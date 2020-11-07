@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="882.0" prefWidth="1500.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+      <BorderPane prefHeight="876.0" prefWidth="1476.0">
+         <center>
+            <ImageView id="mappa" fitHeight="721.0" fitWidth="755.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@mappa2-finita.png" />
+               </image>
+            </ImageView>
+         </center>
+         <left>
+            <VBox id="lista_giocatori" prefHeight="721.0" prefWidth="239.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="39.0" prefWidth="225.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="39.0" prefWidth="16.0" visible="false" />
+                        <Label prefHeight="37.0" prefWidth="133.0" text="Lista giocatori:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView id="lista_giocatori" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="681.0" prefWidth="225.0" style="-fx-background-color: black; -fx-text-inner-color: white;" />
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox alignment="CENTER" prefHeight="721.0" prefWidth="521.0" BorderPane.alignment="CENTER" />
+         </right>
+         <bottom>
+            <HBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="1501.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="117.0" prefWidth="548.0">
+                     <children>
+                        <VBox prefHeight="117.0" prefWidth="310.0">
+                           <children>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Username:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="username_giocatore" prefHeight="39.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="Sm4tt_404">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Personaggio:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="personaggio_giocatore" prefHeight="39.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="Victor Bloom">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Turno:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="turno_giocatore" prefHeight="39.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="2">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="228.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="39.0" prefWidth="207.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="66.0" text="Colore:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="nome_colore_giocatore" prefHeight="39.0" prefWidth="105.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="GIALLO">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <ImageView id="colore_giocatore" fitHeight="32.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@colore-rosso.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children></HBox>
+                  <ImageView fitHeight="115.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Altro/pg2%20-%20Kassandra%20Scarlet.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="117.0" prefWidth="838.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="870.0">
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Movimento" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Indagine" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Accusa" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Fine Turno" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="870.0">
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                              <ComboBox disable="true" prefHeight="31.0" prefWidth="160.0" promptText="carte iniziali" />
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="260.0" text="Apri Taccuino" />
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                              <Button disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="260.0" text="Apri Blocco Note" />
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="35.0" prefWidth="1477.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MenuBar prefHeight="57.0" prefWidth="1500.0" style="-fx-background-color: #282828;">
+                    <menus>
+                      <Menu mnemonicParsing="false">
+                        <items>
+                              <MenuItem mnemonicParsing="false" text="Quit" />
+                          <MenuItem mnemonicParsing="false" text="Close" />
+                              <MenuItem mnemonicParsing="false" text="Regole" />
+                        </items>
+                           <graphic>
+                              <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icon-menu.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+               </children></HBox>
+         </top>
+      </BorderPane>
+  </children>
+</VBox>

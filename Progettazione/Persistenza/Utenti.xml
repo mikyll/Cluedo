@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<utenti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Utenti.xsd">
+
+	<utente>
+		<username>Sm4tt_404</username>
+		<password>password404</password>
+		<email>sm4tt404@gmail.com</email>
+	</utente>
+	<utente>
+		<username>Eugenio73</username>
+		<password>ciao.123@#</password>
+		<email>eugenio73@unibo.it</email>
+	</utente>
+	<utente>
+		<username>Mario31</username>
+		<password>Mario1331</password>
+		<email>mario.rossi31@hotmail.en</email>
+	</utente>
+
+</utenti>

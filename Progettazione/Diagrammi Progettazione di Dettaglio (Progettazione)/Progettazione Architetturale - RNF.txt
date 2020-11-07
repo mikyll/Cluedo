@@ -1,0 +1,14 @@
+Dalla Tabella dei Vincoli sono emersi alcuni requisiti non funzionali:
+-Usabilità;
+-Performance;
+-Sicurezza;
+-Bilanciamento
+
+
+Nel caso in esame i requisiti più importanti sono quelli che rendono l'applicazione "piacevole e divertente", ovvero principalmente usabilità e bilanciamento, ma anche le performance: migliore è l'esperienza di gioco, maggiori saranno le probabilità che l'utente continui ad utilizzare l'applicazione ed eventualmente la consigli ad altri.
+
+L'usabilità impatta molto la struttura delle interfacce che andranno progettate per essere il più semplice ed intuitivo possibile.
+Nel nostro progetto la sicurezza è un aspetto relativamente importante: innanzitutto riguarda solo la modalità multigiocatore. Inoltre, poiché nella versione base dell'applicativo non è previsto un sistema di partite classificate, né eventuali premi o ricompense accumulabili sul proprio account utente, la protezione dei dati di accesso passa in secondo piano (soprattutto perché non vengono salvate informazioni personali sensibili). Al contrario, è importante garantire un'esperienza di gioco equilibrata per tutti, quindi evitare eventuali truffe o utilizzo di terze parti per avere vantaggi nel corso delle partite e/o vincere facilmente.
+
+Considerati questi aspetti, si decide di procedere cercando di massimizzare l'usabilità, quindi l'attenzione sarà focalizzata sullo sviluppo delle interfacce e le interazioni fra queste. Anche il bilanciamento e le performance assumeranno particolare importanza, quindi si cercherà di ottimizzare i componenti, soprattutti quelli riguardanti le partite.
+Per quanto riguarda la sicurezza, verranno adottati algoritmi di controllo automatico ed un gestore di sicurezza in cui sarà possibile analizzare i vari log.

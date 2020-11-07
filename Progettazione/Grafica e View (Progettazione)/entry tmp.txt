@@ -1,0 +1,12 @@
+[20/05/2020 19:23:04] op="connessione al server"
+
+[20/05/2020 19:23:15] username="Sm4tt98" op="accesso effettuato"
+
+[20/05/2020 19:23:19] op="sala creata dX4d0"
+
+[20/05/2020 19:23:40] op="privacy modificata"
+
+[20/05/2020 20:15:07] codPartita="dX4d0" op="partita avviata"
+
+[20/05/2020 20:16:06] codPartita="dX4d0" op="partita terminata - vincitore: Mario82"
+[20/05/2020 20:26:40] op="partecipazione sala" valore="-1:sala smantellata"

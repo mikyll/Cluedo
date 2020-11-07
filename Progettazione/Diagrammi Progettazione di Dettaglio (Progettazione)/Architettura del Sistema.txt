@@ -1,0 +1,28 @@
+SCELTA DELL'ARCHITETTURA
+L'architettura più idonea allo sviluppo di questo tipo di applicazione è il pattern Client/Server. Abbiamo deciso di adattare questo pattern implementandolo nel modo seguente:
+
+L1 - Client Applicazione
+L'applicazione scaricabile dagli utenti si comporta sia da Client che da Server. 
+Contiene al suo interno tutte le interfacce con cui l'utente può interagire ed il controller del menu. Inoltre, poiché dovrà permettere di giocare partite in modalità Giocatore Singolo (ovvero offline), dovrà contenere il controller della partita e quello di gestione del turno. Inoltre, questo sarà anche indispensabile per la modalità Multigiocatore in quando, alla creazione di una sala, l'utente proprietario diventa il Server (Host) che ospiterà la partita e a cui gli altri utenti dovranno connettersi per unirsi alla sala.
+L1 - Client Log
+Fornisce interfacce per visualizzare ed analizzare i log
+
+L2 - Server Multigiocatore
+E' previsto un server che gestisce contemporaneamente l'autenticazionein e la lista delle sale. Per poter accedere alla funzionalità del Multigiocatore è necessario autenticarsi: quando un utente effettua l'accesso, arriva una richiesta a tale Server, in particolare al LoginController, che risponde con l'esito dell'operazione; 
+questo gestisce anche la lista delle sale create dagli utenti proprietari: tramite questo Server agli utenti sarà permesso partecipare ad una sala già esistente.
+L2 - Server Log
+Contiene il controller che raccoglie e permette di gestire i log
+
+L3 - PersistenzaUtenti (file)
+Permette di salvare le credenziali degli utenti
+L3 - PersistenzaLog (file)
+Permette di salvare i log
+
+
+
+
++++++
+Il sistema realizzato sarà dunque una sorta di sistema RMI:
+I ServerHost (proprietari) registrano la propria sala nella lista del ServerMultigiocatore;
+I Client potranno accedere a tali Server ed utilizzare i metodi definiti dal Controller contenutovi
+possibilità per gestione comunicazione: SSL, TLS, HTTPS

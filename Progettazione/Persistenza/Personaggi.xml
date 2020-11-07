@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<personaggi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Personaggi.xsd">
+
+	<personaggio>
+		<nome>Kassandra Scarlet</nome>
+		<colore>rosso</colore>
+		<descrizione>Donna seducente sempre al centro del gossip</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg1.png</imageLocation>
+		</immagine>
+	</personaggio>	
+
+	<personaggio>
+		<nome>Victor Plum</nome>
+		<colore>viola</colore>
+		<descrizione>Giovane informatico sviluppatore di videogames</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg2.png</imageLocation>
+		</immagine>
+	</personaggio>
+	<personaggio>
+		<nome>Jack Mustard</nome>
+		<colore>giallo</colore>
+		<descrizione>Telecronista con un glorioso passato da calciatore</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg3.png</imageLocation>
+		</immagine>
+	</personaggio>
+	<personaggio>
+		<nome>Jacob Green</nome>
+		<colore>verde</colore>
+		<descrizione>Uomo molto influente ma con il quale non è prudente restare in debito</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg4.png</imageLocation>
+		</immagine>
+	</personaggio>
+	<personaggio>
+		<nome>Diane White</nome>
+		<colore>bianco</colore>
+		<descrizione>Donna con infanzia d'attrice che vuole attirare nuovamente l'attenzione su di sé</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg5.png</imageLocation>
+		</immagine>
+	</personaggio>
+	<personaggio>
+		<nome>Eleanor Peacock</nome>
+		<colore>blu</colore>
+		<descrizione>Discendente di un'agiata famiglia di politici, fissata con la perfezione</descrizione>
+		<immagine>
+			<imageLocation>images/personaggi/pg6.png</imageLocation>
+		</immagine>
+	</personaggio>
+	
+</personaggi>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" stylesheets="@background.css">
+      <children>
+            <VBox alignment="CENTER" layoutX="50.0" layoutY="67.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="924.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="67.0">
+               <children>
+                  <WebView href="temp.html" prefHeight="455.0" prefWidth="879.0" />
+               </children>
+            </VBox>
+            <Text fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regole e Aiuto" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+            <VBox alignment="CENTER" layoutX="30.0" layoutY="551.0" prefHeight="48.0" prefWidth="119.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="874.0">
+               <children>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="107.0" text="Indietro">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Altro/icon-back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="437.0" layoutY="527.0" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: black;">
+               <children>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="137.0" text="Avvia Tutorial" />
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+               </children>
+            </VBox>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

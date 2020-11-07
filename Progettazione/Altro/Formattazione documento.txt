@@ -1,0 +1,7 @@
+Titoli - Calibri (Corpo)
+	1° livello - 28
+	2° livello - 24
+	3° livello - 20
+	altri titoli - 16
+
+Testo: 13

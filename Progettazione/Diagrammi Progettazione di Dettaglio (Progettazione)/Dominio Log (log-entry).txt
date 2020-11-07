@@ -1,0 +1,38 @@
+Log
++Log(): Log
++getEntries(): Collection<Entry>
+
+====================================
+
+Entry
+-timestamp: DateTime {readOnly}
+-operazione: String {readOnly}
+-codiceUscita: int {readOnly}
+-messaggio: String {readOnly}
+-----------------------------
++getTimestamp(): DateTime
++getOperazione(): String
++getCodiceUscita(): int
++getMessaggio(): String
+
+====================================
+
+EntryAccesso
++EntryAccesso(timestamp: DateTime, operazione: String, codiceUscita: int, messaggio: String): EntryAccesso
+
+====================================
+
+EntryPartita
+-codicePartita: String
+-----------------------------
++EntryPartita(timestamp: DateTime, operazione: String, codiceUscita: int, messaggio: String, codicePartita: String): EntryPartita
+
+====================================
+
+EntryNetwork
++EntryNetwork(timestamp: DateTime, operazione: String, codiceUscita: int, messaggio: String): EntryNetwork
+
+====================================
+====================================
+====================================
+====================================

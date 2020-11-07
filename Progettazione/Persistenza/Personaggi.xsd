@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="nomeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="7" />
+			<xs:maxLength value="24" />
+			<xs:pattern value="[a-zA-Z\s]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="coloreType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(rosso|viola|giallo|verde|bianco|blu)" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="descrizioneType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="20" />
+			<xs:maxLength value="124" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="immagineType">
+		<xs:sequence>
+			<xs:element name="imageLocation" type="xs:anyURI"/>
+		</xs:sequence>
+		<xs:attribute name="dpi" type="xs:integer" use="optional"/>
+		<xs:attribute name="languageOfImage" type="xs:language" use="optional"/>
+	</xs:complexType>
+	
+	<xs:complexType name="personaggioType">
+		<xs:sequence>
+			<xs:element name="nome" type="nomeType"/>
+			<xs:element name="colore" type="coloreType"/>
+			<xs:element name="descrizione" type="descrizioneType"/>
+			<xs:element name="immagine" type="immagineType"/>
+		</xs:sequence>
+	</xs:complexType>	
+	
+	
+	<xs:element name="personaggi">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="personaggio" type="personaggioType" minOccurs="6" maxOccurs="6"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+

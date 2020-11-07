@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<gestori xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GestoreSicurezza.xsd">
+
+	<gestore>
+		<username>Admin1</username>
+		<password>fa2De9wE51Ph2MK6</password>
+	</gestore>
+	<gestore>
+		<username>Admin2</username>
+		<password>sd63WxM8jf5ER871thO</password>
+	</gestore>
+
+</gestori>

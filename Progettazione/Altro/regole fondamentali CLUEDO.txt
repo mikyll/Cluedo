@@ -1,0 +1,45 @@
+Fasi turno:
+-spostamento;
+-verifica indizi e sospetti (solo se ci si trova in una stanza);
+-formulazione accusa (solo se ci si trova in piscina e una sola volta a partita);
+
+Se a inizio turno ci si trova già in una stanza, a meno che non ci sia stati portati da un altro giocatore, bisogna uscire (o sfruttare un passaggio segreto per raggiungere un'altra stanza). Non è possibile rientrare nella stessa stanza da cui si è usciti nello stesso turno.
+
+Lancio dadi: se esce ? bisogna pescare la carta bonus.
+
+Non si è obbligati a muoversi di tutti i passi indicati dalla somma dei dadi, ma ci si può fermare anche prima (ad esempio se basta meno per andare in una stanza oppure per fermarsi su una casella speciale).
+
+1 passo può essere effettuato solo in orizzontale o verticale, non diagonale.
+
+Si può attraversare una casella su cui è presente un altro giocatore, ma non è possibile fermarcisi sopra.
+
+Se ci si ferma in piscina è possibile formulare un'accusa.
+
+
+
+OPZIONE: Carte Bonus abilitate
+
+Opzioni modalità di gioco:
+-classico, il giocatore che conduce l'interrogatorio chiama il giocatore che interpreta il sospettato nella propria stanza. Il giocatore che svolge il turno dopo di lui deve dimostrarne l'innocenza: se ha 1 o più carte fra quelle della terna dell'accusa, ne deve mostrare almeno una. Se non ne ha, il compito passa al giocatore successivo e così via.
+-veloce, il giocatore a cui viene fatto l'interrogatorio
+
+
+Creazione partita: Scelta numero giocatori, (scelta difficoltà bot), scelta modalità (classica, veloce), scelta se giocare con carte bonus o no.
+
+1) Scelta ordine di gioco - viene estratto l'ordine dei turni dei giocatori;
+2) Scelta dei personaggi - ogni giocatore sceglie il proprio personaggio, nello stesso ordine di quello di gioco;
+3) Scelta la terna del delitto;
+4) Distribuite la carte ai giocatori;
+5) Disposizione giocatori sulla mappa;
+6) Aggiornamento foglio degli indizi;
+
+Turno giocatore:
+1) Spostamento - Il giocatore lancia i dadi e si sposta di un numero minore o uguale al numero ottenuto. Può fermarsi in una stanza o su una casella speciale, se il numero di passi totalizzati glielo permette. Se a inizio turno si trova già dentro una stanza, può rimanerci solo nel caso in cui sia arrivato in seguito all'indagine di un altro giocatore.
+2) Indagine e interrogatorio - il detective chiama un altro giocatore per farlo venire nella propria stanza, sottoponendolo ad un interrogatorio (ovvero gli viene chiesto se possiede una certa terna):
+	-modalità classica, il giocatore seguente deve smentire l'accusa mostrando che possiede almeno una delle carte della terna,
+	 se non la possiede si passa al giocatore dopo e così via;
+	-modalità veloce, il giocatore sottoposto all'interrogatorio mostra le carte che ha fra quelle richieste;
+3) formalizzazione accusa - è possibile farla una sola volta (+solo dalla piscina).
+
+
+termini: indagine, taccuino, sala d'attesa

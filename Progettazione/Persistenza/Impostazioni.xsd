@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:simpleType name="volumeType">
+		<xs:restriction base="xs:double">
+			<xs:minInclusive value="0.0" />
+			<xs:maxInclusive value="100.0" />
+			<xs:pattern value="\d+\.\d{1,2}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="linguaType">
+		<xs:restriction base="xs:language">
+			<xs:pattern value="it-IT|en-US" />
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<xs:complexType name="impostazioneType">
+		<xs:sequence>
+			<xs:element name="volumeMusica" type="volumeType"/>
+			<xs:element name="enableMusica" type="xs:boolean"/>
+			<xs:element name="effettiAudio" type="volumeType"/>
+			<xs:element name="enableEffetti" type="xs:boolean"/>
+			<xs:element name="lingua" type="linguaType"/>
+		</xs:sequence>
+	</xs:complexType>	
+	
+	
+	<xs:element name="impostazioni">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="impostazione" type="impostazioneType"/>
+				<xs:element name="primoAvvio" type="xs:boolean"/>
+				<xs:element name="primoAccesso" type="xs:boolean"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>
+

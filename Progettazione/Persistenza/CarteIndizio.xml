@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<carteIndizio xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CarteIndizio.xsd">
+<cartaIndizio>
+	<descrizione>Cucina</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Ingresso</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Libreria</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Sala da Ballo</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Sala da Pranzo</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Sala giochi</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Salotto</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Serra</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Studio</descrizione>
+	<tipoCarta>stanza</tipoCarta>
+</cartaIndizio>
+
+<cartaIndizio>
+	<descrizione>Candeliere</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Chiave Inglese</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Corda</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Pugnale</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Piede di Porco</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Pistola</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Veleno</descrizione>
+	<tipoCarta>arma</tipoCarta>
+</cartaIndizio>
+
+<cartaIndizio>
+	<descrizione>Kassandra Scarlet</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Diane White</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Dottoressa Orchid</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Eleanor Peacock</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Jack Mustard</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Jacob Green</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+<cartaIndizio>
+	<descrizione>Victor Plum</descrizione>
+	<tipoCarta>sospettato</tipoCarta>
+</cartaIndizio>
+
+</carteIndizio>

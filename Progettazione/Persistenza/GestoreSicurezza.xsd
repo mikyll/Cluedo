@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="usernameType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4" />
+			<xs:maxLength value="16" />
+			<xs:pattern value="[a-zA-Z0-9\-_]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="passwordType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="8" />
+			<xs:maxLength value="32" />
+			<xs:pattern value="[a-zA-Z0-9!?,.@#\-_]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="gestoreType">
+		<xs:sequence>
+			<xs:element name="username" type="usernameType"/>
+			<xs:element name="password" type="passwordType"/>
+		</xs:sequence>
+	</xs:complexType>	
+	
+	
+	<xs:element name="gestori">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="gestore" type="gestoreType" minOccurs="1" maxOccurs="5"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+

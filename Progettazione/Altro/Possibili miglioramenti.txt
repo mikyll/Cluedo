@@ -1,0 +1,33 @@
+Impostazioni
+1) colori per daltonici
+2) risoluzione / modalità schermo intero-finestra
+3) (non è possibile accedere o modificare i dati dell'account utente, per l'accesso, dalle impostazioni ma eventualmente solo richiedere il cambio password in sede d'accesso per evitare falle o rischi)
+
+PartecipazioneSala
+1) Numero di partecipanti attuali
+2) stabiità connessione (tacche)
+3) operazione per filtraggio delle partite
+
+GiocatoreSingolo
+1) possibilità di lasciare in sospeso una partita e riprenderla più avanti
+
+Multigiocatore
+1) Quando un partecipante esce da una stanza non può rientrare nella stessa per N secondi.
+2) Il sistema controlla la qualità della sua connessione (ping) alla selezione dell’opzione multigiocatore (o al login/registrazione)
+
+Login
+1) Controllo CAPCHA + controllo antibot
+
+Partita
+1) modalità diverse/a squadre + tipo ruba bandiera(?) / Modalità aggiuntiva (classica/veloce) da scegliere nelle opzioni;
+2) passaggio di proprietario(?): se esce la stanza non viene smantellata
+3) mappa diversa (+- stanze); +- carte
+4) sottopassaggio
+5) possibilità di aggiungere il proprio personaggio (foto propria, nome, descrizione)
+6) abilità e carte bonus
+
+
+Gestore Sicurezza
+1) doppia modalità d'accesso: Utente/Amministratore.
+2) Utente visualizza solo i propri log, amministratore tutti.
+3) Utente può mandare un report, amministratore può vedere report e analizzare le anomalie.

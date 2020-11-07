@@ -1,0 +1,15 @@
+Ritagliare i personaggi;
+
+togliere "abilita" dai diagrammi (dominio vecchio e nuovo, Personaggio)
+
+aggiungere qualche altra scritta (controllerPartita e mappa Azioni)
+
+fare deployment(?)
+
+guardare collaudo
+
+ripassare TUTTO
+
+aggiornare sommario POI aggiungere nei titoli parti evidenziate
+
+in Partita: rimuovere parametro di incrementaTurno

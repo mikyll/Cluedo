@@ -1,0 +1,35 @@
+<<interfaccia>>
+Fitler
++filter(log: Log): Collection<Entry>
+
+=========================================
+
+FilterLogAccesso
++FilterLogAccesso(): FilterLogAccesso
++filter(log: Log): Collection<EntryAccesso>
+
+=========================================
+
+FilterLogPartita
++FilterLogPartita(): FilterLogPartita
++filter(log: Log): Collection<EntryPartita>
+
+=========================================
+
+FilterLogNetwork
++FilterLogNetwork(): FilterLogNetwork
++filter(log: Log): Collection<EntryNetwork>
+
+=========================================
+
+FilterPerUtente
++FilterPerUtente(): FilterPerUtente
++filter(log: Log): Collection<Entry>
+[FILTRA TUTTE LE ENTRY RELATIVE A QUELL'UTENTE]
+
+=========================================
+
+FilterPerPartita
++FilterPerPartita(): FilterPerPartita
++filter(log: Log): Collection<Entry>
+[FILTRA TUTTE LE ENTRY RELATIVE A QUELLA PARTITA]
