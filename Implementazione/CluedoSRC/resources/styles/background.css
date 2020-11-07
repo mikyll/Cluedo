@@ -1,0 +1,18 @@
+#base {
+	-fx-background-image: url("../../resources/images/background-cluedo.png");
+	/*-fx-background-repeat: repeat;*/ 
+	-fx-background-size: 100% 100%;
+	-fx-background-position: center center;
+	/*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+} 
+#textAreaCrediti{
+	text-area-background: black;
+	-fx-text-inner-color: white;
+	/*-fx-text-box-border: none;*/
+}
+#textAreaCrediti .content {
+    -fx-background-color: text-area-background;
+}
+#textAreaCrediti *.text {
+    -fx-text-alignment: center;
+}

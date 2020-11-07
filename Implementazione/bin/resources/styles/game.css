@@ -1,0 +1,22 @@
+.list-view {
+	-fx-background-color: black;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-border-color: black;
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+}
+.list-view .list-cell{
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: black;
+	-fx-padding: 0;
+}
+/*.list-view .list-cell:even {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+.list-view .list-cell:odd {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}*/

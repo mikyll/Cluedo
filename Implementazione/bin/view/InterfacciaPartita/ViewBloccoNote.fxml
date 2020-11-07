@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="vboxBloccoNote" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="611.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestioneTurno.StrumentiController">
+   <children>
+      <Separator prefHeight="25.0" prefWidth="530.0" visible="false" />
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Blocco Note" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <Separator prefHeight="25.0" prefWidth="530.0" visible="false" />
+      <HBox prefHeight="450.0" prefWidth="530.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="472.0" prefWidth="15.0" visible="false" />
+            <TextArea fx:id="textAreaBloccoNote" prefHeight="472.0" prefWidth="581.0" wrapText="true" />
+            <Separator orientation="VERTICAL" prefHeight="472.0" prefWidth="15.0" visible="false" />
+         </children>
+      </HBox>
+      <Separator prefHeight="25.0" prefWidth="611.0" visible="false" />
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="472.0" prefWidth="50.0" visible="false" />
+            <Button fx:id="buttonSalva" mnemonicParsing="false" onAction="#salvaBloccoNote" prefHeight="50.0" prefWidth="200.0" text="Salva" />
+            <Separator orientation="VERTICAL" prefHeight="472.0" prefWidth="50.0" visible="false" />
+            <Button fx:id="buttonChiudiSenzaSalvare" mnemonicParsing="false" onAction="#chiudiBloccoNote" prefHeight="50.0" prefWidth="200.0" text="Chiudi senza salvare" />
+            <Separator orientation="VERTICAL" prefHeight="472.0" prefWidth="50.0" visible="false" />
+         </children>
+      </HBox>
+      <Separator prefHeight="25.0" prefWidth="530.0" visible="false" />
+   </children>
+</VBox>

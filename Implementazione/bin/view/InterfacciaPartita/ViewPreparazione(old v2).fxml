@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="vboxPreparazione" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="611.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Separator prefHeight="25.0" prefWidth="530.0" visible="false" />
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Preparazione" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="530.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="64.0" prefWidth="63.0" visible="false" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Il tuo turno è il:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="textFieldTurno" editable="false" prefHeight="75.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="2">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+            <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="33.0" visible="false" />
+         </children>
+      </HBox>
+      <Separator prefHeight="25.0" prefWidth="530.0" visible="false" />
+      <HBox prefHeight="450.0" prefWidth="611.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="300.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli il personaggio:" textAlignment="CENTER" wrappingWidth="300.00000953674316">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Text>
+                  <Separator prefHeight="25.0" prefWidth="300.0" visible="false" />
+                  <HBox alignment="CENTER" prefHeight="225.0" prefWidth="301.0">
+                     <children>
+                        <Button fx:id="buttonLeft" mnemonicParsing="false" onAction="#scorriASinistra" style="-fx-background-color: black;">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/icons/icon-triangle-left.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <ImageView fx:id="imageViewPersonaggio" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/characters/pg0%20-%20Kassandra%20Scarlet%20(ROSSO).png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="buttonRight" mnemonicParsing="false" onAction="#scorriADestra" style="-fx-background-color: black;">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/icons/icon-triangle-right.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="301.0">
+                     <children>
+                        <TextField fx:id="textFieldPersonaggio" alignment="CENTER" editable="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: black; -fx-text-inner-color: white; -fx-border-color: red; -fx-border-width: 2px;" text="Character Name">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="301.0">
+                     <children>
+                        <TextField fx:id="textFieldDescrizione" alignment="CENTER" editable="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="Character Description">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="25.0" prefWidth="300.0" visible="false" />
+                  <Button fx:id="buttonConfermaPersonaggio" mnemonicParsing="false" onAction="#confermaPersonaggio" prefHeight="35.0" prefWidth="150.0" text="Conferma" />
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="441.0" prefWidth="11.0" visible="false" />
+            <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="300.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Carte iniziali:" textAlignment="CENTER" wrappingWidth="300.00000953674316">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Separator prefHeight="25.0" prefWidth="300.0" visible="false" />
+                  <HBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="316.0">
+                     <children>
+                        <ComboBox fx:id="comboBoxCarteIniziali" prefHeight="35.0" prefWidth="200.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Separator prefHeight="25.0" prefWidth="611.0" visible="false" />
+   </children>
+</VBox>

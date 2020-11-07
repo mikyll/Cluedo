@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="352.0" prefWidth="931.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestioneLogin.LoginController">
+   <children>
+      <Text layoutX="295.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="TOP_CENTER" layoutX="318.0" layoutY="87.0" prefHeight="283.0" prefWidth="296.0">
+         <children>
+            <Separator prefHeight="49.0" prefWidth="381.0" visible="false" />
+            <HBox prefHeight="40.0" prefWidth="381.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="88.0" text="Username:" />
+                  <TextField fx:id="textFieldUsername" prefHeight="31.0" prefWidth="211.0" />
+               </children>
+            </HBox>
+            <Separator prefHeight="49.0" prefWidth="381.0" visible="false" />
+            <HBox prefHeight="40.0" prefWidth="381.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="88.0" text="Password:" />
+                  <PasswordField fx:id="passwordFieldPassword" onAction="#selezionaLogin" prefHeight="31.0" prefWidth="208.0" />
+               </children>
+            </HBox>
+            <TextField fx:id="textFieldPasswordErrata" alignment="CENTER_RIGHT" editable="false" />
+            <Separator prefHeight="49.0" prefWidth="381.0" visible="false" />
+            <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#selezionaLogin" prefHeight="31.0" prefWidth="164.0" text="Log In" />
+            <Separator prefHeight="49.0" prefWidth="381.0" visible="false" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

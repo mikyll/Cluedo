@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="base" fx:id="baseImpostazioni" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestioneMenu.GestioneMenuController">
+   <children>
+      <VBox alignment="CENTER" layoutX="291.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="123.0">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Volume musica:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkBoxMusica" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderVolume" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldVolume" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Effetti audio:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkBoxEffetti" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderAudio" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldAudio" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Lingua:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboBoxLingua" prefHeight="31.0" prefWidth="180.0" promptText="ITALIANO" />
+                  <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
+               </children>
+            </HBox>
+            <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="buttonRipristina" mnemonicParsing="false" onAction="#ripristinaImpostazioni" text="Ripristina" />
+               </children>
+            </HBox>
+            <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
+            <Button fx:id="buttonSalvaEdEsci" mnemonicParsing="false" onAction="#salvaEdEsci" prefHeight="30.0" prefWidth="130.0" text="Salva ed Esci" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <Text fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impostazioni" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="131.0" layoutY="481.0" prefHeight="48.0" prefWidth="119.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="741.0">
+         <children>
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#selezionaHomeUtente" prefHeight="31.0" prefWidth="107.0" text="Indietro">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

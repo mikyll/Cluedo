@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="base" fx:id="baseRegoleAiuto" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestioneMenu.GestioneMenuController">
+   <children>
+      <VBox alignment="CENTER" layoutX="50.0" layoutY="67.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="924.0" AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="67.0" />
+      <Pane layoutX="324.0" layoutY="68.0" prefHeight="522.0" prefWidth="385.0">
+         <children>
+            <ImageView fx:id="imageViewRules" fitHeight="505.0" fitWidth="359.0" layoutX="13.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/regole/img0.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Text fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regole e Aiuto" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="30.0" layoutY="551.0" prefHeight="48.0" prefWidth="119.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="874.0">
+         <children>
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#selezionaHomeUtente" prefHeight="31.0" prefWidth="107.0" text="Indietro">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="824.0" layoutY="551.0" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: black;">
+         <children>
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+            <Button fx:id="buttonAvviaTutorial" mnemonicParsing="false" onAction="#selezionaAvviaTutorial" prefHeight="31.0" prefWidth="137.0" text="Avvia Tutorial" />
+            <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+         </children>
+      </VBox>
+      <Button fx:id="buttonNextRule" layoutX="220.0" layoutY="555.0" mnemonicParsing="false" onAction="#previousRule" prefHeight="40.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/icons/icon-backplay.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="buttonNextRule" layoutX="272.0" layoutY="555.0" mnemonicParsing="false" onAction="#nextRule" prefHeight="40.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/icons/icon-play.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

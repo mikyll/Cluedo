@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="350.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestioneLog.LogController">
+   <children>
+      <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analisi Log" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <HBox layoutY="67.0" prefHeight="474.0" prefWidth="1023.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="462.0" prefWidth="28.0" visible="false" />
+            <TextArea fx:id="textAreaAnomalie" editable="false" prefHeight="474.0" prefWidth="1045.0" style="-fx-text-inner-color: red;" wrapText="true" />
+            <Separator orientation="VERTICAL" prefHeight="462.0" prefWidth="28.0" visible="false" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutY="562.0" prefHeight="69.0" prefWidth="1023.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="58.0" prefWidth="60.0" visible="false" />
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#selezionaTornaIndietro" prefHeight="31.0" prefWidth="290.0" text="Torna indietro">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="58.0" prefWidth="60.0" visible="false" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,53 @@
+#base {
+	-fx-background-image: url("../../resources/images/background-cluedo.png");
+	/*-fx-background-repeat: repeat;*/ 
+	-fx-background-size: 100% 100%;
+	-fx-background-position: center center;
+	/*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+} 
+#textAreaCrediti{
+	text-area-background: black;
+	-fx-text-inner-color: white;
+	/*-fx-text-box-border: none;*/
+}
+#textAreaCrediti .content {
+    -fx-background-color: text-area-background;
+}
+#textAreaCrediti *.text {
+    -fx-text-alignment: center;
+}
+
+#listViewGiocatori, #listViewColori, #listViewCarteIniziali {
+	-fx-background-color: black;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-border-color: black;
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+}
+#listViewGiocatori .list-cell{
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: black;
+	-fx-padding: 0;
+}
+#listViewColori .list-cell{
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: black;
+	-fx-padding: 0;
+}
+#listViewCarteIniziali .list-cell{
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: black;
+	-fx-padding: 0;
+}
+/*.list-view .list-cell:even {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+.list-view .list-cell:odd {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}*/

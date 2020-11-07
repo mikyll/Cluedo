@@ -1,0 +1,15 @@
+Version Notes:
+v0.10
+	+sistemati i nomi dei package e delle risorse
+	+sistemate references di queste
+	+aggiunto GestionePartitaController
+	+aggiunta ViewGioco
+	+ora gli stylesheet sono specificati dopo lo FXMLLoader per problemi strani con i .css (non si capisce come mai non li rileva se impostati dentro ai .fxml)
+	+sistemata la musica in-game
+	+aggiunti i menuItem funzionanti per toggle FullScreen, uscire dalla partita e uscire dall'applicazione
+
+
+Prossime versioni:
+	+aggiungere suoni
+	+aggiungere varie View a destra in ViewGioco (AnchorPane(?))
+	+collegare tutto
