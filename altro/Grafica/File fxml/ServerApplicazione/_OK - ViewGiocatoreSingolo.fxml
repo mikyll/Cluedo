@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" stylesheets="@background.css">
+      <children>
+            <VBox alignment="CENTER" layoutX="337.0" layoutY="182.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="145.0" AnchorPane.leftAnchor="337.0" AnchorPane.rightAnchor="335.0" AnchorPane.topAnchor="182.0">
+               <children>
+                  <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+                     <children>
+                        <Label prefHeight="60.0" prefWidth="217.0" text="Numero avversari:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Spinner prefHeight="34.0" prefWidth="70.0" />
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+                     <children>
+                        <Label prefHeight="46.0" prefWidth="169.0" text="Difficoltà avversari:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="120.0" promptText="DIFFICILE" />
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="75.0" prefWidth="351.0" visible="false" />
+                  <Button maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Avvia Partita" />
+                  <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="741.0" layoutY="442.0" prefHeight="77.0" prefWidth="119.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="741.0" AnchorPane.rightAnchor="163.0">
+               <children>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0" text="Impostazioni" />
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0" text="Crediti" />
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+               </children>
+            </VBox>
+            <Text fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giocatore Singolo" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+            <VBox alignment="CENTER" layoutX="121.0" layoutY="471.0" prefHeight="48.0" prefWidth="119.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="741.0">
+               <children>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="107.0" text="Indietro">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Altro/icon-back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Separator prefHeight="7.0" prefWidth="119.0" visible="false" />
+               </children>
+            </VBox>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
