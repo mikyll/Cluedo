@@ -30,18 +30,18 @@ versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
 
 ### References
 
-[downloads-shield]: https://img.shields.io/github/downloads/mikyll/ROQuiz/total
-[downloads-url]: https://github.com/mikyll/ROQuiz/releases/latest
-[contributors-shield]: https://img.shields.io/github/contributors/mikyll/ROQuiz
-[contributors-url]: https://github.com/mikyll/ROQuiz/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mikyll/ROQuiz
-[forks-url]: https://github.com/mikyll/ROQuiz/network/members
-[stars-shield]: https://img.shields.io/github/stars/mikyll/ROQuiz
-[stars-url]: https://github.com/mikyll/ROQuiz/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mikyll/ROQuiz
-[issues-url]: https://github.com/mikyll/ROQuiz/issues
-[license-shield]: https://img.shields.io/github/license/mikyll/ROQuiz
-[license-url]: https://github.com/mikyll/ROQuiz/blob/master/LICENSE
+[downloads-shield]: https://img.shields.io/github/downloads/mikyll/Cluedo/total
+[downloads-url]: https://github.com/mikyll/Cluedo/releases/latest
+[contributors-shield]: https://img.shields.io/github/contributors/mikyll/Cluedo
+[contributors-url]: https://github.com/mikyll/Cluedo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mikyll/Cluedo
+[forks-url]: https://github.com/mikyll/Cluedo/network/members
+[stars-shield]: https://img.shields.io/github/stars/mikyll/Cluedo
+[stars-url]: https://github.com/mikyll/Cluedo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mikyll/Cluedo
+[issues-url]: https://github.com/mikyll/Cluedo/issues
+[license-shield]: https://img.shields.io/github/license/mikyll/Cluedo
+[license-url]: https://github.com/mikyll/Cluedo/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=0077B5
 [linkedin-url]: https://www.linkedin.com/in/michele-righi/?locale=it_IT
 [github-shield]: https://img.shields.io/github/followers/mikyll.svg?style=social&label=Follow
