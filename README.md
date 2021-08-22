@@ -10,6 +10,8 @@
 <h1 align="center">CluedoApp</h1>
 Applicazione per il gioco Cluedo, NON UFFICIALE e SENZA SCOPO DI LUCRO.
 
+Nato come progetto del corso di Ingegneria del Software della triennale in Ingegneria Informatica presso l'unibo, ho deciso di portarlo a termine, sostituendo il prototipo con quello che sarà un gioco completo e funzionante.
+
 Prendere ciò che era giusto del prototipo e piazzarlo in modo decente nell'implementazione vera e propria. NIENTE CODICE SPAGHETTI.
 Usare il pattern observer per inviare i dati sulle socket tramite un thread secondario a quello della GUI.
 
