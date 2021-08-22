@@ -8,9 +8,7 @@
 [![GitHub followers][github-shield]][github-url]
 
 <h1 align="center">CluedoApp</h1>
-
-### Applicazione Java per Cluedo
-NON UFFICIALE.
+Applicazione per il gioco Cluedo, NON UFFICIALE e SENZA SCOPO DI LUCRO.
 
 Prendere ciò che era giusto del prototipo e piazzarlo in modo decente nell'implementazione vera e propria. NIENTE CODICE SPAGHETTI.
 Usare il pattern observer per inviare i dati sulle socket tramite un thread secondario a quello della GUI.
