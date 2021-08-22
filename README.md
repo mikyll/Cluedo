@@ -19,6 +19,7 @@ Usare il pattern observer per inviare i dati sulle socket tramite un thread seco
 TO-DO
 
 ### Roadmap
+* NB: modificarlo e scriverlo in INGLESE principalmente.
 * Classi base del model
 * Trovare qualcuno che mi disegni la mappa
 * Sistema per il multigiocatore molto base (server host, client si connettono al server, con socket UDP/TCP. Sistema di room con creazione/unione)
