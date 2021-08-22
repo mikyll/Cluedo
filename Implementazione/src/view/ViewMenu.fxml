@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
+   <children>
+      <Text fx:id="textMM" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textGS" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giocatore Singolo" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textMG" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Multigiocatore" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textIm" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impostazioni" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textC" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crediti" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
+         <children>
+            <Button fx:id="buttonGS" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectGS" prefHeight="50.0" prefWidth="340.0" text="Giocatore Singolo" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <Button fx:id="buttonMG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMG" prefHeight="50.0" prefWidth="340.0" text="Multigiocatore" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <Button fx:id="buttonRA" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRA" prefHeight="50.0" prefWidth="340.0" text="Regole e Aiuto" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxIC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
+         <children>
+            <Button fx:id="buttonIm" mnemonicParsing="false" onAction="#selectIm" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonC" mnemonicParsing="false" onAction="#selectC" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-info.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxIn" alignment="CENTER" layoutX="200.0" layoutY="480.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
+         <children>
+            <Button fx:id="buttonIn" mnemonicParsing="false" onAction="#selectIn" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxGS" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+               <children>
+                  <Label prefHeight="60.0" prefWidth="217.0" text="Numero avversari:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinnerNA" prefHeight="34.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="169.0" text="Difficoltà avversari:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboboxDA" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="120.0" promptText="DIFFICILE" />
+               </children>
+            </HBox>
+            <Separator prefHeight="75.0" prefWidth="351.0" visible="false" />
+            <Button fx:id="buttonAP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectAP" prefHeight="40.0" prefWidth="150.0" text="Avvia Partita" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxMG" alignment="CENTER" layoutX="290.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="442.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <ImageView fitHeight="264.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/coming-soon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxIm" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Volume musica:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxM" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderMV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldVolume" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Effetti audio:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxA" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderAV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldAudio" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Lingua:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="checkboxL" prefHeight="31.0" prefWidth="180.0" promptText="ITALIANO" />
+                  <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
+               </children>
+            </HBox>
+            <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="buttonR" mnemonicParsing="false" onAction="#restoreImp" text="Ripristina" />
+               </children>
+            </HBox>
+            <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
+            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Salva ed Esci" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;">
+         <children>
+            <HBox prefHeight="300.0" prefWidth="380.0">
+               <children>
+                  <TextArea id="textAreaCrediti" fx:id="textAreaCrediti" editable="false" prefHeight="300.0" prefWidth="360.0" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
