@@ -5,22 +5,32 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server {
 	
-	private ServerSocket ss;
-	private int connectedPlayers;
+	private static final int MAX_LENGTH = 5;
 	
-	private ServerSideConnection ssc;
+	private ServerSocket serverSocket;
+	
+	private int connectedPlayers;
+	private boolean acceptConnections; // ON/OFF
+	private ArrayList<Socket> connections;
+	
+	//private ServerSideConnection ssc;
 	
 	public Server()
 	{
-		System.out.println("Game Server init...");
-		
-		this.connectedPlayers = 1;
+		this.acceptConnections = true;
+		this.connectedPlayers = 0;
+		this.connections = new ArrayList<Socket>();
 		
 		try {
-			this.ss = new ServerSocket(51234);
+			this.serverSocket = new ServerSocket(8765, MAX_LENGTH);
+			System.out.println("Server socket created.");
+			System.out.println(this.serverSocket.getInetAddress().toString());
+			System.out.println(this.serverSocket.getLocalSocketAddress());
 		} catch(IOException e) {
 			System.out.println("IOException from Server sonstructor");
 		}
@@ -32,18 +42,13 @@ public class Server {
 		try {
 			System.out.println("Waiting for connections...");
 			
-			while(this.connectedPlayers < 2)
+			while(this.acceptConnections)
 			{
-				Socket s = ss.accept();
+				Socket s = this.serverSocket.accept();
+				this.connections.add(s);
 				this.connectedPlayers++;
-				System.out.println("Player #" + this.connectedPlayers + "has connected.");
-				
-				ServerSideConnection ssc = new ServerSideConnection(s, this.connectedPlayers);
-				
-				// roba?
-				
-				Thread t = new Thread(ssc);
-				t.start();
+				System.out.println("Player #" + this.connectedPlayers + "has connected (" + s.getInetAddress() + s.getLocalAddress() + s.getLocalSocketAddress() + ")");
+				break; // test
 				
 			}
 		}catch(IOException e) {
@@ -51,7 +56,8 @@ public class Server {
 		}
 	}
 	
-	private class ServerSideConnection implements Runnable {
+	
+	/*private class ServerSideConnection implements Runnable {
 		private Socket socket;
 		private DataInputStream dataIn;
 		private DataOutputStream dataOut;
@@ -85,9 +91,9 @@ public class Server {
 			}
 			
 		}
-	}
+	}*/
 	
-	public static void main(String[] args)
+	public static void main(String args[])
 	{
 		Server s = new Server();
 		s.acceptConnections();

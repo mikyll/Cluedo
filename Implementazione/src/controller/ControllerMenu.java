@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,6 +32,8 @@ public class ControllerMenu {
 	@FXML private VBox vboxMP;	// vbox Multi-Player
 	@FXML private VBox vboxS;	// vbox Settings
 	@FXML private VBox vboxC;	// vbox Credits
+	
+	
 	
 	// vbox Main Menu controls:
 	@FXML private Button buttonSP;	// button Single-Player
@@ -56,6 +59,15 @@ public class ControllerMenu {
 	@FXML private Label labelErrorIP;		// label Error IP
 	@FXML private HBox hboxC;				// hbox Connecting
 	@FXML private Button buttonSC;			// button Stop Connecting
+	
+	// vbox Multi-Player create new room cotrols:
+	@FXML private Label labelIP;
+	/*TEST socket*/
+	@FXML private VBox vboxR;				// vbox Room
+	@FXML private TextArea textAreaChat;	// textArea Chat
+	@FXML private TextField textFieldChat;	// textField Chat
+	@FXML private Button buttonSendMessage;	// button Send Message
+	private boolean isServer;
 	
 	// vbox Settings controls:
 	@FXML private CheckBox checkboxM;			// checkbox Music
@@ -122,6 +134,14 @@ public class ControllerMenu {
 	@FXML public void selectCNR(ActionEvent event)
 	{
 		System.out.println("User selected Create New Room");
+		
+		// to-do: server code
+		
+		this.vboxMP.setVisible(false);
+		this.vboxR.setVisible(true);
+		this.labelIP.setVisible(true);
+		this.labelIP.setText(""); // set IP
+		this.isServer = true;
 	}
 	@FXML public void validateIP()
 	{
@@ -144,9 +164,9 @@ public class ControllerMenu {
 		this.buttonJER.setDisable(true);
 		this.hboxC.setVisible(true);
 		this.buttonB.setDisable(true);
-		// creazione socket e connessione al server (porta default)
 		
-		// to-do
+		// to-do: creazione socket e connessione al server (porta default)
+		this.isServer = false;
 	}
 	@FXML public void selectSC(ActionEvent event)
 	{
@@ -157,7 +177,19 @@ public class ControllerMenu {
 		this.buttonJER.setDisable(false);
 		this.hboxC.setVisible(false);
 		this.buttonB.setDisable(false);
-		// to-do
+		
+		
+		// to-do: stop connection attempt
+	}
+	@FXML public void sendMessage(ActionEvent event)
+	{
+		if(this.isServer)
+		{
+			// invio a tutti i client
+		}
+		else {
+			// invio al server
+		}
 	}
 	
 	@FXML public void selectRH(ActionEvent event) 

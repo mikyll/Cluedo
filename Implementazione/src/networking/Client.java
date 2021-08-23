@@ -3,12 +3,16 @@ package networking;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Scanner;
 
-public class Client {
+public class Client implements Runnable {
 	
 	private Socket socket;
-	private ClientSideConnection csc;
+	private DataInputStream diStream;
+	private DataOutputStream doStream;
 	
 	private int playerID;
 	
@@ -17,36 +21,54 @@ public class Client {
 		
 	}
 	
-	public void connectToServer(String ip_address, int port)
+	public void connectToServer(InetAddress ip_address, int port)
 	{
 		try
 		{
 			this.socket = new Socket(ip_address, port);
+			System.out.println("Client socket created.");
+			
+			diStream = new DataInputStream(socket.getInputStream());
+			doStream = new DataOutputStream(socket.getOutputStream());
+			
 		}
 		catch(IOException e) {
-			System.out.println("Connection to server " + ip_address + " reefused");
+			System.out.println("Connection to server " + ip_address + " refused");
+			e.printStackTrace();
 		}
 		
+	}
+	public void sendMessage(int number)
+	{
+		try {
+			this.doStream.writeInt(number);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private class ClientSideConnection {
-		private Socket socket;
-		private DataInputStream dataIn;
-		private DataOutputStream dataOut;
+	public static void main(String args[])
+	{
+		Client c = new Client();
 		
-		public ClientSideConnection() {
-			System.out.println("Client");
-			try {
-				this.socket = new Socket("localhost", 51234);
-				this.dataIn = new DataInputStream(socket.getInputStream());
-				this.dataOut = new DataOutputStream(socket.getOutputStream());
-				
-				playerID = this.dataIn.readInt();
-				System.out.println("Connected to server as Player #" + playerID);
-				
-			} catch(IOException e) {
-				System.out.println("IOException from ClientSideConnection constructor");
-			}
+		try {
+			c.connectToServer(InetAddress.getByName("127.0.0.1"), 8765);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while(true)
+		{
+			Scanner keyboard = new Scanner(System.in);
+			System.out.println("Int to send: ");
+			c.sendMessage(keyboard.nextInt());
 		}
 	}
+
+	@Override
+	public void run() {
+		
+	}
+
 }
