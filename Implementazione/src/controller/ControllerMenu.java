@@ -100,6 +100,8 @@ public class ControllerMenu {
 		this.textS.setVisible(false);
 		this.vboxC.setVisible(false);
 		this.textC.setVisible(false);
+		this.vboxSR.setVisible(false);
+		this.vboxCR.setVisible(false);
 	}
 	
 	@FXML public void selectSP(ActionEvent event) 
@@ -140,10 +142,12 @@ public class ControllerMenu {
 		// to-do: server code
 		
 		this.vboxMP.setVisible(false);
-		this.vboxR.setVisible(true);
+		this.vboxSR.setVisible(true);
 		this.labelIP.setVisible(true);
 		this.labelIP.setText(""); // set IP
 		this.isServer = true;
+		
+		
 	}
 	@FXML public void validateIP()
 	{
@@ -166,6 +170,8 @@ public class ControllerMenu {
 		this.buttonJER.setDisable(true);
 		this.hboxC.setVisible(true);
 		this.buttonB.setDisable(true);
+		
+		this.vboxCR.setVisible(true);
 		
 		// to-do: creazione socket e connessione al server (porta default)
 		this.isServer = false;
@@ -248,6 +254,8 @@ public class ControllerMenu {
 		this.textMP.setVisible(false);
 		this.textS.setVisible(false);
 		this.textC.setVisible(false);
+		this.vboxSR.setVisible(false);
+		this.vboxCR.setVisible(false);
 		
 		this.vboxMM.setVisible(true);
 		this.vboxSC.setVisible(true);
