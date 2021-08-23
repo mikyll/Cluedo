@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -49,10 +50,12 @@ public class ControllerMenu {
 	@FXML private Button buttonSG;				// button Start Game
 	
 	// vbox Multi-Player cotrols:
-	@FXML private Button buttonCNR;	// button Create New Room
-	@FXML private TextField textFieldIP; // textField IP
-	@FXML private Button buttonJER;	// button Join Existing Room
-	@FXML private Label labelErrorIP; // label Error IP
+	@FXML private Button buttonCNR;			// button Create New Room
+	@FXML private TextField textFieldIP;	// textField IP
+	@FXML private Button buttonJER;			// button Join Existing Room
+	@FXML private Label labelErrorIP;		// label Error IP
+	@FXML private HBox hboxC;				// hbox Connecting
+	@FXML private Button buttonSC;			// button Stop Connecting
 	
 	// vbox Settings controls:
 	@FXML private CheckBox checkboxM;			// checkbox Music
@@ -111,32 +114,15 @@ public class ControllerMenu {
 		this.vboxB.setVisible(true);	
 		
 		this.textFieldIP.setText("");
+		this.buttonCNR.setDisable(false);
 		this.buttonJER.setDisable(true);
 		this.labelErrorIP.setVisible(false);
+		this.hboxC.setVisible(false);
 	}
 	@FXML public void selectCNR(ActionEvent event)
 	{
 		System.out.println("User selected Create New Room");
 	}
-	/*
-	@FXML public void enableJER()
-	{
-		this.buttonJER.setDisable(false);
-	}
-	@FXML public void selectJER(ActionEvent event)
-	{
-		if(IP_PATTERN.matcher(this.textFieldIP.getText()).matches())
-		{
-			this.buttonJER.setDisable(false);
-			this.labelErrorIP.setVisible(false);
-		}
-		else {
-			this.buttonJER.setDisable(true);
-			this.labelErrorIP.setVisible(true);
-		}
-		System.out.println("User selected Join Existing Room");
-	}
-	 */
 	@FXML public void validateIP()
 	{
 		if(!IP_PATTERN.matcher(this.textFieldIP.getText()).matches())
@@ -152,6 +138,26 @@ public class ControllerMenu {
 	@FXML public void selectJER(ActionEvent event)
 	{
 		System.out.println("User selected Join Existing Room");
+		
+		this.buttonCNR.setDisable(true);
+		this.textFieldIP.setDisable(true);
+		this.buttonJER.setDisable(true);
+		this.hboxC.setVisible(true);
+		this.buttonB.setDisable(true);
+		// creazione socket e connessione al server (porta default)
+		
+		// to-do
+	}
+	@FXML public void selectSC(ActionEvent event)
+	{
+		System.out.println("Connection attempt interrupted.");
+		
+		this.buttonCNR.setDisable(false);
+		this.textFieldIP.setDisable(false);
+		this.buttonJER.setDisable(false);
+		this.hboxC.setVisible(false);
+		this.buttonB.setDisable(false);
+		// to-do
 	}
 	
 	@FXML public void selectRH(ActionEvent event) 

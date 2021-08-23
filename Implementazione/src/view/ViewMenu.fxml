@@ -58,7 +58,7 @@
          <children>
             <Button fx:id="buttonS" mnemonicParsing="false" onAction="#selectS" prefHeight="35.0" prefWidth="35.0">
                <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/icons/icon-settings.png" />
                      </image>
@@ -66,7 +66,7 @@
                </graphic></Button>
             <Button fx:id="buttonC" mnemonicParsing="false" onAction="#selectC" prefHeight="35.0" prefWidth="35.0">
                <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/icons/icon-info.png" />
                      </image>
@@ -78,7 +78,7 @@
          <children>
             <Button fx:id="buttonB" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
                <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/icons/icon-back.png" />
                      </image>
@@ -118,15 +118,41 @@
       </VBox>
       <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;">
          <children>
-            <Separator prefHeight="20.0" prefWidth="200.0" visible="false" />
-            <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="26.0" prefWidth="140.0" text="Create new room" />
+            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
+            <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="30.0" prefWidth="140.0" text="Create new room" />
             <Separator prefHeight="15.0" prefWidth="442.0" visible="false" />
-            <TextField fx:id="textFieldIP" onKeyTyped="#validateIP" promptText="Remote IP address" text="Host IP address" />
-            <Button fx:id="buttonJER" disable="true" mnemonicParsing="false" onAction="#selectJER" prefHeight="26.0" prefWidth="140.0" text="Join existing room" />
-            <Label fx:id="labelErrorIP" prefHeight="20.0" prefWidth="95.0" text="Invalid IP address." textFill="RED" visible="false" />
+            <VBox alignment="CENTER" prefHeight="105.0" prefWidth="242.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="textFieldIP" onKeyTyped="#validateIP" prefHeight="30.0" prefWidth="242.0" promptText="Remote IP address" text="Host IP address" />
+                  <Button fx:id="buttonJER" disable="true" mnemonicParsing="false" onAction="#selectJER" prefHeight="30.0" prefWidth="140.0" text="Join existing room" />
+                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="95.0" text="Invalid IP address." textFill="RED" visible="false" />
+               </children>
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </VBox>
+            <HBox fx:id="hboxC" alignment="CENTER" prefHeight="30.0" prefWidth="242.0" spacing="10.0" visible="false">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="118.0" text="Connecting to server..." textFill="WHITE" />
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-loading2.gif" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="buttonSC" mnemonicParsing="false" onAction="#selectSC" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/icon-stop-red2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <padding>
-            <Insets left="150.0" right="150.0" />
+            <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
       <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
