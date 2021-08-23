@@ -30,6 +30,8 @@ public class ControllerMenu {
 	@FXML private VBox vboxB;	// vbox Back
 	@FXML private VBox vboxSP;	// vbox Single-Player
 	@FXML private VBox vboxMP;	// vbox Multi-Player
+	@FXML private VBox vboxSR;	// vbox Server Room
+	@FXML private VBox vboxCR;	// vbox Client Room
 	@FXML private VBox vboxS;	// vbox Settings
 	@FXML private VBox vboxC;	// vbox Credits
 	
