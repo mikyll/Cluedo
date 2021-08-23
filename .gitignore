@@ -1,2 +1,5 @@
 # ignores the .pptx files
 *.pptx
+
+Deploy/*
+*.bat
