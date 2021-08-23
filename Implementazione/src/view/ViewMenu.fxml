@@ -116,16 +116,20 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="290.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="442.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;">
          <children>
-            <ImageView fitHeight="264.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/images/coming-soon.png" />
-               </image>
-            </ImageView>
+            <Separator prefHeight="20.0" prefWidth="200.0" visible="false" />
+            <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="26.0" prefWidth="140.0" text="Create new room" />
+            <Separator prefHeight="15.0" prefWidth="442.0" visible="false" />
+            <TextField fx:id="textFieldIP" onKeyTyped="#validateIP" promptText="Remote IP address" text="Host IP address" />
+            <Button fx:id="buttonJER" disable="true" mnemonicParsing="false" onAction="#selectJER" prefHeight="26.0" prefWidth="140.0" text="Join existing room" />
+            <Label fx:id="labelErrorIP" prefHeight="20.0" prefWidth="95.0" text="Invalid IP address." textFill="RED" visible="false" />
          </children>
+         <padding>
+            <Insets left="150.0" right="150.0" />
+         </padding>
       </VBox>
-      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">

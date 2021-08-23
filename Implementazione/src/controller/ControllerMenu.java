@@ -1,16 +1,21 @@
 package controller;
 
+import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class ControllerMenu {
+	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
 	@FXML private Text textMM;	// text Main Menu
 	@FXML private Text textSP;	// text Single-Player
@@ -42,6 +47,12 @@ public class ControllerMenu {
 	@FXML private Spinner<Integer> spinnerON;	// spinner Opponents Number
 	@FXML private ComboBox<String> comboboxDL;	// combobox Difficulty Level
 	@FXML private Button buttonSG;				// button Start Game
+	
+	// vbox Multi-Player cotrols:
+	@FXML private Button buttonCNR;	// button Create New Room
+	@FXML private TextField textFieldIP; // textField IP
+	@FXML private Button buttonJER;	// button Join Existing Room
+	@FXML private Label labelErrorIP; // label Error IP
 	
 	// vbox Settings controls:
 	@FXML private CheckBox checkboxM;			// checkbox Music
@@ -97,9 +108,52 @@ public class ControllerMenu {
 		
 		this.vboxMP.setVisible(true);
 		this.textMP.setVisible(true);
-		this.vboxB.setVisible(true);
+		this.vboxB.setVisible(true);	
 		
+		this.textFieldIP.setText("");
+		this.buttonJER.setDisable(true);
+		this.labelErrorIP.setVisible(false);
 	}
+	@FXML public void selectCNR(ActionEvent event)
+	{
+		System.out.println("User selected Create New Room");
+	}
+	/*
+	@FXML public void enableJER()
+	{
+		this.buttonJER.setDisable(false);
+	}
+	@FXML public void selectJER(ActionEvent event)
+	{
+		if(IP_PATTERN.matcher(this.textFieldIP.getText()).matches())
+		{
+			this.buttonJER.setDisable(false);
+			this.labelErrorIP.setVisible(false);
+		}
+		else {
+			this.buttonJER.setDisable(true);
+			this.labelErrorIP.setVisible(true);
+		}
+		System.out.println("User selected Join Existing Room");
+	}
+	 */
+	@FXML public void validateIP()
+	{
+		if(!IP_PATTERN.matcher(this.textFieldIP.getText()).matches())
+		{
+			this.buttonJER.setDisable(true);
+			this.labelErrorIP.setVisible(true);
+		}
+		else {
+			this.buttonJER.setDisable(false);
+			this.labelErrorIP.setVisible(false);
+		}
+	}
+	@FXML public void selectJER(ActionEvent event)
+	{
+		System.out.println("User selected Join Existing Room");
+	}
+	
 	@FXML public void selectRH(ActionEvent event) 
 	{
 		System.out.println("User selected Rules & Help");

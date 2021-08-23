@@ -7,6 +7,7 @@ import java.net.Socket;
 
 public class Client {
 	
+	private Socket socket;
 	private ClientSideConnection csc;
 	
 	private int playerID;
@@ -16,8 +17,15 @@ public class Client {
 		
 	}
 	
-	public void connectToServer() {
-		this.csc = new ClientSideConnection();
+	public void connectToServer(String ip_address, int port)
+	{
+		try
+		{
+			this.socket = new Socket(ip_address, port);
+		}
+		catch(IOException e) {
+			System.out.println("Connection to server " + ip_address + " reefused");
+		}
 		
 	}
 	
@@ -40,9 +48,5 @@ public class Client {
 				System.out.println("IOException from ClientSideConnection constructor");
 			}
 		}
-	}
-	public static void main(String[] args) {
-		Client c = new Client();
-		c.connectToServer();
 	}
 }
