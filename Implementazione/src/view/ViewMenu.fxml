@@ -20,38 +20,38 @@
 
 <AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
    <children>
-      <Text fx:id="textMM" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+      <Text fx:id="textMM" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="340.00000953674316">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Text fx:id="textGS" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giocatore Singolo" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+      <Text fx:id="textSP" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Single-Player" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Text fx:id="textMG" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Multigiocatore" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+      <Text fx:id="textMP" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Multi-Player" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Text fx:id="textIm" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impostazioni" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+      <Text fx:id="textS" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Text fx:id="textC" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crediti" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+      <Text fx:id="textC" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credits" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
+      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
          <children>
-            <Button fx:id="buttonGS" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectGS" prefHeight="50.0" prefWidth="340.0" text="Giocatore Singolo" />
+            <Button fx:id="buttonSP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSP" prefHeight="50.0" prefWidth="340.0" text="Single-Player" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <Button fx:id="buttonMG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMG" prefHeight="50.0" prefWidth="340.0" text="Multigiocatore" />
+            <Button fx:id="buttonMP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMP" prefHeight="50.0" prefWidth="340.0" text="Multi-Player" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <Button fx:id="buttonRA" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRA" prefHeight="50.0" prefWidth="340.0" text="Regole e Aiuto" />
+            <Button fx:id="buttonRH" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRH" prefHeight="50.0" prefWidth="340.0" text="Rules &amp; Help" />
          </children>
       </VBox>
       <VBox fx:id="vboxIC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
@@ -176,7 +176,7 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="300.0" prefWidth="380.0">
                <children>

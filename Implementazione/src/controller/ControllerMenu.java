@@ -13,10 +13,10 @@ import javafx.scene.text.Text;
 public class ControllerMenu {
 	
 	@FXML private Text textMM;	// text Main Menu
-	@FXML private Text textGS;	// text Giocatore Singolo
-	@FXML private Text textMG;	// text MultiGiocatore
-	@FXML private Text textIm;	// text Impostazioni
-	@FXML private Text textC;	// text Crediti
+	@FXML private Text textSP;	// text Single-Player
+	@FXML private Text textMP;	// text Multi-Player
+	@FXML private Text textS;	// text Settings
+	@FXML private Text textC;	// text Credits
 	
 	@FXML private VBox vboxMM;	// vbox Main Menu
 	@FXML private VBox vboxIC;	// vbox Impostazioni/Crediti
@@ -27,9 +27,9 @@ public class ControllerMenu {
 	@FXML private VBox vboxC;	// vbox Crediti
 	
 	// vbox Main Menu controls:
-	@FXML private Button buttonGS;	// button Giocatore Singolo
-	@FXML private Button buttonMG;	// button MultiGiocatore
-	@FXML private Button buttonRA;	// button Regole e Aiuto
+	@FXML private Button buttonSP;	// button Single-Player
+	@FXML private Button buttonMP;	// button Multi-Player
+	@FXML private Button buttonRH;	// button Rules & Help
 	
 	// vbox Bottom-right controls:
 	@FXML private Button buttonIm;	// button Impostazioni
@@ -65,16 +65,16 @@ public class ControllerMenu {
 		
 		this.vboxIn.setVisible(false);
 		this.vboxGS.setVisible(false);
-		this.textGS.setVisible(false);
+		this.textSP.setVisible(false);
 		this.vboxMG.setVisible(false);
-		this.textMG.setVisible(false);
+		this.textMP.setVisible(false);
 		this.vboxIm.setVisible(false);
-		this.textIm.setVisible(false);
+		this.textS.setVisible(false);
 		this.vboxC.setVisible(false);
 		this.textC.setVisible(false);
 	}
 	
-	@FXML public void selectGS(ActionEvent event) 
+	@FXML public void selectSP(ActionEvent event) 
 	{
 		System.out.println("Selezione Giocatore Singolo");
 		
@@ -84,10 +84,10 @@ public class ControllerMenu {
 				
 		this.vboxGS.setVisible(true);
 		this.vboxIn.setVisible(true);
-		this.textGS.setVisible(true);
+		this.textSP.setVisible(true);
 		
 	}
-	@FXML public void selectMG(ActionEvent event) 
+	@FXML public void selectMP(ActionEvent event) 
 	{
 		System.out.println("Selezione Multigiocatore");
 		
@@ -96,11 +96,11 @@ public class ControllerMenu {
 		this.textMM.setVisible(false);
 		
 		this.vboxMG.setVisible(true);
-		this.textMG.setVisible(true);
+		this.textMP.setVisible(true);
 		this.vboxIn.setVisible(true);
 		
 	}
-	@FXML public void selectRA(ActionEvent event) 
+	@FXML public void selectRH(ActionEvent event) 
 	{
 		System.out.println("Selezione Regole e Aiuto");
 		
@@ -120,7 +120,7 @@ public class ControllerMenu {
 		this.textMM.setVisible(false);
 		
 		this.vboxIm.setVisible(true);
-		this.textIm.setVisible(true);
+		this.textS.setVisible(true);
 		this.vboxIn.setVisible(true);
 	}
 	@FXML public void selectC(ActionEvent event) 
@@ -150,9 +150,9 @@ public class ControllerMenu {
 		this.vboxMG.setVisible(false);
 		this.vboxC.setVisible(false);
 		this.vboxIm.setVisible(false);
-		this.textGS.setVisible(false);
-		this.textMG.setVisible(false);
-		this.textIm.setVisible(false);
+		this.textSP.setVisible(false);
+		this.textMP.setVisible(false);
+		this.textS.setVisible(false);
 		this.textC.setVisible(false);
 		
 		this.vboxMM.setVisible(true);
@@ -170,7 +170,7 @@ public class ControllerMenu {
 		System.out.println("Selezione Salva ed Esci");
 		
 		this.vboxIm.setVisible(false);
-		this.textIm.setVisible(false);
+		this.textS.setVisible(false);
 		
 		this.vboxMM.setVisible(true);
 		this.vboxIC.setVisible(true);
