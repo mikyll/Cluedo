@@ -97,7 +97,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Spinner fx:id="spinnerON" prefHeight="34.0" prefWidth="70.0" />
+                  <Spinner fx:id="spinnerON" prefHeight="30.0" prefWidth="70.0" />
                </children>
             </HBox>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
@@ -108,15 +108,15 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboboxDL" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="120.0" promptText="EASY" />
+                  <ComboBox fx:id="comboboxDL" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="120.0" promptText="EASY" />
                </children>
             </HBox>
             <Separator prefHeight="75.0" prefWidth="351.0" visible="false" />
-            <Button fx:id="buttonSG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSG" prefHeight="40.0" prefWidth="150.0" text="Start Game" />
+            <Button fx:id="buttonSG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSG" prefHeight="30.0" prefWidth="150.0" text="Start Game" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
             <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="30.0" prefWidth="140.0" text="Create new room" />
@@ -191,14 +191,14 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="checkboxL" prefHeight="31.0" prefWidth="180.0" promptText="ENGLISH" />
+                  <ComboBox fx:id="checkboxL" prefHeight="30.0" prefWidth="180.0" promptText="ENGLISH" />
                   <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
                </children>
             </HBox>
             <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
                <children>
-                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" text="Restore default" />
+                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" prefHeight="30.0" prefWidth="110.0" text="Restore default" />
                </children>
             </HBox>
             <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
