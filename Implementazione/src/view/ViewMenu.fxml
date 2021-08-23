@@ -45,7 +45,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
+      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
          <children>
             <Button fx:id="buttonSP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSP" prefHeight="50.0" prefWidth="340.0" text="Single-Player" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
@@ -54,9 +54,9 @@
             <Button fx:id="buttonRH" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRH" prefHeight="50.0" prefWidth="340.0" text="Rules &amp; Help" />
          </children>
       </VBox>
-      <VBox fx:id="vboxIC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
+      <VBox fx:id="vboxSC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
          <children>
-            <Button fx:id="buttonIm" mnemonicParsing="false" onAction="#selectIm" prefHeight="35.0" prefWidth="35.0">
+            <Button fx:id="buttonS" mnemonicParsing="false" onAction="#selectS" prefHeight="35.0" prefWidth="35.0">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,9 +74,9 @@
                </graphic></Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxIn" alignment="CENTER" layoutX="200.0" layoutY="480.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxB" alignment="CENTER" layoutX="200.0" layoutY="480.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
          <children>
-            <Button fx:id="buttonIn" mnemonicParsing="false" onAction="#selectIn" prefHeight="35.0" prefWidth="35.0">
+            <Button fx:id="buttonB" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -87,36 +87,36 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxGS" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSP" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
                <children>
-                  <Label prefHeight="60.0" prefWidth="217.0" text="Numero avversari:" textFill="WHITE">
+                  <Label prefHeight="46.0" prefWidth="230.0" text="Opponents Number:" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Spinner fx:id="spinnerNA" prefHeight="34.0" prefWidth="70.0" />
+                  <Spinner fx:id="spinnerON" prefHeight="34.0" prefWidth="70.0" />
                </children>
             </HBox>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
                <children>
-                  <Label prefHeight="46.0" prefWidth="169.0" text="Difficoltà avversari:" textFill="WHITE">
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Difficulty level:" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboboxDA" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="120.0" promptText="DIFFICILE" />
+                  <ComboBox fx:id="comboboxDL" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="120.0" promptText="EASY" />
                </children>
             </HBox>
             <Separator prefHeight="75.0" prefWidth="351.0" visible="false" />
-            <Button fx:id="buttonAP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectAP" prefHeight="40.0" prefWidth="150.0" text="Avvia Partita" />
+            <Button fx:id="buttonSG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSG" prefHeight="40.0" prefWidth="150.0" text="Start Game" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxMG" alignment="CENTER" layoutX="290.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="442.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="290.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="442.0" style="-fx-background-color: black;" visible="false">
          <children>
             <ImageView fitHeight="264.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -125,12 +125,12 @@
             </ImageView>
          </children>
       </VBox>
-      <VBox fx:id="vboxIm" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;">
          <children>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
                <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Volume musica:" textFill="WHITE">
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Music volume:" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -143,7 +143,7 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
                <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Effetti audio:" textFill="WHITE">
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Audio volume:" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -156,23 +156,23 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
                <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Lingua:" textFill="WHITE">
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Language:" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="checkboxL" prefHeight="31.0" prefWidth="180.0" promptText="ITALIANO" />
+                  <ComboBox fx:id="checkboxL" prefHeight="31.0" prefWidth="180.0" promptText="ENGLISH" />
                   <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
                </children>
             </HBox>
             <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
                <children>
-                  <Button fx:id="buttonR" mnemonicParsing="false" onAction="#restoreImp" text="Ripristina" />
+                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" text="Restore default" />
                </children>
             </HBox>
             <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
-            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Salva ed Esci" />
+            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Save and Exit" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>

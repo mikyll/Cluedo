@@ -19,12 +19,12 @@ public class ControllerMenu {
 	@FXML private Text textC;	// text Credits
 	
 	@FXML private VBox vboxMM;	// vbox Main Menu
-	@FXML private VBox vboxIC;	// vbox Impostazioni/Crediti
-	@FXML private VBox vboxGS;	// vbox Giocatore Singolo
-	@FXML private VBox vboxIn;	// vbox Indietro
-	@FXML private VBox vboxMG;	// vbox MultiGiocatore
-	@FXML private VBox vboxIm;	// vbox Impostazioni
-	@FXML private VBox vboxC;	// vbox Crediti
+	@FXML private VBox vboxSC;	// vbox Settings/Credits
+	@FXML private VBox vboxB;	// vbox Back
+	@FXML private VBox vboxSP;	// vbox Single-Player
+	@FXML private VBox vboxMP;	// vbox Multi-Player
+	@FXML private VBox vboxS;	// vbox Settings
+	@FXML private VBox vboxC;	// vbox Credits
 	
 	// vbox Main Menu controls:
 	@FXML private Button buttonSP;	// button Single-Player
@@ -32,25 +32,25 @@ public class ControllerMenu {
 	@FXML private Button buttonRH;	// button Rules & Help
 	
 	// vbox Bottom-right controls:
-	@FXML private Button buttonIm;	// button Impostazioni
-	@FXML private Button buttonC;	// button Crediti
+	@FXML private Button buttonS;	// button Settings
+	@FXML private Button buttonC;	// button Credits
 	
 	// vbox Bottom-left controls:
-	@FXML private Button buttonIn;	// button indietro
+	@FXML private Button buttonB;	// button Back
 	
 	// vbox Giocatore Singolo controls:
-	@FXML private Spinner<Integer> spinnerNA;	// spinner Numero Avversari
-	@FXML private ComboBox<String> comboboxDA;	// combobox Difficoltà Avversari
-	@FXML private Button buttonAP;				// button Avvia Partita
+	@FXML private Spinner<Integer> spinnerON;	// spinner Opponents Number
+	@FXML private ComboBox<String> comboboxDL;	// combobox Difficulty Level
+	@FXML private Button buttonSG;				// button Start Game
 	
 	// vbox Impostazioni controls:
-	@FXML private CheckBox checkboxM;			// checkbox Musica
-	@FXML private Slider sliderMV;				// slider Musica Volume
+	@FXML private CheckBox checkboxM;			// checkbox Music
+	@FXML private Slider sliderMV;				// slider Music Volume
 	@FXML private CheckBox checkboxA;			// checkbox Audio
 	@FXML private Slider sliderAV;				// slider Audio Volume
-	@FXML private ComboBox<String> comboboxL; 	// combobox Lingua
-	@FXML private Button buttonR;				// button Ripristina
-	@FXML private Button buttonSE;						// button Salva ed Esci
+	@FXML private ComboBox<String> comboboxL; 	// combobox Language
+	@FXML private Button buttonRD;				// button Restore Defaults
+	@FXML private Button buttonSE;				// button Save and Exit
 	
 	public ControllerMenu() {}
 	
@@ -60,15 +60,15 @@ public class ControllerMenu {
 		
 		// setup panels and text labels visibility
 		this.vboxMM.setVisible(true);
-		this.vboxIC.setVisible(true);
+		this.vboxSC.setVisible(true);
 		this.textMM.setVisible(true);
 		
-		this.vboxIn.setVisible(false);
-		this.vboxGS.setVisible(false);
+		this.vboxB.setVisible(false);
+		this.vboxSP.setVisible(false);
 		this.textSP.setVisible(false);
-		this.vboxMG.setVisible(false);
+		this.vboxMP.setVisible(false);
 		this.textMP.setVisible(false);
-		this.vboxIm.setVisible(false);
+		this.vboxS.setVisible(false);
 		this.textS.setVisible(false);
 		this.vboxC.setVisible(false);
 		this.textC.setVisible(false);
@@ -76,104 +76,104 @@ public class ControllerMenu {
 	
 	@FXML public void selectSP(ActionEvent event) 
 	{
-		System.out.println("Selezione Giocatore Singolo");
+		System.out.println("User selected Single-Player");
 		
 		this.vboxMM.setVisible(false);
-		this.vboxIC.setVisible(false);
+		this.vboxSC.setVisible(false);
 		this.textMM.setVisible(false);
 				
-		this.vboxGS.setVisible(true);
-		this.vboxIn.setVisible(true);
+		this.vboxSP.setVisible(true);
+		this.vboxB.setVisible(true);
 		this.textSP.setVisible(true);
 		
 	}
 	@FXML public void selectMP(ActionEvent event) 
 	{
-		System.out.println("Selezione Multigiocatore");
+		System.out.println("User selected Multi-Player");
 		
 		this.vboxMM.setVisible(false);
-		this.vboxIC.setVisible(false);
+		this.vboxSC.setVisible(false);
 		this.textMM.setVisible(false);
 		
-		this.vboxMG.setVisible(true);
+		this.vboxMP.setVisible(true);
 		this.textMP.setVisible(true);
-		this.vboxIn.setVisible(true);
+		this.vboxB.setVisible(true);
 		
 	}
 	@FXML public void selectRH(ActionEvent event) 
 	{
-		System.out.println("Selezione Regole e Aiuto");
+		System.out.println("User selected Rules & Help");
 		
 		this.vboxMM.setVisible(false);
-		this.vboxIC.setVisible(false);
+		this.vboxSC.setVisible(false);
 		this.textMM.setVisible(false);
 		
-		this.vboxIn.setVisible(true);
+		this.vboxB.setVisible(true);
 	}
 	
-	@FXML public void selectIm(ActionEvent event) 
+	@FXML public void selectS(ActionEvent event) 
 	{
-		System.out.println("Selezione Impostazioni");
+		System.out.println("User selected Settings");
 		
 		this.vboxMM.setVisible(false);
-		this.vboxIC.setVisible(false);
+		this.vboxSC.setVisible(false);
 		this.textMM.setVisible(false);
 		
-		this.vboxIm.setVisible(true);
+		this.vboxS.setVisible(true);
 		this.textS.setVisible(true);
-		this.vboxIn.setVisible(true);
+		this.vboxB.setVisible(true);
 	}
 	@FXML public void selectC(ActionEvent event) 
 	{
-		System.out.println("Selezione Crediti");
+		System.out.println("User selected Credits");
 		
 		this.vboxMM.setVisible(false);
-		this.vboxIC.setVisible(false);
+		this.vboxSC.setVisible(false);
 		this.textMM.setVisible(false);
 		
 		this.vboxC.setVisible(true);
 		this.textC.setVisible(true);
-		this.vboxIn.setVisible(true);
+		this.vboxB.setVisible(true);
 	}
 	
-	@FXML public void selectAP(ActionEvent event) 
+	@FXML public void selectSG(ActionEvent event) 
 	{
-		System.out.println("Selezione Avvia Partita");
+		System.out.println("User selected Start Game");
 	}
 	
-	@FXML public void selectIn(ActionEvent event) 
+	@FXML public void selectB(ActionEvent event) 
 	{
-		System.out.println("Selezione Indietro");
+		System.out.println("User selected Back");
 		
-		this.vboxGS.setVisible(false);
-		this.vboxIn.setVisible(false);
-		this.vboxMG.setVisible(false);
+		this.vboxSP.setVisible(false);
+		this.vboxB.setVisible(false);
+		this.vboxMP.setVisible(false);
 		this.vboxC.setVisible(false);
-		this.vboxIm.setVisible(false);
+		this.vboxS.setVisible(false);
 		this.textSP.setVisible(false);
 		this.textMP.setVisible(false);
 		this.textS.setVisible(false);
 		this.textC.setVisible(false);
 		
 		this.vboxMM.setVisible(true);
-		this.vboxIC.setVisible(true);
+		this.vboxSC.setVisible(true);
 		this.textMM.setVisible(true);
 		
 	}
 	
 	@FXML public void restoreImp(ActionEvent event) 
 	{
-		System.out.println("Impostazioni ripristinate.");
+		System.out.println("Settings restored.");
 	}
 	@FXML public void selectSE(ActionEvent event) 
 	{
-		System.out.println("Selezione Salva ed Esci");
+		System.out.println("User selected Save and Exit");
 		
-		this.vboxIm.setVisible(false);
+		this.vboxS.setVisible(false);
 		this.textS.setVisible(false);
 		
 		this.vboxMM.setVisible(true);
-		this.vboxIC.setVisible(true);
+		this.vboxSC.setVisible(true);
 		this.textMM.setVisible(true);
 		
 	}
