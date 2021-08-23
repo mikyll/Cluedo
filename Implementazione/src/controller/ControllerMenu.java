@@ -38,12 +38,12 @@ public class ControllerMenu {
 	// vbox Bottom-left controls:
 	@FXML private Button buttonB;	// button Back
 	
-	// vbox Giocatore Singolo controls:
+	// vbox Single-Player controls:
 	@FXML private Spinner<Integer> spinnerON;	// spinner Opponents Number
 	@FXML private ComboBox<String> comboboxDL;	// combobox Difficulty Level
 	@FXML private Button buttonSG;				// button Start Game
 	
-	// vbox Impostazioni controls:
+	// vbox Settings controls:
 	@FXML private CheckBox checkboxM;			// checkbox Music
 	@FXML private Slider sliderMV;				// slider Music Volume
 	@FXML private CheckBox checkboxA;			// checkbox Audio
