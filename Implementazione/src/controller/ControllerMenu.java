@@ -247,7 +247,7 @@ public class ControllerMenu {
 		
 		// to-do
 		try {
-			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/gui/ViewQuiz.fxml"));
+			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
 			Stage stage = (Stage) this.vboxMM.getScene().getWindow();
 			loader.setController(new ControllerGame());
 			AnchorPane quiz = (AnchorPane) loader.load();

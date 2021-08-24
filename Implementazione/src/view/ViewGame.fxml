@@ -46,7 +46,7 @@
                   <Separator orientation="VERTICAL" prefHeight="650.0" prefWidth="5.0" visible="false" />
                   <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="275.0">
                      <children>
-                        <Label prefHeight="50.0" prefWidth="275.0" text="Lista giocatori:" textFill="WHITE">
+                        <Label prefHeight="50.0" prefWidth="275.0" text="Players list:" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
