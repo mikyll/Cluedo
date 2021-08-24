@@ -1,15 +1,33 @@
 package networking;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private MessageType msgType;
+	private String nickname;
 	private String content;
 	
-	public Message(String type, String content)
+	public Message(String type, String nickname, String content)
 	{
-		
+		this.msgType = MessageType.valueOf(type);
+		this.nickname = nickname;
+		this.content = content;
 	}
-	public Message(MessageType msgType, Stringcontent)
+	public Message(MessageType type, String nickname, String content)
 	{
-		
+		this.msgType = type;
+		this.nickname = nickname;
+		this.content = content;
 	}
+	
+	public MessageType getMsgType() {return msgType;}
+	public void setMsgType(MessageType msgType) {this.msgType = msgType;}
+	public String getNickname() {return nickname;}
+	public void setNickname(String nickname) {this.nickname = nickname;}
+	public String getContent() {return content;}
+	public void setContent(String content) {this.content = content;}
+	
+	
 }

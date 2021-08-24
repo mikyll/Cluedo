@@ -1,5 +1,5 @@
 package networking;
 
 public enum MessageType {
-	CONNECTION, DISCONNECTION, CHAT
+	CONNECTION, OK, DISCONNECTION, CHAT
 }
