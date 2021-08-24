@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1536.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="vboxBase" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1536.0">
+         <children>
+            <MenuBar prefHeight="44.0" prefWidth="1536.0" style="-fx-background-color: #282828;">
+               <menus>
+                  <Menu mnemonicParsing="false">
+                     <items>
+                        <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#terminaPartita" text="Quit" />
+                        <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#close" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Regole" />
+                        <MenuItem fx:id="menuItemFullScreen" mnemonicParsing="false" onAction="#toggleFullScreen" text="FullScreen" />
+                     </items>
+                     <graphic>
+                        <ImageView fitHeight="34.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/icon-menu.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <HBox fx:id="hboxCentrale" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1536.0">
+               <children>
+                  <Separator orientation="VERTICAL" prefHeight="650.0" prefWidth="5.0" visible="false" />
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="275.0">
+                     <children>
+                        <Label prefHeight="50.0" prefWidth="275.0" text="Lista giocatori:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="200.0" prefWidth="275.0">
+                           <children>
+                              <ListView id="listViewColori" fx:id="listViewColori" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="50.0" />
+                              <ListView id="listViewGiocatori" fx:id="listViewGiocatori" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="225.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefHeight="25.0" prefWidth="200.0" visible="false" />
+                        <Label prefHeight="50.0" prefWidth="151.0" text="CarteIndizio iniziali" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox disable="true" prefHeight="30.0" prefWidth="200.0" promptText="carte iniziali" />
+                     </children>
+                  </VBox>
+                  <Pane fx:id="paneMappa" prefHeight="650.0" prefWidth="675.0">
+                     <children>
+                        <ImageView fx:id="imageViewMappa" fitHeight="650.0" fitWidth="650.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/images/map-cluedoNumbers.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaBlu" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-blu25x25.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaVerde" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-verde25x25.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaBianca" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-bianco25x25.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaRossa" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-rossa25x25.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaGialla" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-gialla25x25.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imageViewPedinaViola" fitHeight="20.0" fitWidth="20.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" y="125.0">
+                           <image>
+                              <Image url="@../resources/pawns/pedina-viola25x25.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <VBox fx:id="vboxFase" prefHeight="650.0" prefWidth="605.0">
+                     <children>
+                        <AnchorPane prefHeight="32.0" prefWidth="424.0">
+                           <children>
+                              <HBox fx:id="hboxMovimento" prefHeight="24.0" prefWidth="275.0" spacing="1.0">
+                                 <children>
+                                    <TextField fx:id="posizione" editable="false" onAction="#textChanged" />
+                                    <Button fx:id="sposta" mnemonicParsing="false" onAction="#spostaPedinaBlu" prefHeight="26.0" prefWidth="52.0" text="Sposta" visible="false">
+                                       <HBox.margin>
+                                          <Insets left="70.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children></VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="130.0" prefWidth="1536.0">
+               <children>
+                  <HBox prefHeight="117.0" prefWidth="548.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="117.0" prefWidth="310.0">
+                           <children>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Username:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="username_giocatore" fx:id="textFieldUsername" editable="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="username">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Personaggio:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="personaggio_giocatore" fx:id="textFieldPersonaggio" editable="false" prefHeight="39.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="-">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="309.0">
+                                 <children>
+                                    <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0" visible="false" />
+                                    <Label prefHeight="46.0" prefWidth="134.0" text="Turno:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="turno_giocatore" fx:id="textFieldNumeroTurno" editable="false" prefHeight="39.0" prefWidth="180.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="-">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="228.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="39.0" prefWidth="207.0">
+                                 <children>
+                                    <Label prefHeight="39.0" prefWidth="66.0" text="Colore:" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField id="nome_colore_giocatore" fx:id="textFieldColore" editable="false" prefHeight="39.0" prefWidth="105.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="-">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <ImageView id="colore_giocatore" fx:id="imageViewColore" fitHeight="32.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/images/colors/colore-rosso.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <ImageView fitHeight="115.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/characters/pg0%20-%20Kassandra%20Scarlet%20(ROSSO).png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="117.0" prefWidth="838.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="870.0">
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button fx:id="buttonMovimento" disable="true" mnemonicParsing="false" onAction="#selezionaMovimento" prefHeight="40.0" prefWidth="170.0" text="Movimento" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button fx:id="buttonIndagine" disable="true" mnemonicParsing="false" onAction="#selezionaIndagine" prefHeight="40.0" prefWidth="170.0" text="Indagine" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button fx:id="buttonAccusa" disable="true" mnemonicParsing="false" onAction="#selezionaAccusa" prefHeight="40.0" prefWidth="170.0" text="Accusa" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                              <Button fx:id="buttonFineTurno" disable="true" mnemonicParsing="false" onAction="#selezionaFineTurno" prefHeight="40.0" prefWidth="170.0" text="Fine Turno" />
+                              <Separator orientation="VERTICAL" prefHeight="112.0" prefWidth="20.0" visible="false" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="870.0">
+                           <children>
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                              <Button fx:id="buttonApriTaccuino" disable="true" mnemonicParsing="false" onAction="#selezionaTaccuino" prefHeight="40.0" prefWidth="360.0" text="Apri Taccuino" />
+                              <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="20.0" visible="false" />
+                              <Button fx:id="buttonApriBloccoNote" disable="true" mnemonicParsing="false" onAction="#selezionaBloccoNote" prefHeight="40.0" prefWidth="360.0" text="Apri Blocco Note" />
+                              <Separator orientation="VERTICAL" prefHeight="59.0" prefWidth="30.0" visible="false" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

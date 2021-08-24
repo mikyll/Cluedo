@@ -1,9 +1,12 @@
 package controller;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -12,9 +15,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class ControllerMenu {
 	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
@@ -239,6 +244,23 @@ public class ControllerMenu {
 	@FXML public void selectSG(ActionEvent event) 
 	{
 		System.out.println("User selected Start Game");
+		
+		// to-do
+		try {
+			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/gui/ViewQuiz.fxml"));
+			Stage stage = (Stage) this.vboxMM.getScene().getWindow();
+			loader.setController(new ControllerGame());
+			AnchorPane quiz = (AnchorPane) loader.load();
+		
+			Scene scene = new Scene(quiz);
+			scene.getStylesheets().add(ControllerMenu.class.getResource("/application/application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERRORE: " + e.getMessage());
+			System.exit(1);
+		}
 	}
 	
 	@FXML public void selectB(ActionEvent event) 
