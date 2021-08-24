@@ -155,7 +155,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -286,7 +286,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -366,7 +366,7 @@
                            </children>
                         </VBox>
                         <Separator prefHeight="90.0" prefWidth="295.0" visible="false" />
-                        <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: red;" text="Not Ready">
+                        <Button fx:id="buttonReady" contentDisplay="CENTER" mnemonicParsing="false" onAction="#toggleReady" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: red;" text="Not Ready">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

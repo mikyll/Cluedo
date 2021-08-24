@@ -82,6 +82,7 @@ public class ControllerMenu {
 	@FXML private TextField textFieldChatC;		// textField Chat Client
 	@FXML private Button buttonSendMessageC;	// button Send Message Client
 	
+	@FXML private Button buttonReady;		// button Ready
 	
 	private boolean isServer;
 	
@@ -207,6 +208,21 @@ public class ControllerMenu {
 	{
 		
 	}
+	
+	@FXML public void toggleReady(ActionEvent event)
+	{
+		if(this.buttonReady.getText().equals("Ready"))
+		{
+			this.buttonReady.setText("Not Ready");
+			this.buttonReady.setStyle("-fx-background-color: red");
+		}
+		else
+		{
+			this.buttonReady.setText("Ready");
+			this.buttonReady.setStyle("-fx-background-color: lime");
+		}
+	}
+	
 	@FXML public void sendMessageC(ActionEvent event)
 	{
 		DatagramSocket cs = null;
