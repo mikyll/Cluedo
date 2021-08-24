@@ -155,7 +155,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -230,15 +230,15 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <TextArea fx:id="textAreaChat" editable="false" prefHeight="100.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
+                        <TextArea fx:id="textAreaChatS" editable="false" prefHeight="100.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
                            <font>
                               <Font size="8.0" />
                            </font>
                         </TextArea>
                         <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
                            <children>
-                              <TextField fx:id="textFieldChat" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
-                              <Button fx:id="buttonSendMessage" mnemonicParsing="false" onAction="#sendMessage" prefHeight="26.0" prefWidth="70.0" text="Send" />
+                              <TextField fx:id="textFieldChatS" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <Button fx:id="buttonSendMessageS" mnemonicParsing="false" onAction="#sendMessageS" prefHeight="26.0" prefWidth="70.0" text="Send" />
                            </children>
                         </HBox>
                      </children>
@@ -286,70 +286,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
-         <children>
-            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Music volume:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <CheckBox fx:id="checkboxM" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
-                  <Slider fx:id="sliderMV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
-                  <TextField fx:id="textFieldVolume" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
-               </children>
-            </HBox>
-            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Audio volume:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <CheckBox fx:id="checkboxA" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
-                  <Slider fx:id="sliderAV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
-                  <TextField fx:id="textFieldAudio" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
-               </children>
-            </HBox>
-            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="180.0" text="Language:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="checkboxL" prefHeight="30.0" prefWidth="180.0" promptText="ENGLISH" />
-                  <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
-               </children>
-            </HBox>
-            <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
-            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
-               <children>
-                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" prefHeight="30.0" prefWidth="110.0" text="Restore default" />
-               </children>
-            </HBox>
-            <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
-            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Save and Exit" />
-            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-         </children>
-      </VBox>
-      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
-         <children>
-            <HBox prefHeight="300.0" prefWidth="380.0">
-               <children>
-                  <TextArea id="textAreaCrediti" fx:id="textAreaCrediti" editable="false" prefHeight="300.0" prefWidth="360.0" wrapText="true" />
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -439,15 +376,15 @@
                   <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="295.0" spacing="5.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0" />
-                        <TextArea fx:id="textAreaChat1" editable="false" prefHeight="370.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
+                        <TextArea fx:id="textAreaChatC" editable="false" prefHeight="370.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
                            <font>
                               <Font size="8.0" />
                            </font>
                         </TextArea>
                         <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
                            <children>
-                              <TextField fx:id="textFieldChat1" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
-                              <Button fx:id="buttonSendMessage1" mnemonicParsing="false" onAction="#sendMessage" prefHeight="26.0" prefWidth="70.0" text="Send" />
+                              <TextField fx:id="textFieldChatC" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <Button fx:id="buttonSendMessageC" mnemonicParsing="false" onAction="#sendMessageC" prefHeight="26.0" prefWidth="70.0" text="Send" />
                            </children>
                         </HBox>
                      </children>
@@ -457,6 +394,69 @@
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Music volume:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxM" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderMV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldVolume" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Audio volume:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxA" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderAV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldAudio" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Language:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="checkboxL" prefHeight="30.0" prefWidth="180.0" promptText="ENGLISH" />
+                  <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
+               </children>
+            </HBox>
+            <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" prefHeight="30.0" prefWidth="110.0" text="Restore default" />
+               </children>
+            </HBox>
+            <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
+            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Save and Exit" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <HBox prefHeight="300.0" prefWidth="380.0">
+               <children>
+                  <TextArea id="textAreaCrediti" fx:id="textAreaCrediti" editable="false" prefHeight="300.0" prefWidth="360.0" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
    </children>

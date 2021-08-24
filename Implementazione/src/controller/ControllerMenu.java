@@ -1,6 +1,11 @@
 package controller;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
@@ -70,10 +75,14 @@ public class ControllerMenu {
 	// vbox Multi-Player create new room cotrols:
 	@FXML private Label labelIP;
 	/*TEST socket*/
-	@FXML private VBox vboxR;				// vbox Room
-	@FXML private TextArea textAreaChat;	// textArea Chat
-	@FXML private TextField textFieldChat;	// textField Chat
-	@FXML private Button buttonSendMessage;	// button Send Message
+	@FXML private TextArea textAreaChatS;		// textArea Chat Server
+	@FXML private TextField textFieldChatS;		// textField Chat Server
+	@FXML private Button buttonSendMessageS;	// button Send Message Server
+	@FXML private TextArea textAreaChatC;		// textArea Chat Client
+	@FXML private TextField textFieldChatC;		// textField Chat Client
+	@FXML private Button buttonSendMessageC;	// button Send Message Client
+	
+	
 	private boolean isServer;
 	
 	// vbox Settings controls:
@@ -194,13 +203,50 @@ public class ControllerMenu {
 		
 		// to-do: stop connection attempt
 	}
-	@FXML public void sendMessage(ActionEvent event)
+	@FXML public void sendMessageS(ActionEvent event)
 	{
+		
+	}
+	@FXML public void sendMessageC(ActionEvent event)
+	{
+		DatagramSocket cs = null;
+		try {
+			cs = new DatagramSocket(5334);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		
 		if(this.isServer)
 		{
 			// invio a tutti i client
 		}
 		else {
+			
+			synchronized (this)
+            {
+                byte[] sd = this.textFieldChatC.getText().getBytes();
+                
+                // create datagram packet
+                // for new message
+                DatagramPacket sp = null;
+				try {
+					sp = new DatagramPacket(sd, sd.length, InetAddress.getLocalHost(), 1234);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}
+
+                // send the new packet
+                try {
+					cs.send(sp);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+                String msg = new String(sd);
+                System.out.println("Client says: "
+                                   + msg);
+            }
+
 			// invio al server
 		}
 	}

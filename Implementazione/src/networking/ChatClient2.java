@@ -6,15 +6,8 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
   
-public class ChatClient {
-	
-	
-	
-	public void sendDisconnect()
-	{
-		String msg = ""
-	}
-	
+public class ChatClient2 {
+  
     public static void main(String args[])
         throws IOException, InterruptedException
     {
@@ -22,8 +15,8 @@ public class ChatClient {
         // create DatagramSocket and get ip
         DatagramSocket cs
             = new DatagramSocket(5334);
-        InetAddress /*ip = InetAddress.getLocalHost();*/
-        ip = InetAddress.getByName("192.168.1.3");
+        InetAddress ip
+            = InetAddress.getLocalHost();
   
         System.out.println("Running UnSyncChatClient.java");
   
