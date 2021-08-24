@@ -163,7 +163,6 @@ public class ControllerMenu {
 		this.labelIP.setText(""); // set IP
 		this.isServer = true;
 		
-		
 	}
 	@FXML public void validateIP()
 	{

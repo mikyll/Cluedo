@@ -18,8 +18,18 @@ public class ChatServer {
 	
 	public ChatServer(TextArea textArea)
 	{
-		this.ds = new DatagramSocket(8765);
-		InetAddress ip = InetAddress.getLocalHost();
+		try {
+			this.ds = new DatagramSocket(8765);
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InetAddress ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		this.connectedPlayers = new ArrayList<String>();
 		this.ipList = new ArrayList<String>();
@@ -70,7 +80,7 @@ public class ChatServer {
                             	
                             	if(!alreadyConnected && freePos != -1)
                             	{
-                            		connectedPlayers.set(freePos, msg)
+                            		connectedPlayers.set(freePos, msg);
                             		// gli invia il suo playerID
                             	}
                             		
@@ -99,24 +109,28 @@ public class ChatServer {
 	{
 		byte[] sd = msg.getBytes();
 		
-		DatagramPacket sp = new DatagramPacket(sd, sd.length, ip, 5334);
-
-            // send the new packet
-            ss.send(sp);
-
-            String msg = new String(sd);
-            System.out.println("Server says: "
-                               + msg);
-
-            // exit condition
-            if ((msg).equals("bye")) {
-                System.out.println("Server"
-                                   + " exiting... ");
-                break;
-            }
-            System.out.println("Waiting for"
-                               + " client response... ");
-        }
+		for(int i = 1; i < 6; i++)
+		{
+			InetAddress ip = null;
+			try {
+				ip = InetAddress.getByName(this.connectedPlayers.get(i));
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			DatagramPacket sp = new DatagramPacket(sd, sd.length, ip, 5334);
+			
+			// send the new packet
+			try {
+				ds.send(sp);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+            System.out.println("Server says: " + new String(sd));
+		}
 	}
 	
     public static void main(String args[])

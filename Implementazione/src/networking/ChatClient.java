@@ -9,12 +9,6 @@ import java.util.Scanner;
 public class ChatClient {
 	
 	
-	
-	public void sendDisconnect()
-	{
-		String msg = ""
-	}
-	
     public static void main(String args[])
         throws IOException, InterruptedException
     {
