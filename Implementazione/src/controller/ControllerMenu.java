@@ -65,12 +65,13 @@ public class ControllerMenu {
 	@FXML private Button buttonSG;				// button Start Game
 	
 	// vbox Multi-Player cotrols:
-	@FXML private Button buttonCNR;			// button Create New Room
-	@FXML private TextField textFieldIP;	// textField IP
-	@FXML private Button buttonJER;			// button Join Existing Room
-	@FXML private Label labelErrorIP;		// label Error IP
-	@FXML private HBox hboxC;				// hbox Connecting
-	@FXML private Button buttonSC;			// button Stop Connecting
+	@FXML private Button buttonCNR;				// button Create New Room
+	@FXML private TextField textFieldIP;		// textField IP
+	@FXML private Button buttonJER;				// button Join Existing Room
+	@FXML private Label labelErrorIP;			// label Error IP
+	@FXML private HBox hboxC;					// hbox Connecting
+	@FXML private Button buttonSC;				// button Stop Connecting
+	@FXML private TextField textFieldNickname;	// textField Nickname
 	
 	// vbox Multi-Player create new room cotrols:
 	@FXML private Label labelIP;
