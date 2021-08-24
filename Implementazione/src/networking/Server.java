@@ -18,12 +18,15 @@ public class Server {
 	private boolean acceptConnections; // ON/OFF
 	private ArrayList<Socket> connections;
 	
+	private DataInputStream diStream;
+	private DataOutputStream doStream;
+	
 	//private ServerSideConnection ssc;
 	
 	public Server()
 	{
 		this.acceptConnections = true;
-		this.connectedPlayers = 0;
+		this.connectedPlayers = 1;
 		this.connections = new ArrayList<Socket>();
 		
 		try {
@@ -42,15 +45,30 @@ public class Server {
 		try {
 			System.out.println("Waiting for connections...");
 			
-			while(this.acceptConnections)
+			// test
+			Socket s = this.serverSocket.accept();
+			System.out.println("Player #2 has connected");
+			
+			this.diStream = new DataInputStream(s.getInputStream());
+			this.doStream = new DataOutputStream(s.getOutputStream());
+			
+			this.doStream.writeInt(2);
+			while(true)
+			{
+				System.out.println(diStream.readUTF());
+			}
+			
+			/*while(this.acceptConnections)
 			{
 				Socket s = this.serverSocket.accept();
 				this.connections.add(s);
 				this.connectedPlayers++;
 				System.out.println("Player #" + this.connectedPlayers + "has connected (" + s.getInetAddress() + s.getLocalAddress() + s.getLocalSocketAddress() + ")");
-				break; // test
 				
-			}
+				this.diStream = new DataInputStream(s.getInputStream());
+				this.doStream = new DataOutputStream(s.getOutputStream());
+				
+			}*/
 		}catch(IOException e) {
 			System.out.println("IOException from acceptConnections()");
 		}

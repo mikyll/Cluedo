@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class Client implements Runnable {
 	
 	private Socket socket;
+	private int clientID;
 	private DataInputStream diStream;
 	private DataOutputStream doStream;
 	
@@ -28,8 +29,11 @@ public class Client implements Runnable {
 			this.socket = new Socket(ip_address, port);
 			System.out.println("Client socket created.");
 			
-			diStream = new DataInputStream(socket.getInputStream());
-			doStream = new DataOutputStream(socket.getOutputStream());
+			this.diStream = new DataInputStream(socket.getInputStream());
+			this.doStream = new DataOutputStream(socket.getOutputStream());
+			
+			this.clientID = this.diStream.readInt();
+			System.out.println("You're player #" + this.clientID);
 			
 		}
 		catch(IOException e) {
@@ -38,10 +42,10 @@ public class Client implements Runnable {
 		}
 		
 	}
-	public void sendMessage(int number)
+	public void sendMessage(String message)
 	{
 		try {
-			this.doStream.writeInt(number);
+			this.doStream.writeUTF(message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,15 +58,14 @@ public class Client implements Runnable {
 		try {
 			c.connectToServer(InetAddress.getByName("127.0.0.1"), 8765);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		while(true)
 		{
 			Scanner keyboard = new Scanner(System.in);
-			System.out.println("Int to send: ");
-			c.sendMessage(keyboard.nextInt());
+			System.out.println("Message to send: ");
+			c.sendMessage(keyboard.nextLine());
 		}
 	}
 
