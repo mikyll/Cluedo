@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
+   <children>
+      <Text fx:id="textMM" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textSP" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Single-Player" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textMP" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Multi-Player" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textS" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textC" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credits" textAlignment="CENTER" visible="false" wrappingWidth="340.00000953674316">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
+         <children>
+            <Button fx:id="buttonSP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSP" prefHeight="50.0" prefWidth="340.0" text="Single-Player" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <Button fx:id="buttonMP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMP" prefHeight="50.0" prefWidth="340.0" text="Multi-Player" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <Button fx:id="buttonRH" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRH" prefHeight="50.0" prefWidth="340.0" text="Rules &amp; Help" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxSC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
+         <children>
+            <Button fx:id="buttonS" mnemonicParsing="false" onAction="#selectS" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonC" mnemonicParsing="false" onAction="#selectC" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-info.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxB" alignment="CENTER" layoutX="200.0" layoutY="480.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
+         <children>
+            <Button fx:id="buttonB" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxSP" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="230.0" text="Opponents Number:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Spinner fx:id="spinnerON" prefHeight="30.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Difficulty level:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboboxDL" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="120.0" promptText="EASY" />
+               </children>
+            </HBox>
+            <Separator prefHeight="75.0" prefWidth="351.0" visible="false" />
+            <Button fx:id="buttonSG" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSG" prefHeight="30.0" prefWidth="150.0" text="Start Game" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
+            <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="30.0" prefWidth="140.0" text="Create new room" />
+            <Separator prefHeight="15.0" prefWidth="442.0" visible="false" />
+            <VBox alignment="CENTER" prefHeight="105.0" prefWidth="242.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="textFieldIP" onKeyTyped="#validateIP" prefHeight="30.0" prefWidth="242.0" promptText="Remote IP address" text="Host IP address" />
+                  <Button fx:id="buttonJER" disable="true" mnemonicParsing="false" onAction="#selectJER" prefHeight="30.0" prefWidth="140.0" text="Join existing room" />
+                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="95.0" text="Invalid IP address." textFill="RED" visible="false" />
+               </children>
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </VBox>
+            <HBox fx:id="hboxC" alignment="CENTER" prefHeight="30.0" prefWidth="242.0" spacing="10.0" visible="false">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="118.0" text="Connecting to server..." textFill="WHITE" />
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-loading2.gif" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="buttonSC" mnemonicParsing="false" onAction="#selectSC" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/icon-stop-red2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <HBox prefHeight="365.0" prefWidth="590.0">
+               <children>
+                  <VBox prefHeight="60.0" prefWidth="295.0" spacing="5.0">
+                     <children>
+                        <Label fx:id="labelIP" prefHeight="28.0" prefWidth="98.0" text="IP address: X.X.X.X" textFill="WHITE" />
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Connected Players List:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <VBox prefHeight="190.0" prefWidth="300.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="200.0" text="•1. Me" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="200.0" text="•2. Kary" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="200.0" text="•3. Smatt" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefWidth="200.0" text="•4. Lorenzo" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefWidth="200.0" text="•5. Franco" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefWidth="200.0" text="•6. Beppe" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <TextArea fx:id="textAreaChat" editable="false" prefHeight="100.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </TextArea>
+                        <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
+                           <children>
+                              <TextField fx:id="textFieldChat" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <Button fx:id="buttonSendMessage" mnemonicParsing="false" onAction="#sendMessage" prefHeight="26.0" prefWidth="70.0" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="295.0" spacing="5.0">
+                     <children>
+                        <Label prefHeight="28.0" prefWidth="98.0" textFill="WHITE" visible="false" />
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Match settings" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="200.0" text="Room privacy:" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox prefHeight="26.0" prefWidth="90.0" promptText="Open" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="140.0" text="Password:" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" />
+                              <TextField prefHeight="26.0" prefWidth="120.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefHeight="240.0" prefWidth="295.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Start Game" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Music volume:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxM" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderMV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldVolume" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Audio volume:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkboxA" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+                  <Slider fx:id="sliderAV" prefHeight="18.0" prefWidth="120.0" value="50.0" />
+                  <TextField fx:id="textFieldAudio" editable="false" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: black; -fx-text-inner-color: white;" text="50%" />
+               </children>
+            </HBox>
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="180.0" text="Language:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="checkboxL" prefHeight="30.0" prefWidth="180.0" promptText="ENGLISH" />
+                  <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="40.0" visible="false" />
+               </children>
+            </HBox>
+            <Separator prefHeight="50.0" prefWidth="340.0" visible="false" />
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
+               <children>
+                  <Button fx:id="buttonRD" mnemonicParsing="false" onAction="#restoreImp" prefHeight="30.0" prefWidth="110.0" text="Restore default" />
+               </children>
+            </HBox>
+            <Separator prefHeight="80.0" prefWidth="442.0" visible="false" />
+            <Button fx:id="buttonSE" mnemonicParsing="false" onAction="#selectSE" prefHeight="30.0" prefWidth="130.0" text="Save and Exit" />
+            <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <HBox prefHeight="300.0" prefWidth="380.0">
+               <children>
+                  <TextArea id="textAreaCrediti" fx:id="textAreaCrediti" editable="false" prefHeight="300.0" prefWidth="360.0" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+         <children>
+            <HBox prefHeight="365.0" prefWidth="590.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="295.0" spacing="5.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Connected Players List:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <VBox prefHeight="190.0" prefWidth="300.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="170.0" text="•1. Me" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•2. Kary" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•3. Smatt" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•4. Lorenzo" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•5. Franco" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
+                                 <children>
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•6. Beppe" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator prefHeight="90.0" prefWidth="295.0" visible="false" />
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: red;" text="Not Ready">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="295.0" spacing="5.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0" />
+                        <TextArea fx:id="textAreaChat1" editable="false" prefHeight="370.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </TextArea>
+                        <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
+                           <children>
+                              <TextField fx:id="textFieldChat1" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <Button fx:id="buttonSendMessage1" mnemonicParsing="false" onAction="#sendMessage" prefHeight="26.0" prefWidth="70.0" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

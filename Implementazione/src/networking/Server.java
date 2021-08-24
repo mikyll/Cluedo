@@ -8,9 +8,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Server {
+public class Server implements Runnable {
 	
-	private static final int MAX_LENGTH = 5;
+	private static final int MAX_PLAYERS = 6;
 	
 	private ServerSocket serverSocket;
 	
@@ -30,7 +30,7 @@ public class Server {
 		this.connections = new ArrayList<Socket>();
 		
 		try {
-			this.serverSocket = new ServerSocket(8765, MAX_LENGTH);
+			this.serverSocket = new ServerSocket(8765, MAX_PLAYERS);
 			System.out.println("Server socket created.");
 			System.out.println(this.serverSocket.getInetAddress().toString());
 			System.out.println(this.serverSocket.getLocalSocketAddress());
@@ -74,46 +74,58 @@ public class Server {
 		}
 	}
 	
+	public static void main(String args[])
+	{
+		Server s = new Server();
+		s.run();
+	}
+
+	@Override
+	public void run()
+	{
+		while(this.connectedPlayers < MAX_PLAYERS)
+		{
+			System.out.println("Waiting for connections...");
+			
+			try {
+				Socket s = this.serverSocket.accept();
+				this.connectedPlayers++;
+				System.out.println("Player #" + this.connectedPlayers + " has connected");
+				this.doStream.writeInt(this.connectedPlayers);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
 	
-	/*private class ServerSideConnection implements Runnable {
+	private class Connection implements Runnable {
 		private Socket socket;
-		private DataInputStream dataIn;
-		private DataOutputStream dataOut;
-		private int playerID;
 		
-		public ServerSideConnection(Socket s, int id)
+		private int playerID;
+		private DataInputStream diStream;
+		private DataOutputStream doStream;
+		
+		public Connection(Socket s, int id)
 		{
 			this.socket = s;
 			this.playerID = id;
 			
 			try {
-				this.dataIn = new DataInputStream(socket.getInputStream());
-				this.dataOut = new DataOutputStream(socket.getOutputStream());
+				this.diStream = new DataInputStream(socket.getInputStream());
+				this.doStream = new DataOutputStream(socket.getOutputStream());
 			} catch(IOException e) {
 				System.out.println("IOException from ServerSideConnection constructor");
 			}
 		}
 		
 		@Override
-		public void run() {
-			try {
-				dataOut.writeInt(this.playerID); // gli invia il suo ID
-				dataOut.flush();
-				
-				while(true)
-				{
-					
-				}
-			} catch(IOException e) {
-				System.out.println("IOException from run() in ServerSideConnection");
-			}
+		public void run()
+		{
 			
 		}
-	}*/
-	
-	public static void main(String args[])
-	{
-		Server s = new Server();
-		s.acceptConnections();
+		
 	}
 }
