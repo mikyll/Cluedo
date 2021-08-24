@@ -118,7 +118,17 @@
       </VBox>
       <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
          <children>
-            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="242.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="90.0" text="Nickname:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldNickname" prefHeight="30.0" />
+               </children>
+            </HBox>
+            <Separator prefHeight="20.0" prefWidth="200.0" visible="false" />
             <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#selectCNR" prefHeight="30.0" prefWidth="140.0" text="Create new room" />
             <Separator prefHeight="15.0" prefWidth="442.0" visible="false" />
             <VBox alignment="CENTER" prefHeight="105.0" prefWidth="242.0" spacing="5.0">
@@ -180,51 +190,56 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="200.0" text="•2. Kary" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•2. Kary" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
                                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="200.0" text="•3. Smatt" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•3. Smatt" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
                                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefWidth="200.0" text="•4. Lorenzo" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•4. Lorenzo" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
                                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefWidth="200.0" text="•5. Franco" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•5. Franco" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
                                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefWidth="200.0" text="•6. Beppe" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•6. Beppe" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
                                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
                                  </children>
                               </HBox>
@@ -286,7 +301,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
