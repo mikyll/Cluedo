@@ -205,6 +205,8 @@ public class ControllerMenu {
 			e.printStackTrace();
 		}
 		this.client.sendConnect(this.textFieldNickname.getText());
+		
+		// to-fo: wait for ok
 	}
 	@FXML public void selectSC(ActionEvent event)
 	{
@@ -249,35 +251,10 @@ public class ControllerMenu {
 		
 		if(this.isServer)
 		{
-			// invio a tutti i client
+			// invio a tutti i client tranne il mittente
 		}
 		else {
 			
-			synchronized (this)
-            {
-                byte[] sd = this.textFieldChatC.getText().getBytes();
-                
-                // create datagram packet
-                // for new message
-                DatagramPacket sp = null;
-				try {
-					sp = new DatagramPacket(sd, sd.length, InetAddress.getLocalHost(), 1234);
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				}
-
-                // send the new packet
-                try {
-					cs.send(sp);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-                String msg = new String(sd);
-                System.out.println("Client says: "
-                                   + msg);
-            }
-
 			// invio al server
 		}
 	}

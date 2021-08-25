@@ -15,7 +15,7 @@ public class Server2 {
 	private DatagramSocket ds;
 	private Thread tReceiver;
 	
-	private ArrayList<String> ipAddresses;
+	private ArrayList<InetAddress> ipAddresses;
 	private ArrayList<String> nicknames;
 	
 	private TextArea textArea;
@@ -27,7 +27,7 @@ public class Server2 {
 	
 	public Server2(String nickname, TextArea textArea)
 	{
-		this.ipAddresses = new ArrayList<String>();
+		this.ipAddresses = new ArrayList<InetAddress>();
 		this.nicknames = new ArrayList<String>();
 		
 		this.playerID = 1;
@@ -70,7 +70,8 @@ public class Server2 {
                             {
                             	System.out.println("Player connesso: " + m.getContent());
                             	
-                            	textArea.setText(textArea.getText() + m.getContent());
+                            	String s = m.getTimestamp() + " player " + m.getNickname() + " has connected.";
+                            	textArea.setText(textArea.getText() + "\n" + s);
                             	// Server invia OK con numero del giocatore
                             	
                             	// Server invia la nuova lista dei player
@@ -139,6 +140,10 @@ public class Server2 {
 			
 			// forward to every player connected
 		}
-			
+	
+	}
+	public void stopServer()
+	{
+		
 	}
 }
