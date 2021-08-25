@@ -115,7 +115,6 @@ public class Server2 {
                             		ipAddresses.add(incomingPacket.getAddress());
                             		String s = m.getTimestamp() + " Player #" + connectedPlayers + " '" + m.getNickname() + "' successfully connected to the room.";
                             		textArea.setText(textArea.getText() + "\n" + s);
-                            		
                             		m = new Message(MessageType.CONNECTION_OK, "", nickname, "" + connectedPlayers);
                             	}
                             	// send the message

@@ -303,7 +303,7 @@ public class ControllerMenu {
 		
 		Date date = new Date(System.currentTimeMillis());
 		String timestamp = tformatter.format(date);
-		this.textAreaChatC.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
+		this.textAreaChatC.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatC.getText());
 		
 		// send to server
 		this.client.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatC.getText());

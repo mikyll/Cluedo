@@ -105,7 +105,7 @@ public class Client2 {
                             	vboxCR.setVisible(true);
                             	buttonB.setDisable(false);
                             	
-                            	String s = m.getTimestamp() + " Player #" + m.getContent() + " '" + m.getNickname() + "' successfully connected to the room.";
+                            	String s = m.getTimestamp() + " Player #" + m.getContent() + " '" + nickname + "' successfully connected to the room.";
                         		textArea.setText(textArea.getText() + "\n" + s);
                         		
                             	// clean the loading gif, switch vbox, show the connected message on textArea
@@ -184,7 +184,7 @@ public class Client2 {
 	}
 	public void sendReady(String nickname, String ready)
 	{
-		Message mdg = new Message(MessageType.READY, "", nickname, ready);
+		Message msg = new Message(MessageType.READY, "", nickname, ready);
 	}
 	public void sendDisconnect()
 	{
