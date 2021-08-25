@@ -1,9 +1,11 @@
 package networking;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -72,6 +74,26 @@ public class Client2 {
                     while (true) {
                         synchronized (this)
                         {
+                        	byte[] incomingData = new byte[1024];
+                            
+                            DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
+                            
+                            // ricezione oggetto
+                            ds.receive(incomingPacket);
+                            
+                            byte[] data = incomingPacket.getData();
+                            
+                            ByteArrayInputStream in = new ByteArrayInputStream(data);
+                            ObjectInputStream is = new ObjectInputStream(in);
+                            
+                            Message m = (Message) is.readObject();
+                        	
+                            
+                            if(m.getMsgType().equals(MessageType.CONNECTION_OK))
+                            {
+                            	// clean the loading gif, switch vbox, show the connected message on textArea
+                            }
+                            
 							// per prima cosa manda una connect
 							
 							// if ok, salva playerID

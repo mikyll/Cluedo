@@ -75,7 +75,6 @@ public class Server2 {
                             
                             DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
                             
-                            // ricezione oggetto
                             ds.receive(incomingPacket);
                             
                             byte[] data = incomingPacket.getData();
@@ -120,7 +119,6 @@ public class Server2 {
                         		} catch (IOException e) {
                         			e.printStackTrace();
                         		}
-                        		
                         		
                         		
                         		
