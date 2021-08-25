@@ -167,7 +167,7 @@ public class Server2 {
                             	// forward a tutti tranne quello che l'ha inviato
                             	os.writeObject(m);
                             	data = outputStream.toByteArray();
-                            	for(int i = 1; i < 6; i++)
+                            	for(int i = 1; i < playerList.size(); i++)
                             	{
                             		if(!playerList.get(i).getText().substring(4).equals(m.getNickname()))
                             		{
@@ -195,12 +195,28 @@ public class Server2 {
 	}
 	public void sendChatMessage(String nickname, String content)
 	{
-		if(type.equals(MessageType.CHAT))
-		{
-			// add timestamp to message
-			
-			// forward to every player connected
+		if(this.connectedPlayers == 1)
+			return;
+		
+		Date date = new Date(System.currentTimeMillis());
+		String timestamp = tformatter.format(date);
+    	Message m = new Message(MessageType.CHAT, timestamp, nickname, content);
+    	// forward a tutti tranne quello che l'ha inviato
+    	try {
+			os.writeObject(m);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+    	byte[] data = outputStream.toByteArray();
+    	for(int i = 1; i < this.playerList.size(); i++)
+    	{
+    		DatagramPacket sendPacket = new DatagramPacket(data, data.length, ipAddresses.get(i), CLIENT_PORT);
+        	try {
+        		ds.send(sendPacket);
+        	} catch (IOException e) {
+        		e.printStackTrace();
+        	}
+    	}
 	}
 	public void sendKick()
 	{

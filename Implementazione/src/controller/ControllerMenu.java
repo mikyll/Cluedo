@@ -6,7 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
@@ -31,6 +33,8 @@ import networking.Client2;
 import networking.Server2;
 
 public class ControllerMenu {
+	private SimpleDateFormat tformatter;
+	
 	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
 	@FXML private Text textMM;	// text Main Menu
@@ -115,7 +119,7 @@ public class ControllerMenu {
 	
 	public void initialize()
 	{
-		
+		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		
 		// setup panels and text labels visibility
 		this.vboxMM.setVisible(true);
@@ -267,10 +271,14 @@ public class ControllerMenu {
 	}
 	@FXML public void sendMessageS(ActionEvent event)
 	{
-		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + this.textFieldChatS.getText());
+		System.out.println("User (server) sent message " + this.textFieldChatS.getText());
+		
+		Date date = new Date(System.currentTimeMillis());
+		String timestamp = tformatter.format(date);
+		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
 		
 		// send to everyone else
-		server.sendChatMessage(nickname, content);
+		server.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatS.getText());
 		
 		this.textFieldChatS.setText("");
 	}
@@ -290,21 +298,16 @@ public class ControllerMenu {
 	}
 	@FXML public void sendMessageC(ActionEvent event)
 	{
-		DatagramSocket cs = null;
-		try {
-			cs = new DatagramSocket(5334);
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
+		System.out.println("User (client) sent message " + this.textFieldChatC.getText());
 		
-		if(this.isServer)
-		{
-			// invio a tutti i client tranne il mittente
-		}
-		else {
-			
-			// invio al server
-		}
+		Date date = new Date(System.currentTimeMillis());
+		String timestamp = tformatter.format(date);
+		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
+		
+		// send to server
+		this.client.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatC.getText());
+		
+		this.textFieldChatC.setText("");
 	}
 	
 	@FXML public void selectRH(ActionEvent event) 
