@@ -6,11 +6,13 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -85,8 +87,13 @@ public class ControllerMenu {
 	@FXML private TextField textFieldChatC;		// textField Chat Client
 	@FXML private Button buttonSendMessageC;	// button Send Message Client
 	
+	@FXML private VBox vboxCCPL;			// vbox Client Connected Player List
+	@FXML private VBox vboxSCPL;			// vbox Server Connected Player List
 	@FXML private Button buttonReady;		// button Ready
 	
+	private ArrayList<Label> playerList;
+	private ArrayList<Label> readyList;
+	private ArrayList<Button> kickList;
 	private boolean isServer;
 	
 	// vbox Settings controls:
@@ -163,8 +170,24 @@ public class ControllerMenu {
 	{
 		System.out.println("User selected Create New Room");
 		
+		// to-do: init arrays and pass them to server + add function to kick button listener.
+		
+		this.playerList = new ArrayList<Label>();
+		this.readyList = new ArrayList<Label>();
+		this.kickList = new ArrayList<Button>();
+		for(int i = 0; i < 6; i++)
+		{
+			HBox hbox = (HBox) this.vboxSCPL.getChildren().get(i);
+			this.playerList.add((Label)hbox.getChildren().get(0));
+			this.readyList.add((Label)hbox.getChildren().get(1));
+			this.kickList.add((Button)hbox.getChildren().get(2));
+			if(i != 0)
+				hbox.setVisible(false);
+		}
+		this.playerList.get(0).setText("•1. " + this.textFieldNickname.getText());
+		
 		// to-do: server code
-		this.server = new Server2(this.textFieldNickname.getText(), this.textAreaChatS);
+		this.server = new Server2(this.textFieldNickname.getText(), this.textAreaChatS, this.playerList, this.readyList);
 		
 		this.vboxMP.setVisible(false);
 		this.vboxSR.setVisible(true);

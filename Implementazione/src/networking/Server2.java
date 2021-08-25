@@ -15,6 +15,8 @@ public class Server2 {
 	private DatagramSocket ds;
 	private Thread tReceiver;
 	
+	private int connectedPlayers;
+	private int maxConnectedPlayers = 6;
 	private ArrayList<InetAddress> ipAddresses;
 	private ArrayList<String> nicknames;
 	
@@ -25,11 +27,12 @@ public class Server2 {
 	private String nickname;
 	private int playerID;
 	
-	public Server2(String nickname, TextArea textArea)
+	public Server2(String nickname, TextArea textArea, ArrayList<Label> playerList, ArrayList<Label> readyList)
 	{
 		this.ipAddresses = new ArrayList<InetAddress>();
 		this.nicknames = new ArrayList<String>();
 		
+		this.connectedPlayers = 1;
 		this.playerID = 1;
 		this.nickname = nickname;
 		
@@ -68,14 +71,36 @@ public class Server2 {
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION))
                             {
-                            	System.out.println("Player connesso: " + m.getContent());
+                            	System.out.println("Received connection request from player " + m.getNickname() + " (" + incomingPacket.getAddress().toString() + ")");
                             	
-                            	String s = m.getTimestamp() + " player " + m.getNickname() + " has connected.";
-                            	textArea.setText(textArea.getText() + "\n" + s);
                             	// Server invia OK con numero del giocatore
-                            	
-                            	// Server invia la nuova lista dei player
-                            	
+                            	if(connectedPlayers == maxConnectedPlayers)
+                            	{
+                            		m = new Message(MessageType.CONNECTION_FAILED, "", nickname, "The room is full.");
+                            	}
+                            	if(!checkNicknameOk(m.getNickname()))
+                            	{
+                            		
+                            		m = new Message(MessageType.CONNECTION_FAILED, "", nickname, "The nickname " + m.getNickname() + " is already taken.");
+                            	}
+                            	if(!checkIPOk(incomingPacket.getAddress()))
+                            	{
+                            		m = new Message(MessageType.CONNECTION_FAILED, "", nickname, "The address " + incomingPacket.getAddress() + " is already connected.");
+                            	}
+                            	else
+                            	{
+                            		connectedPlayers++;
+                            		String s = m.getTimestamp() + " Player #" + connectedPlayers + " '" + m.getNickname() + "' successfully connected to the room.";
+                            		textArea.setText(textArea.getText() + "\n" + s);
+                            		
+                            		m = new Message(MessageType.CONNECTION_OK, "", nickname, "" + connectedPlayers);
+                            		
+                            		
+                            		
+                            		// forward the connection to other clients
+                            		
+                            		// Server invia la nuova lista dei player
+                            	}
                             }
                             if(m.getMsgType().equals(MessageType.DISCONNECTION))
                             {
@@ -128,11 +153,12 @@ public class Server2 {
                     System.out.println("Exception occured");
                     e.printStackTrace();
                 }
+				
 			}
 		});
 		this.tReceiver.start();
 	}
-	public void sendMessage(MessageType type, String nickname, String content)
+	public void sendChatMessage(MessageType type, String nickname, String content)
 	{
 		if(type.equals(MessageType.CHAT))
 		{
@@ -140,10 +166,29 @@ public class Server2 {
 			
 			// forward to every player connected
 		}
-	
+	}
+	public void sendKick()
+	{
+		// send kick to the player
+		
+		// send update list to everyone else
 	}
 	public void stopServer()
 	{
 		
+	}
+	private boolean checkNicknameOk(String nickname)
+	{
+		boolean result = true;
+		for(Label l : this.playerList)
+			result = !l.getText().substring(2).equals(nickname);
+		return result;
+	}
+	private boolean checkIPOk(InetAddress address)
+	{
+		boolean result = true;
+		for(InetAddress ia : this.ipAddresses)
+			result = !ia.equals(address);
+		return result;
 	}
 }

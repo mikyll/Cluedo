@@ -66,15 +66,31 @@ public class Client2 {
 			@Override
 			public void run()
 			{
-				// per prima cosa manda una connect
-				
-				// if ok, salva playerID
-				
-				// if player list, aggiorna player list
-				
-				// if ready, aggiorna ready list
-				
-				// if chat, aggiorna chat
+				System.out.println("Client linstening...");
+				try {
+                    while (true) {
+                        synchronized (this)
+                        {
+							// per prima cosa manda una connect
+							
+							// if ok, salva playerID
+							
+							// if not ok, prompt message (example room full, nickname already used, ip already connected)
+							
+							// if player list, aggiorna player list
+							
+							// if ready, aggiorna ready list
+							
+							// if chat, aggiorna chat
+							
+							// if kick, esci dal multigiocatore + prompt message
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    System.out.println("Exception occured");
+                    e.printStackTrace();
+                }
 			}
 		});
 		

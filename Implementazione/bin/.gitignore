@@ -1,8 +1,8 @@
-/resources/
 /application/
 /controller/
 /model/
 /module-info.class
 /networking/
 /persistence/
+/resources/
 /view/
