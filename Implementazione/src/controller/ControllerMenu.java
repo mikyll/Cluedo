@@ -181,6 +181,7 @@ public class ControllerMenu {
 			this.playerList.add((Label)hbox.getChildren().get(0));
 			this.readyList.add((Label)hbox.getChildren().get(1));
 			this.kickList.add((Button)hbox.getChildren().get(2));
+			System.out.println(((Label)hbox.getChildren().get(0)).getText() + ((Label)hbox.getChildren().get(1)).getText());
 			if(i != 0)
 				hbox.setVisible(false);
 		}

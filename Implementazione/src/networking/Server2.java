@@ -50,6 +50,9 @@ public class Server2 {
 		this.ipAddresses = new ArrayList<InetAddress>();
 		this.nicknames = new ArrayList<String>();
 		
+		this.playerList = playerList;
+		this.readyList = readyList;
+		
 		this.connectedPlayers = 1;
 		this.playerID = 1;
 		this.nickname = nickname;
