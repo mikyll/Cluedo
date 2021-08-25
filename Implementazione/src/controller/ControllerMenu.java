@@ -275,12 +275,13 @@ public class ControllerMenu {
 		
 		Date date = new Date(System.currentTimeMillis());
 		String timestamp = tformatter.format(date);
-		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
+		this.textAreaChatS.setText(this.textAreaChatS.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
 		
 		// send to everyone else
 		server.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatS.getText());
 		
 		this.textFieldChatS.setText("");
+		this.buttonSendMessageS.setDisable(true);
 	}
 	
 	@FXML public void toggleReady(ActionEvent event)
@@ -302,12 +303,13 @@ public class ControllerMenu {
 		
 		Date date = new Date(System.currentTimeMillis());
 		String timestamp = tformatter.format(date);
-		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
+		this.textAreaChatC.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
 		
 		// send to server
 		this.client.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatC.getText());
 		
 		this.textFieldChatC.setText("");
+		this.buttonSendMessageC.setDisable(true);
 	}
 	
 	@FXML public void selectRH(ActionEvent event) 
