@@ -74,7 +74,7 @@
                </graphic></Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxB" alignment="CENTER" layoutX="200.0" layoutY="480.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxB" alignment="CENTER" layoutX="164.0" layoutY="501.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
          <children>
             <Button fx:id="buttonB" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
                <graphic>
@@ -165,7 +165,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -177,15 +177,17 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <VBox prefHeight="190.0" prefWidth="300.0">
+                        <VBox fx:id="vboxSCPL" prefHeight="190.0" prefWidth="300.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="200.0" text="•1. Me" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•1. Me" textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" visible="false" />
+                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" visible="false" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
@@ -312,7 +314,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <VBox prefHeight="190.0" prefWidth="300.0">
+                        <VBox fx:id="vboxCCPL" prefHeight="190.0" prefWidth="300.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
@@ -321,6 +323,12 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" visible="false" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
@@ -331,6 +339,11 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
@@ -341,6 +354,11 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
@@ -351,6 +369,11 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
@@ -361,6 +384,11 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <image>
+                                          <Image url="@../resources/icons/icon-backplay2.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
