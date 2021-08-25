@@ -24,6 +24,7 @@ import javafx.scene.control.TextArea;
 public class Client2 {
 	
 	private SimpleDateFormat tformatter;
+	
 	private DatagramSocket ds;
 	private Thread tReceiver;
 	private ByteArrayOutputStream outputStream;

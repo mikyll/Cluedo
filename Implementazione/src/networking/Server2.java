@@ -1,19 +1,28 @@
 package networking;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class Server2 {
+	
+	private SimpleDateFormat tformatter;
+	
 	private DatagramSocket ds;
 	private Thread tReceiver;
+	private ByteArrayOutputStream outputStream;
+	private ObjectOutputStream os;
 	
 	private int connectedPlayers;
 	private int maxConnectedPlayers = 6;
@@ -29,6 +38,14 @@ public class Server2 {
 	
 	public Server2(String nickname, TextArea textArea, ArrayList<Label> playerList, ArrayList<Label> readyList)
 	{
+		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
+		this.outputStream = new ByteArrayOutputStream();
+		try {
+			this.os = new ObjectOutputStream(outputStream);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		this.ipAddresses = new ArrayList<InetAddress>();
 		this.nicknames = new ArrayList<String>();
 		
@@ -80,7 +97,6 @@ public class Server2 {
                             	}
                             	if(!checkNicknameOk(m.getNickname()))
                             	{
-                            		
                             		m = new Message(MessageType.CONNECTION_FAILED, "", nickname, "The nickname " + m.getNickname() + " is already taken.");
                             	}
                             	if(!checkIPOk(incomingPacket.getAddress()))
@@ -94,13 +110,29 @@ public class Server2 {
                             		textArea.setText(textArea.getText() + "\n" + s);
                             		
                             		m = new Message(MessageType.CONNECTION_OK, "", nickname, "" + connectedPlayers);
-                            		
-                            		
-                            		
-                            		// forward the connection to other clients
-                            		
-                            		// Server invia la nuova lista dei player
                             	}
+                            	// send the message
+                            	os.writeObject(m);
+                            	data = outputStream.toByteArray();
+                        		DatagramPacket sendPacket = new DatagramPacket(data, data.length, incomingPacket.getAddress(), 9876);
+                        		try {
+                        			ds.send(sendPacket);
+                        		} catch (IOException e) {
+                        			e.printStackTrace();
+                        		}
+                        		
+                        		
+                        		
+                        		
+                        		
+                        		
+                        		
+                        		
+                        		
+                        		
+                            	// forward the connection to other clients
+                            		
+                            	// Server invia la nuova lista dei player a tutti
                             }
                             if(m.getMsgType().equals(MessageType.DISCONNECTION))
                             {
