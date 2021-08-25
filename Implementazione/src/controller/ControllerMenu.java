@@ -165,6 +165,12 @@ public class ControllerMenu {
 		this.buttonJER.setDisable(true);
 		this.labelErrorIP.setVisible(false);
 		this.hboxC.setVisible(false);
+		
+		//
+		this.textFieldChatC.setText("");
+		this.textFieldChatS.setText("");
+		this.buttonSendMessageC.setDisable(true);
+		this.buttonSendMessageS.setDisable(true);
 	}
 	@FXML public void selectCNR(ActionEvent event)
 	{
@@ -245,9 +251,28 @@ public class ControllerMenu {
 		
 		// to-do: stop connection attempt
 	}
+	@FXML public void validateChatMessage()
+	{
+		if((this.textFieldChatC.getText().isEmpty() || this.textFieldChatC.getText().isBlank()) &&
+			(this.textFieldChatS.getText().isEmpty() || this.textFieldChatS.getText().isBlank()))
+		{
+			this.buttonSendMessageC.setDisable(true);
+			this.buttonSendMessageS.setDisable(true);
+		}
+		else
+		{
+			this.buttonSendMessageC.setDisable(false);
+			this.buttonSendMessageS.setDisable(false);
+		}
+	}
 	@FXML public void sendMessageS(ActionEvent event)
 	{
+		this.textAreaChatS.setText(this.textAreaChatC.getText() + "\n" + this.textFieldChatS.getText());
 		
+		// send to everyone else
+		server.sendChatMessage(nickname, content);
+		
+		this.textFieldChatS.setText("");
 	}
 	
 	@FXML public void toggleReady(ActionEvent event)
@@ -263,7 +288,6 @@ public class ControllerMenu {
 			this.buttonReady.setStyle("-fx-background-color: lime");
 		}
 	}
-	
 	@FXML public void sendMessageC(ActionEvent event)
 	{
 		DatagramSocket cs = null;

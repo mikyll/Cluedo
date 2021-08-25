@@ -12,11 +12,14 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class Server2 {
+	private final int SERVER_PORT = 9876;
+	private final int CLIENT_PORT = 9875;
 	
 	private SimpleDateFormat tformatter;
 	
@@ -60,7 +63,7 @@ public class Server2 {
 		this.textArea = textArea;
 		
 		try {
-			this.ds = new DatagramSocket(9876);
+			this.ds = new DatagramSocket(SERVER_PORT);
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
@@ -109,6 +112,7 @@ public class Server2 {
                             	else
                             	{
                             		connectedPlayers++;
+                            		ipAddresses.add(incomingPacket.getAddress());
                             		String s = m.getTimestamp() + " Player #" + connectedPlayers + " '" + m.getNickname() + "' successfully connected to the room.";
                             		textArea.setText(textArea.getText() + "\n" + s);
                             		
@@ -117,7 +121,7 @@ public class Server2 {
                             	// send the message
                             	os.writeObject(m);
                             	data = outputStream.toByteArray();
-                        		DatagramPacket sendPacket = new DatagramPacket(data, data.length, incomingPacket.getAddress(), 9876);
+                        		DatagramPacket sendPacket = new DatagramPacket(data, data.length, incomingPacket.getAddress(), CLIENT_PORT);
                         		try {
                         			ds.send(sendPacket);
                         		} catch (IOException e) {
@@ -151,35 +155,32 @@ public class Server2 {
                             }
                             if(m.getMsgType().equals(MessageType.CHAT))
                             {
-                            	System.out.println("Player ha mandato un messaggio in chat");
+                            	System.out.println("Player " + m.getNickname() + " sent the message: " + m.getContent());
                             	
+                            	textArea.setText(textArea.getText() + "\n" + m.getTimestamp() + " " + m.getNickname() + ": " + m.getContent());
+                            	
+                            	Date date = new Date(System.currentTimeMillis());
+                        		String timestamp = tformatter.format(date);
+                        		String forwardMessage = m.getContent();
+                            	m = new Message(MessageType.CHAT, timestamp, nickname, forwardMessage);
+                            	                            	
                             	// forward a tutti tranne quello che l'ha inviato
+                            	os.writeObject(m);
+                            	data = outputStream.toByteArray();
+                            	for(int i = 1; i < 6; i++)
+                            	{
+                            		if(!playerList.get(i).getText().substring(4).equals(m.getNickname()))
+                            		{
+                            			DatagramPacket sendPacket = new DatagramPacket(data, data.length, ipAddresses.get(i), CLIENT_PORT);
+                                		try {
+                                			ds.send(sendPacket);
+                                		} catch (IOException e) {
+                                			e.printStackTrace();
+                                		}
+                            		}
+                            	}
                             	
-                            	// aggiorna la text area del server
-                            	String chatEntry = m.getTimestamp() + m.getNickname() + ": " + m.getContent();
-                            	textArea.setText(textArea.getText() + "\n" + chatEntry);
                             }
-                            
-                            // Receive new message
-                           /* DatagramPacket packet = new DatagramPacket(                          rd,
-                                    rd.length);
-                            ds.receive(packet);
-  
-                            // Convert byte data to string
-                            String msg
-                                = (new String(rd)).trim();
-                            System.out.println("Client ("
-                                               + sp1.getPort()
-                                               + "):"
-                                               + " "
-                                               + msg);
-  
-                            // Exit condition
-                            if (msg.equals("bye")) {
-                                System.out.println("Client"
-                                                   + " connection closed.");
-                                break;
-                            }*/
                         }
                     }
                 }
@@ -192,7 +193,7 @@ public class Server2 {
 		});
 		this.tReceiver.start();
 	}
-	public void sendChatMessage(MessageType type, String nickname, String content)
+	public void sendChatMessage(String nickname, String content)
 	{
 		if(type.equals(MessageType.CHAT))
 		{

@@ -27,6 +27,9 @@ import javafx.scene.layout.VBox;
 
 public class Client2 {
 	
+	private final int SERVER_PORT = 9876;
+	private final int CLIENT_PORT = 9875;
+	
 	private SimpleDateFormat tformatter;
 	
 	private DatagramSocket ds;
@@ -65,7 +68,7 @@ public class Client2 {
 		this.readyList = rl;*/
 		
 		try {
-			this.ds = new DatagramSocket();
+			this.ds = new DatagramSocket(CLIENT_PORT);
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
@@ -96,6 +99,8 @@ public class Client2 {
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION_OK))
                             {
+                            	System.out.println("Received CONNECTION_OK from server");
+                            	
                             	vboxMP.setVisible(false);
                             	vboxCR.setVisible(true);
                             	buttonB.setDisable(false);
@@ -104,6 +109,8 @@ public class Client2 {
                         		textArea.setText(textArea.getText() + "\n" + s);
                         		
                             	// clean the loading gif, switch vbox, show the connected message on textArea
+                        		vboxMP.setVisible(false);
+                        		vboxCR.setVisible(true);
                             }
                             
 							// per prima cosa manda una connect
@@ -146,7 +153,7 @@ public class Client2 {
 		}
 		
 		byte[] data = this.outputStream.toByteArray();
-		DatagramPacket sendPacket = new DatagramPacket(data, data.length, this.serverIPaddress, 9876);
+		DatagramPacket sendPacket = new DatagramPacket(data, data.length, this.serverIPaddress, SERVER_PORT);
 		try {
 			this.ds.send(sendPacket);
 		} catch (IOException e) {
@@ -159,6 +166,21 @@ public class Client2 {
 		Date date = new Date(System.currentTimeMillis());
 		String timestamp = this.tformatter.format(date);
 		
+		Message msg = new Message(MessageType.CHAT, timestamp, nickname, message);
+		
+		try {
+			this.os.writeObject(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		byte[] data = this.outputStream.toByteArray();
+		DatagramPacket sendPacket = new DatagramPacket(data, data.length, this.serverIPaddress, SERVER_PORT);
+		try {
+			this.ds.send(sendPacket);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public void sendReady(String nickname, String ready)
 	{
