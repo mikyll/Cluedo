@@ -165,7 +165,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -254,7 +254,7 @@
                         </TextArea>
                         <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
                            <children>
-                              <TextField fx:id="textFieldChatS" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <TextField fx:id="textFieldChatS" onKeyTyped="#validateChatMessage" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
                               <Button fx:id="buttonSendMessageS" mnemonicParsing="false" onAction="#sendMessageS" prefHeight="26.0" prefWidth="70.0" text="Send" />
                            </children>
                         </HBox>
@@ -303,7 +303,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -426,7 +426,7 @@
                         </TextArea>
                         <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
                            <children>
-                              <TextField fx:id="textFieldChatC" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
+                              <TextField fx:id="textFieldChatC" onKeyTyped="#validateChatMessage" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
                               <Button fx:id="buttonSendMessageC" mnemonicParsing="false" onAction="#sendMessageC" prefHeight="26.0" prefWidth="70.0" text="Send" />
                            </children>
                         </HBox>
