@@ -9,6 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -207,6 +208,7 @@ public class Server2 {
 	{
 		
 	}
+	
 	private boolean checkNicknameOk(String nickname)
 	{
 		boolean result = true;

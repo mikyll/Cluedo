@@ -192,7 +192,9 @@ public class ControllerMenu {
 		this.vboxMP.setVisible(false);
 		this.vboxSR.setVisible(true);
 		this.labelIP.setVisible(true);
-		this.labelIP.setText(""); // set IP
+		String address = "";
+		try {address = InetAddress.getLocalHost().toString().split("/")[1];} catch (UnknownHostException e) {e.printStackTrace();}
+		this.labelIP.setText("IP address: " + address);
 		this.isServer = true;
 		
 	}
@@ -218,12 +220,10 @@ public class ControllerMenu {
 		this.hboxC.setVisible(true);
 		this.buttonB.setDisable(true);
 		
-		this.vboxCR.setVisible(true);
-		
 		// to-do: creazione socket e connessione al server (porta default)
 		this.isServer = false;
 		try {
-			this.client = new Client2(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.textAreaChatC);
+			this.client = new Client2(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMP, this.vboxCR, this.buttonB, this.textAreaChatC);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

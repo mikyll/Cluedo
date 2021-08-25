@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 
 public class Client2 {
 	
@@ -35,6 +37,9 @@ public class Client2 {
 	private ArrayList<String> ipAddresses;
 	private ArrayList<String> nicknames;
 	
+	private VBox vboxMP;
+	private VBox vboxCR;
+	private Button buttonB;
 	private TextArea textArea;
 	private ArrayList<Label> playerList;
 	private ArrayList<Label> readyList;
@@ -43,7 +48,7 @@ public class Client2 {
 	private String nickname;
 	private int playerID;
 	
-	public Client2(String nickname, InetAddress ipAddress, TextArea textArea/*, ArrayList<Label> pl, ArrayList<Label> rl*/)
+	public Client2(String nickname, InetAddress ipAddress, VBox vboxMP, VBox vboxCR, Button buttonB, TextArea textArea/*, ArrayList<Label> pl, ArrayList<Label> rl*/)
 	{
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		this.outputStream = new ByteArrayOutputStream();
@@ -91,6 +96,13 @@ public class Client2 {
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION_OK))
                             {
+                            	vboxMP.setVisible(false);
+                            	vboxCR.setVisible(true);
+                            	buttonB.setDisable(false);
+                            	
+                            	String s = m.getTimestamp() + " Player #" + m.getContent() + " '" + m.getNickname() + "' successfully connected to the room.";
+                        		textArea.setText(textArea.getText() + "\n" + s);
+                        		
                             	// clean the loading gif, switch vbox, show the connected message on textArea
                             }
                             
@@ -125,7 +137,7 @@ public class Client2 {
 		Date date = new Date(System.currentTimeMillis());
 		String timestamp = this.tformatter.format(date);
 		
-		Message msg = new Message(MessageType.CONNECTION, timestamp, nickname, "culo");
+		Message msg = new Message(MessageType.CONNECTION, timestamp, nickname, "");
 		
 		try {
 			this.os.writeObject(msg);
