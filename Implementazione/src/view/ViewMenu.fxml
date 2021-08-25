@@ -171,7 +171,7 @@
                <children>
                   <VBox prefHeight="60.0" prefWidth="295.0" spacing="5.0">
                      <children>
-                        <Label fx:id="labelIP" prefHeight="28.0" prefWidth="98.0" text="IP address: X.X.X.X" textFill="WHITE" />
+                        <Label fx:id="labelIP" prefHeight="18.0" prefWidth="200.0" text="IP address: X.X.X.X" textFill="WHITE" />
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Connected Players List:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="20.0" />
