@@ -25,6 +25,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import networking.Client2;
+import networking.Server2;
 
 public class ControllerMenu {
 	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
@@ -96,6 +98,12 @@ public class ControllerMenu {
 	@FXML private Button buttonRD;				// button Restore Defaults
 	@FXML private Button buttonSE;				// button Save and Exit
 	
+	
+	
+	// test
+	private Server2 server;
+	private Client2 client;
+	
 	public ControllerMenu() {}
 	
 	public void initialize()
@@ -156,6 +164,7 @@ public class ControllerMenu {
 		System.out.println("User selected Create New Room");
 		
 		// to-do: server code
+		this.server = new Server2(this.textFieldNickname.getText(), this.textAreaChatS);
 		
 		this.vboxMP.setVisible(false);
 		this.vboxSR.setVisible(true);
@@ -190,6 +199,12 @@ public class ControllerMenu {
 		
 		// to-do: creazione socket e connessione al server (porta default)
 		this.isServer = false;
+		try {
+			this.client = new Client2(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.textAreaChatC);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.client.sendConnect(this.textFieldNickname.getText());
 	}
 	@FXML public void selectSC(ActionEvent event)
 	{

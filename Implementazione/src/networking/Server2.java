@@ -4,26 +4,48 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class Server2 {
-	DatagramSocket ds;
-	Thread tReceiver;
+	private DatagramSocket ds;
+	private Thread tReceiver;
 	
-	ArrayList<String> ipAddresses;
-	ArrayList<String> nicknames;
+	private ArrayList<String> ipAddresses;
+	private ArrayList<String> nicknames;
 	
-	public Server2(TextArea textArea)
+	private TextArea textArea;
+	private ArrayList<Label> playerList;
+	private ArrayList<Label> readyList;
+	
+	private String nickname;
+	private int playerID;
+	
+	public Server2(String nickname, TextArea textArea)
 	{
 		this.ipAddresses = new ArrayList<String>();
 		this.nicknames = new ArrayList<String>();
 		
+		this.playerID = 1;
+		this.nickname = nickname;
+		
+		this.textArea = textArea;
+		
+		try {
+			this.ds = new DatagramSocket(9876);
+		} catch (SocketException e1) {
+			e1.printStackTrace();
+		}
+        //InetAddress ip = InetAddress.getLocalHost();
 		this.tReceiver = new Thread(new Runnable() {
 			@Override
 			public void run()
 			{
+				System.out.println("Server linstening...");
 				try {
                     while (true) {
                         synchronized (this)
@@ -46,8 +68,9 @@ public class Server2 {
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION))
                             {
-                            	System.out.println("Player connesso");
+                            	System.out.println("Player connesso: " + m.getContent());
                             	
+                            	textArea.setText(textArea.getText() + m.getContent());
                             	// Server invia OK con numero del giocatore
                             	
                             	// Server invia la nuova lista dei player
@@ -61,11 +84,21 @@ public class Server2 {
                             }
                             if(m.getMsgType().equals(MessageType.READY))
                             {
+                            	
                             	System.out.println("Player disconnesso");
                             	
                             	// Server invia la nuova lista dei player
                             }
-                            
+                            if(m.getMsgType().equals(MessageType.CHAT))
+                            {
+                            	System.out.println("Player ha mandato un messaggio in chat");
+                            	
+                            	// forward a tutti tranne quello che l'ha inviato
+                            	
+                            	// aggiorna la text area del server
+                            	String chatEntry = m.getTimestamp() + m.getNickname() + ": " + m.getContent();
+                            	textArea.setText(textArea.getText() + "\n" + chatEntry);
+                            }
                             
                             // Receive new message
                            /* DatagramPacket packet = new DatagramPacket(                          rd,
@@ -92,15 +125,11 @@ public class Server2 {
                 }
                 catch (Exception e) {
                     System.out.println("Exception occured");
+                    e.printStackTrace();
                 }
 			}
 		});
 		this.tReceiver.start();
-		try {
-			this.tReceiver.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	public void sendMessage(MessageType type, String nickname, String content)
 	{
