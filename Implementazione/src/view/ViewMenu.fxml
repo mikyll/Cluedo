@@ -165,7 +165,7 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -192,7 +192,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•2. Kary" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•2. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -203,7 +203,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•3. Smatt" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•3. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -214,7 +214,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•4. Lorenzo" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•4. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -225,7 +225,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•5. Franco" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•5. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -236,7 +236,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•6. Beppe" textFill="WHITE">
+                                    <Label prefHeight="30.0" prefWidth="155.0" text="•6. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -303,7 +303,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -333,7 +333,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="0.0" prefWidth="170.0" text="•2. Kary" textFill="WHITE">
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•2. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -348,7 +348,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="0.0" prefWidth="170.0" text="•3. Smatt" textFill="WHITE">
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•3. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -363,7 +363,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="0.0" prefWidth="170.0" text="•4. Lorenzo" textFill="WHITE">
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•4. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -378,7 +378,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="0.0" prefWidth="170.0" text="•5. Franco" textFill="WHITE">
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•5. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -393,7 +393,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
                                  <children>
-                                    <Label prefHeight="0.0" prefWidth="170.0" text="•6. Beppe" textFill="WHITE">
+                                    <Label prefHeight="0.0" prefWidth="170.0" text="•6. " textFill="WHITE">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
