@@ -81,7 +81,7 @@ public class Server2 {
                             byte[] incomingData = new byte[1024];
                             
                             DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
-                            
+                                                        
                             ds.receive(incomingPacket);
                             
                             byte[] data = incomingPacket.getData();

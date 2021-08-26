@@ -204,6 +204,20 @@ public class Client2 {
 	{
 		//Message msg = new Message();
 	}
+	private void updatePlayerList(String msg)
+	{
+		//"1. mikyll,2. kary,3. cane";
+		String[] players = msg.split(",");
+		for(int i = 0; i < players.length; i++)
+		{
+			this.playerList.get(i).setText(players[i]);
+		}
+		for(int i = players.length; i < 6; i++)
+		{
+			this.playerList.get(i).setText(i + ". ");
+		}
+		// NB: solo il server deve conoscere tutti gli IP
+	}
 	
 	public static void main(String[] args)
 	{
