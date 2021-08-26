@@ -29,8 +29,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import networking.Client2;
-import networking.Server2;
+import networking.ClientDatagram;
+import networking.ServerDatagram;
 
 public class ControllerMenu {
 	private SimpleDateFormat tformatter;
@@ -112,8 +112,8 @@ public class ControllerMenu {
 	
 	
 	// test
-	private Server2 server;
-	private Client2 client;
+	private ServerDatagram server;
+	private ClientDatagram client;
 	
 	public ControllerMenu() {}
 	
@@ -200,7 +200,7 @@ public class ControllerMenu {
 		this.playerList.get(0).setText("•1. " + this.textFieldNickname.getText());
 		
 		// to-do: server code
-		this.server = new Server2(this.textFieldNickname.getText(), this.textAreaChatS, this.playerList, this.readyList);
+		this.server = new ServerDatagram(this.textFieldNickname.getText(), this.textAreaChatS, this.playerList, this.readyList);
 		
 		this.vboxMP.setVisible(false);
 		this.vboxSR.setVisible(true);
@@ -236,7 +236,7 @@ public class ControllerMenu {
 		// to-do: creazione socket e connessione al server (porta default)
 		this.isServer = false;
 		try {
-			this.client = new Client2(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMP, this.vboxCR, this.buttonB, this.textAreaChatC);
+			this.client = new ClientDatagram(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMP, this.vboxCR, this.buttonB, this.textAreaChatC);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

@@ -17,7 +17,7 @@ import java.util.Date;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-public class Server2 {
+public class ServerDatagram {
 	private final int SERVER_PORT = 9876;
 	private final int CLIENT_PORT = 9875;
 	
@@ -40,7 +40,7 @@ public class Server2 {
 	private String nickname;
 	private int playerID;
 	
-	public Server2(String nickname, TextArea textArea, ArrayList<Label> playerList, ArrayList<Label> readyList)
+	public ServerDatagram(String nickname, TextArea textArea, ArrayList<Label> playerList, ArrayList<Label> readyList)
 	{
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		this.outputStream = new ByteArrayOutputStream();
@@ -140,7 +140,7 @@ public class Server2 {
                             if(m.getMsgType().equals(MessageType.READY))
                             {
                             	boolean ready = m.getContent().equals("yes") ? true : false;
-                            	System.out.println("Player ready/not read");
+                            	System.out.println("Player " + m.getNickname() + " " + ready);
                             	
                             	// Server invia la nuova lista dei player
                             }

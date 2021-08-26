@@ -25,7 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
-public class Client2 {
+public class ClientDatagram {
 	
 	private final int SERVER_PORT = 9876;
 	private final int CLIENT_PORT = 9875;
@@ -51,7 +51,7 @@ public class Client2 {
 	private String nickname;
 	private int playerID;
 	
-	public Client2(String nickname, InetAddress ipAddress, VBox vboxMP, VBox vboxCR, Button buttonB, TextArea textArea/*, ArrayList<Label> pl, ArrayList<Label> rl*/)
+	public ClientDatagram(String nickname, InetAddress ipAddress, VBox vboxMP, VBox vboxCR, Button buttonB, TextArea textArea/*, ArrayList<Label> pl, ArrayList<Label> rl*/)
 	{
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		this.outputStream = new ByteArrayOutputStream();
