@@ -170,7 +170,9 @@ public class ControllerMenu {
 		this.labelErrorIP.setVisible(false);
 		this.hboxC.setVisible(false);
 		
-		//
+		// reset chat controls
+		//this.textAreaChatC.setText("");
+		//this.textAreaChatS.setText("");
 		this.textFieldChatC.setText("");
 		this.textFieldChatS.setText("");
 		this.buttonSendMessageC.setDisable(true);
@@ -240,7 +242,6 @@ public class ControllerMenu {
 		}
 		this.client.sendConnect(this.textFieldNickname.getText());
 		
-		// to-fo: wait for ok
 	}
 	@FXML public void selectSC(ActionEvent event)
 	{

@@ -109,7 +109,7 @@ public class Server2 {
                             	{
                             		m = new Message(MessageType.CONNECTION_FAILED, "", nickname, "The address " + incomingPacket.getAddress() + " is already connected.");
                             	}
-                            	else
+                            	else // CONNECTION_OK
                             	{
                             		connectedPlayers++;
                             		ipAddresses.add(incomingPacket.getAddress());
@@ -127,14 +127,6 @@ public class Server2 {
                         			e.printStackTrace();
                         		}
                         		
-                        		
-                        		
-                        		
-                        		
-                        		
-                        		
-                        		
-                        		
                             	// forward the connection to other clients
                             		
                             	// Server invia la nuova lista dei player a tutti
@@ -147,8 +139,8 @@ public class Server2 {
                             }
                             if(m.getMsgType().equals(MessageType.READY))
                             {
-                            	
-                            	System.out.println("Player disconnesso");
+                            	boolean ready = m.getContent().equals("yes") ? true : false;
+                            	System.out.println("Player ready/not read");
                             	
                             	// Server invia la nuova lista dei player
                             }
@@ -191,6 +183,11 @@ public class Server2 {
 			}
 		});
 		this.tReceiver.start();
+	}
+	
+	public void startReceiving()
+	{
+		
 	}
 	public void sendChatMessage(String nickname, String content)
 	{
