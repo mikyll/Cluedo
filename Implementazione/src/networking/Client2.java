@@ -95,11 +95,11 @@ public class Client2 {
                             ObjectInputStream is = new ObjectInputStream(in);
                             
                             Message m = (Message) is.readObject();
-                        	
+                            System.out.println("Client: message object received. " + m.getMsgType() + ", " + m.getTimestamp() + ", " + m.getNickname() + ", " + m.getContent()); // test
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION_OK))
                             {
-                            	System.out.println("Received CONNECTION_OK from server");
+                            	System.out.println("Received CONNECTION_OK");
                             	
                             	vboxMP.setVisible(false);
                             	vboxCR.setVisible(true);
@@ -108,9 +108,23 @@ public class Client2 {
                             	String s = m.getTimestamp() + " Player #" + m.getContent() + " '" + nickname + "' successfully connected to the room.";
                         		textArea.setText(textArea.getText() + "\n" + s);
                         		
+                        		playerID = Integer.parseInt(m.getContent());
+                        		
                             	// clean the loading gif, switch vbox, show the connected message on textArea
                         		vboxMP.setVisible(false);
                         		vboxCR.setVisible(true);
+                            }
+                            if(m.getMsgType().equals(MessageType.USER_LIST))
+                            {
+                            	System.out.println("Received USER_LIST");
+                            	
+                            	// update user list (nicknames, ready & <-)
+                            }
+                            if(m.getMsgType().equals(MessageType.CHAT))
+                            {
+                            	System.out.println("Received CHAT");
+                            	
+                            	textArea.setText(textArea.getText() + "\n" + m.getTimestamp() + " " + m.getNickname() + ": " + m.getContent());
                             }
                             
 							// per prima cosa manda una connect

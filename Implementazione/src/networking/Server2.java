@@ -90,11 +90,11 @@ public class Server2 {
                             ObjectInputStream is = new ObjectInputStream(in);
                             
                             Message m = (Message) is.readObject();
-                            System.out.println("Message object received: " + m.getMsgType() + ", " + m.getNickname() + ", " + m.getContent());
+                            System.out.println("Server: message object received. " + m.getMsgType() + ", " + m.getTimestamp() + ", " + m.getNickname() + ", " + m.getContent()); // test
                             
                             if(m.getMsgType().equals(MessageType.CONNECTION))
                             {
-                            	System.out.println("Received connection request from player " + m.getNickname() + " (" + incomingPacket.getAddress().toString() + ")");
+                            	System.out.println("Received CONNECTION " + m.getNickname() + " (" + incomingPacket.getAddress().toString() + ")");
                             	
                             	// Server invia OK con numero del giocatore
                             	if(connectedPlayers == maxConnectedPlayers)
