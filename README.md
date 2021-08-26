@@ -33,6 +33,7 @@ versione Java: JavaSE-11 (jdk-11.0.11)<br/>
 versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
 
 ### References
+* Progetto utilissimo per implementare la chat della lobby: [JavaFX-Chat](https://github.com/DomHeal/JavaFX-Chat)
 
 [downloads-shield]: https://img.shields.io/github/downloads/mikyll/Cluedo/total
 [downloads-url]: https://github.com/mikyll/Cluedo/releases/latest
