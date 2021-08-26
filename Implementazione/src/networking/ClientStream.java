@@ -10,7 +10,9 @@ import java.util.Scanner;
 
 public class ClientStream {
 	
-	private Receiver receiver;
+	private final int SERVER_PORT = 8001;
+	
+	private Thread tReceiver;
 	private Socket socket;
 	private int clientID;
 	private DataInputStream diStream;
@@ -18,11 +20,11 @@ public class ClientStream {
 	
 	private int playerID;
 	
-	public ClientStream(InetAddress ip_address, int port)
+	public ClientStream(InetAddress ip_address)
 	{
 		try
 		{
-			this.socket = new Socket(ip_address, port);
+			this.socket = new Socket(ip_address, SERVER_PORT);
 			System.out.println("Client socket created.");
 			
 			this.diStream = new DataInputStream(socket.getInputStream());
@@ -105,7 +107,7 @@ public class ClientStream {
 	public static void main(String args[])
 	{
 		try {
-			ClientStream c = new ClientStream(InetAddress.getByName("127.0.0.1"), 8765);
+			ClientStream c = new ClientStream(InetAddress.getByName("127.0.0.1"));
 			
 			while(true)
 			{

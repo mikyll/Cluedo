@@ -1,6 +1,6 @@
 package networking;
 
-public interface Server {
+public interface IServer {
 	public void startReceiving();
 	public void sendChatMessage();
 	public void sendKickMessage();

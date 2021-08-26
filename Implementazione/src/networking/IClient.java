@@ -1,6 +1,6 @@
 package networking;
 
-public interface Client {
+public interface IClient {
 	public void startReceiving();
 	public void sendConnectMessage();
 	public void sendDisconnectMessage();

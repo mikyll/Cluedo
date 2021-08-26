@@ -112,6 +112,8 @@ public class ControllerMenu {
 	
 	
 	// test
+	/*private IServer server;
+	private IClient client;*/
 	private ServerDatagram server;
 	private ClientDatagram client;
 	
