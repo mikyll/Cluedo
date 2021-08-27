@@ -29,6 +29,19 @@ TO-DO
 
 Niente gestore sicurezza che tanto non serve a una mazza.
 
+### Multiplayer execution flow:
+1. Un utente1 inserisce il nickname e seleziona "crea una lobby";
+2. viene creato il Server:
+  - il server crea un thread che crea una socket, la binda all'address locale, porta 9001 e si mette in ascolto (il thread viene creato perché ascoltare sulla socket è un'operazione bloccante;
+4. un utente2 inserisce il nickname, l'IP del server a cui si vuole connettere, e prova ad unirsi ad una stanza.
+5. dunque viene creato il Client:
+  - il client crea un thread che crea la socket, si connette al server, e gli invia un messaggio CONNECT;
+  - il server risponde dicendo se è possibile la connessione (CONNECT_OK, in caso affermativo, CONNECT_FAILED, in caso negativo);
+  - una volta ricevuto l'OK, il client riceve un secondo messaggio, contenente la lista degli utenti connessi (così può aggiornare l'interfaccia grafica);
+  - dopodiché si mette in ascolto per i messaggi futuri.
+
+
+
 ### Built With
 versione Java: JavaSE-11 (jdk-11.0.11)<br/>
 versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
