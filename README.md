@@ -27,6 +27,7 @@ TO-DO
 * Per le socket usare un thread aggiuntivo: quando l'utente seleziona "crea una stanza" viene creato un oggetto Server che, dopo il set dei parametri si mette in listen delle connessioni. Quando l'utente seleziona "unisciti ad una stanza" viene creato un oggetto Client che si connette al server. Serve thread separato altrimenti le chiamate bloccanti interferiscono con la GUI (sempre che funzionino, perché javafx si arrabbia spesso) - pattern observer(?)
 * Scrivere documentazione su tutto. Fondamentalmente su come funzionano client e server, quali thread eseguono, quali sono i workflow e quali sono le sequenze di scambio di messaggi. Utilizzare anche dei diagrammi UML.
 * ATTENZIONE: aggiungere chiusura di tutto quando si chiude l'app (potrebbero esserci dei thread attivi)
+* Persistenza impostazioni varie con parsing XML
 
 Niente gestore sicurezza che tanto non serve a una mazza.
 
