@@ -51,6 +51,7 @@ versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
 ### References
 - Progetto utilissimo per implementare la chat della lobby: [JavaFX-Chat](https://github.com/DomHeal/JavaFX-Chat)
 - Tutorial Gioco JavaFX: [Space Shooter](https://www.youtube.com/watch?v=6BKI26gxK2Q)
+- Simple API with high-level abstraction, to build a game without troubles: [Java FXGL](https://www.youtube.com/watch?v=gj0yKmsKwvc)
 
 [downloads-shield]: https://img.shields.io/github/downloads/mikyll/Cluedo/total
 [downloads-url]: https://github.com/mikyll/Cluedo/releases/latest
