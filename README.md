@@ -20,6 +20,9 @@ Usare il pattern observer per inviare i dati sulle socket tramite un thread seco
 TO-DO
 
 ### Roadmap
+- [ ] Scrivere le classi del game engine
+- [ ] Poi adattarci la grafica
+- [ ] Sfruttare le classi del JavaFX multiplayer lobby system per il multigiocatore
 * NB: modificarlo e scriverlo in INGLESE principalmente.
 * Classi base del model
 * Trovare qualcuno che mi disegni la mappa
