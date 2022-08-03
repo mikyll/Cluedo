@@ -20,7 +20,7 @@ Usare il pattern observer per inviare i dati sulle socket tramite un thread seco
 TO-DO
 
 ### Roadmap
-- [ ] Scrivere le classi del game engine
+- [ ] Scrivere le classi del game engine (prendere spunto anche da Tablut magari)
 - [ ] Poi adattarci la grafica
 - [ ] Sfruttare le classi del JavaFX multiplayer lobby system per il multigiocatore
 - [ ] Una volta ottenuto un prototipo giocabile, fare la grafica. NB: l'associazione delle caselle ai punti specifici nella mappa la fa il controller.
