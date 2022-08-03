@@ -23,6 +23,7 @@ TO-DO
 - [ ] Scrivere le classi del game engine
 - [ ] Poi adattarci la grafica
 - [ ] Sfruttare le classi del JavaFX multiplayer lobby system per il multigiocatore
+- [ ] Una volta ottenuto un prototipo giocabile, fare la grafica. NB: l'associazione delle caselle ai punti specifici nella mappa la fa il controller.
 * NB: modificarlo e scriverlo in INGLESE principalmente.
 * Classi base del model
 * Trovare qualcuno che mi disegni la mappa
