@@ -6,6 +6,8 @@ import model.game.clues.Clue;
 import model.game.clues.Character;
 import model.game.clues.Place;
 import model.game.clues.Weapon;
+import model.game.player.Player;
+import model.game.player.PlayerArtificial;
 
 /*
  * Game class
@@ -27,11 +29,11 @@ public class Game {
 	/*
 	 * Constructor. It takes a list of users and the game settings
 	 */
-	public Game(List<Player> players, GameSettings gSettings) {
+	public Game(List<Player> players, int playerNumber) {
 		this.players = players;
 		
 		// Add artificial players if there aren't enough players
-		for(int i = players.size(); i < gSettings.getPlayersNumber(); i++) {
+		for(int i = players.size(); i < playerNumber; i++) {
 			Player p = new PlayerArtificial("AI " + i);
 			this.players.add(p);
 		}

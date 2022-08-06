@@ -1,29 +1,26 @@
-package model.game;
+package model.game.player;
 
 import model.game.clues.Character;
+import model.networking.User;
 
-public class PlayerArtificial implements Player  {
-
-	private String nickname;
+/*
+ * An User becomes a Player when the game starts.
+ */
+public abstract class Player extends User {
+	
 	private int turn;
 	private Character character;
 	
-	public PlayerArtificial(String nickname) {
-		this.nickname = nickname;
-		this.turn = -1;
-		this.character = Character.NONE;
+	public Player(String username) {
+		super(username);
 	}
 	
-	public String getNickname() {return nickname;}
 	public void setTurn(int turn) {this.turn = turn;}
 	public int getTurn() {return turn;}
 	public void setCharacter(Character character) {this.character = character;}
 	public Character getCharacter() {return character;}
-	
-	@Override
+
 	public boolean wasMoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

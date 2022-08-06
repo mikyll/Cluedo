@@ -1,2 +1,6 @@
-/module-info.class
+/controller/
 /model/
+/module-info.class
+/networking/
+/persistence/
+/view/

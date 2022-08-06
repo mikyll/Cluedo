@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: yellow;" BorderPane.alignment="CENTER">
@@ -23,6 +22,14 @@
                </image>
             </ImageView>
             <Label layoutX="48.0" layoutY="37.0" text="STUDIO" textFill="WHITE" />
+            <VBox fx:id="vboxMenu" alignment="CENTER" disable="true" layoutX="42.0" layoutY="100.0" prefHeight="300.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: white;">
+               <children>
+                  <Button mnemonicParsing="false" prefWidth="100.0" text="RESUME" />
+                  <Button mnemonicParsing="false" prefWidth="100.0" text="RULES" />
+                  <Button mnemonicParsing="false" prefWidth="100.0" text="SETTINGS" />
+                  <Button mnemonicParsing="false" prefWidth="100.0" text="QUIT" />
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </center>
@@ -65,11 +72,14 @@
                   <Label text="INFO GIOCATORE" />
                </children>
             </HBox>
-            <HBox prefHeight="98.0" prefWidth="530.0">
+            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="530.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" text="Move" />
+                  <Button mnemonicParsing="false" text="ASk Clue" />
+                  <Button mnemonicParsing="false" text="Accusation" />
+                  <Button mnemonicParsing="false" text="End Turn" />
+                  <Button mnemonicParsing="false" text="Clue Sheet" />
+                  <Button mnemonicParsing="false" text="Notepad" />
                </children>
             </HBox>
          </children>

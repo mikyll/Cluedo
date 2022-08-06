@@ -43,29 +43,29 @@ public class ControllerMenu {
 	@FXML private Text textS;	// text Settings
 	@FXML private Text textC;	// text Credits
 	
-	@FXML private VBox vboxMM;	// vbox Main Menu
-	@FXML private VBox vboxSC;	// vbox Settings/Credits
-	@FXML private VBox vboxB;	// vbox Back
-	@FXML private VBox vboxSP;	// vbox Single-Player
-	@FXML private VBox vboxMP;	// vbox Multi-Player
-	@FXML private VBox vboxSR;	// vbox Server Room
-	@FXML private VBox vboxCR;	// vbox Client Room
-	@FXML private VBox vboxS;	// vbox Settings
-	@FXML private VBox vboxC;	// vbox Credits
+	@FXML private VBox vboxMainMenu;
+	@FXML private VBox vboxSettingsInfo;
+	@FXML private VBox vboxBack;
+	@FXML private VBox vboxSinglePlayer;
+	@FXML private VBox vboxMultiPlayer;
+	@FXML private VBox vboxLobbyServer;
+	@FXML private VBox vboxLobbyClient;
+	@FXML private VBox vboxSettings;
+	@FXML private VBox vboxInfo;
 	
 	
 	
 	// vbox Main Menu controls:
-	@FXML private Button buttonSP;	// button Single-Player
-	@FXML private Button buttonMP;	// button Multi-Player
-	@FXML private Button buttonRH;	// button Rules & Help
+	@FXML private Button buttonSinglePlayer;	// button Single-Player
+	@FXML private Button buttonMultiPlayer;	// button Multi-Player
+	@FXML private Button buttonRulesHelp;	// button Rules & Help
 	
 	// vbox Bottom-right controls:
-	@FXML private Button buttonS;	// button Settings
-	@FXML private Button buttonC;	// button Credits
+	@FXML private Button buttonSettings;	// button Settings
+	@FXML private Button buttonInfo;	// button Credits
 	
 	// vbox Bottom-left controls:
-	@FXML private Button buttonB;	// button Back
+	@FXML private Button buttonBack;	// button Back
 	
 	// vbox Single-Player controls:
 	@FXML private Spinner<Integer> spinnerON;	// spinner Opponents Number
@@ -73,7 +73,7 @@ public class ControllerMenu {
 	@FXML private Button buttonSG;				// button Start Game
 	
 	// vbox Multi-Player cotrols:
-	@FXML private Button buttonCNR;				// button Create New Room
+	@FXML private Button buttonCreateLobby;
 	@FXML private TextField textFieldIP;		// textField IP
 	@FXML private Button buttonJER;				// button Join Existing Room
 	@FXML private Label labelErrorIP;			// label Error IP
@@ -124,50 +124,51 @@ public class ControllerMenu {
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		
 		// setup panels and text labels visibility
-		this.vboxMM.setVisible(true);
-		this.vboxSC.setVisible(true);
+		this.vboxMainMenu.setVisible(true);
+		this.vboxSettingsInfo.setVisible(true);
 		this.textMM.setVisible(true);
 		
-		this.vboxB.setVisible(false);
-		this.vboxSP.setVisible(false);
+		this.vboxBack.setVisible(false);
+		this.vboxSinglePlayer.setVisible(false);
 		this.textSP.setVisible(false);
-		this.vboxMP.setVisible(false);
+		this.vboxMultiPlayer.setVisible(false);
 		this.textMP.setVisible(false);
-		this.vboxS.setVisible(false);
+		this.vboxSettings.setVisible(false);
 		this.textS.setVisible(false);
-		this.vboxC.setVisible(false);
+		this.vboxInfo.setVisible(false);
 		this.textC.setVisible(false);
-		this.vboxSR.setVisible(false);
-		this.vboxCR.setVisible(false);
+		this.vboxLobbyServer.setVisible(false);
+		this.vboxLobbyClient.setVisible(false);
 	}
 	
-	@FXML public void selectSP(ActionEvent event) 
+	// MainMenu functions =====================================================
+	@FXML public void selectSinglePlayer(ActionEvent event) 
 	{
 		System.out.println("User selected Single-Player");
 		
-		this.vboxMM.setVisible(false);
-		this.vboxSC.setVisible(false);
+		this.vboxMainMenu.setVisible(false);
+		this.vboxSettingsInfo.setVisible(false);
 		this.textMM.setVisible(false);
 				
-		this.vboxSP.setVisible(true);
-		this.vboxB.setVisible(true);
+		this.vboxSinglePlayer.setVisible(true);
+		this.vboxBack.setVisible(true);
 		this.textSP.setVisible(true);
 		
 	}
-	@FXML public void selectMP(ActionEvent event) 
+	@FXML public void selectMultiPlayer(ActionEvent event) 
 	{
 		System.out.println("User selected Multi-Player");
 		
-		this.vboxMM.setVisible(false);
-		this.vboxSC.setVisible(false);
+		this.vboxMainMenu.setVisible(false);
+		this.vboxSettingsInfo.setVisible(false);
 		this.textMM.setVisible(false);
 		
-		this.vboxMP.setVisible(true);
+		this.vboxMultiPlayer.setVisible(true);
 		this.textMP.setVisible(true);
-		this.vboxB.setVisible(true);	
+		this.vboxBack.setVisible(true);	
 		
 		this.textFieldIP.setText("");
-		this.buttonCNR.setDisable(false);
+		this.buttonCreateLobby.setDisable(false);
 		this.buttonJER.setDisable(true);
 		this.labelErrorIP.setVisible(false);
 		this.hboxC.setVisible(false);
@@ -180,6 +181,44 @@ public class ControllerMenu {
 		this.buttonSendMessageC.setDisable(true);
 		this.buttonSendMessageS.setDisable(true);
 	}
+	@FXML public void selectRulesHelp(ActionEvent event) 
+	{
+		System.out.println("User selected Rules & Help");
+		
+		this.vboxMainMenu.setVisible(false);
+		this.vboxSettingsInfo.setVisible(false);
+		this.textMM.setVisible(false);
+		
+		this.vboxBack.setVisible(true);
+	}
+	
+	@FXML public void selectSettings(ActionEvent event) 
+	{
+		System.out.println("User selected Settings");
+		
+		this.vboxMainMenu.setVisible(false);
+		this.vboxSettingsInfo.setVisible(false);
+		this.textMM.setVisible(false);
+		
+		this.vboxSettings.setVisible(true);
+		this.textS.setVisible(true);
+		this.vboxBack.setVisible(true);
+	}
+	@FXML public void selectInfo(ActionEvent event) 
+	{
+		System.out.println("User selected Info");
+		
+		this.vboxMainMenu.setVisible(false);
+		this.vboxSettingsInfo.setVisible(false);
+		this.textMM.setVisible(false);
+		
+		this.vboxInfo.setVisible(true);
+		this.textC.setVisible(true);
+		this.vboxBack.setVisible(true);
+	}
+	
+	// SinglePlayer functions =====================================================
+	
 	@FXML public void selectCNR(ActionEvent event)
 	{
 		System.out.println("User selected Create New Room");
@@ -204,8 +243,8 @@ public class ControllerMenu {
 		// to-do: server code
 		this.server = new ServerDatagram(this.textFieldNickname.getText(), this.textAreaChatS, this.playerList, this.readyList);
 		
-		this.vboxMP.setVisible(false);
-		this.vboxSR.setVisible(true);
+		this.vboxMultiPlayer.setVisible(false);
+		this.vboxLobbyServer.setVisible(true);
 		this.labelIP.setVisible(true);
 		String address = "";
 		try {address = InetAddress.getLocalHost().toString().split("/")[1];} catch (UnknownHostException e) {e.printStackTrace();}
@@ -229,16 +268,16 @@ public class ControllerMenu {
 	{
 		System.out.println("User selected Join Existing Room");
 		
-		this.buttonCNR.setDisable(true);
+		this.buttonCreateLobby.setDisable(true);
 		this.textFieldIP.setDisable(true);
 		this.buttonJER.setDisable(true);
 		this.hboxC.setVisible(true);
-		this.buttonB.setDisable(true);
+		this.buttonBack.setDisable(true);
 		
 		// to-do: creazione socket e connessione al server (porta default)
 		this.isServer = false;
 		try {
-			this.client = new ClientDatagram(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMP, this.vboxCR, this.buttonB, this.textAreaChatC);
+			this.client = new ClientDatagram(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMultiPlayer, this.vboxLobbyClient, this.buttonBack, this.textAreaChatC);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -249,11 +288,11 @@ public class ControllerMenu {
 	{
 		System.out.println("Connection attempt interrupted.");
 		
-		this.buttonCNR.setDisable(false);
+		this.buttonCreateLobby.setDisable(false);
 		this.textFieldIP.setDisable(false);
 		this.buttonJER.setDisable(false);
 		this.hboxC.setVisible(false);
-		this.buttonB.setDisable(false);
+		this.buttonBack.setDisable(false);
 		
 		
 		// to-do: stop connection attempt
@@ -315,41 +354,8 @@ public class ControllerMenu {
 		this.buttonSendMessageC.setDisable(true);
 	}
 	
-	@FXML public void selectRH(ActionEvent event) 
-	{
-		System.out.println("User selected Rules & Help");
-		
-		this.vboxMM.setVisible(false);
-		this.vboxSC.setVisible(false);
-		this.textMM.setVisible(false);
-		
-		this.vboxB.setVisible(true);
-	}
 	
-	@FXML public void selectS(ActionEvent event) 
-	{
-		System.out.println("User selected Settings");
-		
-		this.vboxMM.setVisible(false);
-		this.vboxSC.setVisible(false);
-		this.textMM.setVisible(false);
-		
-		this.vboxS.setVisible(true);
-		this.textS.setVisible(true);
-		this.vboxB.setVisible(true);
-	}
-	@FXML public void selectC(ActionEvent event) 
-	{
-		System.out.println("User selected Credits");
-		
-		this.vboxMM.setVisible(false);
-		this.vboxSC.setVisible(false);
-		this.textMM.setVisible(false);
-		
-		this.vboxC.setVisible(true);
-		this.textC.setVisible(true);
-		this.vboxB.setVisible(true);
-	}
+	
 	
 	@FXML public void selectSG(ActionEvent event) 
 	{
@@ -358,7 +364,7 @@ public class ControllerMenu {
 		// to-do
 		try {
 			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
-			Stage stage = (Stage) this.vboxMM.getScene().getWindow();
+			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
 			loader.setController(new ControllerGame());
 			AnchorPane quiz = (AnchorPane) loader.load();
 		
@@ -377,20 +383,20 @@ public class ControllerMenu {
 	{
 		System.out.println("User selected Back");
 		
-		this.vboxSP.setVisible(false);
-		this.vboxB.setVisible(false);
-		this.vboxMP.setVisible(false);
-		this.vboxC.setVisible(false);
-		this.vboxS.setVisible(false);
+		this.vboxSinglePlayer.setVisible(false);
+		this.vboxBack.setVisible(false);
+		this.vboxMultiPlayer.setVisible(false);
+		this.vboxInfo.setVisible(false);
+		this.vboxSettings.setVisible(false);
 		this.textSP.setVisible(false);
 		this.textMP.setVisible(false);
 		this.textS.setVisible(false);
 		this.textC.setVisible(false);
-		this.vboxSR.setVisible(false);
-		this.vboxCR.setVisible(false);
+		this.vboxLobbyServer.setVisible(false);
+		this.vboxLobbyClient.setVisible(false);
 		
-		this.vboxMM.setVisible(true);
-		this.vboxSC.setVisible(true);
+		this.vboxMainMenu.setVisible(true);
+		this.vboxSettingsInfo.setVisible(true);
 		this.textMM.setVisible(true);
 		
 	}
@@ -403,11 +409,11 @@ public class ControllerMenu {
 	{
 		System.out.println("User selected Save and Exit");
 		
-		this.vboxS.setVisible(false);
+		this.vboxSettings.setVisible(false);
 		this.textS.setVisible(false);
 		
-		this.vboxMM.setVisible(true);
-		this.vboxSC.setVisible(true);
+		this.vboxMainMenu.setVisible(true);
+		this.vboxSettingsInfo.setVisible(true);
 		this.textMM.setVisible(true);
 		
 	}

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
+<AnchorPane id="base" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
    <children>
       <Text fx:id="textMM" fill="WHITE" layoutX="342.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="340.00000953674316">
          <font>
@@ -45,18 +46,18 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <VBox fx:id="vboxMM" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
+      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="290.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="291.0" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="171.0">
          <children>
-            <Button fx:id="buttonSP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSP" prefHeight="50.0" prefWidth="340.0" text="Single-Player" />
+            <Button fx:id="buttonSinglePlayer" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectSinglePlayer" prefHeight="50.0" prefWidth="340.0" text="Single-Player" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <Button fx:id="buttonMP" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMP" prefHeight="50.0" prefWidth="340.0" text="Multi-Player" />
+            <Button fx:id="buttonMultiPlayer" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectMultiPlayer" prefHeight="50.0" prefWidth="340.0" text="Multi-Player" />
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
-            <Button fx:id="buttonRH" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRH" prefHeight="50.0" prefWidth="340.0" text="Rules &amp; Help" />
+            <Button fx:id="buttonRulesHelp" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectRulesHelp" prefHeight="50.0" prefWidth="340.0" text="Rules &amp; Help" />
          </children>
       </VBox>
-      <VBox fx:id="vboxSC" alignment="CENTER" layoutX="760.0" layoutY="458.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" visible="false" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="216.0">
+      <VBox fx:id="vboxSettingsInfo" alignment="CENTER" layoutX="812.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="92.0" prefWidth="48.0" spacing="8.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="812.0" AnchorPane.rightAnchor="163.0">
          <children>
-            <Button fx:id="buttonS" mnemonicParsing="false" onAction="#selectS" prefHeight="35.0" prefWidth="35.0">
+            <Button fx:id="buttonSettings" mnemonicParsing="false" onAction="#selectSettings" prefHeight="35.0" prefWidth="35.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,7 +65,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="buttonC" mnemonicParsing="false" onAction="#selectC" prefHeight="35.0" prefWidth="35.0">
+            <Button fx:id="buttonInfo" mnemonicParsing="false" onAction="#selectInfo" prefHeight="35.0" prefWidth="35.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,9 +75,9 @@
                </graphic></Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxB" alignment="CENTER" layoutX="164.0" layoutY="501.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxBack" alignment="CENTER" layoutX="164.0" layoutY="501.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;">
          <children>
-            <Button fx:id="buttonB" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -87,7 +88,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxSP" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSinglePlayer" alignment="CENTER" layoutX="336.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="351.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="46.0" prefWidth="361.0">
@@ -116,7 +117,7 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxMP" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxMultiPlayer" alignment="CENTER" layoutX="289.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="442.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox alignment="CENTER" prefHeight="30.0" prefWidth="242.0">
                <children>
@@ -165,145 +166,55 @@
             <Insets left="100.0" right="100.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxSR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxLobbyServer" alignment="BOTTOM_CENTER" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
-            <HBox prefHeight="365.0" prefWidth="590.0">
+            <HBox prefHeight="330.0" prefWidth="600.0">
                <children>
-                  <VBox prefHeight="60.0" prefWidth="295.0" spacing="5.0">
+                  <VBox prefHeight="330.0" prefWidth="300.0" spacing="5.0">
                      <children>
-                        <Label fx:id="labelIP" prefHeight="18.0" prefWidth="200.0" text="IP address: X.X.X.X" textFill="WHITE" />
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Connected Players List:" textFill="WHITE">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="290.0" text="User List" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <VBox fx:id="vboxSCPL" prefHeight="190.0" prefWidth="300.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•1. Me" textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" visible="false" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" visible="false" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•2. " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•3. " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•4. " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: lime;" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•5. " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="300.0" spacing="20.0">
-                                 <children>
-                                    <Label prefHeight="30.0" prefWidth="155.0" text="•6. " textFill="WHITE">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red;" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="kick" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <TextArea fx:id="textAreaChatS" editable="false" prefHeight="100.0" prefWidth="295.0" text="[22:01] Beppe: culo eheh&#10;[22:01] Me: esplodi&#10;[22:02] Beppe: no">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextArea>
-                        <HBox prefHeight="30.0" prefWidth="600.0" spacing="5.0">
-                           <children>
-                              <TextField fx:id="textFieldChatS" onKeyTyped="#validateChatMessage" prefHeight="26.0" prefWidth="220.0" promptText="Message" />
-                              <Button fx:id="buttonSendMessageS" mnemonicParsing="false" onAction="#sendMessageS" prefHeight="26.0" prefWidth="70.0" text="Send" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="295.0" spacing="5.0">
-                     <children>
-                        <Label prefHeight="28.0" prefWidth="98.0" textFill="WHITE" visible="false" />
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="295.0" text="Match settings" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0">
-                           <children>
-                              <Label prefHeight="30.0" prefWidth="200.0" text="Room privacy:" textFill="WHITE">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox prefHeight="26.0" prefWidth="90.0" promptText="Open" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="295.0" spacing="5.0">
-                           <children>
-                              <Label prefHeight="30.0" prefWidth="140.0" text="Password:" textFill="WHITE">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" />
-                              <TextField prefHeight="26.0" prefWidth="120.0" />
-                           </children>
-                        </HBox>
-                        <Separator prefHeight="240.0" prefWidth="295.0" visible="false" />
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Start Game" />
+                        <ListView prefHeight="285.0" prefWidth="290.0" />
                      </children>
                      <padding>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="330.0" prefWidth="300.0" spacing="5.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="290.0" text="Chat" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextArea prefHeight="250.0" prefWidth="290.0" />
+                        <HBox prefHeight="30.0" prefWidth="290.0" spacing="5.0">
+                           <children>
+                              <TextField prefHeight="30.0" prefWidth="210.0" />
+                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
                </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </HBox>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
       </VBox>
-      <VBox fx:id="vboxCR" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxLobbyClient" layoutX="212.0" layoutY="104.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="365.0" prefWidth="590.0">
                <children>
@@ -439,7 +350,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxS" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxSettings" alignment="CENTER" layoutX="290.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="45.0" prefWidth="400.0">
@@ -490,7 +401,7 @@
             <Separator prefHeight="25.0" prefWidth="340.0" visible="false" />
          </children>
       </VBox>
-      <VBox fx:id="vboxC" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxInfo" alignment="CENTER" layoutX="322.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="380.0" style="-fx-background-color: black;" visible="false">
          <children>
             <HBox prefHeight="300.0" prefWidth="380.0">
                <children>
@@ -501,6 +412,19 @@
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding>
+      </VBox>
+      <VBox fx:id="vboxLobbySettings" alignment="CENTER" layoutX="812.0" layoutY="501.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Button fx:id="buttonLobbySettings" mnemonicParsing="false" onAction="#selectB" prefHeight="35.0" prefWidth="35.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/icon-settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
       </VBox>
    </children>
 </AnchorPane>
