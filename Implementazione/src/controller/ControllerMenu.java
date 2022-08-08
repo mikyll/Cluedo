@@ -1,37 +1,28 @@
 package controller;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import networking.ClientDatagram;
-import networking.ServerDatagram;
+import model.networking.ServerStream;
+import model.networking.message.IMessageHandler;
+import model.networking.message.Message;
 
 public class ControllerMenu {
 	private SimpleDateFormat tformatter;
@@ -112,6 +103,50 @@ public class ControllerMenu {
 	// Info controls:
 	// [...]
 	
+	public IMessageHandler messageHandler = (Message msg) -> {
+		switch(msg.getMsgType())
+		{
+		
+		case CONNECT_REQUEST:
+			break;
+			
+		case CONNECT_OK:
+			break;
+			
+		case CONNECT_REFUSED:
+			break;
+			
+		case USER_JOINED:
+			break;
+			
+		case USER_LIST:
+			break;
+			
+		case DISCONNECT:
+			break;
+			
+		case CHAT:
+			break;
+			
+		case READY:
+			break;
+			
+		case KICK:
+			break;
+			
+		case BAN:
+			break;
+			
+		case START_GAME:
+			break;
+			
+		default:
+			System.out.println("Unknown Message Type");
+			break;
+		
+		}
+	};
+	
 	
 	public ControllerMenu() {}
 	
@@ -133,6 +168,15 @@ public class ControllerMenu {
 		this.vboxRulesHelp.setVisible(false);
 		this.vboxSettings.setVisible(false);
 		this.vboxInfo.setVisible(false);
+		
+		this.textFieldPort.setPromptText("" + ServerStream.DEFAULT_PORT);
+		
+		this.spinnerRoomSizeMin.valueProperty().addListener((changed, oldval, newval) -> {
+			this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(newval, 6, this.spinnerRoomSizeMax.getValue()));
+		});
+		this.spinnerRoomSizeMax.valueProperty().addListener((changed, oldval, newval) -> {
+			this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerRoomSizeMin.getValue()));
+		});
 	}
 	
 	// MainMenu functions =====================================================
@@ -428,8 +472,26 @@ public class ControllerMenu {
 	@FXML public void startMultiPlayerGame(ActionEvent event)
 	{
 		System.out.println("User started the game");
+			
+		// to-do
+		try {
+			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
+			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
+			loader.setController(new ControllerGame());
+			BorderPane basePane = (BorderPane) loader.load();
+		
+			Scene scene = new Scene(basePane);
+			scene.getStylesheets().add(ControllerMenu.class.getResource("/application/application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERRORE: " + e.getMessage());
+			System.exit(1);
+		}
 	}
 	
+	// private addChatMessage()
 	
 	// close Lobby Settings
 	
