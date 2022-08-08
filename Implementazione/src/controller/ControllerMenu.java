@@ -36,7 +36,8 @@ import networking.ServerDatagram;
 public class ControllerMenu {
 	private SimpleDateFormat tformatter;
 	
-	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
+	private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
 	@FXML private VBox vboxMainMenu;
 	@FXML private VBox vboxSettingsInfoControls;
@@ -73,8 +74,8 @@ public class ControllerMenu {
 	@FXML private Button buttonSelectJoinExistingLobby;
 	
 	// Create New Lobby controls:
-	@FXML private TextField textFieldNicknameCreate;
-	@FXML private Label labelErrorNicknameCreate;
+	@FXML private TextField textFieldUsernameCreate;
+	@FXML private Label labelErrorUsernameCreate;
 	@FXML private Spinner<Integer> spinnerRoomSizeMin;
 	@FXML private Spinner<Integer> spinnerRoomSizeMax;
 	@FXML private TextField textFieldPort;
@@ -82,8 +83,8 @@ public class ControllerMenu {
 	@FXML private Button buttonCreateNewLobby;
 	
 	// Join Existing Lobby controls:
-	@FXML private TextField textFieldNicknameJoin;
-	@FXML private Label labelErrorNicknameJoin;
+	@FXML private TextField textFieldUsernameJoin;
+	@FXML private Label labelErrorUsernameJoin;
 	@FXML private TextField textFieldIP;
 	@FXML private Label labelErrorIP;
 	@FXML private HBox hboxConnectionJoin;
@@ -284,14 +285,18 @@ public class ControllerMenu {
 		this.vboxCreateNewLobby.setVisible(true);
 		
 		// Reset fields
-		this.textFieldNicknameCreate.setText("");
+		this.textFieldUsernameCreate.setText("");
 		// set textField color(?)
-		this.labelErrorNicknameCreate.setVisible(false);
+		this.labelErrorUsernameCreate.setVisible(false);
+		
 		// reset spinner
+		//this.spinnerRoomSizeMin.set
+		
 		this.textFieldPort.setText("");
-		// set color
+		this.textFieldPort.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorPort.setVisible(false);
-		//this.buttonCreateNewLobby.setDisable(true);
+		
+		this.buttonCreateNewLobby.setDisable(true);
 	}
 	
 	@FXML public void selectJoinExistingLobby(ActionEvent event)
@@ -303,19 +308,62 @@ public class ControllerMenu {
 		this.vboxJoinExistingLobby.setVisible(true);
 		
 		// Reset fields
-		this.textFieldNicknameJoin.setText("");
-		// set textField color(?)
-		this.labelErrorNicknameJoin.setVisible(false);
+		this.textFieldUsernameJoin.setText("");
+		this.textFieldUsernameJoin.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorUsernameJoin.setVisible(false);
+		
 		this.textFieldIP.setText("");
-		// set textField color(?)
+		this.textFieldIP.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorIP.setVisible(false);
+		
 		this.hboxConnectionJoin.setVisible(false);
 		this.buttonJoinExistingLobby.setDisable(true);
 	}
 	
 	// Create New Lobby functions =============================================
+	private boolean validateUsername(String username)
+	{
+		return PATTERN_USERNAME.matcher(username).matches();
+	}
 	
-	// validate Nickname
+	private boolean validatePort(String port)
+	{
+		boolean result;
+		int p;
+		
+		try {
+			p = Integer.parseInt(port);
+			result = (p > 1023 && p < 65536);
+		} catch(Exception e) {
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	@FXML private void checkEnableCreateLobby()
+	{
+		boolean disableCreateButton = false, errorUsername = false, errorPort = false;
+		
+		if(!this.validateUsername(this.textFieldUsernameCreate.getText()))
+		{
+			disableCreateButton = true;
+			errorUsername = true;
+		}
+		
+		if(!(this.validatePort(this.textFieldPort.getText()) || this.textFieldPort.getText().isEmpty()))
+		{
+			disableCreateButton = true;
+			errorPort = true;
+		}
+		
+		this.buttonCreateNewLobby.setDisable(disableCreateButton);
+		this.labelErrorUsernameCreate.setVisible(errorUsername);
+		this.textFieldUsernameCreate.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorPort.setVisible(errorPort);
+		this.textFieldPort.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+	
+	}
 	
 	@FXML public void createNewLobby(ActionEvent event)
 	{
@@ -329,10 +377,33 @@ public class ControllerMenu {
 	}
 	
 	// Join Existing Lobby functions ==========================================
+	private boolean validateIPv4(String address)
+	{
+		return PATTERN_IP.matcher(address).matches();
+	}
 	
-	// validate Nickname
-	
-	// validate IP
+	@FXML private void checkEnableJoinLobby()
+	{
+		boolean disableJoinButton = false, errorUsername = false, errorIP = false;
+		
+		if(!this.validateUsername(this.textFieldUsernameJoin.getText()))
+		{
+			disableJoinButton = true;
+			errorUsername = true;
+		}
+		
+		if(!(this.validateIPv4(this.textFieldIP.getText()) || this.textFieldIP.getText().isEmpty()))
+		{
+			disableJoinButton = true;
+			errorIP = true;
+		}
+		
+		this.buttonJoinExistingLobby.setDisable(disableJoinButton);
+		this.labelErrorUsernameJoin.setVisible(errorUsername);
+		this.textFieldUsernameJoin.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorIP.setVisible(errorIP);
+		this.textFieldIP.setStyle(errorIP ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+	}
 	
 	@FXML public void joinExistingLobby(ActionEvent event)
 	{
