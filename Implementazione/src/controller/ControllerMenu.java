@@ -77,6 +77,8 @@ public class ControllerMenu {
 	@FXML private Label labelErrorNicknameCreate;
 	@FXML private Spinner<Integer> spinnerRoomSizeMin;
 	@FXML private Spinner<Integer> spinnerRoomSizeMax;
+	@FXML private TextField textFieldPort;
+	@FXML private Label labelErrorPort;
 	@FXML private Button buttonCreateNewLobby;
 	
 	// Join Existing Lobby controls:
@@ -187,7 +189,67 @@ public class ControllerMenu {
 	
 	@FXML public void selectBack(ActionEvent event)
 	{
+		System.out.println("User selected Back");
 		
+		if(this.vboxSinglePlayer.isVisible())
+		{
+			this.vboxSinglePlayer.setVisible(false);
+			this.vboxBackControls.setVisible(false);
+			
+			this.vboxMainMenu.setVisible(true);
+			this.vboxSettingsInfoControls.setVisible(true);
+		}
+		else if(this.vboxMultiPlayer.isVisible())
+		{
+			this.vboxMultiPlayer.setVisible(false);
+			this.vboxBackControls.setVisible(false);
+			
+			this.vboxMainMenu.setVisible(true);
+			this.vboxSettingsInfoControls.setVisible(true);
+		}
+		else if(this.vboxRulesHelp.isVisible())
+		{
+			this.vboxRulesHelp.setVisible(false);
+			this.vboxBackControls.setVisible(false);
+			
+			this.vboxMainMenu.setVisible(true);
+			this.vboxSettingsInfoControls.setVisible(true);
+		}
+		else if(this.vboxSettings.isVisible())
+		{
+			this.vboxSettings.setVisible(false);
+			this.vboxBackControls.setVisible(false);
+			
+			this.vboxMainMenu.setVisible(true);
+			this.vboxSettingsInfoControls.setVisible(true);
+		}
+		else if(this.vboxInfo.isVisible())
+		{
+			this.vboxInfo.setVisible(false);
+			this.vboxBackControls.setVisible(false);
+			
+			this.vboxMainMenu.setVisible(true);
+			this.vboxSettingsInfoControls.setVisible(true);
+		}
+		else if(this.vboxCreateNewLobby.isVisible())
+		{
+			this.vboxCreateNewLobby.setVisible(false);
+			
+			this.vboxMultiPlayer.setVisible(true);
+		}
+		else if(this.vboxJoinExistingLobby.isVisible())
+		{
+			this.vboxJoinExistingLobby.setVisible(false);
+			
+			this.vboxMultiPlayer.setVisible(true);
+		}
+		else if(this.vboxLobby.isVisible())
+		{
+			this.vboxLobby.setVisible(false);
+			this.vboxLobbySettingsControls.setVisible(false);
+			
+			this.vboxMultiPlayer.setVisible(true);
+		}
 	}
 	
 	// SinglePlayer functions =================================================
@@ -226,7 +288,10 @@ public class ControllerMenu {
 		// set textField color(?)
 		this.labelErrorNicknameCreate.setVisible(false);
 		// reset spinner
-		this.buttonCreateNewLobby.setDisable(true);
+		this.textFieldPort.setText("");
+		// set color
+		this.labelErrorPort.setVisible(false);
+		//this.buttonCreateNewLobby.setDisable(true);
 	}
 	
 	@FXML public void selectJoinExistingLobby(ActionEvent event)
@@ -255,6 +320,12 @@ public class ControllerMenu {
 	@FXML public void createNewLobby(ActionEvent event)
 	{
 		System.out.println("User created a new lobby");
+		
+		this.vboxCreateNewLobby.setVisible(false);
+		
+		this.vboxLobby.setVisible(true);
+		this.vboxLobbySettingsControls.setVisible(true);
+		this.buttonLobbySettings.setDisable(false);
 	}
 	
 	// Join Existing Lobby functions ==========================================
@@ -272,16 +343,22 @@ public class ControllerMenu {
 	
 	@FXML public void selectLobbySettings(ActionEvent event)
 	{
+		System.out.println("User selected Lobby Settings");
 		
+		this.buttonLobbySettings.setDisable(true);
+	}
+	
+	@FXML public void closeLobbySettings(ActionEvent event)
+	{
+		System.out.println("User closed Lobby Settings");
 	}
 	
 	// Start Game
 	@FXML public void startMultiPlayerGame(ActionEvent event)
 	{
-		
+		System.out.println("User started the game");
 	}
 	
-	// select Lobby Settings
 	
 	// close Lobby Settings
 	
