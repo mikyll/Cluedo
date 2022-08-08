@@ -10,7 +10,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/ViewMenu.fxml"));
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/ViewMenu2.fxml"));
 			AnchorPane homeUtente = (AnchorPane) loader.load();
 			// loader.setController();
 			Scene scene = new Scene(homeUtente);

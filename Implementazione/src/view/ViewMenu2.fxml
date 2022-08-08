@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" style="-fx-background-image: url(&quot;../../resources/images/background-cluedo.png&quot;);" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" style="-fx-background-image: url(&quot;../../resources/images/background-cluedo.png&quot;);" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1060.0">
          <image>
@@ -31,12 +30,12 @@
             <Button fx:id="buttonRulesHelp" mnemonicParsing="false" onAction="#selectRulesHelp" prefHeight="30.0" prefWidth="200.0" text="Rules &amp; Help" />
          </children>
       </VBox>
-      <VBox fx:id="vboxBack" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0">
+      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0">
          <children>
             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
-      <VBox fx:id="vboxSettingsInfo" alignment="CENTER" layoutX="810.0" layoutY="480.0" prefHeight="100.0" prefWidth="50.0" spacing="10.0" visible="false">
+      <VBox fx:id="vboxSettingsInfoControls" alignment="CENTER" layoutX="810.0" layoutY="480.0" prefHeight="100.0" prefWidth="50.0" spacing="10.0" visible="false">
          <children>
             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
@@ -44,7 +43,8 @@
       </VBox>
       <VBox fx:id="vboxSinglePlayer" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
-            <HBox prefHeight="50.0" prefWidth="400.0">
+            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
+            <HBox prefHeight="60.0" prefWidth="400.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
@@ -62,7 +62,7 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox prefHeight="50.0" prefWidth="400.0">
+            <HBox prefHeight="60.0" prefWidth="400.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
@@ -80,7 +80,7 @@
                   </HBox>
                </children>
             </HBox>
-            <Separator prefHeight="100.0" prefWidth="200.0" />
+            <Separator prefHeight="90.0" prefWidth="200.0" visible="false" />
             <Button fx:id="buttonStartSinglePlayer" mnemonicParsing="false" onAction="#startSinglePlayerGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
          </children>
          <padding>
@@ -89,8 +89,8 @@
       </VBox>
       <VBox fx:id="vboxMultiPlayer" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
-            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#selectCreateNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
-            <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
+            <Button fx:id="buttonSelectCreateNewLobby" mnemonicParsing="false" onAction="#selectCreateNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
+            <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
       <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
@@ -103,8 +103,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="30.0" prefWidth="200.0" />
-                  <Label fx:id="labelErrorNicknameJoin1" prefHeight="60.0" prefWidth="150.0" text="Nickname must be from   3 to 15 alphanumeric characters long." textFill="RED" wrapText="true">
+                  <TextField fx:id="textFieldNicknameCreate" prefHeight="30.0" prefWidth="200.0" />
+                  <Label fx:id="labelErrorNicknameCreate" prefHeight="60.0" prefWidth="150.0" text="Nickname must be from   3 to 15 alphanumeric characters long." textFill="RED" wrapText="true">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -128,13 +128,13 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Spinner prefHeight="30.0" prefWidth="50.0" />
+                        <Spinner fx:id="spinnerRoomSizeMin" prefHeight="30.0" prefWidth="50.0" />
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="50.0" text="Max:" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Spinner prefHeight="30.0" prefWidth="50.0" />
+                        <Spinner fx:id="spinnerRoomSizeMax" prefHeight="30.0" prefWidth="50.0" />
                      </children>
                   </HBox>
                </children>
@@ -143,7 +143,7 @@
                </padding>
             </HBox>
             <Separator prefHeight="50.0" prefWidth="500.0" visible="false" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
+            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
          </children>
       </VBox>
       <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
@@ -156,7 +156,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="textFieldNicknameJoin" prefHeight="30.0" prefWidth="200.0" />
                   <Label fx:id="labelErrorNicknameJoin" prefHeight="60.0" prefWidth="150.0" text="Nickname must be from   3 to 15 alphanumeric characters long." textFill="RED" wrapText="true">
                      <padding>
                         <Insets left="10.0" />
@@ -174,8 +174,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="30.0" prefWidth="200.0" promptText="localhost" />
-                  <Label fx:id="labelErrorIPaddress" prefHeight="30.0" prefWidth="120.0" text="IP address:" textFill="RED">
+                  <TextField fx:id="textFieldIP" prefHeight="30.0" prefWidth="200.0" promptText="localhost" />
+                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="120.0" text="IP address:" textFill="RED">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -197,10 +197,10 @@
                </children>
             </HBox>
             <Separator prefHeight="60.0" prefWidth="500.0" visible="false" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
+            <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="280.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+      <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="280.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
          <children>
             <HBox prefHeight="300.0" prefWidth="500.0">
                <children>
@@ -211,7 +211,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <ListView prefHeight="255.0" prefWidth="240.0" />
+                        <ListView fx:id="listViewUsers" prefHeight="255.0" prefWidth="240.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -224,11 +224,11 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <TextArea prefHeight="250.0" prefWidth="240.0" />
+                        <TextArea fx:id="textAreaChat" prefHeight="250.0" prefWidth="240.0" />
                         <HBox prefHeight="30.0" prefWidth="240.0" spacing="5.0">
                            <children>
-                              <TextField prefHeight="30.0" prefWidth="165.0" />
-                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Send" />
+                              <TextField fx:id="textFieldChat" prefHeight="30.0" prefWidth="165.0" />
+                              <Button fx:id="buttonChatSend" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Send" />
                            </children>
                         </HBox>
                      </children>
@@ -248,12 +248,34 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="vboxLobbySettings" alignment="CENTER" layoutX="810.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0">
+      <VBox fx:id="vboxLobbySettingsControls" alignment="CENTER" layoutX="810.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0">
          <children>
             <Button fx:id="buttonLobbySettings" mnemonicParsing="false" onAction="#selectLobbySettings" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
-      <VBox fx:id="vboxRulesHelp" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" />
+      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+         <children>
+            <Label text="Lobby Settings" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <HBox prefHeight="50.0" prefWidth="400.0">
+               <children>
+                  <TextField text="Nickname" />
+                  <TextField text="IPaddress" />
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Ban" />
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="400.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="150.0" text="IP address: X.X.X.X" textFill="WHITE" />
+                  <Button mnemonicParsing="false" text="Open/Close" />
+               </children>
+            </HBox>
+         </children></VBox>
+      <VBox fx:id="vboxRulesHelp" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox fx:id="vboxSettings" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox fx:id="vboxInfo" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />

@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
@@ -37,85 +38,77 @@ public class ControllerMenu {
 	
 	private static final Pattern IP_PATTERN = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
-	@FXML private Text textMM;	// text Main Menu
-	@FXML private Text textSP;	// text Single-Player
-	@FXML private Text textMP;	// text Multi-Player
-	@FXML private Text textS;	// text Settings
-	@FXML private Text textC;	// text Credits
-	
 	@FXML private VBox vboxMainMenu;
-	@FXML private VBox vboxSettingsInfo;
-	@FXML private VBox vboxBack;
+	@FXML private VBox vboxSettingsInfoControls;
+	@FXML private VBox vboxBackControls;
 	@FXML private VBox vboxSinglePlayer;
 	@FXML private VBox vboxMultiPlayer;
-	@FXML private VBox vboxLobbyServer;
-	@FXML private VBox vboxLobbyClient;
+	@FXML private VBox vboxCreateNewLobby;
+	@FXML private VBox vboxJoinExistingLobby;
+	@FXML private VBox vboxLobby;
+	@FXML private VBox vboxLobbySettingsControls;
+	@FXML private VBox vboxLobbySettings;
+	@FXML private VBox vboxRulesHelp;
 	@FXML private VBox vboxSettings;
 	@FXML private VBox vboxInfo;
 	
+	// Main Menu controls:
+	@FXML private Button buttonSinglePlayer;
+	@FXML private Button buttonMultiPlayer;
+	@FXML private Button buttonRulesHelp;
 	
+	// Bottom-right controls:
+	@FXML private Button buttonSettings;
+	@FXML private Button buttonInfo;
 	
-	// vbox Main Menu controls:
-	@FXML private Button buttonSinglePlayer;	// button Single-Player
-	@FXML private Button buttonMultiPlayer;	// button Multi-Player
-	@FXML private Button buttonRulesHelp;	// button Rules & Help
+	// Bottom-left controls:
+	@FXML private Button buttonBack;
 	
-	// vbox Bottom-right controls:
-	@FXML private Button buttonSettings;	// button Settings
-	@FXML private Button buttonInfo;	// button Credits
+	// SinglePlayer controls:
+	// [...] settings controls
+	@FXML private Button buttonStartSinglePlayer;
 	
-	// vbox Bottom-left controls:
-	@FXML private Button buttonBack;	// button Back
+	// MultiPlayer cotrols:
+	@FXML private Button buttonSelectCreateNewLobby;
+	@FXML private Button buttonSelectJoinExistingLobby;
 	
-	// vbox Single-Player controls:
-	@FXML private Spinner<Integer> spinnerON;	// spinner Opponents Number
-	@FXML private ComboBox<String> comboboxDL;	// combobox Difficulty Level
-	@FXML private Button buttonSG;				// button Start Game
+	// Create New Lobby controls:
+	@FXML private TextField textFieldNicknameCreate;
+	@FXML private Label labelErrorNicknameCreate;
+	@FXML private Spinner<Integer> spinnerRoomSizeMin;
+	@FXML private Spinner<Integer> spinnerRoomSizeMax;
+	@FXML private Button buttonCreateNewLobby;
 	
-	// vbox Multi-Player cotrols:
-	@FXML private Button buttonCreateLobby;
-	@FXML private TextField textFieldIP;		// textField IP
-	@FXML private Button buttonJER;				// button Join Existing Room
-	@FXML private Label labelErrorIP;			// label Error IP
-	@FXML private HBox hboxC;					// hbox Connecting
-	@FXML private Button buttonSC;				// button Stop Connecting
-	@FXML private TextField textFieldNickname;	// textField Nickname
+	// Join Existing Lobby controls:
+	@FXML private TextField textFieldNicknameJoin;
+	@FXML private Label labelErrorNicknameJoin;
+	@FXML private TextField textFieldIP;
+	@FXML private Label labelErrorIP;
+	@FXML private HBox hboxConnectionJoin;
+	@FXML private Button buttonJoinExistingLobby;
 	
-	// vbox Multi-Player create new room cotrols:
-	@FXML private Label labelIP;
-	/*TEST socket*/
-	@FXML private TextArea textAreaChatS;		// textArea Chat Server
-	@FXML private TextField textFieldChatS;		// textField Chat Server
-	@FXML private Button buttonSendMessageS;	// button Send Message Server
-	@FXML private TextArea textAreaChatC;		// textArea Chat Client
-	@FXML private TextField textFieldChatC;		// textField Chat Client
-	@FXML private Button buttonSendMessageC;	// button Send Message Client
+	// Lobby controls:
+	@FXML private ListView<HBox> listViewUsers;
+	@FXML private TextArea textAreaChat;
+	@FXML private TextField textFieldChat;
+	@FXML private Button buttonChatSend;
+	@FXML private Button buttonStartMultiPlayer;
 	
-	@FXML private VBox vboxCCPL;			// vbox Client Connected Player List
-	@FXML private VBox vboxSCPL;			// vbox Server Connected Player List
-	@FXML private Button buttonReady;		// button Ready
+	// Lobby bottom-right controls:
+	@FXML private Button buttonLobbySettings;
 	
-	private ArrayList<Label> playerList;
-	private ArrayList<Label> readyList;
-	private ArrayList<Button> kickList;
-	private boolean isServer;
+	// Lobby Settings controls:
+	// [...]
 	
-	// vbox Settings controls:
-	@FXML private CheckBox checkboxM;			// checkbox Music
-	@FXML private Slider sliderMV;				// slider Music Volume
-	@FXML private CheckBox checkboxA;			// checkbox Audio
-	@FXML private Slider sliderAV;				// slider Audio Volume
-	@FXML private ComboBox<String> comboboxL; 	// combobox Language
-	@FXML private Button buttonRD;				// button Restore Defaults
-	@FXML private Button buttonSE;				// button Save and Exit
+	// Rules & Help controls:
+	// [...]
 	
+	// Settings controls:
+	// [...]
 	
+	// Info controls:
+	// [...]
 	
-	// test
-	/*private IServer server;
-	private IClient client;*/
-	private ServerDatagram server;
-	private ClientDatagram client;
 	
 	public ControllerMenu() {}
 	
@@ -125,71 +118,50 @@ public class ControllerMenu {
 		
 		// setup panels and text labels visibility
 		this.vboxMainMenu.setVisible(true);
-		this.vboxSettingsInfo.setVisible(true);
-		this.textMM.setVisible(true);
+		this.vboxSettingsInfoControls.setVisible(true);
 		
-		this.vboxBack.setVisible(false);
+		this.vboxBackControls.setVisible(false);
 		this.vboxSinglePlayer.setVisible(false);
-		this.textSP.setVisible(false);
 		this.vboxMultiPlayer.setVisible(false);
-		this.textMP.setVisible(false);
+		this.vboxCreateNewLobby.setVisible(false);
+		this.vboxJoinExistingLobby.setVisible(false);
+		this.vboxLobby.setVisible(false);
+		this.vboxLobbySettingsControls.setVisible(false);
+		this.vboxRulesHelp.setVisible(false);
 		this.vboxSettings.setVisible(false);
-		this.textS.setVisible(false);
 		this.vboxInfo.setVisible(false);
-		this.textC.setVisible(false);
-		this.vboxLobbyServer.setVisible(false);
-		this.vboxLobbyClient.setVisible(false);
 	}
 	
 	// MainMenu functions =====================================================
 	@FXML public void selectSinglePlayer(ActionEvent event) 
 	{
-		System.out.println("User selected Single-Player");
+		System.out.println("User selected SinglePlayer");
 		
 		this.vboxMainMenu.setVisible(false);
-		this.vboxSettingsInfo.setVisible(false);
-		this.textMM.setVisible(false);
+		this.vboxSettingsInfoControls.setVisible(false);
 				
 		this.vboxSinglePlayer.setVisible(true);
-		this.vboxBack.setVisible(true);
-		this.textSP.setVisible(true);
-		
+		this.vboxBackControls.setVisible(true);
 	}
 	@FXML public void selectMultiPlayer(ActionEvent event) 
 	{
-		System.out.println("User selected Multi-Player");
+		System.out.println("User selected MultiPlayer");
 		
 		this.vboxMainMenu.setVisible(false);
-		this.vboxSettingsInfo.setVisible(false);
-		this.textMM.setVisible(false);
+		this.vboxSettingsInfoControls.setVisible(false);
 		
 		this.vboxMultiPlayer.setVisible(true);
-		this.textMP.setVisible(true);
-		this.vboxBack.setVisible(true);	
-		
-		this.textFieldIP.setText("");
-		this.buttonCreateLobby.setDisable(false);
-		this.buttonJER.setDisable(true);
-		this.labelErrorIP.setVisible(false);
-		this.hboxC.setVisible(false);
-		
-		// reset chat controls
-		//this.textAreaChatC.setText("");
-		//this.textAreaChatS.setText("");
-		this.textFieldChatC.setText("");
-		this.textFieldChatS.setText("");
-		this.buttonSendMessageC.setDisable(true);
-		this.buttonSendMessageS.setDisable(true);
+		this.vboxBackControls.setVisible(true);	
 	}
 	@FXML public void selectRulesHelp(ActionEvent event) 
 	{
 		System.out.println("User selected Rules & Help");
 		
 		this.vboxMainMenu.setVisible(false);
-		this.vboxSettingsInfo.setVisible(false);
-		this.textMM.setVisible(false);
+		this.vboxSettingsInfoControls.setVisible(false);
 		
-		this.vboxBack.setVisible(true);
+		this.vboxRulesHelp.setVisible(true);
+		this.vboxBackControls.setVisible(true);
 	}
 	
 	@FXML public void selectSettings(ActionEvent event) 
@@ -197,29 +169,125 @@ public class ControllerMenu {
 		System.out.println("User selected Settings");
 		
 		this.vboxMainMenu.setVisible(false);
-		this.vboxSettingsInfo.setVisible(false);
-		this.textMM.setVisible(false);
+		this.vboxSettingsInfoControls.setVisible(false);
 		
 		this.vboxSettings.setVisible(true);
-		this.textS.setVisible(true);
-		this.vboxBack.setVisible(true);
+		this.vboxBackControls.setVisible(true);
 	}
 	@FXML public void selectInfo(ActionEvent event) 
 	{
 		System.out.println("User selected Info");
 		
 		this.vboxMainMenu.setVisible(false);
-		this.vboxSettingsInfo.setVisible(false);
-		this.textMM.setVisible(false);
+		this.vboxSettingsInfoControls.setVisible(false);
 		
 		this.vboxInfo.setVisible(true);
-		this.textC.setVisible(true);
-		this.vboxBack.setVisible(true);
+		this.vboxBackControls.setVisible(true);
 	}
 	
-	// SinglePlayer functions =====================================================
+	@FXML public void selectBack(ActionEvent event)
+	{
+		
+	}
 	
-	@FXML public void selectCNR(ActionEvent event)
+	// SinglePlayer functions =================================================
+	
+	@FXML public void startSinglePlayerGame(ActionEvent event)
+	{
+		// to-do
+		try {
+			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
+			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
+			loader.setController(new ControllerGame());
+			AnchorPane quiz = (AnchorPane) loader.load();
+		
+			Scene scene = new Scene(quiz);
+			scene.getStylesheets().add(ControllerMenu.class.getResource("/application/application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERRORE: " + e.getMessage());
+			System.exit(1);
+		}
+	}
+	
+	// MultiPlayer functions ==================================================
+	@FXML public void selectCreateNewLobby(ActionEvent event)
+	{
+		System.out.println("User selected Create New Lobby");
+		
+		this.vboxMultiPlayer.setVisible(false);
+		
+		this.vboxCreateNewLobby.setVisible(true);
+		
+		// Reset fields
+		this.textFieldNicknameCreate.setText("");
+		// set textField color(?)
+		this.labelErrorNicknameCreate.setVisible(false);
+		// reset spinner
+		this.buttonCreateNewLobby.setDisable(true);
+	}
+	
+	@FXML public void selectJoinExistingLobby(ActionEvent event)
+	{
+		System.out.println("User selected Join Existing Lobby");
+		
+		this.vboxMultiPlayer.setVisible(false);
+		
+		this.vboxJoinExistingLobby.setVisible(true);
+		
+		// Reset fields
+		this.textFieldNicknameJoin.setText("");
+		// set textField color(?)
+		this.labelErrorNicknameJoin.setVisible(false);
+		this.textFieldIP.setText("");
+		// set textField color(?)
+		this.labelErrorIP.setVisible(false);
+		this.hboxConnectionJoin.setVisible(false);
+		this.buttonJoinExistingLobby.setDisable(true);
+	}
+	
+	// Create New Lobby functions =============================================
+	
+	// validate Nickname
+	
+	@FXML public void createNewLobby(ActionEvent event)
+	{
+		System.out.println("User created a new lobby");
+	}
+	
+	// Join Existing Lobby functions ==========================================
+	
+	// validate Nickname
+	
+	// validate IP
+	
+	@FXML public void joinExistingLobby(ActionEvent event)
+	{
+		System.out.println("User is trying to join an existing lobby");
+	}
+	
+	// Lobby functions ========================================================
+	
+	@FXML public void selectLobbySettings(ActionEvent event)
+	{
+		
+	}
+	
+	// Start Game
+	@FXML public void startMultiPlayerGame(ActionEvent event)
+	{
+		
+	}
+	
+	// select Lobby Settings
+	
+	// close Lobby Settings
+	
+	//////////////////////////
+	
+	/*@FXML public void selectCNR(ActionEvent event)
 	{
 		System.out.println("User selected Create New Room");
 		
@@ -417,6 +485,6 @@ public class ControllerMenu {
 		this.textMM.setVisible(true);
 		
 	}
-	
+	*/
 	
 }
