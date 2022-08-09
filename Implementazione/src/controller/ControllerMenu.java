@@ -1,13 +1,20 @@
 package controller;
 
 import java.io.IOException;
+import java.net.BindException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -15,17 +22,19 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.networking.ClientStream;
 import model.networking.ServerStream;
 import model.networking.message.IMessageHandler;
 import model.networking.message.Message;
 
 public class ControllerMenu {
-	private SimpleDateFormat tformatter;
+	private static SimpleDateFormat tformatter;
 	
 	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
 	private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
@@ -69,8 +78,8 @@ public class ControllerMenu {
 	@FXML private Label labelErrorUsernameCreate;
 	@FXML private Spinner<Integer> spinnerRoomSizeMin;
 	@FXML private Spinner<Integer> spinnerRoomSizeMax;
-	@FXML private TextField textFieldPort;
-	@FXML private Label labelErrorPort;
+	@FXML private TextField textFieldPortCreate;
+	@FXML private Label labelErrorPortCreate;
 	@FXML private Button buttonCreateNewLobby;
 	
 	// Join Existing Lobby controls:
@@ -78,6 +87,8 @@ public class ControllerMenu {
 	@FXML private Label labelErrorUsernameJoin;
 	@FXML private TextField textFieldIP;
 	@FXML private Label labelErrorIP;
+	@FXML private TextField textFieldPortJoin;
+	@FXML private Label labelErrorPortJoin;
 	@FXML private HBox hboxConnectionJoin;
 	@FXML private Button buttonJoinExistingLobby;
 	
@@ -103,56 +114,14 @@ public class ControllerMenu {
 	// Info controls:
 	// [...]
 	
-	public IMessageHandler messageHandler = (Message msg) -> {
-		switch(msg.getMsgType())
-		{
-		
-		case CONNECT_REQUEST:
-			break;
-			
-		case CONNECT_OK:
-			break;
-			
-		case CONNECT_REFUSED:
-			break;
-			
-		case USER_JOINED:
-			break;
-			
-		case USER_LIST:
-			break;
-			
-		case DISCONNECT:
-			break;
-			
-		case CHAT:
-			break;
-			
-		case READY:
-			break;
-			
-		case KICK:
-			break;
-			
-		case BAN:
-			break;
-			
-		case START_GAME:
-			break;
-			
-		default:
-			System.out.println("Unknown Message Type");
-			break;
-		
-		}
-	};
-	
+	private ServerStream server;
+	private ClientStream client;
 	
 	public ControllerMenu() {}
 	
 	public void initialize()
 	{
-		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
+		tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		
 		// setup panels and text labels visibility
 		this.vboxMainMenu.setVisible(true);
@@ -169,7 +138,7 @@ public class ControllerMenu {
 		this.vboxSettings.setVisible(false);
 		this.vboxInfo.setVisible(false);
 		
-		this.textFieldPort.setPromptText("" + ServerStream.DEFAULT_PORT);
+		this.textFieldPortCreate.setPromptText("" + ServerStream.DEFAULT_PORT);
 		
 		this.spinnerRoomSizeMin.valueProperty().addListener((changed, oldval, newval) -> {
 			this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(newval, 6, this.spinnerRoomSizeMax.getValue()));
@@ -290,6 +259,8 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
+			this.closeConnection();
+			
 			this.vboxLobby.setVisible(false);
 			this.vboxLobbySettingsControls.setVisible(false);
 			
@@ -329,18 +300,18 @@ public class ControllerMenu {
 		this.vboxCreateNewLobby.setVisible(true);
 		
 		// Reset fields
-		this.textFieldUsernameCreate.setText("");
-		// set textField color(?)
+		this.textFieldUsernameCreate.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorUsernameCreate.setVisible(false);
 		
 		// reset spinner
-		//this.spinnerRoomSizeMin.set
+		this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 2));
+		this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 6));
 		
-		this.textFieldPort.setText("");
-		this.textFieldPort.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		this.labelErrorPort.setVisible(false);
+		this.textFieldPortCreate.setText("");
+		this.textFieldPortCreate.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorPortCreate.setVisible(false);
 		
-		this.buttonCreateNewLobby.setDisable(true);
+		this.buttonCreateNewLobby.setDisable(!this.validateUsername(this.textFieldUsernameCreate.getText()));
 	}
 	
 	@FXML public void selectJoinExistingLobby(ActionEvent event)
@@ -352,7 +323,6 @@ public class ControllerMenu {
 		this.vboxJoinExistingLobby.setVisible(true);
 		
 		// Reset fields
-		this.textFieldUsernameJoin.setText("");
 		this.textFieldUsernameJoin.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorUsernameJoin.setVisible(false);
 		
@@ -360,8 +330,13 @@ public class ControllerMenu {
 		this.textFieldIP.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorIP.setVisible(false);
 		
+		this.textFieldPortJoin.setText("");
+		this.textFieldPortCreate.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorPortJoin.setVisible(false);
+		
 		this.hboxConnectionJoin.setVisible(false);
-		this.buttonJoinExistingLobby.setDisable(true);
+		
+		this.buttonJoinExistingLobby.setDisable(!this.validateUsername(this.textFieldUsernameJoin.getText()));
 	}
 	
 	// Create New Lobby functions =============================================
@@ -385,7 +360,7 @@ public class ControllerMenu {
 		return result;
 	}
 	
-	@FXML private void checkEnableCreateLobby()
+	@FXML private boolean checkEnableCreateLobby()
 	{
 		boolean disableCreateButton = false, errorUsername = false, errorPort = false;
 		
@@ -395,7 +370,7 @@ public class ControllerMenu {
 			errorUsername = true;
 		}
 		
-		if(!(this.validatePort(this.textFieldPort.getText()) || this.textFieldPort.getText().isEmpty()))
+		if(!(this.validatePort(this.textFieldPortCreate.getText()) || this.textFieldPortCreate.getText().isEmpty()))
 		{
 			disableCreateButton = true;
 			errorPort = true;
@@ -404,13 +379,54 @@ public class ControllerMenu {
 		this.buttonCreateNewLobby.setDisable(disableCreateButton);
 		this.labelErrorUsernameCreate.setVisible(errorUsername);
 		this.textFieldUsernameCreate.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		this.labelErrorPort.setVisible(errorPort);
-		this.textFieldPort.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-	
+		this.labelErrorPortCreate.setVisible(errorPort);
+		this.textFieldPortCreate.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		
+		return disableCreateButton;
 	}
 	
 	@FXML public void createNewLobby(ActionEvent event)
 	{
+		if(!this.checkEnableCreateLobby())
+			return;
+		
+		if(this.textFieldPortCreate.getText().isEmpty())
+			this.textFieldPortCreate.setText("" + ServerStream.DEFAULT_PORT);
+		
+		// create new room -> start server (if OK switch to Server Room View)
+		try{
+			this.server = new ServerStream(
+					Integer.parseInt(this.textFieldPortCreate.getText()),
+					this.spinnerRoomSizeMin.getValue(),
+					this.spinnerRoomSizeMax.getValue(),
+					this.lobbyMessageHandler);
+		} catch (IOException e) {
+			System.out.println("Server: ServerSocket creation failed");
+			if(e instanceof BindException)
+			{
+				System.out.println("Server: another socket is already binded to this address and port");
+				try(final DatagramSocket socket = new DatagramSocket()) {
+					socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+					String privateIP = socket.getLocalAddress().getHostAddress();
+					
+					// Alert
+					Alert alert = new Alert(AlertType.ERROR, "Room creation failed");
+					alert.setTitle("Error Dialog");
+					alert.setHeaderText("Room creation failed");
+					alert.setContentText("Another socket is already binded to " + privateIP + ":" + this.textFieldPortCreate.getText());
+					alert.showAndWait();
+					
+					return;
+				} catch (SocketException e1) {
+					e.printStackTrace();
+				} catch (UnknownHostException e1) {
+					e.printStackTrace();
+				}
+			}
+		}
+				
+		this.client = null;
+		
 		System.out.println("User created a new lobby");
 		
 		this.vboxCreateNewLobby.setVisible(false);
@@ -426,9 +442,9 @@ public class ControllerMenu {
 		return PATTERN_IP.matcher(address).matches();
 	}
 	
-	@FXML private void checkEnableJoinLobby()
+	@FXML private boolean checkEnableJoinLobby()
 	{
-		boolean disableJoinButton = false, errorUsername = false, errorIP = false;
+		boolean disableJoinButton = false, errorUsername = false, errorIP = false, errorPort = false;
 		
 		if(!this.validateUsername(this.textFieldUsernameJoin.getText()))
 		{
@@ -442,15 +458,37 @@ public class ControllerMenu {
 			errorIP = true;
 		}
 		
+		if(!(this.validatePort(this.textFieldPortJoin.getText()) || this.textFieldPortJoin.getText().isEmpty()))
+		{
+			disableJoinButton = true;
+			errorPort = true;
+		}
+		
 		this.buttonJoinExistingLobby.setDisable(disableJoinButton);
 		this.labelErrorUsernameJoin.setVisible(errorUsername);
 		this.textFieldUsernameJoin.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorIP.setVisible(errorIP);
 		this.textFieldIP.setStyle(errorIP ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.labelErrorPortJoin.setVisible(errorPort);
+		this.textFieldPortJoin.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+	
+		return disableJoinButton;
 	}
 	
 	@FXML public void joinExistingLobby(ActionEvent event)
 	{
+		if(!this.checkEnableJoinLobby())
+			return;
+		
+		if(this.textFieldIP.getText().isEmpty())
+			this.textFieldIP.setText("127.0.0.1");
+		
+		this.hboxConnectionJoin.setVisible(true);
+		
+		// connect to existing room -> start client (if OK switch to Client Room View)
+		//this.client = new ClientStream(this.textFieldIP.getText(), , this.textFieldUsernameJoin.getText());
+		this.server = null;
+		
 		System.out.println("User is trying to join an existing lobby");
 	}
 	
@@ -491,11 +529,78 @@ public class ControllerMenu {
 		}
 	}
 	
+	private void closeConnection()
+	{
+		if(this.server != null)
+		{
+			this.server.sendClose();
+			this.server = null;
+		}
+		if(this.client != null)
+		{
+			this.client.sendClose();
+			this.client = null;
+		}
+	}
+	
 	// private addChatMessage()
 	
 	// close Lobby Settings
 	
 	//////////////////////////
+	
+	
+	public static String getCurrentTimestamp()
+	{
+		Date date = new Date(System.currentTimeMillis());
+		String timestamp = tformatter.format(date);
+		
+		return timestamp;
+	}
+	
+	public IMessageHandler lobbyMessageHandler = (Message msg) -> {
+		switch(msg.getMsgType())
+		{
+		
+		case CONNECT_REQUEST:
+			break;
+			
+		case CONNECT_OK:
+			break;
+			
+		case CONNECT_REFUSED:
+			break;
+			
+		case USER_JOINED:
+			break;
+			
+		case USER_LIST:
+			break;
+			
+		case DISCONNECT:
+			break;
+			
+		case CHAT:
+			break;
+			
+		case READY:
+			break;
+			
+		case KICK:
+			break;
+			
+		case BAN:
+			break;
+			
+		case START_GAME:
+			break;
+			
+		default:
+			System.out.println("Unknown Message Type");
+			break;
+		
+		}
+	};
 	
 	/*@FXML public void selectCNR(ActionEvent event)
 	{

@@ -88,7 +88,7 @@
             <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
             <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -144,8 +144,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textFieldPort" onKeyTyped="#checkEnableCreateLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: 4321" />
-                  <Label fx:id="labelErrorPort" prefHeight="60.0" prefWidth="150.0" text="Port must be a number between 1024 and 65535" textFill="RED" wrapText="true">
+                  <TextField fx:id="textFieldPortCreate" onKeyTyped="#checkEnableCreateLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: 4321" />
+                  <Label fx:id="labelErrorPortCreate" prefHeight="60.0" prefWidth="150.0" text="Port must be a number between 1024 and 65535" textFill="RED" wrapText="true">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -159,9 +159,9 @@
             <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
          <children>
-            <Separator prefHeight="50.0" prefWidth="500.0" visible="false" />
+            <Separator prefHeight="20.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="120.0" text="Username:" textFill="WHITE">
@@ -195,6 +195,24 @@
                   </Label>
                </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Port:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldPortJoin" onKeyTyped="#checkEnableJoinLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: 4321" />
+                  <Label fx:id="labelErrorPortJoin" prefHeight="60.0" prefWidth="150.0" text="Port must be a number between 1024 and 65535" textFill="RED" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
             <HBox fx:id="hboxConnectionJoin" alignment="CENTER" prefHeight="30.0" prefWidth="500.0">
                <children>
                   <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Connecting to server..." textFill="WHITE">
@@ -209,7 +227,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Separator prefHeight="60.0" prefWidth="500.0" visible="false" />
+            <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
             <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
