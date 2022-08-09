@@ -1,14 +1,18 @@
 package model.networking.message;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Message implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private MessageType msgType;
-	private String timestamp;
-	private String username;
-	private String content;
+	private static SimpleDateFormat tformatter = new SimpleDateFormat("[HH:mm:ss]");
+	
+	private MessageType msgType = MessageType.NONE;
+	private String timestamp = "";
+	private String username = "";
+	private String content = "";
 	
 	public Message(String type, String timestamp, String username, String content)
 	{
@@ -24,6 +28,10 @@ public class Message implements Serializable{
 		this.username = username;
 		this.content = content;
 	}
+	public Message()
+	{
+		this.timestamp = getCurrentTimestamp();
+	}
 	
 	public MessageType getMsgType() {return msgType;}
 	public void setMsgType(MessageType msgType) {this.msgType = msgType;}
@@ -33,4 +41,17 @@ public class Message implements Serializable{
 	public void setUsername(String username) {this.username = username;}
 	public String getContent() {return content;}
 	public void setContent(String content) {this.content = content;}
+	
+	public String toString()
+	{
+		return this.timestamp + " " + this.username + "(" + this.msgType.toString() + "): " + this.content;
+	}
+	
+	public static String getCurrentTimestamp()
+	{
+		Date date = new Date(System.currentTimeMillis());
+		String timestamp = tformatter.format(date);
+		
+		return timestamp;
+	}
 }

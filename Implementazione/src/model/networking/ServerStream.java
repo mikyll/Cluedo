@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import controller.ControllerMenu;
 import javafx.scene.control.Alert.AlertType;
 import model.game.Game;
+import model.networking.User;
 import model.networking.message.IMessageHandler;
 import model.networking.message.Message;
 import model.networking.message.MessageType;
@@ -34,25 +35,29 @@ public class ServerStream {
 	private int maxUsers;
 	private IMessageHandler messageHandler;
 	
+	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> writers = new ArrayList<ObjectOutputStream>();
 	private ArrayList<String> bannedUsernames = new ArrayList<String>();
-	private ArrayList<String> bannedIPaddresses = new ArrayList<String>();
+	private ArrayList<InetAddress> bannedIPaddresses = new ArrayList<InetAddress>();
 	
 	private Game game;
 	
-	public ServerStream(int port, int minUsers, int maxUsers, IMessageHandler msgHandler) throws IOException
+	public ServerStream(String username, int port, int minUsers, int maxUsers, IMessageHandler msgHandler) throws IOException
 	{
+		this.username = username;
 		this.port = port;
 		this.minUsers = minUsers;
 		this.maxUsers = maxUsers;
 		this.messageHandler = msgHandler;
 		
+		User u = new User(username);
+		u.setReady(true);
+		this.users.add(u);
 		// add the server writer (placeholder)
 		writers.add(null);
 		
 		this.serverListener = new ServerListener(port);
 		this.serverListener.start();
-			
 		
 		// If we reach there, it means that everything went fine, therefore we can switch view (from the ControllerMenu)
 	}
@@ -95,7 +100,7 @@ public class ServerStream {
 		@Override
 		public void run()
 		{
-			/*try {
+			try {
 				while(true)
 				{
 					new Handler(this.socketListener.accept()).start();
@@ -111,7 +116,7 @@ public class ServerStream {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}*/
+			}
 		}
 		
 		public void closeSocket()
@@ -156,7 +161,64 @@ public class ServerStream {
 					{
 						System.out.println("Server (" + this.getId() + "): received " + incomingMsg.toString());
 						
-						// handle message
+						switch(incomingMsg.getMsgType())
+						{
+							case CONNECT_REQUEST:
+							{
+								Message mReply = new Message();
+								
+								// the user is banned?
+								
+								// the room is closed?
+								
+								// the room is full?
+								
+								// duplicate username?
+								
+								// connection can be accepted
+								User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
+								users.add(u);
+								writers.add(this.output);
+								
+								mReply.setMsgType(MessageType.USER_JOINED);
+								mReply.setUsername(incomingMsg.getUsername());
+								forwardMessageToOthers(mReply);
+								
+								mReply.setMsgType(MessageType.CONNECT_OK);
+								mReply.setUsername(username);
+								mReply.setContent(User.userListToString(users));
+								
+								this.output.writeObject(mReply);
+								
+								messageHandler.handleMessage(incomingMsg);
+								/*{
+									// add user and writer to list
+									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
+									users.add(u);
+									writers.add(this.output);
+									controller.addUser(u);
+									
+									// forward to other users the new user joined
+									mReply.setMsgType(MessageType.USER_JOINED);
+									mReply.setNickname(incomingMsg.getNickname());
+									forwardMessage(mReply);
+									
+									// create OK message, containing the updated user list
+									mReply.setMsgType(MessageType.CONNECT_OK);
+									mReply.setNickname(nickname);
+									mReply.setContent(getUserList());
+									
+									// add the message to the chat textArea
+									controller.addToTextArea(mReply.getTimestamp() + " " + incomingMsg.getNickname() + " has joined the room");
+								}*/
+								
+								// 
+								
+								break;
+							}
+							default:
+								break;
+						}		
 					}
 				}
 			} catch(SocketException e) {
@@ -192,9 +254,25 @@ public class ServerStream {
 		}
 	}
 	
+	private void forwardMessageToOthers(Message msg)
+	{
+		// forward the message to each connected client, except the one that sent the message first
+		for(int i = 1; i < this.users.size(); i++)
+		{
+			if(!msg.getUsername().equals(this.users.get(i).getUsername()))
+			{
+				try {
+					this.writers.get(i).writeObject(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, ControllerMenu.getCurrentTimestamp(), this.username, "Server room closed");
+		Message msg = new Message(MessageType.DISCONNECT, Message.getCurrentTimestamp(), this.username, "Server room closed");
 
 		// send the message to each user except the server (NB: it's not a normal sendMessage)
 		for(int i = 1; i < this.writers.size(); i++)

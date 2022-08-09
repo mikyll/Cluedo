@@ -26,8 +26,10 @@ public class ClientStream {
     
     private IMessageHandler messageHandler;
     
-    public ClientStream(String address, int port)
+    public ClientStream(String username, String address, int port, IMessageHandler messageHandler)
     {
+    	this.username = username;
+    	this.messageHandler = messageHandler;
     	
     	this.clientListener = new ClientListener(address, port);
     	this.clientListener.start();
@@ -58,7 +60,7 @@ public class ClientStream {
 				input = new ObjectInputStream(is);
 				
 				// send CONNECT_REQUEST message
-				Message msg = new Message(MessageType.CONNECT_REQUEST, ControllerMenu.getCurrentTimestamp(), username, "");
+				Message msg = new Message(MessageType.CONNECT_REQUEST, Message.getCurrentTimestamp(), username, "");
 				output.writeObject(msg);
 				
 				while(this.socket.isConnected())
@@ -67,13 +69,23 @@ public class ClientStream {
 					if(incomingMsg != null)
 					{
 						System.out.println("Client (" + this.getId() + "): received " + incomingMsg.toString()); // test
+						switch(incomingMsg.getMsgType())
+						{
+							case CONNECT_OK:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
+						}
 					}
 				}
 			} catch(SocketException e) {
 				System.out.println("Socket exception");
 				if(e instanceof ConnectException)
 				{
-					messageHandler.handleMessage(new Message(MessageType.CONNECT_REFUSED, "", "", e.getMessage()));
+					messageHandler.handleMessage(
+							new Message(MessageType.CONNECT_REFUSED, "", "", e.getMessage()));
 				}
 				else if(e.getMessage().equals("Connection reset"))
 				{
@@ -100,7 +112,7 @@ public class ClientStream {
 	
 	public void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, ControllerMenu.getCurrentTimestamp(), this.username, "");
+		Message msg = new Message(MessageType.DISCONNECT, Message.getCurrentTimestamp(), this.username, "");
 		
 		// send disconnect message
 		this.sendMessage(msg);

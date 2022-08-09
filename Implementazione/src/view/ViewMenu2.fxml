@@ -159,7 +159,7 @@
             <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
             <Separator prefHeight="20.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -231,7 +231,7 @@
             <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="280.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+      <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="280.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
          <children>
             <HBox prefHeight="300.0" prefWidth="500.0">
                <children>
@@ -271,10 +271,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="500.0">
                <children>
+                  <Button fx:id="buttonReady" mnemonicParsing="false" onAction="#toggleReady" prefHeight="30.0" prefWidth="120.0" text=" Not Ready" />
                   <Button fx:id="buttonStartMultiPlayer" mnemonicParsing="false" onAction="#startMultiPlayerGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
                </children>
                <padding>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="5.0" right="120.0" />
                </padding>
             </HBox>
          </children>

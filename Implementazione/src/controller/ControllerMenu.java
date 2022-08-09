@@ -7,9 +7,15 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,12 +36,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.networking.ClientStream;
 import model.networking.ServerStream;
+import model.networking.User;
 import model.networking.message.IMessageHandler;
 import model.networking.message.Message;
 
 public class ControllerMenu {
-	private static SimpleDateFormat tformatter;
-	
 	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
 	private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
@@ -93,10 +98,11 @@ public class ControllerMenu {
 	@FXML private Button buttonJoinExistingLobby;
 	
 	// Lobby controls:
-	@FXML private ListView<HBox> listViewUsers;
+	@FXML private ListView<UserListElement> listViewUsers;
 	@FXML private TextArea textAreaChat;
 	@FXML private TextField textFieldChat;
 	@FXML private Button buttonChatSend;
+	@FXML private Button buttonReady;
 	@FXML private Button buttonStartMultiPlayer;
 	
 	// Lobby bottom-right controls:
@@ -117,12 +123,12 @@ public class ControllerMenu {
 	private ServerStream server;
 	private ClientStream client;
 	
+	private ObservableList<UserListElement> userList = FXCollections.observableArrayList();
+	
 	public ControllerMenu() {}
 	
 	public void initialize()
 	{
-		tformatter = new SimpleDateFormat("[HH:mm:ss]");
-		
 		// setup panels and text labels visibility
 		this.vboxMainMenu.setVisible(true);
 		this.vboxSettingsInfoControls.setVisible(true);
@@ -138,7 +144,8 @@ public class ControllerMenu {
 		this.vboxSettings.setVisible(false);
 		this.vboxInfo.setVisible(false);
 		
-		this.textFieldPortCreate.setPromptText("" + ServerStream.DEFAULT_PORT);
+		this.textFieldPortCreate.setPromptText("default: " + ServerStream.DEFAULT_PORT);
+		this.textFieldPortJoin.setPromptText("default: " + ServerStream.DEFAULT_PORT);
 		
 		this.spinnerRoomSizeMin.valueProperty().addListener((changed, oldval, newval) -> {
 			this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(newval, 6, this.spinnerRoomSizeMax.getValue()));
@@ -146,6 +153,8 @@ public class ControllerMenu {
 		this.spinnerRoomSizeMax.valueProperty().addListener((changed, oldval, newval) -> {
 			this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerRoomSizeMin.getValue()));
 		});
+		
+		this.listViewUsers.setItems(this.userList);
 	}
 	
 	// MainMenu functions =====================================================
@@ -312,6 +321,9 @@ public class ControllerMenu {
 		this.labelErrorPortCreate.setVisible(false);
 		
 		this.buttonCreateNewLobby.setDisable(!this.validateUsername(this.textFieldUsernameCreate.getText()));
+		
+		this.buttonStartMultiPlayer.setVisible(true);
+		this.buttonReady.setVisible(false);
 	}
 	
 	@FXML public void selectJoinExistingLobby(ActionEvent event)
@@ -337,6 +349,11 @@ public class ControllerMenu {
 		this.hboxConnectionJoin.setVisible(false);
 		
 		this.buttonJoinExistingLobby.setDisable(!this.validateUsername(this.textFieldUsernameJoin.getText()));
+	
+		this.buttonStartMultiPlayer.setVisible(false);
+		this.buttonReady.setVisible(true);
+		this.buttonReady.setText(" Not ready");
+		this.buttonReady.setStyle("-fx-background-color: red");
 	}
 	
 	// Create New Lobby functions =============================================
@@ -387,19 +404,22 @@ public class ControllerMenu {
 	
 	@FXML public void createNewLobby(ActionEvent event)
 	{
-		if(!this.checkEnableCreateLobby())
-			return;
+		// Validate
 		
 		if(this.textFieldPortCreate.getText().isEmpty())
 			this.textFieldPortCreate.setText("" + ServerStream.DEFAULT_PORT);
 		
+		this.userList.clear();
+		
 		// create new room -> start server (if OK switch to Server Room View)
 		try{
 			this.server = new ServerStream(
+					this.textFieldUsernameCreate.getText(),
 					Integer.parseInt(this.textFieldPortCreate.getText()),
 					this.spinnerRoomSizeMin.getValue(),
 					this.spinnerRoomSizeMax.getValue(),
 					this.lobbyMessageHandler);
+			this.client = null;
 		} catch (IOException e) {
 			System.out.println("Server: ServerSocket creation failed");
 			if(e instanceof BindException)
@@ -409,7 +429,6 @@ public class ControllerMenu {
 					socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
 					String privateIP = socket.getLocalAddress().getHostAddress();
 					
-					// Alert
 					Alert alert = new Alert(AlertType.ERROR, "Room creation failed");
 					alert.setTitle("Error Dialog");
 					alert.setHeaderText("Room creation failed");
@@ -424,16 +443,15 @@ public class ControllerMenu {
 				}
 			}
 		}
-				
-		this.client = null;
-		
-		System.out.println("User created a new lobby");
 		
 		this.vboxCreateNewLobby.setVisible(false);
 		
 		this.vboxLobby.setVisible(true);
 		this.vboxLobbySettingsControls.setVisible(true);
 		this.buttonLobbySettings.setDisable(false);
+		
+		UserListElement el = new UserListElement().buildServerElement(new User(this.textFieldUsernameCreate.getText()), true);
+		this.userList.add(el);
 	}
 	
 	// Join Existing Lobby functions ==========================================
@@ -477,16 +495,23 @@ public class ControllerMenu {
 	
 	@FXML public void joinExistingLobby(ActionEvent event)
 	{
-		if(!this.checkEnableJoinLobby())
-			return;
+		// Validate
 		
 		if(this.textFieldIP.getText().isEmpty())
 			this.textFieldIP.setText("127.0.0.1");
+		if(this.textFieldPortJoin.getText().isEmpty())
+			this.textFieldPortJoin.setText("" + ServerStream.DEFAULT_PORT);
+		
+		this.userList.clear();
 		
 		this.hboxConnectionJoin.setVisible(true);
 		
 		// connect to existing room -> start client (if OK switch to Client Room View)
-		//this.client = new ClientStream(this.textFieldIP.getText(), , this.textFieldUsernameJoin.getText());
+		this.client = new ClientStream(
+				this.textFieldUsernameJoin.getText(),
+				this.textFieldIP.getText(),
+				Integer.parseInt(this.textFieldPortJoin.getText()),
+				this.lobbyMessageHandler);
 		this.server = null;
 		
 		System.out.println("User is trying to join an existing lobby");
@@ -506,12 +531,34 @@ public class ControllerMenu {
 		System.out.println("User closed Lobby Settings");
 	}
 	
+	@FXML public void toggleReady(ActionEvent event)
+	{
+		boolean ready = this.buttonReady.getText().trim().equalsIgnoreCase("Ready");
+		
+		if(ready)
+		{
+			this.buttonReady.setText(" Not ready");
+			this.buttonReady.setStyle("-fx-background-color: red");
+		}
+		else
+		{
+			this.buttonReady.setText("   Ready   ");
+			this.buttonReady.setStyle("-fx-background-color: lime");
+		}
+		
+		// TO-DO
+		//this.client.sendReady(!ready);
+		//this.updateReady(this.textFieldNicknameC.getText(), !ready);
+		
+		// TO-DO: set a 5 sec timer that disables the button, so that users can't spam the toggle
+	}
+	
 	// Start Game
 	@FXML public void startMultiPlayerGame(ActionEvent event)
 	{
 		System.out.println("User started the game");
 			
-		// to-do
+		// TO-DO
 		try {
 			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
 			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
@@ -529,6 +576,7 @@ public class ControllerMenu {
 		}
 	}
 	
+	// Utilities ==============================================================
 	private void closeConnection()
 	{
 		if(this.server != null)
@@ -543,48 +591,114 @@ public class ControllerMenu {
 		}
 	}
 	
+	private void setUsers(List<User> users)
+	{
+		if(this.client != null)
+		{
+			this.addUser(users.get(0));
+			for(int i = 1; i < users.size(); i++)
+			{
+				this.addUser(users.get(i));
+			}
+		}
+	}
+	
+	private void addUser(User user)
+	{
+		Platform.runLater(() -> {
+			if(this.server != null)
+			{
+				UserListElement el = new UserListElement().buildServerElement(user, user.getUsername().equals(this.textFieldUsernameCreate.getText()));
+				this.userList.add(el);
+			}
+			else if(this.client != null)
+			{
+				UserListElement el = new UserListElement().buildClientElement(user, user.isReady());
+				this.userList.add(el);
+			}
+		});
+	}
+	
+	private void removeUser(User user)
+	{
+		
+	}
+	
+	private void addChatMessage(Message message)
+	{
+		//this.textAreaChat.appendText((this.textAreaChat.getText().isEmpty() ? "" : "\n") + "[" + message.getTimestamp() + "] " + message. );
+	}
 	// private addChatMessage()
 	
 	// close Lobby Settings
 	
 	//////////////////////////
 	
-	
-	public static String getCurrentTimestamp()
-	{
-		Date date = new Date(System.currentTimeMillis());
-		String timestamp = tformatter.format(date);
-		
-		return timestamp;
-	}
-	
 	public IMessageHandler lobbyMessageHandler = (Message msg) -> {
 		switch(msg.getMsgType())
 		{
-		
 		case CONNECT_REQUEST:
-			break;
+		{
+			// add user to list
+			this.addUser(new User(msg.getUsername()));
 			
+			// add chat message
+			
+			break;
+		}
 		case CONNECT_OK:
-			break;
+		{
+			this.hboxConnectionJoin.setVisible(false);
+			this.vboxJoinExistingLobby.setVisible(false);
+			this.vboxLobby.setVisible(true);
 			
-		case CONNECT_REFUSED:
+			// set user list
+			this.setUsers(User.stringToUserList(msg.getContent()));
+			
+			// add chat message 
+			
 			break;
+		}
+		
+		case CONNECT_REFUSED:
+		{
+			Alert alert = new Alert(AlertType.ERROR, "Connection failed");
+			alert.setTitle("Error Dialog");
+			alert.setContentText(msg.getContent());
+			alert.show();
+			this.hboxConnectionJoin.setVisible(false);
+			
+			break;
+		}
 			
 		case USER_JOINED:
-			break;
+		{
+			// add to user list
 			
-		case USER_LIST:
+			// add chat message
+			
 			break;
+		}
+		
+		case USER_LIST:
+		{
+			break;
+		}
 			
 		case DISCONNECT:
+		{
 			break;
+		}
 			
 		case CHAT:
+		{
 			break;
+		}
 			
 		case READY:
+		{
 			break;
+		}
 			
 		case KICK:
 			break;
@@ -602,204 +716,60 @@ public class ControllerMenu {
 		}
 	};
 	
-	/*@FXML public void selectCNR(ActionEvent event)
-	{
-		System.out.println("User selected Create New Room");
+	private class UserListElement extends HBox {
+		private boolean ready;
 		
-		// to-do: init arrays and pass them to server + add function to kick button listener.
-		
-		this.playerList = new ArrayList<Label>();
-		this.readyList = new ArrayList<Label>();
-		this.kickList = new ArrayList<Button>();
-		for(int i = 0; i < 6; i++)
+		public UserListElement buildServerElement(User user, boolean isHost)
 		{
-			HBox hbox = (HBox) this.vboxSCPL.getChildren().get(i);
-			this.playerList.add((Label)hbox.getChildren().get(0));
-			this.readyList.add((Label)hbox.getChildren().get(1));
-			this.kickList.add((Button)hbox.getChildren().get(2));
-			System.out.println(((Label)hbox.getChildren().get(0)).getText() + ((Label)hbox.getChildren().get(1)).getText());
-			if(i != 0)
-				hbox.setVisible(false);
+			UserListElement result = new UserListElement();
+			
+			Label lUsername = new Label(user.getUsername());
+			// l.setSize
+			
+			result.getChildren().add(lUsername);
+			
+			if(!isHost)
+			{
+				Label lReady = new Label();
+				lReady.setPrefSize(25.0, 25.0);
+				lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (user.isReady() ? "lime" : "red"));
+				
+				Button bKick = new Button("kick");
+				// size, etc.
+				
+				Button bBan = new Button("ban");
+				
+				result.getChildren().addAll(lReady, bKick, bBan);
+			}
+			else
+			{
+				// highlight
+			}
+			
+			return result;
 		}
-		this.playerList.get(0).setText("•1. " + this.textFieldNickname.getText());
 		
-		// to-do: server code
-		this.server = new ServerDatagram(this.textFieldNickname.getText(), this.textAreaChatS, this.playerList, this.readyList);
-		
-		this.vboxMultiPlayer.setVisible(false);
-		this.vboxLobbyServer.setVisible(true);
-		this.labelIP.setVisible(true);
-		String address = "";
-		try {address = InetAddress.getLocalHost().toString().split("/")[1];} catch (UnknownHostException e) {e.printStackTrace();}
-		this.labelIP.setText("IP address: " + address);
-		this.isServer = true;
-		
-	}
-	@FXML public void validateIP()
-	{
-		if(!IP_PATTERN.matcher(this.textFieldIP.getText()).matches())
+		public UserListElement buildClientElement(User user, boolean isHost)
 		{
-			this.buttonJER.setDisable(true);
-			this.labelErrorIP.setVisible(true);
+			UserListElement result = new UserListElement();
+			
+			Label lUsername = new Label(user.getUsername());
+			
+			result.getChildren().add(lUsername);
+			
+			if(!isHost)
+			{
+				Label lReady = new Label();
+				lReady.setPrefSize(25.0, 25.0);
+				lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (user.isReady() ? "lime" : "red"));
+				
+				result.getChildren().add(lReady);
+			}
+			
+			return result;
 		}
-		else {
-			this.buttonJER.setDisable(false);
-			this.labelErrorIP.setVisible(false);
-		}
+
+		public boolean isReady() {return this.ready;}
+		public void setReady(boolean ready) {this.ready = ready;}
 	}
-	@FXML public void selectJER(ActionEvent event)
-	{
-		System.out.println("User selected Join Existing Room");
-		
-		this.buttonCreateLobby.setDisable(true);
-		this.textFieldIP.setDisable(true);
-		this.buttonJER.setDisable(true);
-		this.hboxC.setVisible(true);
-		this.buttonBack.setDisable(true);
-		
-		// to-do: creazione socket e connessione al server (porta default)
-		this.isServer = false;
-		try {
-			this.client = new ClientDatagram(this.textFieldNickname.getText(), InetAddress.getByName(this.textFieldIP.getText()), this.vboxMultiPlayer, this.vboxLobbyClient, this.buttonBack, this.textAreaChatC);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		this.client.sendConnect(this.textFieldNickname.getText());
-		
-	}
-	@FXML public void selectSC(ActionEvent event)
-	{
-		System.out.println("Connection attempt interrupted.");
-		
-		this.buttonCreateLobby.setDisable(false);
-		this.textFieldIP.setDisable(false);
-		this.buttonJER.setDisable(false);
-		this.hboxC.setVisible(false);
-		this.buttonBack.setDisable(false);
-		
-		
-		// to-do: stop connection attempt
-	}
-	@FXML public void validateChatMessage()
-	{
-		if((this.textFieldChatC.getText().isEmpty() || this.textFieldChatC.getText().isBlank()) &&
-			(this.textFieldChatS.getText().isEmpty() || this.textFieldChatS.getText().isBlank()))
-		{
-			this.buttonSendMessageC.setDisable(true);
-			this.buttonSendMessageS.setDisable(true);
-		}
-		else
-		{
-			this.buttonSendMessageC.setDisable(false);
-			this.buttonSendMessageS.setDisable(false);
-		}
-	}
-	@FXML public void sendMessageS(ActionEvent event)
-	{
-		System.out.println("User (server) sent message " + this.textFieldChatS.getText());
-		
-		Date date = new Date(System.currentTimeMillis());
-		String timestamp = tformatter.format(date);
-		this.textAreaChatS.setText(this.textAreaChatS.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatS.getText());
-		
-		// send to everyone else
-		server.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatS.getText());
-		
-		this.textFieldChatS.setText("");
-		this.buttonSendMessageS.setDisable(true);
-	}
-	
-	@FXML public void toggleReady(ActionEvent event)
-	{
-		if(this.buttonReady.getText().equals("Ready"))
-		{
-			this.buttonReady.setText("Not Ready");
-			this.buttonReady.setStyle("-fx-background-color: red");
-		}
-		else
-		{
-			this.buttonReady.setText("Ready");
-			this.buttonReady.setStyle("-fx-background-color: lime");
-		}
-	}
-	@FXML public void sendMessageC(ActionEvent event)
-	{
-		System.out.println("User (client) sent message " + this.textFieldChatC.getText());
-		
-		Date date = new Date(System.currentTimeMillis());
-		String timestamp = tformatter.format(date);
-		this.textAreaChatC.setText(this.textAreaChatC.getText() + "\n" + timestamp + " " + this.textFieldNickname.getText() + ": " + this.textFieldChatC.getText());
-		
-		// send to server
-		this.client.sendChatMessage(this.textFieldNickname.getText(), this.textFieldChatC.getText());
-		
-		this.textFieldChatC.setText("");
-		this.buttonSendMessageC.setDisable(true);
-	}
-	
-	
-	
-	
-	@FXML public void selectSG(ActionEvent event) 
-	{
-		System.out.println("User selected Start Game");
-		
-		// to-do
-		try {
-			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
-			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
-			loader.setController(new ControllerGame());
-			AnchorPane quiz = (AnchorPane) loader.load();
-		
-			Scene scene = new Scene(quiz);
-			scene.getStylesheets().add(ControllerMenu.class.getResource("/application/application.css").toExternalForm());
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("ERRORE: " + e.getMessage());
-			System.exit(1);
-		}
-	}
-	
-	@FXML public void selectB(ActionEvent event) 
-	{
-		System.out.println("User selected Back");
-		
-		this.vboxSinglePlayer.setVisible(false);
-		this.vboxBack.setVisible(false);
-		this.vboxMultiPlayer.setVisible(false);
-		this.vboxInfo.setVisible(false);
-		this.vboxSettings.setVisible(false);
-		this.textSP.setVisible(false);
-		this.textMP.setVisible(false);
-		this.textS.setVisible(false);
-		this.textC.setVisible(false);
-		this.vboxLobbyServer.setVisible(false);
-		this.vboxLobbyClient.setVisible(false);
-		
-		this.vboxMainMenu.setVisible(true);
-		this.vboxSettingsInfo.setVisible(true);
-		this.textMM.setVisible(true);
-		
-	}
-	
-	@FXML public void restoreImp(ActionEvent event) 
-	{
-		System.out.println("Settings restored.");
-	}
-	@FXML public void selectSE(ActionEvent event) 
-	{
-		System.out.println("User selected Save and Exit");
-		
-		this.vboxSettings.setVisible(false);
-		this.textS.setVisible(false);
-		
-		this.vboxMainMenu.setVisible(true);
-		this.vboxSettingsInfo.setVisible(true);
-		this.textMM.setVisible(true);
-		
-	}
-	*/
-	
 }

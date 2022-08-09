@@ -40,6 +40,13 @@
 	-fx-text-fill: white;
 }*/
 
+.spinner:maxvalue .increment-arrow-button {
+	-fx-background-color: -fx-outer-border, #999999;
+}
+.spinner:minvalue .decrement-arrow-button {
+	-fx-background-color: -fx-outer-border, #999999;
+}
+
 .button {
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
