@@ -28,6 +28,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -632,25 +634,39 @@ public class ControllerMenu {
 		});
 	}
 	
+	@FXML public void handleKeyboard(KeyEvent event) {
+		if(this.textFieldChat.getText().length() > 100)
+		{
+			this.buttonChatSend.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+			this.buttonChatSend.setDisable(true);
+		}
+		else
+		{
+			this.buttonChatSend.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+			this.buttonChatSend.setDisable(false);
+			
+			if (event.getCode().equals(KeyCode.ENTER)) {
+	            this.send(new ActionEvent());
+	        }
+		}
+    }
+	
 	@FXML public void send(ActionEvent event)
 	{
-		// TEST
-		/*for(HBox el : this.listViewUsers.getItems())
+		if(!this.textFieldChat.getText().isEmpty() && this.textFieldChat.getText().length() <= 100)
 		{
-			System.out.println(((Label) el.getChildren().get(0)).getText());
-		}*/
-		
-		if(this.server != null)
-		{
-			this.server.sendChatMessage(this.textFieldChat.getText());
-			this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
+			if(this.server != null)
+			{
+				this.server.sendChatMessage(this.textFieldChat.getText());
+				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
+			}
+			else if(this.client != null)
+			{
+				this.client.sendChatMessage(this.textFieldChat.getText());
+				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
+			}
+			this.textFieldChat.clear();
 		}
-		else if(this.client != null)
-		{
-			this.client.sendChatMessage(this.textFieldChat.getText());
-			this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
-		}
-		
 		
 	}
 	
@@ -719,7 +735,7 @@ public class ControllerMenu {
 			this.setUsers(User.stringToUserList(msg.getContent()));
 			
 			// add chat message 
-			this.addJoinMessage(msg);
+			this.textAreaChat.setText(Message.getCurrentTimestamp() + " User " + this.textFieldUsernameCreate.getText() + " has joined the lobby");
 			
 			break;
 		}
