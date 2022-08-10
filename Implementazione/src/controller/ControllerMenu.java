@@ -39,6 +39,7 @@ import model.networking.ServerStream;
 import model.networking.User;
 import model.networking.message.IMessageHandler;
 import model.networking.message.Message;
+import model.networking.message.MessageType;
 
 public class ControllerMenu {
 	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
@@ -453,6 +454,9 @@ public class ControllerMenu {
 		this.buttonLobbySettings.setDisable(false);
 		
 		this.addUser(this.textFieldUsernameCreate.getText(), true, true);
+
+		this.textAreaChat.setText(Message.getCurrentTimestamp() + " Lobby created\n" +
+				Message.getCurrentTimestamp() + " User " + this.textFieldUsernameCreate.getText() + " has joined the lobby");
 	}
 	
 	// Join Existing Lobby functions ==========================================
@@ -542,9 +546,7 @@ public class ControllerMenu {
 		
 		this.setReady(this.textFieldUsernameJoin.getText(), ready);
 		
-		// TO-DO
-		//this.client.sendReady(!ready);
-		//this.updateReady(this.textFieldNicknameC.getText(), !ready);
+		this.client.sendReady(ready);
 		
 		// TO-DO: set a 5 sec timer that disables the button, so that users can't spam the toggle
 	}
@@ -630,12 +632,26 @@ public class ControllerMenu {
 		});
 	}
 	
-	@FXML public void test(ActionEvent event)
+	@FXML public void send(ActionEvent event)
 	{
-		for(HBox el : this.listViewUsers.getItems())
+		// TEST
+		/*for(HBox el : this.listViewUsers.getItems())
 		{
 			System.out.println(((Label) el.getChildren().get(0)).getText());
+		}*/
+		
+		if(this.server != null)
+		{
+			this.server.sendChatMessage(this.textFieldChat.getText());
+			this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
 		}
+		else if(this.client != null)
+		{
+			this.client.sendChatMessage(this.textFieldChat.getText());
+			this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
+		}
+		
+		
 	}
 	
 	private void removeUser(User user)
@@ -645,15 +661,17 @@ public class ControllerMenu {
 	
 	private void setReady(String username, boolean ready)
 	{
-		if(client != null)
+		for(int i = 1; i < this.listLabelUsername.size(); i++)
 		{
-			for(int i = 1; i < this.listLabelUsername.size(); i++)
+			if(this.listLabelUsername.get(i).getText().equals(username))
 			{
-				if(this.listLabelUsername.get(i).getText().equals(username))
-				{
-					this.listLabelReady.get(i).setStyle("-fx-background-radius: 30; -fx-background-color: " + (ready ? "lime" : "red"));
-				}
+				this.listLabelReady.get(i).setStyle("-fx-background-radius: 30; -fx-background-color: " + (ready ? "lime" : "red"));
 			}
+		}
+		
+		if(server != null)
+		{
+			// TO-DO check if can enable START
 		}
 	}
 	
@@ -664,7 +682,13 @@ public class ControllerMenu {
 	
 	private void addChatMessage(Message message)
 	{
-		//this.textAreaChat.appendText((this.textAreaChat.getText().isEmpty() ? "" : "\n") + "[" + message.getTimestamp() + "] " + message. );
+		this.textAreaChat.appendText(this.textAreaChat.getText().isEmpty() ? "" : "\n" +
+			message.getTimestamp() + " " + message.getUsername() + ": " + message.getContent());
+	}
+	private void addJoinMessage(Message message)
+	{
+		this.textAreaChat.appendText(this.textAreaChat.getText().isEmpty() ? "" : "\n" +
+			message.getTimestamp() + " User " + message.getUsername() + " has joined the lobby");
 	}
 	// private addChatMessage()
 	
@@ -681,6 +705,7 @@ public class ControllerMenu {
 			this.addUser(msg.getUsername(), false, false);
 			
 			// add chat message
+			this.addJoinMessage(msg);
 			
 			break;
 		}
@@ -694,6 +719,7 @@ public class ControllerMenu {
 			this.setUsers(User.stringToUserList(msg.getContent()));
 			
 			// add chat message 
+			this.addJoinMessage(msg);
 			
 			break;
 		}
@@ -730,11 +756,18 @@ public class ControllerMenu {
 			
 		case CHAT:
 		{
+			System.out.println("prova");
+			this.addChatMessage(msg);
+			
 			break;
 		}
 			
 		case READY:
 		{
+			this.setReady(msg.getUsername(), Boolean.parseBoolean(msg.getContent()));
+			
+			// enable start button if everyone's ready
+			
 			break;
 		}
 			
@@ -797,71 +830,6 @@ public class ControllerMenu {
 		result.getChildren().addAll(lNickname, lReady);
 		
 		return result;
-	}
-	
-	private class UserListElement extends HBox {
-		private Label labelUser;
-		private Label labelRaedy;
-		private Button buttonKick;
-		private Button buttonBan;
-		
-		public UserListElement buildServerElement(String username, boolean isHost, boolean isReady)
-		{
-			UserListElement result = new UserListElement();
-			
-			this.labelUser = new Label(username);
-			// l.setSize
-			
-			result.getChildren().add(this.labelUser);
-			
-			if(!isHost)
-			{
-				this.labelRaedy = new Label();
-				labelRaedy.setPrefSize(25.0, 25.0);
-				labelRaedy.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
-				
-				this.buttonKick = new Button("kick");
-				// size, etc.
-				
-				this.buttonBan = new Button("ban");
-				
-				result.getChildren().addAll(this.labelRaedy, this.buttonKick, this.buttonBan);
-			}
-			else
-			{
-				// highlight
-			}
-			
-			return result;
-		}
-		
-		public UserListElement buildClientElement(String username, boolean isHost, boolean isReady)
-		{
-			UserListElement result = new UserListElement();
-			
-			this.labelUser = new Label(username);
-			// l.setSize
-			
-			result.getChildren().add(this.labelUser);
-			
-			if(!isHost)
-			{
-				this.labelRaedy = new Label();
-				this.labelRaedy.setPrefSize(25.0, 25.0);
-				this.labelRaedy.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
-				
-				result.getChildren().add(this.labelRaedy);
-			}
-			
-			return result;
-		}
-
-		public String getUsername() {return this.labelUser.getText();}
-		public void setReady(boolean ready) {
-			System.out.println("TEST1: " + this.labelRaedy.getStyle());
-			this.labelRaedy.setStyle("-fx-background-color: " + (ready ? "lime" : "red"));
-			System.out.println("TEST2: " + this.labelRaedy.getStyle());
-		}
 	}
 	
 	private void clearLists()

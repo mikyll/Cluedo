@@ -220,10 +220,20 @@ public class ServerStream {
 							}
 							case CHAT:
 							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								// TO-DO: forward
+								
 								break;
 							}
 							case READY:
 							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								// TO-DO: update users
+								
+								// TO-DO: forward
+								
 								break;
 							}
 							case DISCONNECT:
@@ -267,6 +277,14 @@ public class ServerStream {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void sendChatMessage(String content)
+	{
+		Message msg = new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.username, content);
+		
+		// send the chat message to everyone
+		this.sendMessage(msg);
 	}
 	
 	private void forwardMessageToOthers(Message msg)

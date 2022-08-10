@@ -77,6 +77,12 @@ public class ClientStream {
 								
 								break;
 							}
+							case CHAT:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
 						}
 					}
 				}
@@ -101,6 +107,14 @@ public class ClientStream {
 		}
 	}
 	
+	public void sendReady(boolean ready)
+	{
+		Message msg = new Message(MessageType.READY, Message.getCurrentTimestamp(), this.username, "" + ready);
+		
+		// send ready message
+		this.sendMessage(msg);
+	}
+	
 	private void sendMessage(Message message)
 	{
 		try {
@@ -108,6 +122,14 @@ public class ClientStream {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendChatMessage(String content)
+	{
+		Message msg = new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.username, content);
+		
+		// send the chat message to everyone
+		this.sendMessage(msg);
 	}
 	
 	public void sendClose()
