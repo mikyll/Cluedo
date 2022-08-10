@@ -98,7 +98,11 @@ public class ControllerMenu {
 	@FXML private Button buttonJoinExistingLobby;
 	
 	// Lobby controls:
-	@FXML private ListView<UserListElement> listViewUsers;
+	@FXML private ListView<HBox> listViewUsers;
+	private ArrayList<Label> listLabelUsername = new ArrayList<Label>();
+	private ArrayList<Label> listLabelReady = new ArrayList<Label>();
+	private ArrayList<Label> listLabelKick = new ArrayList<Label>();
+	private ArrayList<Label> listLabelBan = new ArrayList<Label>();
 	@FXML private TextArea textAreaChat;
 	@FXML private TextField textFieldChat;
 	@FXML private Button buttonChatSend;
@@ -122,8 +126,6 @@ public class ControllerMenu {
 	
 	private ServerStream server;
 	private ClientStream client;
-	
-	private ObservableList<UserListElement> userList = FXCollections.observableArrayList();
 	
 	public ControllerMenu() {}
 	
@@ -154,7 +156,7 @@ public class ControllerMenu {
 			this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerRoomSizeMin.getValue()));
 		});
 		
-		this.listViewUsers.setItems(this.userList);
+		this.listViewUsers.setItems(FXCollections.observableArrayList());
 	}
 	
 	// MainMenu functions =====================================================
@@ -409,7 +411,7 @@ public class ControllerMenu {
 		if(this.textFieldPortCreate.getText().isEmpty())
 			this.textFieldPortCreate.setText("" + ServerStream.DEFAULT_PORT);
 		
-		this.userList.clear();
+		this.clearLists();
 		
 		// create new room -> start server (if OK switch to Server Room View)
 		try{
@@ -450,8 +452,7 @@ public class ControllerMenu {
 		this.vboxLobbySettingsControls.setVisible(true);
 		this.buttonLobbySettings.setDisable(false);
 		
-		UserListElement el = new UserListElement().buildServerElement(new User(this.textFieldUsernameCreate.getText()), true);
-		this.userList.add(el);
+		this.addUser(this.textFieldUsernameCreate.getText(), true, true);
 	}
 	
 	// Join Existing Lobby functions ==========================================
@@ -502,7 +503,7 @@ public class ControllerMenu {
 		if(this.textFieldPortJoin.getText().isEmpty())
 			this.textFieldPortJoin.setText("" + ServerStream.DEFAULT_PORT);
 		
-		this.userList.clear();
+		this.clearLists();
 		
 		this.hboxConnectionJoin.setVisible(true);
 		
@@ -534,17 +535,12 @@ public class ControllerMenu {
 	@FXML public void toggleReady(ActionEvent event)
 	{
 		boolean ready = this.buttonReady.getText().trim().equalsIgnoreCase("Ready");
+		ready = !ready;
 		
-		if(ready)
-		{
-			this.buttonReady.setText(" Not ready");
-			this.buttonReady.setStyle("-fx-background-color: red");
-		}
-		else
-		{
-			this.buttonReady.setText("   Ready   ");
-			this.buttonReady.setStyle("-fx-background-color: lime");
-		}
+		this.buttonReady.setText(ready ? "Ready" : "Not ready");
+		this.buttonReady.setStyle("-fx-background-color: " + (ready ? "lime" : "red"));
+		
+		this.setReady(this.textFieldUsernameJoin.getText(), ready);
 		
 		// TO-DO
 		//this.client.sendReady(!ready);
@@ -591,35 +587,77 @@ public class ControllerMenu {
 		}
 	}
 	
+	// it's called only by client, when it receive a user_list
 	private void setUsers(List<User> users)
 	{
+		this.clearLists();
+		
 		if(this.client != null)
 		{
-			this.addUser(users.get(0));
+			this.addUser(users.get(0).getUsername(), true, true);
 			for(int i = 1; i < users.size(); i++)
 			{
-				this.addUser(users.get(i));
+				this.addUser(users.get(i).getUsername(), false, users.get(i).isReady());
 			}
 		}
 	}
 	
-	private void addUser(User user)
+	private void addUser(String username, boolean isHost, boolean isReady)
 	{
 		Platform.runLater(() -> {
 			if(this.server != null)
 			{
-				UserListElement el = new UserListElement().buildServerElement(user, user.getUsername().equals(this.textFieldUsernameCreate.getText()));
-				this.userList.add(el);
+				HBox el = this.buildUserServerElement(username, isHost, isReady);
+				
+				this.listViewUsers.getItems().add(el);
+				
+				this.listLabelUsername.add((Label) el.getChildren().get(0));
+				this.listLabelReady.add((Label) el.getChildren().get(1));
+				this.listLabelKick.add((Label) el.getChildren().get(2));
+				this.listLabelBan.add((Label) el.getChildren().get(3));
+				
+				this.buttonStartMultiPlayer.setDisable(true);
 			}
 			else if(this.client != null)
 			{
-				UserListElement el = new UserListElement().buildClientElement(user, user.isReady());
-				this.userList.add(el);
+				HBox el = this.buildUserClientElement(username, isHost, isReady);
+				
+				this.listViewUsers.getItems().add(el);
+				
+				this.listLabelUsername.add((Label) el.getChildren().get(0));
+				this.listLabelReady.add((Label) el.getChildren().get(1));
 			}
 		});
 	}
 	
+	@FXML public void test(ActionEvent event)
+	{
+		for(HBox el : this.listViewUsers.getItems())
+		{
+			System.out.println(((Label) el.getChildren().get(0)).getText());
+		}
+	}
+	
 	private void removeUser(User user)
+	{
+		
+	}
+	
+	private void setReady(String username, boolean ready)
+	{
+		if(client != null)
+		{
+			for(int i = 1; i < this.listLabelUsername.size(); i++)
+			{
+				if(this.listLabelUsername.get(i).getText().equals(username))
+				{
+					this.listLabelReady.get(i).setStyle("-fx-background-radius: 30; -fx-background-color: " + (ready ? "lime" : "red"));
+				}
+			}
+		}
+	}
+	
+	private void banUser(String username, String address)
 	{
 		
 	}
@@ -640,7 +678,7 @@ public class ControllerMenu {
 		case CONNECT_REQUEST:
 		{
 			// add user to list
-			this.addUser(new User(msg.getUsername()));
+			this.addUser(msg.getUsername(), false, false);
 			
 			// add chat message
 			
@@ -716,30 +754,78 @@ public class ControllerMenu {
 		}
 	};
 	
-	private class UserListElement extends HBox {
-		private boolean ready;
+	private HBox buildUserServerElement(String username, boolean isHost, boolean isReady)
+	{
+		HBox result = new HBox();
 		
-		public UserListElement buildServerElement(User user, boolean isHost)
+		Label lNickname = new Label(username);
+		
+		
+		Label lReady = new Label();
+		lReady.setPrefSize(25.0, 25.0);
+		lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		
+		Label lKick = new Label("Kick");
+		// add callback
+		
+		Label lBan = new Label("Ban");
+		// add callback
+		
+		lReady.setVisible(!isHost);
+		lKick.setVisible(!isHost);
+		lBan.setVisible(!isHost);
+		
+		// TO-DO: highlight
+		
+		result.getChildren().addAll(lNickname, lReady, lKick, lBan);
+		
+		return result;
+	}
+	
+	private HBox buildUserClientElement(String username, boolean isHost, boolean isReady)
+	{
+		HBox result = new HBox();
+		
+		Label lNickname = new Label(username);
+		
+		Label lReady = new Label();
+		lReady.setPrefSize(25.0, 25.0);
+		lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		
+		lReady.setVisible(!isHost);
+		
+		result.getChildren().addAll(lNickname, lReady);
+		
+		return result;
+	}
+	
+	private class UserListElement extends HBox {
+		private Label labelUser;
+		private Label labelRaedy;
+		private Button buttonKick;
+		private Button buttonBan;
+		
+		public UserListElement buildServerElement(String username, boolean isHost, boolean isReady)
 		{
 			UserListElement result = new UserListElement();
 			
-			Label lUsername = new Label(user.getUsername());
+			this.labelUser = new Label(username);
 			// l.setSize
 			
-			result.getChildren().add(lUsername);
+			result.getChildren().add(this.labelUser);
 			
 			if(!isHost)
 			{
-				Label lReady = new Label();
-				lReady.setPrefSize(25.0, 25.0);
-				lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (user.isReady() ? "lime" : "red"));
+				this.labelRaedy = new Label();
+				labelRaedy.setPrefSize(25.0, 25.0);
+				labelRaedy.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
 				
-				Button bKick = new Button("kick");
+				this.buttonKick = new Button("kick");
 				// size, etc.
 				
-				Button bBan = new Button("ban");
+				this.buttonBan = new Button("ban");
 				
-				result.getChildren().addAll(lReady, bKick, bBan);
+				result.getChildren().addAll(this.labelRaedy, this.buttonKick, this.buttonBan);
 			}
 			else
 			{
@@ -749,27 +835,42 @@ public class ControllerMenu {
 			return result;
 		}
 		
-		public UserListElement buildClientElement(User user, boolean isHost)
+		public UserListElement buildClientElement(String username, boolean isHost, boolean isReady)
 		{
 			UserListElement result = new UserListElement();
 			
-			Label lUsername = new Label(user.getUsername());
+			this.labelUser = new Label(username);
+			// l.setSize
 			
-			result.getChildren().add(lUsername);
+			result.getChildren().add(this.labelUser);
 			
 			if(!isHost)
 			{
-				Label lReady = new Label();
-				lReady.setPrefSize(25.0, 25.0);
-				lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (user.isReady() ? "lime" : "red"));
+				this.labelRaedy = new Label();
+				this.labelRaedy.setPrefSize(25.0, 25.0);
+				this.labelRaedy.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
 				
-				result.getChildren().add(lReady);
+				result.getChildren().add(this.labelRaedy);
 			}
 			
 			return result;
 		}
 
-		public boolean isReady() {return this.ready;}
-		public void setReady(boolean ready) {this.ready = ready;}
+		public String getUsername() {return this.labelUser.getText();}
+		public void setReady(boolean ready) {
+			System.out.println("TEST1: " + this.labelRaedy.getStyle());
+			this.labelRaedy.setStyle("-fx-background-color: " + (ready ? "lime" : "red"));
+			System.out.println("TEST2: " + this.labelRaedy.getStyle());
+		}
+	}
+	
+	private void clearLists()
+	{
+		this.listViewUsers.getItems().clear();
+		
+		this.listLabelUsername.clear();
+		this.listLabelReady.clear();
+		this.listLabelKick.clear();
+		this.listLabelBan.clear();
 	}
 }

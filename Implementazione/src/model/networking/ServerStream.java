@@ -176,21 +176,23 @@ public class ServerStream {
 								// duplicate username?
 								
 								// connection can be accepted
-								User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
-								users.add(u);
-								writers.add(this.output);
-								
-								mReply.setMsgType(MessageType.USER_JOINED);
-								mReply.setUsername(incomingMsg.getUsername());
-								forwardMessageToOthers(mReply);
-								
-								mReply.setMsgType(MessageType.CONNECT_OK);
-								mReply.setUsername(username);
-								mReply.setContent(User.userListToString(users));
-								
-								this.output.writeObject(mReply);
-								
-								messageHandler.handleMessage(incomingMsg);
+								{
+									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
+									users.add(u);
+									writers.add(this.output);
+									
+									mReply.setMsgType(MessageType.USER_JOINED);
+									mReply.setUsername(incomingMsg.getUsername());
+									forwardMessageToOthers(mReply);
+									
+									mReply.setMsgType(MessageType.CONNECT_OK);
+									mReply.setUsername(username);
+									mReply.setContent(User.userListToString(users));
+									
+									this.output.writeObject(mReply);
+									
+									messageHandler.handleMessage(incomingMsg);
+								}
 								/*{
 									// add user and writer to list
 									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
@@ -213,6 +215,19 @@ public class ServerStream {
 								}*/
 								
 								// 
+								
+								break;
+							}
+							case CHAT:
+							{
+								break;
+							}
+							case READY:
+							{
+								break;
+							}
+							case DISCONNECT:
+							{
 								
 								break;
 							}
