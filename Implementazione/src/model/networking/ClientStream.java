@@ -77,10 +77,36 @@ public class ClientStream {
 								
 								break;
 							}
+							case CONNECT_REFUSED:
+							{
+								break;
+							}
+							case USER_JOINED:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
 							case CHAT:
 							{
 								messageHandler.handleMessage(incomingMsg);
 								
+								break;
+							}
+							case DISCONNECT:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
+							case READY:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
+							default:
+							{
 								break;
 							}
 						}

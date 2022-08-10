@@ -76,8 +76,8 @@ public class ServerStream {
 		
 	}
 	
-	public void kickUser(User user) {
-		
+	public void kickUser(String username) {
+		// TO-DO
 	}
 	
 	public void banUser(String nickname, String address) {
@@ -190,8 +190,6 @@ public class ServerStream {
 									mReply.setContent(User.userListToString(users));
 									
 									this.output.writeObject(mReply);
-									
-									messageHandler.handleMessage(incomingMsg);
 								}
 								/*{
 									// add user and writer to list
@@ -220,7 +218,6 @@ public class ServerStream {
 							}
 							case CHAT:
 							{
-								messageHandler.handleMessage(incomingMsg);
 								
 								// TO-DO: forward
 								
@@ -228,22 +225,43 @@ public class ServerStream {
 							}
 							case READY:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								for(User u : users)
+								{
+									if(u.getUsername().equals(incomingMsg.getUsername()))
+									{
+										u.setReady(Boolean.parseBoolean(incomingMsg.getContent()));
+										break;
+									}
+								}
 								
-								// TO-DO: update users
-								
-								// TO-DO: forward
+								forwardMessageToOthers(incomingMsg);
 								
 								break;
 							}
 							case DISCONNECT:
 							{
+								// remove user and writer from the list
+								for(int i = 1; i < users.size(); i++)
+								{
+									if(users.get(i).getUsername().equals(incomingMsg.getUsername()))
+									{
+										users.remove(i);
+										writers.remove(i);
+										break;
+									}
+								}
+								
+								// forward
+								forwardMessageToOthers(incomingMsg);
+								
+								socket.close();
 								
 								break;
 							}
 							default:
 								break;
-						}		
+						}
+						messageHandler.handleMessage(incomingMsg);
 					}
 				}
 			} catch(SocketException e) {
@@ -303,6 +321,9 @@ public class ServerStream {
 		}
 	}
 	
+	/*
+	 * Send a DISCONNECT message to each connected client, and then close the listen socket.
+	 */
 	public void sendClose()
 	{
 		Message msg = new Message(MessageType.DISCONNECT, Message.getCurrentTimestamp(), this.username, "Server room closed");
@@ -310,6 +331,7 @@ public class ServerStream {
 		// send the message to each user except the server (NB: it's not a normal sendMessage)
 		for(int i = 1; i < this.writers.size(); i++)
 		{
+			msg.setUsername(this.users.get(i).getUsername());
 			try {
 				this.writers.get(i).writeObject(msg);
 			} catch (IOException e) {
@@ -320,5 +342,41 @@ public class ServerStream {
 		
 		// close the socket
 		this.serverListener.closeSocket();
+	}
+	
+	/*
+	 * Check if there are enough connected users to start a game, and they are all ready.
+	 */
+	public boolean canStart()
+	{	
+		for(User u : this.users)
+		{
+			if(!u.isReady())
+				return false;
+		}
+		
+		return this.users.size() >= this.minUsers;
+	}
+	
+	public InetAddress getAddressFromUsername(String username)
+	{
+		for(User u : this.users)
+		{
+			if(u.getUsername().equals(username))
+				return u.getAddress();
+		}
+		
+		return null;
+	}
+	
+	public String getUsernameFromAddress(InetAddress address)
+	{
+		for(User u : this.users)
+		{
+			if(u.getAddress().equals(address))
+				return u.getUsername();
+		}
+		
+		return "";
 	}
 }

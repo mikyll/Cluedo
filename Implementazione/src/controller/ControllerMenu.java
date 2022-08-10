@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
@@ -35,6 +37,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.networking.ClientStream;
 import model.networking.ServerStream;
@@ -104,8 +109,8 @@ public class ControllerMenu {
 	@FXML private ListView<HBox> listViewUsers;
 	private ArrayList<Label> listLabelUsername = new ArrayList<Label>();
 	private ArrayList<Label> listLabelReady = new ArrayList<Label>();
-	private ArrayList<Label> listLabelKick = new ArrayList<Label>();
-	private ArrayList<Label> listLabelBan = new ArrayList<Label>();
+	private ArrayList<Button> listButtonKick = new ArrayList<Button>();
+	private ArrayList<Button> listButtonBan = new ArrayList<Button>();
 	@FXML private TextArea textAreaChat;
 	@FXML private TextField textFieldChat;
 	@FXML private Button buttonChatSend;
@@ -315,6 +320,7 @@ public class ControllerMenu {
 		
 		// Reset fields
 		this.textFieldUsernameCreate.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.textFieldUsernameCreate.requestFocus();
 		this.labelErrorUsernameCreate.setVisible(false);
 		
 		// reset spinner
@@ -341,6 +347,7 @@ public class ControllerMenu {
 		
 		// Reset fields
 		this.textFieldUsernameJoin.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.textFieldUsernameJoin.requestFocus();
 		this.labelErrorUsernameJoin.setVisible(false);
 		
 		this.textFieldIP.setText("");
@@ -382,7 +389,7 @@ public class ControllerMenu {
 		return result;
 	}
 	
-	@FXML private boolean checkEnableCreateLobby()
+	@FXML private boolean checkEnableCreateNewLobby()
 	{
 		boolean disableCreateButton = false, errorUsername = false, errorPort = false;
 		
@@ -404,17 +411,19 @@ public class ControllerMenu {
 		this.labelErrorPortCreate.setVisible(errorPort);
 		this.textFieldPortCreate.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		
-		return disableCreateButton;
+		return !disableCreateButton;
 	}
 	
 	@FXML public void createNewLobby(ActionEvent event)
 	{
-		// Validate
+		if (!this.checkEnableCreateNewLobby())
+			return;
 		
 		if(this.textFieldPortCreate.getText().isEmpty())
 			this.textFieldPortCreate.setText("" + ServerStream.DEFAULT_PORT);
 		
 		this.clearLists();
+		this.clearChat();
 		
 		// create new room -> start server (if OK switch to Server Room View)
 		try{
@@ -436,9 +445,8 @@ public class ControllerMenu {
 					
 					Alert alert = new Alert(AlertType.ERROR, "Room creation failed");
 					alert.setTitle("Error Dialog");
-					alert.setHeaderText("Room creation failed");
 					alert.setContentText("Another socket is already binded to " + privateIP + ":" + this.textFieldPortCreate.getText());
-					alert.showAndWait();
+					alert.show();
 					
 					return;
 				} catch (SocketException e1) {
@@ -456,9 +464,9 @@ public class ControllerMenu {
 		this.buttonLobbySettings.setDisable(false);
 		
 		this.addUser(this.textFieldUsernameCreate.getText(), true, true);
-
-		this.textAreaChat.setText(Message.getCurrentTimestamp() + " Lobby created\n" +
-				Message.getCurrentTimestamp() + " User " + this.textFieldUsernameCreate.getText() + " has joined the lobby");
+		
+		this.addJoinMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), ""));
+		this.buttonStartMultiPlayer.setDisable(true);
 	}
 	
 	// Join Existing Lobby functions ==========================================
@@ -467,7 +475,7 @@ public class ControllerMenu {
 		return PATTERN_IP.matcher(address).matches();
 	}
 	
-	@FXML private boolean checkEnableJoinLobby()
+	@FXML private boolean checkEnableJoinExistingLobby()
 	{
 		boolean disableJoinButton = false, errorUsername = false, errorIP = false, errorPort = false;
 		
@@ -497,12 +505,13 @@ public class ControllerMenu {
 		this.labelErrorPortJoin.setVisible(errorPort);
 		this.textFieldPortJoin.setStyle(errorPort ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 	
-		return disableJoinButton;
+		return !disableJoinButton;
 	}
 	
 	@FXML public void joinExistingLobby(ActionEvent event)
 	{
-		// Validate
+		if (!this.checkEnableJoinExistingLobby())
+			return;
 		
 		if(this.textFieldIP.getText().isEmpty())
 			this.textFieldIP.setText("127.0.0.1");
@@ -510,6 +519,7 @@ public class ControllerMenu {
 			this.textFieldPortJoin.setText("" + ServerStream.DEFAULT_PORT);
 		
 		this.clearLists();
+		this.clearChat();
 		
 		this.hboxConnectionJoin.setVisible(true);
 		
@@ -551,6 +561,42 @@ public class ControllerMenu {
 		this.client.sendReady(ready);
 		
 		// TO-DO: set a 5 sec timer that disables the button, so that users can't spam the toggle
+	}
+	
+	@FXML public void checkEnableSendChat(KeyEvent event)
+	{
+		if(this.textFieldChat.getText().length() > 100)
+		{
+			this.textFieldChat.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+			this.buttonChatSend.setDisable(true);
+		}
+		else
+		{
+			this.textFieldChat.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+			this.buttonChatSend.setDisable(false);
+		}
+    }
+	
+	/*
+	 * Send CHAT message
+	 */
+	@FXML public void send(ActionEvent event)
+	{
+		if(!this.textFieldChat.getText().isEmpty() && this.textFieldChat.getText().length() <= 100)
+		{
+			if(this.server != null)
+			{
+				this.server.sendChatMessage(this.textFieldChat.getText());
+				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
+			}
+			else if(this.client != null)
+			{
+				this.client.sendChatMessage(this.textFieldChat.getText());
+				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
+			}
+			this.textFieldChat.clear();
+		}
+		
 	}
 	
 	// Start Game
@@ -608,71 +654,69 @@ public class ControllerMenu {
 	
 	private void addUser(String username, boolean isHost, boolean isReady)
 	{
-		Platform.runLater(() -> {
-			if(this.server != null)
-			{
-				HBox el = this.buildUserServerElement(username, isHost, isReady);
-				
-				this.listViewUsers.getItems().add(el);
-				
-				this.listLabelUsername.add((Label) el.getChildren().get(0));
-				this.listLabelReady.add((Label) el.getChildren().get(1));
-				this.listLabelKick.add((Label) el.getChildren().get(2));
-				this.listLabelBan.add((Label) el.getChildren().get(3));
-				
-				this.buttonStartMultiPlayer.setDisable(true);
-			}
-			else if(this.client != null)
-			{
-				HBox el = this.buildUserClientElement(username, isHost, isReady);
-				
-				this.listViewUsers.getItems().add(el);
-				
-				this.listLabelUsername.add((Label) el.getChildren().get(0));
-				this.listLabelReady.add((Label) el.getChildren().get(1));
-			}
-		});
-	}
-	
-	@FXML public void handleKeyboard(KeyEvent event) {
-		if(this.textFieldChat.getText().length() > 100)
+		if(this.server != null)
 		{
-			this.buttonChatSend.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-			this.buttonChatSend.setDisable(true);
-		}
-		else
-		{
-			this.buttonChatSend.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-			this.buttonChatSend.setDisable(false);
+			HBox el = this.buildUserServerElement(username, isHost, isReady);
 			
-			if (event.getCode().equals(KeyCode.ENTER)) {
-	            this.send(new ActionEvent());
-	        }
+			this.listViewUsers.getItems().add(el);
+			
+			this.listLabelUsername.add((Label) el.getChildren().get(0));
+			this.listLabelReady.add((Label) el.getChildren().get(1));
+			this.listButtonKick.add((Button) el.getChildren().get(2));
+			this.listButtonBan.add((Button) el.getChildren().get(3));
+			
+			// Highlight user
+			Label l = this.listLabelUsername.get(this.listLabelUsername.size() - 1);
+			if(l.getText().equals(this.textFieldUsernameCreate.getText()))
+				l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 14.0));
+				
 		}
-    }
-	
-	@FXML public void send(ActionEvent event)
-	{
-		if(!this.textFieldChat.getText().isEmpty() && this.textFieldChat.getText().length() <= 100)
+		else if(this.client != null)
 		{
-			if(this.server != null)
-			{
-				this.server.sendChatMessage(this.textFieldChat.getText());
-				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
-			}
-			else if(this.client != null)
-			{
-				this.client.sendChatMessage(this.textFieldChat.getText());
-				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
-			}
-			this.textFieldChat.clear();
+			HBox el = this.buildUserClientElement(username, isHost, isReady);
+			
+			this.listViewUsers.getItems().add(el);
+			
+			this.listLabelUsername.add((Label) el.getChildren().get(0));
+			this.listLabelReady.add((Label) el.getChildren().get(1));
+			
+			// Highlight user
+			Label l = this.listLabelUsername.get(this.listLabelUsername.size() - 1);
+			if(l.getText().equals(this.textFieldUsernameJoin.getText()))
+				l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 14.0));
 		}
-		
 	}
 	
-	private void removeUser(User user)
+	private void removeUser(String username)
 	{
-		
+		if(this.server != null)
+		{
+			for(int i = 0; i < this.listLabelUsername.size(); i++)
+			{
+				if(this.listLabelUsername.get(i).getText().equals(username))
+				{
+					this.listLabelUsername.remove(i);
+					this.listLabelReady.remove(i);
+					this.listButtonKick.remove(i);
+					this.listButtonBan.remove(i);
+					
+					this.listViewUsers.getItems().remove(i);
+				}
+			}
+		}
+		else if(this.client != null)
+		{
+			for(int i = 0; i < this.listLabelUsername.size(); i++)
+			{
+				if(this.listLabelUsername.get(i).getText().equals(username))
+				{
+					this.listLabelUsername.remove(i);
+					this.listLabelReady.remove(i);
+					
+					this.listViewUsers.getItems().remove(i);
+				}
+			}
+		}
 	}
 	
 	private void setReady(String username, boolean ready)
@@ -688,23 +732,48 @@ public class ControllerMenu {
 		if(server != null)
 		{
 			// TO-DO check if can enable START
+			if(this.server.canStart())
+				this.buttonStartMultiPlayer.setDisable(false);
 		}
+	}
+	
+	private void kickUser(String username)
+	{
+		this.removeUser(username);
+		
+		this.server.kickUser(username);
 	}
 	
 	private void banUser(String username, String address)
 	{
+		if(username != null)
+			this.removeUser(username);
+		else
+		{
+			try {
+				this.server.getUsernameFromAddress(InetAddress.getByName(address));
+			} catch (UnknownHostException e) {System.out.println("Address not found");}
+		}
 		
+		// add to banned list
+		
+		this.server.banUser(username, address);
 	}
 	
 	private void addChatMessage(Message message)
 	{
-		this.textAreaChat.appendText(this.textAreaChat.getText().isEmpty() ? "" : "\n" +
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
 			message.getTimestamp() + " " + message.getUsername() + ": " + message.getContent());
 	}
 	private void addJoinMessage(Message message)
 	{
-		this.textAreaChat.appendText(this.textAreaChat.getText().isEmpty() ? "" : "\n" +
-			message.getTimestamp() + " User " + message.getUsername() + " has joined the lobby");
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
+			message.getTimestamp() + " User '" + message.getUsername() + "' has joined the lobby");
+	}
+	private void addLeaveMessage(Message message)
+	{
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
+				message.getTimestamp() + " User '" + message.getUsername() + "' has left the lobby");
 	}
 	// private addChatMessage()
 	
@@ -713,120 +782,182 @@ public class ControllerMenu {
 	//////////////////////////
 	
 	public IMessageHandler lobbyMessageHandler = (Message msg) -> {
-		switch(msg.getMsgType())
-		{
-		case CONNECT_REQUEST:
-		{
-			// add user to list
-			this.addUser(msg.getUsername(), false, false);
-			
-			// add chat message
-			this.addJoinMessage(msg);
-			
-			break;
-		}
-		case CONNECT_OK:
-		{
-			this.hboxConnectionJoin.setVisible(false);
-			this.vboxJoinExistingLobby.setVisible(false);
-			this.vboxLobby.setVisible(true);
-			
-			// set user list
-			this.setUsers(User.stringToUserList(msg.getContent()));
-			
-			// add chat message 
-			this.textAreaChat.setText(Message.getCurrentTimestamp() + " User " + this.textFieldUsernameCreate.getText() + " has joined the lobby");
-			
-			break;
-		}
-		
-		case CONNECT_REFUSED:
-		{
-			Alert alert = new Alert(AlertType.ERROR, "Connection failed");
-			alert.setTitle("Error Dialog");
-			alert.setContentText(msg.getContent());
-			alert.show();
-			this.hboxConnectionJoin.setVisible(false);
-			
-			break;
-		}
-			
-		case USER_JOINED:
-		{
-			// add to user list
-			
-			// add chat message
-			
-			break;
-		}
-		
-		case USER_LIST:
-		{
-			break;
-		}
-			
-		case DISCONNECT:
-		{
-			break;
-		}
-			
-		case CHAT:
-		{
-			System.out.println("prova");
-			this.addChatMessage(msg);
-			
-			break;
-		}
-			
-		case READY:
-		{
-			this.setReady(msg.getUsername(), Boolean.parseBoolean(msg.getContent()));
-			
-			// enable start button if everyone's ready
-			
-			break;
-		}
-			
-		case KICK:
-			break;
-			
-		case BAN:
-			break;
-			
-		case START_GAME:
-			break;
-			
-		default:
-			System.out.println("Unknown Message Type");
-			break;
-		
-		}
+		Platform.runLater(() -> {
+			switch(msg.getMsgType())
+			{
+				case CONNECT_REQUEST:
+				{
+					// add user to list
+					this.addUser(msg.getUsername(), false, false);
+					this.buttonStartMultiPlayer.setDisable(true);
+					
+					// add chat message
+					this.addJoinMessage(msg);
+					
+					break;
+				}
+				case CONNECT_OK:
+				{
+					this.hboxConnectionJoin.setVisible(false);
+					this.vboxJoinExistingLobby.setVisible(false);
+					this.vboxLobby.setVisible(true);
+					
+					// set user list
+					this.setUsers(User.stringToUserList(msg.getContent()));
+					
+					// add chat message
+					msg.setUsername(this.textFieldUsernameJoin.getText());
+					this.addJoinMessage(msg);
+					
+					break;
+				}
+				
+				case CONNECT_REFUSED:
+				{
+					Alert alert = new Alert(AlertType.ERROR, "Connection failed");
+					alert.setTitle("Error Dialog");
+					alert.setContentText(msg.getContent());
+					alert.show();
+					this.hboxConnectionJoin.setVisible(false);
+					
+					break;
+				}
+					
+				case USER_JOINED:
+				{
+					if(this.client != null)
+					{
+						// add to user list
+						this.addUser(msg.getUsername(), false, false);
+						
+						// add chat message
+						this.addJoinMessage(msg);
+					}
+					
+					
+					break;
+				}
+				
+				case USER_LIST:
+				{
+					break;
+				}
+					
+				case DISCONNECT:
+				{
+					if(this.server != null)
+					{
+						this.addLeaveMessage(msg);
+						
+						this.removeUser(msg.getUsername());
+					}
+					if(this.client != null)
+					{
+						if(msg.getUsername().equals(this.textFieldUsernameJoin.getText()))
+						{
+							this.selectBack(new ActionEvent());
+							
+							Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
+							alert.setTitle("Error Dialog");
+							alert.setContentText(msg.getContent());
+							alert.show();
+						}
+						else
+						{
+							this.addLeaveMessage(msg);
+							this.removeUser(msg.getUsername());
+						}
+					}
+					
+					break;
+				}
+					
+				case CHAT:
+				{
+					this.addChatMessage(msg);
+					
+					break;
+				}
+					
+				case READY:
+				{
+					this.setReady(msg.getUsername(), Boolean.parseBoolean(msg.getContent()));
+					
+					if(this.server != null)
+					{
+						this.buttonStartMultiPlayer.setDisable(!this.server.canStart());
+					}
+					
+					break;
+				}
+					
+				case KICK:
+					break;
+					
+				case BAN:
+					break;
+					
+				case START_GAME:
+					break;
+					
+				default:
+					System.out.println("Unknown Message Type");
+					break;
+			}
+		});
 	};
 	
 	private HBox buildUserServerElement(String username, boolean isHost, boolean isReady)
 	{
 		HBox result = new HBox();
+		result.setPrefHeight(30.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
 		
-		Label lNickname = new Label(username);
-		
+		Label lUsername = new Label(username);
+		lUsername.setPrefWidth(200.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
 		
 		Label lReady = new Label();
 		lReady.setPrefSize(25.0, 25.0);
-		lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		if(isHost)
+		{
+			lReady.setId("host");
+			Tooltip tR = new Tooltip("User '" + username + "' is the host");
+			tR.setFont(Font.font(14.0));
+			lReady.setTooltip(tR);
+		}
+		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
 		
-		Label lKick = new Label("Kick");
+		Button bKick = new Button();
+		bKick.setPrefSize(25.0, 25.0);
+		bKick.setId("kick");
 		// add callback
+		Tooltip tK = new Tooltip("Kick user '" + username + "'");
+		tK.setFont(Font.font(14.0));
+		bKick.setTooltip(tK);
+		bKick.setOnAction(e -> {
+			this.kickUser(username);
+		});
 		
-		Label lBan = new Label("Ban");
+		Button bBan = new Button();
+		bBan.setPrefSize(25.0, 25.0);
+		bBan.setId("ban");
 		// add callback
+		Tooltip tB = new Tooltip("Ban user '" + username + "'");
+		tB.setFont(Font.font(14.0));
+		bBan.setTooltip(tB);
+		bBan.setOnAction((ActionEvent e) -> {
+			System.out.println(e);
+		});
 		
-		lReady.setVisible(!isHost);
-		lKick.setVisible(!isHost);
-		lBan.setVisible(!isHost);
+		bKick.setVisible(!isHost);
+		bBan.setVisible(!isHost);
 		
 		// TO-DO: highlight
 		
-		result.getChildren().addAll(lNickname, lReady, lKick, lBan);
+		result.getChildren().addAll(lUsername, lReady, bKick, bBan);
 		
 		return result;
 	}
@@ -834,16 +965,28 @@ public class ControllerMenu {
 	private HBox buildUserClientElement(String username, boolean isHost, boolean isReady)
 	{
 		HBox result = new HBox();
+		result.setPrefHeight(30.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
 		
-		Label lNickname = new Label(username);
+		Label lUsername = new Label(username);
+		lUsername.setPrefWidth(200.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
 		
 		Label lReady = new Label();
 		lReady.setPrefSize(25.0, 25.0);
-		lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		if(isHost)
+		{
+			lReady.setId("host");
+			Tooltip tR = new Tooltip("User '" + username + "' is the host");
+			tR.setFont(Font.font(14.0));
+			lReady.setTooltip(tR);
+		}
+		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
 		
-		lReady.setVisible(!isHost);
 		
-		result.getChildren().addAll(lNickname, lReady);
+		result.getChildren().addAll(lUsername, lReady);
 		
 		return result;
 	}
@@ -854,7 +997,15 @@ public class ControllerMenu {
 		
 		this.listLabelUsername.clear();
 		this.listLabelReady.clear();
-		this.listLabelKick.clear();
-		this.listLabelBan.clear();
+		this.listButtonKick.clear();
+		this.listButtonBan.clear();
+	}
+	
+	private void clearChat()
+	{
+		this.textAreaChat.setText("");
+		this.textFieldChat.setText("");
+		this.textFieldChat.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.buttonChatSend.setDisable(false);
 	}
 }

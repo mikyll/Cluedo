@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import model.sounds.MusicPlayer;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,12 @@ import javafx.scene.layout.BackgroundSize;
 public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
+		// load settings
+		MusicPlayer player = MusicPlayer.getInstance("David Fesliyan - Unfolding Revelation (Menu).mp3");
+		player.setVolume(50.0);
+		player.setLoopNumber(Integer.MAX_VALUE);
+		//player.play();
+		
 		try {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/ViewMenu2.fxml"));
 			AnchorPane basePane = (AnchorPane) loader.load();

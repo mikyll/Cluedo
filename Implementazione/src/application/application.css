@@ -47,6 +47,16 @@
 	-fx-background-color: -fx-outer-border, #999999;
 }
 
+.list-view {
+	-fx-background-color: rgba(0,0,0,0.0);
+}
+.list-view .list-cell:even {
+	-fx-background-color: rgba(0,0,0,0.0);
+}
+.list-view .list-cell:odd {
+	-fx-background-color: rgba(0,0,0,0.0);
+}
+
 .button {
 	-fx-background-size: 30px;
     -fx-background-repeat: no-repeat;
@@ -55,7 +65,6 @@
 #back {
 	-fx-background-image: url('../resources/icons/icon_back_dark.png');
 }
-
 #settings {
 	-fx-background-image: url('../resources/icons/icon_settings_dark.png');
 }
@@ -64,4 +73,20 @@
 }
 #lobbySettings {
 	-fx-background-image: url('../resources/icons/icon_settings_dark.png');
+}
+#kick {
+	-fx-background-size: 25px;
+	-fx-background-image: url('../resources/icons/icon_kick_dark.png');
+}
+#ban {
+	-fx-background-size: 25px;
+	-fx-background-image: url('../resources/icons/icon_ban_dark.png');
+}
+#host {
+	-fx-background-size: 25px;
+	-fx-background-repeat: no-repeat;
+    -fx-background-position: 50%;
+	-fx-background-image: url('../resources/icons/icon_host_yellow.png');
+	/*-fx-background-radius: 30;
+	-fx-background-color: lime;*/
 }
