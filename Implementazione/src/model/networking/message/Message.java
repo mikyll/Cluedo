@@ -28,9 +28,26 @@ public class Message implements Serializable{
 		this.username = username;
 		this.content = content;
 	}
+	public Message(String type, String username, String content)
+	{
+		this.msgType = MessageType.valueOf(type);
+		this.timestamp = getCurrentTimestamp();
+		this.username = username;
+		this.content = content;
+	}
+	public Message(MessageType type, String username, String content)
+	{
+		this.msgType = type;
+		this.timestamp = getCurrentTimestamp();
+		this.username = username;
+		this.content = content;
+	}
 	public Message()
 	{
+		this.msgType = MessageType.NONE;
 		this.timestamp = getCurrentTimestamp();
+		this.username = "";
+		this.content = "";
 	}
 	
 	public MessageType getMsgType() {return msgType;}

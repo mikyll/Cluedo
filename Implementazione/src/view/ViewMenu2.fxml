@@ -88,7 +88,7 @@
             <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
          <children>
             <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -111,7 +111,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="120.0" text="Room size:" textFill="WHITE">
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Lobby size:" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -123,13 +123,13 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Spinner fx:id="spinnerRoomSizeMin" initialValue="2" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
+                        <Spinner fx:id="spinnerLobbySizeMin" initialValue="2" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="50.0" text="Max:" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Spinner fx:id="spinnerRoomSizeMax" initialValue="6" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
+                        <Spinner fx:id="spinnerLobbySizeMax" initialValue="6" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
                      </children>
                   </HBox>
                </children>
@@ -159,7 +159,7 @@
             <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
             <Separator prefHeight="20.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -294,28 +294,39 @@
             <Button id="lobbySettings" fx:id="buttonLobbySettings" mnemonicParsing="false" onAction="#selectLobbySettings" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
-      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
+      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false">
          <children>
-            <Label text="Lobby Settings" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-            <HBox prefHeight="50.0" prefWidth="400.0">
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <TextField text="Nickname" />
-                  <TextField text="IPaddress" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Ban" />
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="310.0" text="Lobby Settings" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button id="close" fx:id="buttonCloseLobbySettings" mnemonicParsing="false" onAction="#closeLobbySettings" prefHeight="30.0" prefWidth="30.0" />
+               </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </HBox>
+            <ListView prefHeight="195.0" prefWidth="390.0" />
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="390.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="textFieldBanUsername" prefHeight="30.0" prefWidth="150.0" promptText="Username" />
+                  <TextField fx:id="textFieldBanAddress" prefHeight="30.0" prefWidth="150.0" promptText="IPaddress" />
+                  <Button fx:id="buttonBan" mnemonicParsing="false" onAction="#ban" prefHeight="30.0" prefWidth="80.0" text="Ban" />
                </children>
             </HBox>
-            <HBox prefHeight="50.0" prefWidth="400.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="400.0">
                <children>
-                  <Label prefHeight="18.0" prefWidth="150.0" text="IP address: X.X.X.X" textFill="WHITE" />
-                  <Button mnemonicParsing="false" text="Open/Close" />
+                  <Label fx:id="labelLobbyAddress" prefHeight="18.0" prefWidth="150.0" text="IP address: X.X.X.X" textFill="WHITE" />
+                  <Button fx:id="buttonLobbyPrivacy" mnemonicParsing="false" onAction="#toggleLobbyPrivacy" prefHeight="30.0" text="Open/Close" />
                </children>
             </HBox>
-         </children></VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding></VBox>
       <VBox fx:id="vboxRulesHelp" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox fx:id="vboxSettings" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox fx:id="vboxInfo" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />

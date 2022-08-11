@@ -60,7 +60,7 @@ public class ClientStream {
 				input = new ObjectInputStream(is);
 				
 				// send CONNECT_REQUEST message
-				Message msg = new Message(MessageType.CONNECT_REQUEST, Message.getCurrentTimestamp(), username, "");
+				Message msg = new Message(MessageType.CONNECT_REQUEST, username, "");
 				output.writeObject(msg);
 				
 				while(this.socket.isConnected())
@@ -79,6 +79,8 @@ public class ClientStream {
 							}
 							case CONNECT_REFUSED:
 							{
+								messageHandler.handleMessage(incomingMsg);
+								
 								break;
 							}
 							case USER_JOINED:
@@ -94,6 +96,12 @@ public class ClientStream {
 								break;
 							}
 							case DISCONNECT:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
+							case KICK:
 							{
 								messageHandler.handleMessage(incomingMsg);
 								
@@ -135,7 +143,7 @@ public class ClientStream {
 	
 	public void sendReady(boolean ready)
 	{
-		Message msg = new Message(MessageType.READY, Message.getCurrentTimestamp(), this.username, "" + ready);
+		Message msg = new Message(MessageType.READY, this.username, "" + ready);
 		
 		// send ready message
 		this.sendMessage(msg);
@@ -152,7 +160,7 @@ public class ClientStream {
 	
 	public void sendChatMessage(String content)
 	{
-		Message msg = new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.username, content);
+		Message msg = new Message(MessageType.CHAT, this.username, content);
 		
 		// send the chat message to everyone
 		this.sendMessage(msg);
@@ -160,7 +168,7 @@ public class ClientStream {
 	
 	public void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, Message.getCurrentTimestamp(), this.username, "");
+		Message msg = new Message(MessageType.DISCONNECT, this.username, "");
 		
 		// send disconnect message
 		this.sendMessage(msg);

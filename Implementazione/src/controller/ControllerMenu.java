@@ -6,16 +6,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +26,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -89,8 +84,8 @@ public class ControllerMenu {
 	// Create New Lobby controls:
 	@FXML private TextField textFieldUsernameCreate;
 	@FXML private Label labelErrorUsernameCreate;
-	@FXML private Spinner<Integer> spinnerRoomSizeMin;
-	@FXML private Spinner<Integer> spinnerRoomSizeMax;
+	@FXML private Spinner<Integer> spinnerLobbySizeMin;
+	@FXML private Spinner<Integer> spinnerLobbySizeMax;
 	@FXML private TextField textFieldPortCreate;
 	@FXML private Label labelErrorPortCreate;
 	@FXML private Button buttonCreateNewLobby;
@@ -121,7 +116,13 @@ public class ControllerMenu {
 	@FXML private Button buttonLobbySettings;
 	
 	// Lobby Settings controls:
-	// [...]
+	@FXML private Button buttonCloseLobbySettings;
+	@FXML private ListView<HBox> listViewBannedUsers;
+	@FXML private TextField textFieldBanUsername;
+	@FXML private TextField textFieldBanAddress;
+	@FXML private Button buttonBan;
+	@FXML private Label labelLobbyAddress;
+	@FXML private Button buttonLobbyPrivacy;
 	
 	// Rules & Help controls:
 	// [...]
@@ -134,6 +135,7 @@ public class ControllerMenu {
 	
 	private ServerStream server;
 	private ClientStream client;
+	private String username;
 	
 	public ControllerMenu() {}
 	
@@ -150,6 +152,7 @@ public class ControllerMenu {
 		this.vboxJoinExistingLobby.setVisible(false);
 		this.vboxLobby.setVisible(false);
 		this.vboxLobbySettingsControls.setVisible(false);
+		this.vboxLobbySettings.setVisible(false);
 		this.vboxRulesHelp.setVisible(false);
 		this.vboxSettings.setVisible(false);
 		this.vboxInfo.setVisible(false);
@@ -157,11 +160,11 @@ public class ControllerMenu {
 		this.textFieldPortCreate.setPromptText("default: " + ServerStream.DEFAULT_PORT);
 		this.textFieldPortJoin.setPromptText("default: " + ServerStream.DEFAULT_PORT);
 		
-		this.spinnerRoomSizeMin.valueProperty().addListener((changed, oldval, newval) -> {
-			this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(newval, 6, this.spinnerRoomSizeMax.getValue()));
+		this.spinnerLobbySizeMin.valueProperty().addListener((changed, oldval, newval) -> {
+			this.spinnerLobbySizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(newval, 6, this.spinnerLobbySizeMax.getValue()));
 		});
-		this.spinnerRoomSizeMax.valueProperty().addListener((changed, oldval, newval) -> {
-			this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerRoomSizeMin.getValue()));
+		this.spinnerLobbySizeMax.valueProperty().addListener((changed, oldval, newval) -> {
+			this.spinnerLobbySizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerLobbySizeMin.getValue()));
 		});
 		
 		this.listViewUsers.setItems(FXCollections.observableArrayList());
@@ -278,7 +281,7 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
-			this.closeConnection();
+			//this.closeConnection();
 			
 			this.vboxLobby.setVisible(false);
 			this.vboxLobbySettingsControls.setVisible(false);
@@ -324,14 +327,14 @@ public class ControllerMenu {
 		this.labelErrorUsernameCreate.setVisible(false);
 		
 		// reset spinner
-		this.spinnerRoomSizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 2));
-		this.spinnerRoomSizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 6));
+		this.spinnerLobbySizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 2));
+		this.spinnerLobbySizeMax.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 6, 6));
 		
 		this.textFieldPortCreate.setText("");
 		this.textFieldPortCreate.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.labelErrorPortCreate.setVisible(false);
 		
-		this.buttonCreateNewLobby.setDisable(!this.validateUsername(this.textFieldUsernameCreate.getText()));
+		this.buttonCreateNewLobby.setDisable(!validateUsername(this.textFieldUsernameCreate.getText()));
 		
 		this.buttonStartMultiPlayer.setVisible(true);
 		this.buttonReady.setVisible(false);
@@ -360,7 +363,7 @@ public class ControllerMenu {
 		
 		this.hboxConnectionJoin.setVisible(false);
 		
-		this.buttonJoinExistingLobby.setDisable(!this.validateUsername(this.textFieldUsernameJoin.getText()));
+		this.buttonJoinExistingLobby.setDisable(!validateUsername(this.textFieldUsernameJoin.getText()));
 	
 		this.buttonStartMultiPlayer.setVisible(false);
 		this.buttonReady.setVisible(true);
@@ -369,7 +372,7 @@ public class ControllerMenu {
 	}
 	
 	// Create New Lobby functions =============================================
-	private boolean validateUsername(String username)
+	public static boolean validateUsername(String username)
 	{
 		return PATTERN_USERNAME.matcher(username).matches();
 	}
@@ -393,7 +396,7 @@ public class ControllerMenu {
 	{
 		boolean disableCreateButton = false, errorUsername = false, errorPort = false;
 		
-		if(!this.validateUsername(this.textFieldUsernameCreate.getText()))
+		if(!validateUsername(this.textFieldUsernameCreate.getText()))
 		{
 			disableCreateButton = true;
 			errorUsername = true;
@@ -424,14 +427,15 @@ public class ControllerMenu {
 		
 		this.clearLists();
 		this.clearChat();
+		this.username = this.textFieldUsernameCreate.getText();
 		
 		// create new room -> start server (if OK switch to Server Room View)
 		try{
 			this.server = new ServerStream(
-					this.textFieldUsernameCreate.getText(),
+					this.username,
 					Integer.parseInt(this.textFieldPortCreate.getText()),
-					this.spinnerRoomSizeMin.getValue(),
-					this.spinnerRoomSizeMax.getValue(),
+					this.spinnerLobbySizeMin.getValue(),
+					this.spinnerLobbySizeMax.getValue(),
 					this.lobbyMessageHandler);
 			this.client = null;
 		} catch (IOException e) {
@@ -463,9 +467,9 @@ public class ControllerMenu {
 		this.vboxLobbySettingsControls.setVisible(true);
 		this.buttonLobbySettings.setDisable(false);
 		
-		this.addUser(this.textFieldUsernameCreate.getText(), true, true);
+		this.addUser(this.username, true, true);
 		
-		this.addJoinMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), ""));
+		this.addJoinMessage(new Message(MessageType.CHAT, this.username, ""));
 		this.buttonStartMultiPlayer.setDisable(true);
 	}
 	
@@ -479,7 +483,7 @@ public class ControllerMenu {
 	{
 		boolean disableJoinButton = false, errorUsername = false, errorIP = false, errorPort = false;
 		
-		if(!this.validateUsername(this.textFieldUsernameJoin.getText()))
+		if(!validateUsername(this.textFieldUsernameJoin.getText()))
 		{
 			disableJoinButton = true;
 			errorUsername = true;
@@ -520,12 +524,13 @@ public class ControllerMenu {
 		
 		this.clearLists();
 		this.clearChat();
+		this.username = this.textFieldUsernameJoin.getText();
 		
 		this.hboxConnectionJoin.setVisible(true);
 		
 		// connect to existing room -> start client (if OK switch to Client Room View)
 		this.client = new ClientStream(
-				this.textFieldUsernameJoin.getText(),
+				this.username,
 				this.textFieldIP.getText(),
 				Integer.parseInt(this.textFieldPortJoin.getText()),
 				this.lobbyMessageHandler);
@@ -540,12 +545,31 @@ public class ControllerMenu {
 	{
 		System.out.println("User selected Lobby Settings");
 		
+		this.buttonBack.setDisable(true);
 		this.buttonLobbySettings.setDisable(true);
+		
+		this.vboxLobbySettings.setVisible(true);
 	}
 	
 	@FXML public void closeLobbySettings(ActionEvent event)
 	{
 		System.out.println("User closed Lobby Settings");
+		
+		this.vboxLobbySettings.setVisible(false);
+		
+		this.buttonBack.setDisable(false);
+		this.buttonLobbySettings.setDisable(false);
+	}
+	
+	@FXML public void ban(ActionEvent event)
+	{
+		// this.ban
+		
+		// this.server.ban
+	}
+	@FXML public void toggleLobbyPrivacy(ActionEvent event)
+	{
+		
 	}
 	
 	@FXML public void toggleReady(ActionEvent event)
@@ -556,7 +580,7 @@ public class ControllerMenu {
 		this.buttonReady.setText(ready ? "Ready" : "Not ready");
 		this.buttonReady.setStyle("-fx-background-color: " + (ready ? "lime" : "red"));
 		
-		this.setReady(this.textFieldUsernameJoin.getText(), ready);
+		this.setReady(this.username, ready);
 		
 		this.client.sendReady(ready);
 		
@@ -584,16 +608,9 @@ public class ControllerMenu {
 	{
 		if(!this.textFieldChat.getText().isEmpty() && this.textFieldChat.getText().length() <= 100)
 		{
-			if(this.server != null)
-			{
-				this.server.sendChatMessage(this.textFieldChat.getText());
-				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameCreate.getText(), this.textFieldChat.getText()));
-			}
-			else if(this.client != null)
-			{
-				this.client.sendChatMessage(this.textFieldChat.getText());
-				this.addChatMessage(new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.textFieldUsernameJoin.getText(), this.textFieldChat.getText()));
-			}
+			this.server.sendChatMessage(this.textFieldChat.getText());
+			this.addChatMessage(new Message(MessageType.CHAT, this.username, this.textFieldChat.getText()));
+			
 			this.textFieldChat.clear();
 		}
 		
@@ -667,7 +684,7 @@ public class ControllerMenu {
 			
 			// Highlight user
 			Label l = this.listLabelUsername.get(this.listLabelUsername.size() - 1);
-			if(l.getText().equals(this.textFieldUsernameCreate.getText()))
+			if(l.getText().equals(this.username))
 				l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 14.0));
 				
 		}
@@ -682,7 +699,7 @@ public class ControllerMenu {
 			
 			// Highlight user
 			Label l = this.listLabelUsername.get(this.listLabelUsername.size() - 1);
-			if(l.getText().equals(this.textFieldUsernameJoin.getText()))
+			if(l.getText().equals(this.username))
 				l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 14.0));
 		}
 	}
@@ -739,19 +756,30 @@ public class ControllerMenu {
 	
 	private void kickUser(String username)
 	{
+		this.addKickMessage(new Message(MessageType.KICK, username, ""));
+		
 		this.removeUser(username);
 		
-		this.server.kickUser(username);
+		this.server.sendKickUser(username);
 	}
 	
 	private void banUser(String username, String address)
 	{
 		if(username != null)
+		{
+			this.addBanMessage(new Message(MessageType.BAN, username, ""));
+			
 			this.removeUser(username);
+		}
 		else
 		{
 			try {
-				this.server.getUsernameFromAddress(InetAddress.getByName(address));
+				String sUsername = this.server.getUsernameFromAddress(InetAddress.getByName(address));
+				
+				this.addBanMessage(new Message(MessageType.BAN, username, ""));
+				
+				this.removeUser(username);
+				
 			} catch (UnknownHostException e) {System.out.println("Address not found");}
 		}
 		
@@ -774,6 +802,21 @@ public class ControllerMenu {
 	{
 		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
 				message.getTimestamp() + " User '" + message.getUsername() + "' has left the lobby");
+	}
+	private void addKickMessage(Message message)
+	{
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
+				message.getTimestamp() + " User '" + message.getUsername() + "' has been kicked out");
+	}
+	private void addBanMessage(Message message)
+	{
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
+				message.getTimestamp() + " User '" + message.getUsername() + "' has been banned from the lobby");
+	}
+	private void addRevokeBanMessage(Message message)
+	{
+		this.textAreaChat.setText(this.textAreaChat.getText() + (this.textAreaChat.getText().isEmpty() ? "" : "\n") +
+				message.getTimestamp() + " User '" + message.getUsername() + "' is no longer banned from the lobby");
 	}
 	// private addChatMessage()
 	
@@ -806,7 +849,7 @@ public class ControllerMenu {
 					this.setUsers(User.stringToUserList(msg.getContent()));
 					
 					// add chat message
-					msg.setUsername(this.textFieldUsernameJoin.getText());
+					msg.setUsername(this.username);
 					this.addJoinMessage(msg);
 					
 					break;
@@ -853,7 +896,7 @@ public class ControllerMenu {
 					}
 					if(this.client != null)
 					{
-						if(msg.getUsername().equals(this.textFieldUsernameJoin.getText()))
+						if(msg.getUsername().equals(this.username))
 						{
 							this.selectBack(new ActionEvent());
 							
@@ -892,7 +935,25 @@ public class ControllerMenu {
 				}
 					
 				case KICK:
+				{
+					if(msg.getUsername().equals(this.username))
+					{
+						this.selectBack(new ActionEvent());
+						
+						Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
+						alert.setTitle("Error Dialog");
+						alert.setContentText(msg.getContent());
+						alert.show();
+					}
+					else
+					{
+						this.removeUser(msg.getUsername());
+						
+						this.addKickMessage(msg);
+					}
+					
 					break;
+				}
 					
 				case BAN:
 					break;

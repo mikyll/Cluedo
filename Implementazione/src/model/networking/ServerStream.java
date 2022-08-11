@@ -76,8 +76,23 @@ public class ServerStream {
 		
 	}
 	
-	public void kickUser(String username) {
-		// TO-DO
+	public void sendKickUser(String username)
+	{
+		Message msg = new Message(MessageType.KICK, username, "You have been kicked out from the room");
+		
+		// send kick to everyone (the nickname indicates which user is getting kicked)
+		this.sendMessage(msg);
+		
+		// remove user and writer
+		for(int i = 1; i < this.users.size(); i++)
+		{
+			if(this.users.get(i).getUsername().equals(username))
+			{
+				this.users.remove(i);
+				this.writers.remove(i);
+				break;
+			}
+		}
 	}
 	
 	public void banUser(String nickname, String address) {
@@ -169,14 +184,28 @@ public class ServerStream {
 								
 								// the user is banned?
 								
-								// the room is closed?
+								// the lobby is closed?
 								
-								// the room is full?
-								
-								// duplicate username?
-								
-								// connection can be accepted
+								// the lobby is full
+								if(users.size() == maxUsers)
 								{
+									mReply.setMsgType(MessageType.CONNECT_REFUSED);
+									mReply.setContent("The lobby is full");
+								}
+								// duplicate username
+								else if(checkDuplicateUsername(incomingMsg.getUsername()))
+								{
+									mReply.setMsgType(MessageType.CONNECT_REFUSED);
+									mReply.setContent("Username '" + incomingMsg.getUsername() + "' already present");
+								}	
+								// invalid username
+								else if(!ControllerMenu.validateUsername(incomingMsg.getUsername()))
+								{
+									mReply.setMsgType(MessageType.CONNECT_REFUSED);
+									mReply.setContent("Invalid username. The username must be from 3 to 15 alphanumeric characters long.");
+								}
+								// connection can be accepted
+								else {
 									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
 									users.add(u);
 									writers.add(this.output);
@@ -189,8 +218,11 @@ public class ServerStream {
 									mReply.setUsername(username);
 									mReply.setContent(User.userListToString(users));
 									
-									this.output.writeObject(mReply);
+									messageHandler.handleMessage(incomingMsg);
 								}
+								
+								// send reply
+								this.output.writeObject(mReply);
 								/*{
 									// add user and writer to list
 									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
@@ -209,7 +241,7 @@ public class ServerStream {
 									mReply.setContent(getUserList());
 									
 									// add the message to the chat textArea
-									controller.addToTextArea(mReply.getTimestamp() + " " + incomingMsg.getNickname() + " has joined the room");
+									controller.addToTextArea(mReply.getTimestamp() + " " + incomingMsg.getNickname() + " has joined the lobby");
 								}*/
 								
 								// 
@@ -220,6 +252,8 @@ public class ServerStream {
 							{
 								
 								// TO-DO: forward
+								
+								messageHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
@@ -235,6 +269,8 @@ public class ServerStream {
 								}
 								
 								forwardMessageToOthers(incomingMsg);
+								
+								messageHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
@@ -256,12 +292,14 @@ public class ServerStream {
 								
 								socket.close();
 								
+								messageHandler.handleMessage(incomingMsg);
+								
 								break;
 							}
 							default:
 								break;
 						}
-						messageHandler.handleMessage(incomingMsg);
+						
 					}
 				}
 			} catch(SocketException e) {
@@ -282,6 +320,15 @@ public class ServerStream {
 			}
 		}
 	}
+	private boolean checkDuplicateUsername(String username)
+	{
+		for(User u : this.users)
+		{
+			if(u.getUsername().equals(username))
+				return true; // username already present
+		}
+		return false;
+	}
 	
 	private void sendMessage(Message message)
 	{
@@ -299,7 +346,7 @@ public class ServerStream {
 	
 	public void sendChatMessage(String content)
 	{
-		Message msg = new Message(MessageType.CHAT, Message.getCurrentTimestamp(), this.username, content);
+		Message msg = new Message(MessageType.CHAT, this.username, content);
 		
 		// send the chat message to everyone
 		this.sendMessage(msg);
@@ -326,7 +373,7 @@ public class ServerStream {
 	 */
 	public void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, Message.getCurrentTimestamp(), this.username, "Server room closed");
+		Message msg = new Message(MessageType.DISCONNECT, this.username, "Server lobby closed");
 
 		// send the message to each user except the server (NB: it's not a normal sendMessage)
 		for(int i = 1; i < this.writers.size(); i++)
