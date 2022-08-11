@@ -101,13 +101,19 @@ public class ClientStream {
 								
 								break;
 							}
+							case READY:
+							{
+								messageHandler.handleMessage(incomingMsg);
+								
+								break;
+							}
 							case KICK:
 							{
 								messageHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
-							case READY:
+							case BAN:
 							{
 								messageHandler.handleMessage(incomingMsg);
 								

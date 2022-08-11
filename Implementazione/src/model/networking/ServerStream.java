@@ -37,6 +37,7 @@ public class ServerStream {
 	
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> writers = new ArrayList<ObjectOutputStream>();
+	
 	private ArrayList<String> bannedUsernames = new ArrayList<String>();
 	private ArrayList<InetAddress> bannedIPaddresses = new ArrayList<InetAddress>();
 	
@@ -76,9 +77,12 @@ public class ServerStream {
 		
 	}
 	
+	/*
+	 * Kick out the User from the lobby, closing the connection and removing its writer stream from the list.
+	 */
 	public void sendKickUser(String username)
 	{
-		Message msg = new Message(MessageType.KICK, username, "You have been kicked out from the room");
+		Message msg = new Message(MessageType.KICK, username, "You have been kicked out from the lobby");
 		
 		// send kick to everyone (the nickname indicates which user is getting kicked)
 		this.sendMessage(msg);
@@ -89,18 +93,86 @@ public class ServerStream {
 			if(this.users.get(i).getUsername().equals(username))
 			{
 				this.users.remove(i);
+				
+				try {
+					this.writers.get(i).close();
+				} catch (IOException e) {}
+				
 				this.writers.remove(i);
 				break;
 			}
 		}
 	}
 	
-	public void banUser(String nickname, String address) {
-		// NB: nickname XOR address can be empty
+	public void sendBanUser(String username, String address)
+	{
+		if(username == null && address == null)
+			return;
+		
+		InetAddress iAddress = null;
+		Message msg = new Message();
+		msg.setMsgType(MessageType.BAN);
+		msg.setContent("You have been banned from the lobby");
+		
+		if(username != null)
+		{
+			this.bannedUsernames.add(username);
+			msg.setUsername(username);
+		}
+		if(address != null)
+		{
+			try {
+				iAddress = InetAddress.getByName(address);
+			} catch (UnknownHostException e) {System.out.println("Address not found");}
+			
+			this.bannedIPaddresses.add(iAddress);
+			if(msg.getUsername().isEmpty())
+				msg.setUsername(this.getUsernameFromAddress(iAddress));
+				
+		}
+		
+		// send ban to everyone (the username indicates which user is getting banned)
+		this.sendMessage(msg);
+		
+		// remove user and writer
+		for(int i = 1; i < this.users.size(); i++)
+		{
+			if(this.users.get(i).getUsername().equals(username) || this.users.get(i).getAddress().equals(iAddress))
+			{
+				this.users.remove(i);
+				this.writers.remove(i);
+				break;
+			}
+		}
 	}
 	
-	public void handleMessage() {
-		
+	public boolean isBanned(String username, InetAddress address)
+	{
+		if(username != null)
+		{
+			if(this.bannedUsernames.contains(username))
+				return true;
+		}
+		if(address != null)
+		{
+			if(this.bannedIPaddresses.contains(address))
+					return true;
+		}
+		return false;
+	}
+	
+	public void removeBan(String username, String address)
+	{
+		if(username != null)
+		{
+			this.bannedUsernames.remove(username);
+		}
+		if(address != null)
+		{
+			try {
+				this.bannedIPaddresses.remove(InetAddress.getByName(address));
+			} catch (UnknownHostException e) {System.out.println("Address not found");}
+		}
 	}
 	
 	private class ServerListener extends Thread {
@@ -183,11 +255,15 @@ public class ServerStream {
 								Message mReply = new Message();
 								
 								// the user is banned?
-								
+								if(isBanned(incomingMsg.getUsername(), socket.getInetAddress()))
+								{
+									mReply.setMsgType(MessageType.CONNECT_REFUSED);
+									mReply.setContent("You've been banned from this lobby");
+								}
 								// the lobby is closed?
 								
 								// the lobby is full
-								if(users.size() == maxUsers)
+								else if(users.size() == maxUsers)
 								{
 									mReply.setMsgType(MessageType.CONNECT_REFUSED);
 									mReply.setContent("The lobby is full");

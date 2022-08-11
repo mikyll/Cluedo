@@ -168,6 +168,7 @@ public class ControllerMenu {
 		});
 		
 		this.listViewUsers.setItems(FXCollections.observableArrayList());
+		this.listViewBannedUsers.setItems(FXCollections.observableArrayList());
 	}
 	
 	// MainMenu functions =====================================================
@@ -563,9 +564,7 @@ public class ControllerMenu {
 	
 	@FXML public void ban(ActionEvent event)
 	{
-		// this.ban
-		
-		// this.server.ban
+		this.banUser(this.textFieldBanUsername.getText(), this.textFieldBanAddress.getText());
 	}
 	@FXML public void toggleLobbyPrivacy(ActionEvent event)
 	{
@@ -761,10 +760,16 @@ public class ControllerMenu {
 		this.removeUser(username);
 		
 		this.server.sendKickUser(username);
+		
+		this.buttonStartMultiPlayer.setDisable(!this.server.canStart());
 	}
 	
 	private void banUser(String username, String address)
 	{
+		if(username == null && address == null)
+		{
+			return;
+		}
 		if(username != null)
 		{
 			this.addBanMessage(new Message(MessageType.BAN, username, ""));
@@ -776,16 +781,28 @@ public class ControllerMenu {
 			try {
 				String sUsername = this.server.getUsernameFromAddress(InetAddress.getByName(address));
 				
-				this.addBanMessage(new Message(MessageType.BAN, username, ""));
-				
-				this.removeUser(username);
-				
+				this.removeUser(sUsername);
 			} catch (UnknownHostException e) {System.out.println("Address not found");}
 		}
 		
-		// add to banned list
+		// add to banned list (LobbySettings)
+		this.listViewBannedUsers.getItems().add(this.buildBannedUserElement(username, address));
 		
-		this.server.banUser(username, address);
+		this.server.sendBanUser(username, address);
+		
+		this.buttonStartMultiPlayer.setDisable(!this.server.canStart());
+	}
+	
+	private void removeFromBanList(HBox row, String username, String address)
+	{
+		this.listViewBannedUsers.getItems().remove(row);
+		
+		if(username != null)
+		{
+			this.addRevokeBanMessage(new Message(MessageType.BAN, username, ""));
+		}
+		
+		this.server.removeBan(username, address);
 	}
 	
 	private void addChatMessage(Message message)
@@ -956,7 +973,25 @@ public class ControllerMenu {
 				}
 					
 				case BAN:
+				{
+					if(msg.getUsername().equals(this.username))
+					{
+						this.selectBack(new ActionEvent());
+						
+						Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
+						alert.setTitle("Error Dialog");
+						alert.setContentText(msg.getContent());
+						alert.show();
+					}
+					else
+					{
+						this.removeUser(msg.getUsername());
+						
+						this.addBanMessage(msg);
+					}
+					
 					break;
+				}
 					
 				case START_GAME:
 					break;
@@ -1010,7 +1045,7 @@ public class ControllerMenu {
 		tB.setFont(Font.font(14.0));
 		bBan.setTooltip(tB);
 		bBan.setOnAction((ActionEvent e) -> {
-			System.out.println(e);
+			this.banUser(username, this.server.getAddressFromUsername(username).toString());
 		});
 		
 		bKick.setVisible(!isHost);
@@ -1052,9 +1087,43 @@ public class ControllerMenu {
 		return result;
 	}
 	
+	private HBox buildBannedUserElement(String username, String address)
+	{
+		HBox result = new HBox();
+		result.setPrefWidth(390.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
+		
+		Label lUsername = new Label(username == null ? "-" : username);
+		lUsername.setPrefWidth(150.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
+		
+		Label lAddress = new Label(address == null ? "-" : address);
+		lAddress.setPrefWidth(150.0);
+		lAddress.setFont(Font.font("System", 14));
+		lAddress.setTextFill(Color.WHITE);
+		
+		Button bRevokeBan = new Button();
+		bRevokeBan.setPrefSize(25.0, 25.0);
+		bRevokeBan.setId("revokeBan");
+		// add callback
+		Tooltip tRB = new Tooltip("Revoke ban");
+		tRB.setFont(Font.font(14.0));
+		bRevokeBan.setTooltip(tRB);
+		bRevokeBan.setOnAction((ActionEvent e) -> {
+			this.removeFromBanList(result, username, address);
+		});
+		
+		result.getChildren().addAll(lUsername, lAddress, bRevokeBan);
+		
+		return result;
+	}
+	
 	private void clearLists()
 	{
 		this.listViewUsers.getItems().clear();
+		this.listViewBannedUsers.getItems().clear();
 		
 		this.listLabelUsername.clear();
 		this.listLabelReady.clear();

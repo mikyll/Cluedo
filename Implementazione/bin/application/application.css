@@ -94,3 +94,7 @@
 	-fx-background-size: 25px;
 	-fx-background-image: url('../resources/icons/icon_close_dark.png');
 }
+#revokeBan {
+	-fx-background-size: 25px;
+	-fx-background-image: url('../resources/icons/icon_bin_dark.png');
+}
