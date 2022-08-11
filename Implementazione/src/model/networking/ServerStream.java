@@ -33,6 +33,7 @@ public class ServerStream {
 	private int port;
 	private int minUsers;
 	private int maxUsers;
+	private boolean isOpen;
 	private IMessageHandler messageHandler;
 	
 	private ArrayList<User> users = new ArrayList<User>();
@@ -43,12 +44,13 @@ public class ServerStream {
 	
 	private Game game;
 	
-	public ServerStream(String username, int port, int minUsers, int maxUsers, IMessageHandler msgHandler) throws IOException
+	public ServerStream(String username, int port, int minUsers, int maxUsers, boolean isOpen, IMessageHandler msgHandler) throws IOException
 	{
 		this.username = username;
 		this.port = port;
 		this.minUsers = minUsers;
 		this.maxUsers = maxUsers;
+		this.isOpen = isOpen;
 		this.messageHandler = msgHandler;
 		
 		User u = new User(username);
@@ -261,7 +263,11 @@ public class ServerStream {
 									mReply.setContent("You've been banned from this lobby");
 								}
 								// the lobby is closed?
-								
+								else if(!isOpen)
+								{
+									mReply.setMsgType(MessageType.CONNECT_REFUSED);
+									mReply.setContent("The lobby is closed");
+								}
 								// the lobby is full
 								else if(users.size() == maxUsers)
 								{
@@ -396,6 +402,12 @@ public class ServerStream {
 			}
 		}
 	}
+	
+	public void setPrivacy(boolean open)
+	{
+		this.isOpen = open;
+	}
+	
 	private boolean checkDuplicateUsername(String username)
 	{
 		for(User u : this.users)

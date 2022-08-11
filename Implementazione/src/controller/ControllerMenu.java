@@ -111,6 +111,8 @@ public class ControllerMenu {
 	@FXML private Button buttonChatSend;
 	@FXML private Button buttonReady;
 	@FXML private Button buttonStartMultiPlayer;
+	@FXML private HBox hboxIPaddress;
+	@FXML private Label labelLobbyLANaddress;
 	
 	// Lobby bottom-right controls:
 	@FXML private Button buttonLobbySettings;
@@ -121,7 +123,7 @@ public class ControllerMenu {
 	@FXML private TextField textFieldBanUsername;
 	@FXML private TextField textFieldBanAddress;
 	@FXML private Button buttonBan;
-	@FXML private Label labelLobbyAddress;
+	@FXML private Label labelLobbyPrivacy;
 	@FXML private Button buttonLobbyPrivacy;
 	
 	// Rules & Help controls:
@@ -151,6 +153,7 @@ public class ControllerMenu {
 		this.vboxCreateNewLobby.setVisible(false);
 		this.vboxJoinExistingLobby.setVisible(false);
 		this.vboxLobby.setVisible(false);
+		this.hboxIPaddress.setVisible(false);
 		this.vboxLobbySettingsControls.setVisible(false);
 		this.vboxLobbySettings.setVisible(false);
 		this.vboxRulesHelp.setVisible(false);
@@ -282,9 +285,10 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
-			//this.closeConnection();
+			this.closeConnection();
 			
 			this.vboxLobby.setVisible(false);
+			this.hboxIPaddress.setVisible(false);
 			this.vboxLobbySettingsControls.setVisible(false);
 			
 			this.vboxMultiPlayer.setVisible(true);
@@ -437,6 +441,7 @@ public class ControllerMenu {
 					Integer.parseInt(this.textFieldPortCreate.getText()),
 					this.spinnerLobbySizeMin.getValue(),
 					this.spinnerLobbySizeMax.getValue(),
+					true,
 					this.lobbyMessageHandler);
 			this.client = null;
 		} catch (IOException e) {
@@ -467,6 +472,11 @@ public class ControllerMenu {
 		this.vboxLobby.setVisible(true);
 		this.vboxLobbySettingsControls.setVisible(true);
 		this.buttonLobbySettings.setDisable(false);
+		
+		this.setServerAddress();
+		this.hboxIPaddress.setVisible(true);
+		this.labelLobbyPrivacy.setId("privacyOpen");
+		this.buttonLobbyPrivacy.setText(" Open");
 		
 		this.addUser(this.username, true, true);
 		
@@ -568,7 +578,20 @@ public class ControllerMenu {
 	}
 	@FXML public void toggleLobbyPrivacy(ActionEvent event)
 	{
-		
+		if(this.buttonLobbyPrivacy.getText().contains("Open"))
+		{
+			this.labelLobbyPrivacy.setId("privacyClosed");
+			this.buttonLobbyPrivacy.setText("Closed");
+			
+			this.server.setPrivacy(false);
+		}
+		else
+		{
+			this.labelLobbyPrivacy.setId("privacyOpen");
+			this.buttonLobbyPrivacy.setText(" Open");
+			
+			this.server.setPrivacy(true);
+		}
 	}
 	
 	@FXML public void toggleReady(ActionEvent event)
@@ -1118,6 +1141,19 @@ public class ControllerMenu {
 		result.getChildren().addAll(lUsername, lAddress, bRevokeBan);
 		
 		return result;
+	}
+	
+	private void setServerAddress()
+	{
+		try(final DatagramSocket socket = new DatagramSocket()) {
+			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			String privateIP = socket.getLocalAddress().getHostAddress();
+			this.labelLobbyLANaddress.setText(privateIP);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void clearLists()

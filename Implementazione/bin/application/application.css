@@ -98,3 +98,11 @@
 	-fx-background-size: 25px;
 	-fx-background-image: url('../resources/icons/icon_bin_dark.png');
 }
+#privacyOpen {
+	-fx-background-size: 25px;
+	-fx-background-image: url('../resources/icons/icon_privacy_open_green.png');
+}
+#privacyClosed {
+	-fx-background-size: 25px;
+	-fx-background-image: url('../resources/icons/icon_privacy_closed_red.png');
+}
