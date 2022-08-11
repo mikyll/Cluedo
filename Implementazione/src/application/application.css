@@ -50,12 +50,20 @@
 .list-view {
 	-fx-background-color: rgba(0,0,0,0.0);
 }
+.list-view .list-cell {
+	-fx-background-color: rgba(0,0,0,0.0);
+}
+.list-view .scroll-bar:horizontal {
+	-fx-opacity: 0;
+}
+/*
 .list-view .list-cell:even {
 	-fx-background-color: rgba(0,0,0,0.0);
 }
 .list-view .list-cell:odd {
 	-fx-background-color: rgba(0,0,0,0.0);
 }
+*/
 
 .button {
 	-fx-background-size: 30px;

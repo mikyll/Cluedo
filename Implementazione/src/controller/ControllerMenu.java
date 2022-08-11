@@ -181,6 +181,8 @@ public class ControllerMenu {
 		
 		this.vboxMainMenu.setVisible(false);
 		this.vboxSettingsInfoControls.setVisible(false);
+		
+		// request focus on first element
 				
 		this.vboxSinglePlayer.setVisible(true);
 		this.vboxBackControls.setVisible(true);
@@ -191,6 +193,8 @@ public class ControllerMenu {
 		
 		this.vboxMainMenu.setVisible(false);
 		this.vboxSettingsInfoControls.setVisible(false);
+		
+		Platform.runLater(()->this.buttonSelectCreateNewLobby.requestFocus());
 		
 		this.vboxMultiPlayer.setVisible(true);
 		this.vboxBackControls.setVisible(true);	
@@ -559,6 +563,12 @@ public class ControllerMenu {
 		this.buttonBack.setDisable(true);
 		this.buttonLobbySettings.setDisable(true);
 		
+		this.textFieldBanUsername.setText("");
+		this.textFieldBanUsername.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.textFieldBanAddress.setText("");
+		this.textFieldBanAddress.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.buttonBan.setDisable(true);
+		
 		this.vboxLobbySettings.setVisible(true);
 	}
 	
@@ -574,6 +584,9 @@ public class ControllerMenu {
 	
 	@FXML public void ban(ActionEvent event)
 	{
+		if (!this.checkEnableBanUser())
+			return;
+		
 		this.banUser(this.textFieldBanUsername.getText(), this.textFieldBanAddress.getText());
 	}
 	@FXML public void toggleLobbyPrivacy(ActionEvent event)
@@ -659,6 +672,46 @@ public class ControllerMenu {
 			System.out.println("ERRORE: " + e.getMessage());
 			System.exit(1);
 		}
+	}
+	
+	// Lobby Settings =========================================================
+	@FXML private boolean checkEnableBanUser()
+	{
+		boolean disableBanButton = false, errorUsername = false, errorIP = false;
+		
+		if(this.textFieldBanUsername.getText().isEmpty() &&
+				this.textFieldBanAddress.getText().isEmpty())
+		{
+			disableBanButton = true;
+		}
+		if(!validateUsername(this.textFieldBanUsername.getText()))
+		{
+			errorUsername = true;
+		}
+		if(!this.validateIPv4(this.textFieldBanAddress.getText()))
+		{
+			errorIP = true;
+			if(errorUsername)
+				disableBanButton = true;
+		}
+		if(validateUsername(this.textFieldBanUsername.getText()))
+		{
+			if(!this.validateIPv4(this.textFieldBanAddress.getText()) &&
+					!this.textFieldBanAddress.getText().isEmpty())
+				disableBanButton = true;
+		}
+		if(this.validateIPv4(this.textFieldBanAddress.getText()))
+		{
+			if(!validateUsername(this.textFieldBanUsername.getText()) &&
+					!this.textFieldBanUsername.getText().isEmpty())
+				disableBanButton = true;
+		}
+		
+		this.buttonBan.setDisable(disableBanButton);
+		this.textFieldBanUsername.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		this.textFieldBanAddress.setStyle(errorIP ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
+		
+		return !disableBanButton;
 	}
 	
 	// Utilities ==============================================================
