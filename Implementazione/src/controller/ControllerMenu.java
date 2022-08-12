@@ -732,6 +732,12 @@ public class ControllerMenu {
 				disableBanButton = true;
 		}
 		
+		if(this.textFieldBanUsername.getText().equals(this.textFieldUsernameCreate.getText()))
+		{
+			disableBanButton = true;
+			errorUsername = true;
+		}
+		
 		this.buttonBan.setDisable(disableBanButton);
 		this.textFieldBanUsername.setStyle(errorUsername ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.textFieldBanAddress.setStyle(errorIP ? "-fx-text-box-border: red; -fx-focus-color: red;" : "-fx-border-width: 0px; -fx-focus-color: #039ED3;");

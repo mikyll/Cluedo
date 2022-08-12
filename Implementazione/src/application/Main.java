@@ -37,8 +37,6 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.setMinWidth(1060.0);
 			stage.setMinHeight(600.0);
-			stage.setWidth(1060.0);
-			stage.setHeight(600.0);
 			stage.show();
 			
 		} catch(Exception e) {
