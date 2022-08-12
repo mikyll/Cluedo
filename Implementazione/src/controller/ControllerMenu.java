@@ -19,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -26,6 +27,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -172,6 +174,13 @@ public class ControllerMenu {
 		
 		this.listViewUsers.setItems(FXCollections.observableArrayList());
 		this.listViewBannedUsers.setItems(FXCollections.observableArrayList());
+		
+		Platform.runLater(() -> {
+			this.vboxMainMenu.getScene().setOnKeyPressed(e -> {
+				if(e.getCode() == KeyCode.ESCAPE)
+					this.selectBack(new ActionEvent());
+			});
+		});
 	}
 	
 	// MainMenu functions =====================================================
@@ -289,6 +298,22 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
+			// Problem: when you get kicked
+			/*Alert alert = new Alert(AlertType.CONFIRMATION, "Leave the lobby?", ButtonType.YES, ButtonType.NO);
+			alert.setTitle("Confirmation Dialog");
+			alert.setContentText("Are you sure you want to leave the lobby?");
+			alert.showAndWait();
+			if (alert.getResult() == ButtonType.YES)
+			{
+				this.closeConnection();
+				
+				this.vboxLobby.setVisible(false);
+				this.hboxIPaddress.setVisible(false);
+				this.vboxLobbySettingsControls.setVisible(false);
+				
+				this.vboxMultiPlayer.setVisible(true);
+			}*/
+			
 			this.closeConnection();
 			
 			this.vboxLobby.setVisible(false);
@@ -915,7 +940,126 @@ public class ControllerMenu {
 	
 	// close Lobby Settings
 	
-	//////////////////////////
+	// Component builders
+	
+	private HBox buildUserServerElement(String username, boolean isHost, boolean isReady)
+	{
+		HBox result = new HBox();
+		result.setPrefHeight(30.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
+		
+		Label lUsername = new Label(username);
+		lUsername.setPrefWidth(200.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
+		
+		Label lReady = new Label();
+		lReady.setPrefSize(25.0, 25.0);
+		if(isHost)
+		{
+			lReady.setId("host");
+			Tooltip tR = new Tooltip("User '" + username + "' is the host");
+			tR.setFont(Font.font(14.0));
+			lReady.setTooltip(tR);
+		}
+		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		
+		Button bKick = new Button();
+		bKick.setPrefSize(25.0, 25.0);
+		bKick.setId("kick");
+		// add callback
+		Tooltip tK = new Tooltip("Kick user '" + username + "'");
+		tK.setFont(Font.font(14.0));
+		bKick.setTooltip(tK);
+		bKick.setOnAction(e -> {
+			this.kickUser(username);
+		});
+		
+		Button bBan = new Button();
+		bBan.setPrefSize(25.0, 25.0);
+		bBan.setId("ban");
+		// add callback
+		Tooltip tB = new Tooltip("Ban user '" + username + "'");
+		tB.setFont(Font.font(14.0));
+		bBan.setTooltip(tB);
+		bBan.setOnAction((ActionEvent e) -> {
+			this.banUser(username, this.server.getAddressFromUsername(username).toString());
+		});
+		
+		bKick.setVisible(!isHost);
+		bBan.setVisible(!isHost);
+		
+		// TO-DO: highlight
+		
+		result.getChildren().addAll(lUsername, lReady, bKick, bBan);
+		
+		return result;
+	}
+	
+	private HBox buildUserClientElement(String username, boolean isHost, boolean isReady)
+	{
+		HBox result = new HBox();
+		result.setPrefHeight(30.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
+		
+		Label lUsername = new Label(username);
+		lUsername.setPrefWidth(200.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
+		
+		Label lReady = new Label();
+		lReady.setPrefSize(25.0, 25.0);
+		if(isHost)
+		{
+			lReady.setId("host");
+			Tooltip tR = new Tooltip("User '" + username + "' is the host");
+			tR.setFont(Font.font(14.0));
+			lReady.setTooltip(tR);
+		}
+		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
+		
+		
+		result.getChildren().addAll(lUsername, lReady);
+		
+		return result;
+	}
+	
+	private HBox buildBannedUserElement(String username, String address)
+	{
+		HBox result = new HBox();
+		result.setPrefWidth(390.0);
+		result.setAlignment(Pos.CENTER_LEFT);
+		result.setSpacing(5.0);
+		
+		Label lUsername = new Label(username == null ? "-" : username);
+		lUsername.setPrefWidth(150.0);
+		lUsername.setFont(Font.font("System", 14));
+		lUsername.setTextFill(Color.WHITE);
+		
+		Label lAddress = new Label(address == null ? "-" : address);
+		lAddress.setPrefWidth(150.0);
+		lAddress.setFont(Font.font("System", 14));
+		lAddress.setTextFill(Color.WHITE);
+		
+		Button bRevokeBan = new Button();
+		bRevokeBan.setPrefSize(25.0, 25.0);
+		bRevokeBan.setId("revokeBan");
+		// add callback
+		Tooltip tRB = new Tooltip("Revoke ban");
+		tRB.setFont(Font.font(14.0));
+		bRevokeBan.setTooltip(tRB);
+		bRevokeBan.setOnAction((ActionEvent e) -> {
+			this.removeFromBanList(result, username, address);
+		});
+		
+		result.getChildren().addAll(lUsername, lAddress, bRevokeBan);
+		
+		return result;
+	}
+	
+	// Handle Lobby Messages ==================================================
 	
 	public IMessageHandler lobbyMessageHandler = (Message msg) -> {
 		Platform.runLater(() -> {
@@ -1079,122 +1223,7 @@ public class ControllerMenu {
 		});
 	};
 	
-	private HBox buildUserServerElement(String username, boolean isHost, boolean isReady)
-	{
-		HBox result = new HBox();
-		result.setPrefHeight(30.0);
-		result.setAlignment(Pos.CENTER_LEFT);
-		result.setSpacing(5.0);
-		
-		Label lUsername = new Label(username);
-		lUsername.setPrefWidth(200.0);
-		lUsername.setFont(Font.font("System", 14));
-		lUsername.setTextFill(Color.WHITE);
-		
-		Label lReady = new Label();
-		lReady.setPrefSize(25.0, 25.0);
-		if(isHost)
-		{
-			lReady.setId("host");
-			Tooltip tR = new Tooltip("User '" + username + "' is the host");
-			tR.setFont(Font.font(14.0));
-			lReady.setTooltip(tR);
-		}
-		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
-		
-		Button bKick = new Button();
-		bKick.setPrefSize(25.0, 25.0);
-		bKick.setId("kick");
-		// add callback
-		Tooltip tK = new Tooltip("Kick user '" + username + "'");
-		tK.setFont(Font.font(14.0));
-		bKick.setTooltip(tK);
-		bKick.setOnAction(e -> {
-			this.kickUser(username);
-		});
-		
-		Button bBan = new Button();
-		bBan.setPrefSize(25.0, 25.0);
-		bBan.setId("ban");
-		// add callback
-		Tooltip tB = new Tooltip("Ban user '" + username + "'");
-		tB.setFont(Font.font(14.0));
-		bBan.setTooltip(tB);
-		bBan.setOnAction((ActionEvent e) -> {
-			this.banUser(username, this.server.getAddressFromUsername(username).toString());
-		});
-		
-		bKick.setVisible(!isHost);
-		bBan.setVisible(!isHost);
-		
-		// TO-DO: highlight
-		
-		result.getChildren().addAll(lUsername, lReady, bKick, bBan);
-		
-		return result;
-	}
 	
-	private HBox buildUserClientElement(String username, boolean isHost, boolean isReady)
-	{
-		HBox result = new HBox();
-		result.setPrefHeight(30.0);
-		result.setAlignment(Pos.CENTER_LEFT);
-		result.setSpacing(5.0);
-		
-		Label lUsername = new Label(username);
-		lUsername.setPrefWidth(200.0);
-		lUsername.setFont(Font.font("System", 14));
-		lUsername.setTextFill(Color.WHITE);
-		
-		Label lReady = new Label();
-		lReady.setPrefSize(25.0, 25.0);
-		if(isHost)
-		{
-			lReady.setId("host");
-			Tooltip tR = new Tooltip("User '" + username + "' is the host");
-			tR.setFont(Font.font(14.0));
-			lReady.setTooltip(tR);
-		}
-		else lReady.setStyle("-fx-background-radius: 30; -fx-background-color: " + (isReady ? "lime" : "red"));
-		
-		
-		result.getChildren().addAll(lUsername, lReady);
-		
-		return result;
-	}
-	
-	private HBox buildBannedUserElement(String username, String address)
-	{
-		HBox result = new HBox();
-		result.setPrefWidth(390.0);
-		result.setAlignment(Pos.CENTER_LEFT);
-		result.setSpacing(5.0);
-		
-		Label lUsername = new Label(username == null ? "-" : username);
-		lUsername.setPrefWidth(150.0);
-		lUsername.setFont(Font.font("System", 14));
-		lUsername.setTextFill(Color.WHITE);
-		
-		Label lAddress = new Label(address == null ? "-" : address);
-		lAddress.setPrefWidth(150.0);
-		lAddress.setFont(Font.font("System", 14));
-		lAddress.setTextFill(Color.WHITE);
-		
-		Button bRevokeBan = new Button();
-		bRevokeBan.setPrefSize(25.0, 25.0);
-		bRevokeBan.setId("revokeBan");
-		// add callback
-		Tooltip tRB = new Tooltip("Revoke ban");
-		tRB.setFont(Font.font(14.0));
-		bRevokeBan.setTooltip(tRB);
-		bRevokeBan.setOnAction((ActionEvent e) -> {
-			this.removeFromBanList(result, username, address);
-		});
-		
-		result.getChildren().addAll(lUsername, lAddress, bRevokeBan);
-		
-		return result;
-	}
 	
 	private void setServerAddress()
 	{
