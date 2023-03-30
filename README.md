@@ -12,9 +12,7 @@ Applicazione per il gioco Cluedo, NON UFFICIALE e SENZA SCOPO DI LUCRO.
 
 Nato come progetto del corso di Ingegneria del Software della triennale in Ingegneria Informatica presso l'unibo, ho deciso di portarlo a termine, sostituendo il prototipo con quello che sarà un gioco completo e funzionante.
 
-Prossima cosa da fare: chat multiplayer (per vedere se riesco a connettere la gui a server/client - provare a usare observer(?))
-Prendere ciò che era giusto del prototipo e piazzarlo in modo decente nell'implementazione vera e propria. NIENTE CODICE SPAGHETTI.
-Usare il pattern observer per inviare i dati sulle socket tramite un thread secondario a quello della GUI.
+*In corso di sviluppo: quando avrò tempo lo porterò a termine*.
 
 ### Esecuzione
 TO-DO
