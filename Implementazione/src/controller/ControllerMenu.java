@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
@@ -127,7 +128,7 @@ public class ControllerMenu {
 	@FXML private Button buttonBan;
 	@FXML private Label labelLobbyPrivacy;
 	@FXML private Button buttonLobbyPrivacy;
-	
+
 	// Rules & Help controls:
 	// [...]
 	
@@ -298,8 +299,7 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
-			// Problem: when you get kicked
-			/*Alert alert = new Alert(AlertType.CONFIRMATION, "Leave the lobby?", ButtonType.YES, ButtonType.NO);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Leave the lobby?", ButtonType.YES, ButtonType.NO);
 			alert.setTitle("Confirmation Dialog");
 			alert.setContentText("Are you sure you want to leave the lobby?");
 			alert.showAndWait();
@@ -312,15 +312,7 @@ public class ControllerMenu {
 				this.vboxLobbySettingsControls.setVisible(false);
 				
 				this.vboxMultiPlayer.setVisible(true);
-			}*/
-			
-			this.closeConnection();
-			
-			this.vboxLobby.setVisible(false);
-			this.hboxIPaddress.setVisible(false);
-			this.vboxLobbySettingsControls.setVisible(false);
-			
-			this.vboxMultiPlayer.setVisible(true);
+			}
 		}
 	}
 	
@@ -333,9 +325,9 @@ public class ControllerMenu {
 			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/view/ViewGame.fxml"));
 			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
 			loader.setController(new ControllerGame());
-			AnchorPane quiz = (AnchorPane) loader.load();
+			BorderPane game = (BorderPane) loader.load();
 		
-			Scene scene = new Scene(quiz);
+			Scene scene = new Scene(game);
 			scene.getStylesheets().add(ControllerMenu.class.getResource("/application/application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();

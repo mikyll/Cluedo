@@ -12,7 +12,7 @@ import model.game.player.PlayerArtificial;
 /*
  * Game class
  */
-public class Game {
+public class GameCluedo {
 	private List<Player> players;
 	// Timer
 	// User list
@@ -29,7 +29,7 @@ public class Game {
 	/*
 	 * Constructor. It takes a list of users and the game settings
 	 */
-	public Game(List<Player> players, int playerNumber) {
+	public GameCluedo(List<Player> players, int playerNumber) {
 		this.players = players;
 		
 		// Add artificial players if there aren't enough players

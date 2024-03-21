@@ -1,5 +1,5 @@
 package model.game;
 
-public class State {
+public abstract class State {
 
 }

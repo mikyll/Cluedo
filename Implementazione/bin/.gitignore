@@ -1,6 +1,7 @@
+/resources/
 /controller/
 /model/
-/module-info.class
 /persistence/
-/resources/
 /view/
+/application/
+/module-info.class

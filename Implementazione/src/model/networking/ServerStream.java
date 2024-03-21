@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import controller.ControllerMenu;
 import javafx.scene.control.Alert.AlertType;
-import model.game.Game;
+import model.game.GameCluedo;
 import model.networking.User;
 import model.networking.message.IMessageHandler;
 import model.networking.message.Message;
@@ -42,7 +42,7 @@ public class ServerStream {
 	private ArrayList<String> bannedUsernames = new ArrayList<String>();
 	private ArrayList<InetAddress> bannedIPaddresses = new ArrayList<InetAddress>();
 	
-	private Game game;
+	private GameCluedo game;
 	
 	public ServerStream(String username, int port, int minUsers, int maxUsers, boolean isOpen, IMessageHandler msgHandler) throws IOException
 	{
