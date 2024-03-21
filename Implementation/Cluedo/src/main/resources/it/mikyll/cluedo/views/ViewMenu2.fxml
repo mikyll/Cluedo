@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="base" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.mikyll.cluedo.controller.ControllerMenu">
+   <children>
+      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Button fx:id="buttonSinglePlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectSinglePlayer" prefHeight="60.0" prefWidth="300.0" text="SinglePlayer" />
+            <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
+            <Button fx:id="buttonMultiPlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectMultiPlayer" prefHeight="60.0" prefWidth="300.0" text="MultiPlayer" />
+            <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
+            <Button fx:id="buttonRulesHelp" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectRulesHelp" prefHeight="60.0" prefWidth="300.0" text="Rules &amp; Help" />
+         </children>
+         <padding>
+            <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+         <children>
+            <Button id="back" fx:id="buttonBack" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxSettingsInfoControls" alignment="CENTER" prefHeight="100.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="150.0">
+         <children>
+            <Button id="settings" fx:id="buttonSettings" mnemonicParsing="false" onAction="#selectSettings" prefHeight="40.0" prefWidth="40.0" />
+            <Button id="info" fx:id="buttonInfo" mnemonicParsing="false" onAction="#selectInfo" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxSinglePlayer" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Opponents Number:" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Spinner prefHeight="30.0" prefWidth="60.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="199.0" text="Difficulty" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox prefHeight="30.0" prefWidth="120.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Separator prefHeight="90.0" prefWidth="200.0" visible="false" />
+            <Button fx:id="buttonStartSinglePlayer" mnemonicParsing="false" onAction="#startSinglePlayerGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
+         </children>
+         <padding>
+            <Insets left="50.0" right="50.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxMultiPlayer" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Button fx:id="buttonSelectCreateNewLobby" mnemonicParsing="false" onAction="#selectCreateNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
+            <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Username:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldUsernameCreate" onAction="#createNewLobby" onKeyTyped="#checkEnableCreateNewLobby" prefHeight="30.0" prefWidth="200.0" />
+                  <Label fx:id="labelErrorUsernameCreate" prefHeight="60.0" prefWidth="150.0" text="Username must be from   3 to 15 alphanumeric characters long." textFill="RED" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Lobby size:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="50.0" text="Min:" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spinnerLobbySizeMin" initialValue="2" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="50.0" text="Max:" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spinnerLobbySizeMax" initialValue="6" max="6" min="2" prefHeight="30.0" prefWidth="50.0" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets right="120.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Port:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldPortCreate" onKeyTyped="#checkEnableCreateNewLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: 4321" />
+                  <Label fx:id="labelErrorPortCreate" prefHeight="60.0" prefWidth="150.0" text="Port must be a number between 1024 and 65535" textFill="RED" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <Separator prefHeight="50.0" prefWidth="500.0" visible="false" />
+            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Separator prefHeight="20.0" prefWidth="500.0" visible="false" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Username:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldUsernameJoin" onAction="#joinExistingLobby" onKeyTyped="#checkEnableJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" />
+                  <Label fx:id="labelErrorUsernameJoin" prefHeight="60.0" prefWidth="150.0" text="Username must be from   3 to 15 alphanumeric characters long." textFill="RED" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="IP address:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldIP" onKeyTyped="#checkEnableJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: localhost" />
+                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="120.0" text="IP address:" textFill="RED">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="120.0" text="Port:" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldPortJoin" onKeyTyped="#checkEnableJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: 4321" />
+                  <Label fx:id="labelErrorPortJoin" prefHeight="60.0" prefWidth="150.0" text="Port must be a number between 1024 and 65535" textFill="RED" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="hboxConnectionJoin" alignment="CENTER" prefHeight="30.0" prefWidth="500.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Connecting to server..." textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/icon_loading_animated.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
+            <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="180.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <HBox prefHeight="2000.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="1300.0" prefWidth="1350.0" spacing="5.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" text="User List" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="205.0" text="Username" textFill="WHITE" />
+                              <Label prefHeight="20.0" prefWidth="50.0" text="Ready" textFill="WHITE" />
+                           </children>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </HBox>
+                        <ListView fx:id="listViewUsers" focusTraversable="false" prefHeight="1230.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="1300.0" prefWidth="1350.0" spacing="5.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" text="Chat" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="1250.0">
+                           <children>
+                              <TextArea fx:id="textAreaChat" editable="false" focusTraversable="false" mouseTransparent="true" prefWidth="2340.0" wrapText="true" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="1030.0" spacing="5.0">
+                           <children>
+                              <TextField fx:id="textFieldChat" onAction="#send" onKeyTyped="#checkEnableSendChat" prefHeight="30.0" prefWidth="1255.0" promptText="message" />
+                              <Button fx:id="buttonChatSend" mnemonicParsing="false" onAction="#send" prefHeight="30.0" prefWidth="1080.0" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="50.0" prefWidth="700.0">
+               <children>
+                  <Button fx:id="buttonReady" mnemonicParsing="false" onAction="#toggleReady" prefHeight="30.0" prefWidth="120.0" text=" Not Ready" />
+                  <Button fx:id="buttonStartMultiPlayer" mnemonicParsing="false" onAction="#startMultiPlayerGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" right="120.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxLobbySettingsControls" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="150.0">
+         <children>
+            <Button id="lobbySettings" fx:id="buttonLobbySettings" mnemonicParsing="false" onAction="#selectLobbySettings" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" minHeight="300.0" minWidth="400.0" spacing="5.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <HBox alignment="CENTER" minHeight="30.0" minWidth="390.0" prefHeight="30.0" prefWidth="2000.0">
+               <children>
+                  <Label alignment="CENTER" minWidth="330.0" prefHeight="30.0" prefWidth="2000.0" text="Lobby Settings" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button id="close" fx:id="buttonCloseLobbySettings" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#closeLobbySettings" prefHeight="30.0" prefWidth="30.0" />
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <HBox minHeight="20.0" prefHeight="20.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="150.0" text="Banned Username" textFill="WHITE" />
+                  <Label prefHeight="18.0" prefWidth="150.0" text="Banned IP Address" textFill="WHITE" />
+               </children>
+            </HBox>
+            <ListView fx:id="listViewBannedUsers" focusTraversable="false" minWidth="390.0" prefHeight="2000.0" prefWidth="1160.0" />
+            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0" prefWidth="390.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="textFieldBanUsername" minWidth="150.0" onAction="#ban" onKeyTyped="#checkEnableBanUser" prefHeight="30.0" prefWidth="600.0" promptText="Username" />
+                  <TextField fx:id="textFieldBanAddress" minWidth="150.0" onAction="#ban" onKeyTyped="#checkEnableBanUser" prefHeight="30.0" prefWidth="600.0" promptText="IP Address" />
+                  <Button fx:id="buttonBan" minWidth="80.0" mnemonicParsing="false" onAction="#ban" prefHeight="30.0" prefWidth="320.0" text="Ban" />
+               </children>
+               <padding>
+                  <Insets left="100.0" right="100.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" minWidth="390.0" prefHeight="30.0" prefWidth="1800.0">
+               <children>
+                  <Label minWidth="150.0" prefHeight="20.0" text=" Lobby privacy:" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonLobbyPrivacy" minWidth="90.0" mnemonicParsing="false" onAction="#toggleLobbyPrivacy" prefHeight="30.0" prefWidth="90.0" text=" Open">
+                     <graphic>
+                        <Label fx:id="labelLobbyPrivacy" prefHeight="25.0" prefWidth="25.0" />
+                     </graphic></Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding></VBox>
+      <VBox fx:id="vboxRulesHelp" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
+      <VBox fx:id="vboxSettings" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
+      <VBox fx:id="vboxInfo" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
+      <VBox layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
+      <HBox fx:id="hboxIPaddress" layoutX="14.0" layoutY="577.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Label prefHeight="0.0" text=" LAN IP address: " textFill="WHITE" />
+            <Label fx:id="labelLobbyLANaddress" prefHeight="0.0" text="255.255.255.255" textFill="WHITE" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
