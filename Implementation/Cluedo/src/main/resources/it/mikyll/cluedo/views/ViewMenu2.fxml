@@ -18,7 +18,7 @@
 
 <AnchorPane id="base" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.mikyll.cluedo.controller.ControllerMenu">
    <children>
-      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
          <children>
             <Button fx:id="buttonSinglePlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectSinglePlayer" prefHeight="60.0" prefWidth="300.0" text="SinglePlayer" />
             <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
@@ -93,7 +93,7 @@
             <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
          <children>
             <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -161,7 +161,7 @@
                </padding>
             </HBox>
             <Separator prefHeight="50.0" prefWidth="500.0" visible="false" />
-            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create Lobby" visible="false" />
+            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create Lobby" />
          </children>
       </VBox>
       <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
