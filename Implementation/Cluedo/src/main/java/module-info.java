@@ -5,8 +5,6 @@ module it.mikyll.cluedo {
 
     opens it.mikyll.cluedo.controller;
 
-    opens it.mikyll.cluedo to javafx.fxml;
-    exports it.mikyll.cluedo;
     exports it.mikyll.cluedo.application;
     opens it.mikyll.cluedo.application to javafx.fxml;
 }

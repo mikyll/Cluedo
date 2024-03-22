@@ -18,7 +18,7 @@
 
 <AnchorPane id="base" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.mikyll.cluedo.controller.ControllerMenu">
    <children>
-      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
          <children>
             <Button fx:id="buttonSinglePlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectSinglePlayer" prefHeight="60.0" prefWidth="300.0" text="SinglePlayer" />
             <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
@@ -161,7 +161,7 @@
                </padding>
             </HBox>
             <Separator prefHeight="50.0" prefWidth="500.0" visible="false" />
-            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create New Lobby" />
+            <Button fx:id="buttonCreateNewLobby" mnemonicParsing="false" onAction="#createNewLobby" prefHeight="30.0" prefWidth="200.0" text="Create Lobby" visible="false" />
          </children>
       </VBox>
       <VBox fx:id="vboxJoinExistingLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
@@ -193,7 +193,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="textFieldIP" onKeyTyped="#checkEnableJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" promptText="default: localhost" />
-                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="120.0" text="IP address:" textFill="RED">
+                  <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="120.0" text="Invalid IPv4 address" textFill="RED">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -233,7 +233,7 @@
                </children>
             </HBox>
             <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
-            <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
+            <Button fx:id="buttonJoinExistingLobby" mnemonicParsing="false" onAction="#joinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Lobby" />
          </children>
       </VBox>
       <VBox fx:id="vboxLobby" alignment="BOTTOM_CENTER" layoutX="180.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="125.0">
@@ -303,7 +303,7 @@
             <Button id="lobbySettings" fx:id="buttonLobbySettings" mnemonicParsing="false" onAction="#selectLobbySettings" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
-      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" minHeight="300.0" minWidth="400.0" spacing="5.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="150.0">
+      <VBox fx:id="vboxLobbySettings" alignment="TOP_CENTER" layoutX="330.0" layoutY="150.0" minHeight="300.0" minWidth="400.0" spacing="5.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="150.0">
          <children>
             <HBox alignment="CENTER" minHeight="30.0" minWidth="390.0" prefHeight="30.0" prefWidth="2000.0">
                <children>
