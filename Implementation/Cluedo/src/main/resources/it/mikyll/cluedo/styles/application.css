@@ -79,6 +79,12 @@
 #info {
 	-fx-background-image: url('../icons/icon_info_dark.png');
 }
+#previous {
+	-fx-background-image: url('../icons/icon_previous_dark.png');
+}
+#next {
+	-fx-background-image: url('../icons/icon_next_dark.png');
+}
 #lobbySettings {
 	-fx-background-image: url('../icons/icon_settings_dark.png');
 }

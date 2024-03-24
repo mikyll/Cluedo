@@ -40,8 +40,6 @@ public class ControllerLobbyClient implements IController {
     @FXML private ListView<HBox> listViewUsers;
     private ArrayList<Label> listLabelUsername = new ArrayList<Label>();
     private ArrayList<Label> listLabelReady = new ArrayList<Label>();
-    private ArrayList<Button> listButtonKick = new ArrayList<Button>();
-    private ArrayList<Button> listButtonBan = new ArrayList<Button>();
     @FXML private TextArea textAreaChat;
     @FXML private TextField textFieldChat;
     @FXML private Button buttonChatSend;
@@ -75,6 +73,7 @@ public class ControllerLobbyClient implements IController {
             this.client.setReadyMessageHandler(readyHandler);
             this.client.setKickMessageHandler(kickHandler);
             this.client.setBanMessageHandler(banHandler);
+            this.client.setGenericMessageHandler(banHandler);
         }
     }
 
@@ -367,8 +366,6 @@ public class ControllerLobbyClient implements IController {
 
         this.listLabelUsername.clear();
         this.listLabelReady.clear();
-        this.listButtonKick.clear();
-        this.listButtonBan.clear();
     }
 
     private void clearChat()

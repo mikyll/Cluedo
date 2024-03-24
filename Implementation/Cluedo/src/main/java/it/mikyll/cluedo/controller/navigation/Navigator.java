@@ -71,23 +71,15 @@ public class Navigator {
         views.put(NavEntry.LOBBY_CLIENT, loadScene("views/ViewMenuLobbyClient.fxml", ctrlLC));
         controllers.put(NavEntry.LOBBY_CLIENT, ctrlLC);
 
-        // TODO
-
-        /*views.put(MenuEntry.MAIN, loadScene("views/ViewMenuMain.fxml", new ControllerMain()));
-        views.put(MenuEntry.SINGLE_PLAYER, loadScene("views/ViewMenuSinglePlayer.fxml", new ControllerSinglePlayer()));
-        views.put(MenuEntry.MULTIPLAYER, loadScene("views/ViewMenuMultiplayer.fxml", new ControllerMultiplayer()));
-        views.put(MenuEntry.SETTINGS, loadScene("views/ViewMenuSettings.fxml", new ControllerSettings()));
-        views.put(MenuEntry.ABOUT, loadScene("views/ViewMenuAbout.fxml", new ControllerAbout()));
-
-        views.put(MenuEntry.LOBBY_SERVER, loadScene("views/ViewMenuLobbyServer.fxml", new ControllerLobbyServer()));
-        //views.put(MenuEntry.LOBBY_CLIENT, loadScene("views/ViewMenuLobbyClient.fxml", new ControllerLobbyClient()));
-        */
+        ControllerRulesHelp ctrlRH = new ControllerRulesHelp();
+        views.put(NavEntry.RULES_HELP, loadScene("views/ViewMenuRulesHelp.fxml", ctrlRH));
+        controllers.put(NavEntry.RULES_HELP, ctrlRH);
     }
 
-    public static synchronized void switchView(NavEntry menuEntry)
+    public static synchronized void switchView(NavEntry navEntry)
     {
-        stage.setScene(views.get(menuEntry));
-        controllers.get(menuEntry).initialize();
+        stage.setScene(views.get(navEntry));
+        controllers.get(navEntry).initialize();
         stage.show();
     }
 

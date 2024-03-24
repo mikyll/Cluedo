@@ -14,7 +14,7 @@
             <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
             <Button fx:id="buttonMultiPlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectMultiplayer" prefHeight="60.0" prefWidth="300.0" text="Multiplayer" />
             <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
-            <Button fx:id="buttonRulesHelp" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" text="Rules &amp; Help" />
+            <Button fx:id="buttonRulesHelp" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectRulesHelp" prefHeight="60.0" prefWidth="300.0" text="Rules &amp; Help" />
          </children>
          <padding>
             <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />

@@ -25,7 +25,7 @@ public class MainRefactor extends Application {
         ((ControllerLobbyServer) Navigator.getController(NavEntry.LOBBY_SERVER)).closeConnection();
         ((ControllerLobbyClient) Navigator.getController(NavEntry.LOBBY_CLIENT)).closeConnection();
         Platform.exit();
-        System.exit(0);
+        //System.exit(0);
     }
 
     public static void main(String[] args) {

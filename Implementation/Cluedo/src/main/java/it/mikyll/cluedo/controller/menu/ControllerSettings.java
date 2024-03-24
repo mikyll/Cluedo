@@ -14,6 +14,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ControllerSettings implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -22,6 +23,7 @@ public class ControllerSettings implements IController {
 
     @FXML private Button buttonBack;
 
+    @FXML private CheckBox checkBoxToggleFullscreen;
     @FXML private CheckBox checkBoxToggleMusic;
     @FXML private Slider sliderMusicVolume;
     @FXML private CheckBox checkBoxToggleSoundEffects;
@@ -29,8 +31,12 @@ public class ControllerSettings implements IController {
     @FXML private Button buttonSaveSettings;
     @FXML private Button buttonCancelSettings;
 
+    private Settings settings;
+
     public void initialize()
     {
+        this.settings = Settings.getInstance();
+
         this.vboxSettings.setVisible(true);
         this.vboxBackControls.setVisible(true);
     }
@@ -41,6 +47,12 @@ public class ControllerSettings implements IController {
         System.out.println("User selected Back");
 
         Navigator.switchView(NavEntry.MAIN);
+    }
+
+    @FXML
+    public void toggleFullscreen(ActionEvent e)
+    {
+        // TODO ?
     }
 
     @FXML

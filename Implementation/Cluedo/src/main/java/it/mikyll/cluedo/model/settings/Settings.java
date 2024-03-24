@@ -7,9 +7,10 @@ public class Settings {
 
     private static Settings instance = null;
 
-    private Language language = Language.ENGLISH;
+    private boolean fullscreen = false;
     private double windowWidth = 1060.0;
     private double windowHeight = 600.0;
+    private Language language = Language.ENGLISH;
     private boolean musicEnabled = false;
     private double musicVolume = 50.0;
     private boolean soundEffectsEnabled = false;
@@ -29,6 +30,14 @@ public class Settings {
     public void setValues(Settings settings)
     {
         instance = settings;
+    }
+
+    public boolean isFullscreen() {
+        return fullscreen;
+    }
+
+    public void setFullscreen(boolean fullscreen) {
+        this.fullscreen = fullscreen;
     }
 
     public Language getLanguage() {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="base" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+         <children>
+            <Button id="back" fx:id="buttonBack" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="vboxRulesHelp" alignment="CENTER" layoutX="200.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+         <children>
+            <HBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" spacing="10.0">
+               <children>
+                  <Button id="previous" fx:id="buttonPreviousPage" mnemonicParsing="false" onAction="#selectPreviousPage" prefHeight="40.0" prefWidth="40.0" />
+                  <ImageView fx:id="imageViewRules" fitHeight="600.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/rules/en/page1.png" />
+                     </image>
+                  </ImageView>
+                  <Button id="next" fx:id="buttonNextPage" mnemonicParsing="false" onAction="#selectNextPage" prefHeight="40.0" prefWidth="40.0" />
+               </children>
+            </HBox>
+         </children></VBox>
+      <Label fx:id="labelPageNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="740.0" layoutY="558.6" prefHeight="22.0" prefWidth="32.0" style="-fx-background-color: white;" text="1/8" AnchorPane.bottomAnchor="10.0">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>

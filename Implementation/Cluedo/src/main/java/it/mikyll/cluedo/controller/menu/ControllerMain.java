@@ -3,11 +3,13 @@ package it.mikyll.cluedo.controller.menu;
 import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
+import it.mikyll.cluedo.model.settings.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ControllerMain implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -20,11 +22,9 @@ public class ControllerMain implements IController {
     @FXML private Button buttonSettings;
     @FXML private Button buttonAbout;
 
-    public void initialize() {
+    public void initialize()
+    {
         vboxMainMenu.setVisible(true);
-
-        // TODO: Use settings
-        this.anchorPaneRoot.setPrefSize(1060, 600);
     }
 
     // MainMenu functions =====================================================
@@ -40,6 +40,13 @@ public class ControllerMain implements IController {
         System.out.println("User selected Multiplayer");
 
         Navigator.switchView(NavEntry.MULTIPLAYER);
+    }
+
+    @FXML public void selectRulesHelp(ActionEvent event)
+    {
+        System.out.println("User selected Rules & Help");
+
+        Navigator.switchView(NavEntry.RULES_HELP);
     }
 
     @FXML public void selectSettings(ActionEvent event)
