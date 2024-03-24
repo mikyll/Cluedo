@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import it.mikyll.cluedo.model.settings.Settings;
+import it.mikyll.cluedo.model.sounds.MusicPlayer;
+import it.mikyll.cluedo.persistence.SettingsRepository;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -17,21 +20,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.*;
+import javafx.scene.input.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -134,7 +125,12 @@ public class ControllerMenu {
 	// [...]
 	
 	// Settings controls:
-	// [...]
+	@FXML private CheckBox checkBoxToggleMusic;
+	@FXML private Slider sliderMusicVolume;
+	@FXML private CheckBox checkBoxToggleSoundEffects;
+	@FXML private Slider sliderSoundEffectsVolume;
+	@FXML private Button buttonSaveSettings;
+	@FXML private Button buttonCancelSettings;
 	
 	// Info controls:
 	// [...]
@@ -323,7 +319,7 @@ public class ControllerMenu {
 	{
 		// to-do
 		try {
-			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/it/mikyll/cluedo/view/ViewGame.fxml"));
+			FXMLLoader loader = new FXMLLoader(ControllerMenu.class.getResource("/it/mikyll/cluedo/views/ViewGame.fxml"));
 			Stage stage = (Stage) this.vboxMainMenu.getScene().getWindow();
 			loader.setController(new ControllerGame());
 			BorderPane game = (BorderPane) loader.load();
@@ -463,8 +459,8 @@ public class ControllerMenu {
 					Integer.parseInt(this.textFieldPortCreate.getText()),
 					this.spinnerLobbySizeMin.getValue(),
 					this.spinnerLobbySizeMax.getValue(),
-					true,
-					this.lobbyMessageHandler);
+					true);
+					//this.lobbyMessageHandler);
 			this.client = null;
 		} catch (IOException e) {
 			System.out.println("Server: ServerSocket creation failed");
@@ -565,8 +561,8 @@ public class ControllerMenu {
 		this.client = new ClientStream(
 				this.username,
 				this.textFieldIP.getText(),
-				Integer.parseInt(this.textFieldPortJoin.getText()),
-				this.lobbyMessageHandler);
+				Integer.parseInt(this.textFieldPortJoin.getText()));
+				//this.lobbyMessageHandler);
 		this.server = null;
 		
 		System.out.println("User is trying to join an existing lobby");
@@ -1075,7 +1071,7 @@ public class ControllerMenu {
 					
 					break;
 				}
-				case CONNECT_OK:
+				case CONNECT_ACCEPTED:
 				{
 					this.hboxConnectionJoin.setVisible(false);
 					this.vboxJoinExistingLobby.setVisible(false);
@@ -1211,7 +1207,7 @@ public class ControllerMenu {
 					
 					break;
 				}
-					
+
 				case START_GAME:
 					break;
 					
@@ -1254,5 +1250,64 @@ public class ControllerMenu {
 		this.textFieldChat.setText("");
 		this.textFieldChat.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
 		this.buttonChatSend.setDisable(false);
+	}
+
+
+	// Settings functions =====================================================
+	@FXML public void toggleMusic(ActionEvent e)
+	{
+		MusicPlayer player = MusicPlayer.getInstance();
+		if (checkBoxToggleMusic.isSelected())
+		{
+			sliderMusicVolume.setDisable(false);
+			player.play();
+		}
+		else
+		{
+			sliderMusicVolume.setDisable(true);
+			player.stop();
+		}
+	}
+
+	@FXML public void updateMusicVolume(MouseEvent e)
+	{
+		MusicPlayer player = MusicPlayer.getInstance();
+		player.setVolume(sliderMusicVolume.getValue() / 100);
+	}
+
+	@FXML public void toggleSoundEffects(ActionEvent e)
+	{
+		if (checkBoxToggleSoundEffects.isSelected())
+		{
+			sliderSoundEffectsVolume.setDisable(false);
+			// TODO
+		}
+		else
+		{
+			sliderSoundEffectsVolume.setDisable(true);
+			// TODO
+		}
+	}
+
+	@FXML public void updateSoundEffectsVolume(MouseEvent e)
+	{
+		MusicPlayer player = MusicPlayer.getInstance();
+		player.setVolume(sliderMusicVolume.getValue() / 100);
+	}
+
+	@FXML public void saveSettings(ActionEvent e)
+	{
+		Settings settings = Settings.getInstance();
+		// language
+		settings.setMusicEnabled(checkBoxToggleMusic.isSelected());
+		settings.setMusicVolume(sliderMusicVolume.getValue());
+		settings.setSoundEffectsEnabled(checkBoxToggleSoundEffects.isSelected());
+		settings.setSoundEffectsVolume(sliderSoundEffectsVolume.getValue());
+		SettingsRepository.saveSettings(settings);
+	}
+
+	@FXML public void cancelSettings(ActionEvent e)
+	{
+
 	}
 }

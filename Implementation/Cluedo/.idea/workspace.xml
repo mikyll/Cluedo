@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Cluedo:jar" />
+      <artifact name="Cluedo:jar2" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,13 +10,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b4264c3-df6c-4481-9407-33d1fb368718" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/localization/Language.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/localization/TextStrings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Cluedo_old_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/MainRefactor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerAbout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMultiplayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSinglePlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/navigation/IController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/navigation/NavEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/navigation/Navigator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/persistence/SettingsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Cluedo_jar/Cluedo.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Cluedo_jar/Cluedo.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ClientStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ClientStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ServerStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ServerStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/message/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/message/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/settings/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/settings/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/sounds/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/sounds/MusicPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenu2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenu2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +48,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -43,7 +65,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 4
@@ -59,20 +81,31 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.CluedoApp.executor": "Run",
+    "Application.CluedoAppRefactor.executor": "Run",
+    "Application.CluedoAppRefactor2.executor": "Run",
     "Application.HelloApplication.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.MainRefactor.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "Maven.Cluedo [compile].executor": "Run",
+    "Maven.Cluedo [deploy].executor": "Run",
+    "Maven.Cluedo [install].executor": "Run",
+    "Maven.Cluedo [org.apache.maven.plugins:maven-jar-plugin:2.4:jar].executor": "Run",
+    "Maven.Cluedo [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
+    "Maven.Cluedo [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.Cluedo [package].executor": "Run",
+    "Maven.Cluedo [site].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Michele Righi/Programmi/GitHub/Cluedo/Implementation/Cluedo/src/main/java/it/mikyll/cluedo",
+    "last_opened_file_path": "C:/Program Files/Java/javafx-sdk-11.0.2/bin/vcruntime140.dll",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.27471265",
-    "settings.editor.selected.configurable": "project.propCompiler"
+    "project.structure.side.proportion": "0.3402163",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -85,8 +118,11 @@
       <recent name="D:\Michele Righi\Programmi\GitHub\Cluedo\Implementation\Cluedo\src\main\resources\it\mikyll\cluedo\styles" />
       <recent name="D:\Michele Righi\Programmi\GitHub\Cluedo\Implementation\Cluedo\src\main\java\it\mikyll\cluedo\application" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.mikyll.cluedo.controller.menu" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CluedoAppRefactor">
     <configuration name="CluedoApp" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.mikyll.cluedo.application.Main" />
       <module name="Cluedo" />
@@ -94,6 +130,42 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CluedoAppRefactor" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="it.mikyll.cluedo.application.MainRefactor" />
+      <module name="Cluedo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.mikyll.cluedo.application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CluedoAppRefactor2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="it.mikyll.cluedo.application.MainRefactor" />
+      <module name="Cluedo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.mikyll.cluedo.application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.CluedoApp" />
+      <item itemvalue="Application.CluedoAppRefactor2" />
+      <item itemvalue="Application.CluedoAppRefactor" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CluedoAppRefactor" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

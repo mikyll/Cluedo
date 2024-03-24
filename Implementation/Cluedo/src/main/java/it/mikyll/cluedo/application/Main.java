@@ -2,6 +2,7 @@ package it.mikyll.cluedo.application;
 
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
+import it.mikyll.cluedo.persistence.SettingsRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +22,14 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             // load settings
+            Settings settings = SettingsRepository.loadSettings();
             MusicPlayer player = MusicPlayer.getInstance();
-            player.setVolume(50.0);
-            player.setLoopNumber(Integer.MAX_VALUE);
-            player.play(MusicTrack.MENU);
+            player.setVolume(settings.getMusicVolume());
+            if (settings.isMusicEnabled())
+            {
+                player.setTrack(MusicTrack.MENU);
+                player.play();
+            }
 
             FXMLLoader loader = new FXMLLoader(Main.class.getResource(Settings.RESOURCES_PATH + "views/ViewMenu2.fxml"));
             AnchorPane basePane = (AnchorPane) loader.load();

@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.net.BindException;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,11 +12,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import javafx.scene.control.Alert.AlertType;
-
 import it.mikyll.cluedo.controller.ControllerMenu;
 import it.mikyll.cluedo.model.game.GameCluedo;
-import it.mikyll.cluedo.model.networking.User;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
@@ -30,12 +25,18 @@ public class ServerStream {
 	
 	private MPState serverState = MPState.LOBBY;
 	
-	private String username;
+	private User ownerUser;
 	private int port;
-	private int minUsers;
-	private int maxUsers;
+	private final int minUsers;
+	private final int maxUsers;
 	private boolean isOpen;
-	private IMessageHandler messageHandler;
+
+	// Message handlers
+	private IMessageHandler connectRequestHandler;
+	private IMessageHandler chatHandler;
+	private IMessageHandler readyHandler;
+	private IMessageHandler disconnectHandler;
+	private IMessageHandler genericHandler;
 	
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> writers = new ArrayList<ObjectOutputStream>();
@@ -45,39 +46,64 @@ public class ServerStream {
 	
 	private GameCluedo game;
 	
-	public ServerStream(String username, int port, int minUsers, int maxUsers, boolean isOpen, IMessageHandler msgHandler) throws IOException
+	public ServerStream(String username, int port, int minUsers, int maxUsers, boolean isOpen) throws IOException
 	{
-		this.username = username;
 		this.port = port;
 		this.minUsers = minUsers;
 		this.maxUsers = maxUsers;
 		this.isOpen = isOpen;
-		this.messageHandler = msgHandler;
-		
-		User u = new User(username);
-		u.setReady(true);
-		this.users.add(u);
+
+		ownerUser = new User(username);
+		ownerUser.setReady(true);
+		this.users.add(ownerUser);
 		// add the server writer (placeholder)
 		writers.add(null);
 		
 		this.serverListener = new ServerListener(port);
-		this.serverListener.start();
 		
 		// If we reach there, it means that everything went fine, therefore we can switch view (from the ControllerMenu)
 	}
-	public ServerStream() {
-		this.port = DEFAULT_PORT;
-		this.minUsers = 2;
-		this.maxUsers = 6;
+
+	public void startServer()
+	{
+		if (!this.serverListener.isAlive())
+		{
+			this.serverListener.start();
+		}
+		else
+		{
+			// TODO
+			// Edit error handling?
+			System.out.println("ServerStream.java: the server is already listening!");
+		}
 	}
-	
-	public void setMessageHandler(IMessageHandler msgHandler) {this.messageHandler = msgHandler;}
-	
+
+	public void setConnectRequestMessageHandler(IMessageHandler msgHandler)
+	{
+		this.connectRequestHandler = msgHandler;
+	}
+	public void setChatMessageHandler(IMessageHandler msgHandler)
+	{
+		this.chatHandler = msgHandler;
+	}
+	public void setReadyMessageHandler(IMessageHandler msgHandler)
+	{
+		this.readyHandler = msgHandler;
+	}
+	public void setDisconnectMessageHandler(IMessageHandler msgHandler)
+	{
+		this.disconnectHandler = msgHandler;
+	}
+	public void setGenericMessageHandler(IMessageHandler msgHandler)
+	{
+		this.genericHandler = msgHandler;
+	}
+
 	public void startGame() {
 		this.serverState = MPState.GAME;
-		
-		//this.game = new Game();
-		
+
+		// TODO
+		// this.game = new Game();
 	}
 	
 	/*
@@ -184,12 +210,12 @@ public class ServerStream {
 		public ServerListener(int port) throws IOException
 		{
 			this.socketListener = new ServerSocket(port);
-			System.out.println("Server (" + this.getId() + "): listening for connections on port " + port);
-		}
+			}
 		
 		@Override
 		public void run()
 		{
+			System.out.println("Server (" + this.getId() + "): listening for connections on port " + port);
 			try {
 				while(true)
 				{
@@ -297,11 +323,16 @@ public class ServerStream {
 									mReply.setUsername(incomingMsg.getUsername());
 									forwardMessageToOthers(mReply);
 									
-									mReply.setMsgType(MessageType.CONNECT_OK);
-									mReply.setUsername(username);
+									mReply.setMsgType(MessageType.CONNECT_ACCEPTED);
+									mReply.setUsername(ownerUser.getUsername());
 									mReply.setContent(User.userListToString(users));
-									
-									messageHandler.handleMessage(incomingMsg);
+
+									if (connectRequestHandler != null)
+										connectRequestHandler.handleMessage(incomingMsg);
+
+									// TODO
+									// remove after checking
+									// messageHandler.handleMessage(incomingMsg);
 								}
 								
 								// send reply
@@ -327,16 +358,15 @@ public class ServerStream {
 									controller.addToTextArea(mReply.getTimestamp() + " " + incomingMsg.getNickname() + " has joined the lobby");
 								}*/
 								
-								// 
-								
 								break;
 							}
 							case CHAT:
 							{
 								
 								// TO-DO: forward
-								
-								messageHandler.handleMessage(incomingMsg);
+
+								if (chatHandler != null)
+									chatHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
@@ -352,8 +382,9 @@ public class ServerStream {
 								}
 								
 								forwardMessageToOthers(incomingMsg);
-								
-								messageHandler.handleMessage(incomingMsg);
+
+								if (readyHandler != null)
+									readyHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
@@ -374,12 +405,15 @@ public class ServerStream {
 								forwardMessageToOthers(incomingMsg);
 								
 								socket.close();
-								
-								messageHandler.handleMessage(incomingMsg);
+
+								if (disconnectHandler != null)
+									disconnectHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							default:
+								if (genericHandler != null)
+									genericHandler.handleMessage(incomingMsg);
 								break;
 						}
 						
@@ -435,7 +469,7 @@ public class ServerStream {
 	
 	public void sendChatMessage(String content)
 	{
-		Message msg = new Message(MessageType.CHAT, this.username, content);
+		Message msg = new Message(MessageType.CHAT, ownerUser.getUsername(), content);
 		
 		// send the chat message to everyone
 		this.sendMessage(msg);
@@ -462,7 +496,7 @@ public class ServerStream {
 	 */
 	public void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, this.username, "Server lobby closed");
+		Message msg = new Message(MessageType.DISCONNECT, ownerUser.getUsername(), "Server lobby closed");
 
 		// send the message to each user except the server (NB: it's not a normal sendMessage)
 		for(int i = 1; i < this.writers.size(); i++)

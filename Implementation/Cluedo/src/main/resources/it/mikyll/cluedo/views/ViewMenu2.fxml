@@ -2,10 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -93,7 +95,7 @@
             <Button fx:id="buttonSelectJoinExistingLobby" mnemonicParsing="false" onAction="#selectJoinExistingLobby" prefHeight="30.0" prefWidth="200.0" text="Join Existing Lobby" />
          </children>
       </VBox>
-      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+      <VBox fx:id="vboxCreateNewLobby" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
          <children>
             <Separator prefHeight="30.0" prefWidth="500.0" visible="false" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
@@ -353,7 +355,72 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></VBox>
       <VBox fx:id="vboxRulesHelp" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
-      <VBox fx:id="vboxSettings" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
+      <VBox fx:id="vboxSettings" alignment="TOP_CENTER" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+         <children>
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Language" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <ComboBox fx:id="comboBoxLanguage" prefHeight="30.0" prefWidth="120.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Music Volume" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <CheckBox fx:id="checkBoxToggleMusic" mnemonicParsing="false" onAction="#toggleMusic" />
+                        <Slider fx:id="sliderMusicVolume" disable="true" majorTickUnit="50.0" onMouseReleased="#updateMusicVolume" value="50.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Sound Effects Volume" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <CheckBox fx:id="checkBoxToggleSoundEffects" mnemonicParsing="false" onAction="#toggleSoundEffects" />
+                        <Slider fx:id="sliderSoundEffectsVolume" disable="true" onMouseReleased="#updateSoundEffectsVolume" value="50.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Separator prefHeight="120.0" prefWidth="500.0" visible="false" />
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0" spacing="25.0">
+               <children>
+                  <Button fx:id="buttonSaveSettings" mnemonicParsing="false" onAction="#saveSettings" prefHeight="30.0" prefWidth="100.0" text="Save" />
+                  <Button fx:id="buttonCancelSettings" mnemonicParsing="false" onAction="#cancelSettings" prefHeight="30.0" prefWidth="100.0" text="Cancel" />
+               </children>
+            </HBox>
+         </children></VBox>
       <VBox fx:id="vboxInfo" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <VBox layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" />
       <HBox fx:id="hboxIPaddress" layoutX="14.0" layoutY="577.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">

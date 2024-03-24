@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="base" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="vboxMainMenu" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Button fx:id="buttonSinglePlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectSinglePlayer" prefHeight="60.0" prefWidth="300.0" text="Single Player" />
+            <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
+            <Button fx:id="buttonMultiPlayer" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" onAction="#selectMultiplayer" prefHeight="60.0" prefWidth="300.0" text="Multiplayer" />
+            <Separator minHeight="20.0" prefHeight="40.0" visible="false" />
+            <Button fx:id="buttonRulesHelp" maxWidth="500.0" minHeight="30.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" text="Rules &amp; Help" />
+         </children>
+         <padding>
+            <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxSettingsInfoControls" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="150.0">
+         <children>
+            <Button id="settings" fx:id="buttonSettings" mnemonicParsing="false" onAction="#selectSettings" prefHeight="40.0" prefWidth="40.0" />
+            <Button id="info" fx:id="buttonAbout" mnemonicParsing="false" onAction="#selectAbout" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -12,7 +12,6 @@ import java.net.SocketException;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
-import it.mikyll.cluedo.controller.ControllerMenu;
 
 public class ClientStream {
 	private ClientListener clientListener;
@@ -23,17 +22,74 @@ public class ClientStream {
     private ObjectInputStream input;
 	
     private String username;
+
+	// Message handlers
+	private IMessageHandler connectAcceptedHandler;
+	private IMessageHandler connectRefusedHandler;
+	private IMessageHandler userJoinedHandler;
+	private IMessageHandler chatHandler;
+	private IMessageHandler disconnectHandler;
+	private IMessageHandler readyHandler;
+	private IMessageHandler kickHandler;
+	private IMessageHandler banHandler;
+    private IMessageHandler genericHandler;
     
-    private IMessageHandler messageHandler;
-    
-    public ClientStream(String username, String address, int port, IMessageHandler messageHandler)
+    public ClientStream(String username, String address, int port)
     {
     	this.username = username;
-    	this.messageHandler = messageHandler;
     	
     	this.clientListener = new ClientListener(address, port);
-    	this.clientListener.start();
     }
+
+	public void startClient()
+	{
+		if (!this.clientListener.isAlive())
+		{
+			this.clientListener.start();
+		}
+		else
+		{
+			// TODO
+			System.out.println("ClientStream.java: the client is already listening!");
+		}
+	}
+
+	public void setConnectAcceptedMessageHandler(IMessageHandler msgHandler)
+	{
+		this.connectAcceptedHandler = msgHandler;
+	}
+	public void setConnectRefusedMessageHandler(IMessageHandler msgHandler)
+	{
+		this.connectRefusedHandler = msgHandler;
+	}
+	public void setUserJoinedMessageHandler(IMessageHandler msgHandler)
+	{
+		this.userJoinedHandler = msgHandler;
+	}
+	public void setChatMessageHandler(IMessageHandler msgHandler)
+	{
+		this.chatHandler = msgHandler;
+	}
+	public void setDisconnectMessageHandler(IMessageHandler msgHandler)
+	{
+		this.disconnectHandler = msgHandler;
+	}
+	public void setReadyMessageHandler(IMessageHandler msgHandler)
+	{
+		this.readyHandler = msgHandler;
+	}
+	public void setKickMessageHandler(IMessageHandler msgHandler)
+	{
+		this.kickHandler = msgHandler;
+	}
+	public void setBanMessageHandler(IMessageHandler msgHandler)
+	{
+		this.banHandler = msgHandler;
+	}
+	public void setGenericMessageHandler(IMessageHandler msgHandler)
+	{
+		this.genericHandler = msgHandler;
+	}
     
 	private class ClientListener extends Thread {
 		private Socket socket;
@@ -71,56 +127,67 @@ public class ClientStream {
 						System.out.println("Client (" + this.getId() + "): received " + incomingMsg.toString()); // test
 						switch(incomingMsg.getMsgType())
 						{
-							case CONNECT_OK:
+							case CONNECT_ACCEPTED:
 							{
-								messageHandler.handleMessage(incomingMsg);
-								
+								if (connectAcceptedHandler != null)
+									connectAcceptedHandler.handleMessage(incomingMsg);
+
 								break;
 							}
 							case CONNECT_REFUSED:
 							{
-								messageHandler.handleMessage(incomingMsg);
-								
+								if (connectRefusedHandler != null)
+									connectRefusedHandler.handleMessage(incomingMsg);
+
 								break;
 							}
 							case USER_JOINED:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (userJoinedHandler != null)
+									userJoinedHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							case CHAT:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (chatHandler != null)
+									chatHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							case DISCONNECT:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (disconnectHandler != null)
+									disconnectHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							case READY:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (readyHandler != null)
+									readyHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							case KICK:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (kickHandler != null)
+									kickHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							case BAN:
 							{
-								messageHandler.handleMessage(incomingMsg);
+								if (banHandler != null)
+									banHandler.handleMessage(incomingMsg);
 								
 								break;
 							}
 							default:
 							{
+								if (genericHandler != null)
+									genericHandler.handleMessage(incomingMsg);
+
 								break;
 							}
 						}
@@ -130,7 +197,7 @@ public class ClientStream {
 				System.out.println("Socket exception");
 				if(e instanceof ConnectException)
 				{
-					messageHandler.handleMessage(
+					connectRefusedHandler.handleMessage(
 							new Message(MessageType.CONNECT_REFUSED, "", "", e.getMessage()));
 				}
 				else if(e.getMessage().equals("Connection reset"))

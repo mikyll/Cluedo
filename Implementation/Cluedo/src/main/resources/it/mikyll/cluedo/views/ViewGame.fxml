@@ -18,7 +18,7 @@
          <children>
             <ImageView fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/mappa2.png" />
+                  <Image url="@../images/mappa2.png" />
                </image>
             </ImageView>
             <Label layoutX="48.0" layoutY="37.0" text="STUDIO" textFill="WHITE" />
@@ -75,7 +75,7 @@
             <HBox alignment="CENTER" prefHeight="98.0" prefWidth="530.0" spacing="5.0">
                <children>
                   <Button mnemonicParsing="false" text="Move" />
-                  <Button mnemonicParsing="false" text="ASk Clue" />
+                  <Button mnemonicParsing="false" text="Ask Clue" />
                   <Button mnemonicParsing="false" text="Accusation" />
                   <Button mnemonicParsing="false" text="End Turn" />
                   <Button mnemonicParsing="false" text="Clue Sheet" />

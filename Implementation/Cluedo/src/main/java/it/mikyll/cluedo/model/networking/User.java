@@ -4,8 +4,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class User {
+	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
+	private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+
 	private String username;
 	private boolean isReady;
 	private InetAddress address;
@@ -68,4 +72,14 @@ public class User {
 		
 		return result;
 	}
+
+	public static boolean validateUsername(String username)
+	{
+		return PATTERN_USERNAME.matcher(username).matches();
+	}
+	public static boolean validateIPv4(String address)
+	{
+		return PATTERN_IP.matcher(address).matches();
+	}
+
 }
