@@ -14,6 +14,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -134,11 +136,19 @@ public class ControllerLobbyServer implements IController {
         this.buttonBack.setDisable(true);
         this.buttonLobbySettings.setDisable(true);
 
+        this.textFieldChat.setDisable(true);
+        this.buttonChatSend.setDisable(true);
+        this.buttonStartGame.setDisable(true);
+
         this.textFieldBanUsername.setText("");
         this.textFieldBanUsername.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
         this.textFieldBanAddress.setText("");
         this.textFieldBanAddress.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
         this.buttonBan.setDisable(true);
+
+        GaussianBlur blur = new GaussianBlur();
+        blur.setRadius(15.0);
+        this.vboxLobbyServer.setEffect(blur);
 
         this.vboxLobbySettings.setVisible(true);
     }
@@ -149,8 +159,13 @@ public class ControllerLobbyServer implements IController {
 
         this.vboxLobbySettings.setVisible(false);
 
+        this.vboxLobbyServer.setEffect(null);
+
+        this.textFieldChat.setDisable(false);
+        this.buttonChatSend.setDisable(false);
         this.buttonBack.setDisable(false);
         this.buttonLobbySettings.setDisable(false);
+        this.buttonStartGame.setDisable(false);
     }
 
     @FXML public void ban(ActionEvent event)
@@ -335,9 +350,12 @@ public class ControllerLobbyServer implements IController {
     private void banUser(String username, String address)
     {
         if(username == null && address == null)
-        {
             return;
-        }
+
+
+        if (this.isPresentInBanList(username, address))
+            return;
+
         if(username != null)
         {
             this.addBanMessage(new Message(MessageType.BAN, username, ""));
@@ -353,12 +371,25 @@ public class ControllerLobbyServer implements IController {
             } catch (UnknownHostException e) {System.out.println("Address not found");}
         }
 
-        // add to banned list (LobbySettings)
+        // Add to banned list (LobbySettings)
         this.listViewBannedUsers.getItems().add(this.buildBannedUserElement(username, address));
 
         this.server.sendBanUser(username, address);
 
         this.buttonStartGame.setDisable(!this.server.canStart());
+    }
+
+    private boolean isPresentInBanList(String username, String address)
+    {
+        for (int i = 0; i < this.listViewBannedUsers.getItems().size(); i++)
+        {
+            HBox hbox = this.listViewBannedUsers.getItems().get(i);
+            Label lUsername = (Label) hbox.getChildren().get(0);
+            Label lAddress = (Label) hbox.getChildren().get(1);
+            if (username.equals(lUsername.getText()) && address.equals(lAddress.getText()))
+                return true;
+        }
+        return false;
     }
 
     private void removeFromBanList(HBox row, String username, String address)

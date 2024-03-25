@@ -23,8 +23,6 @@ public class ServerStream {
 	
 	private ServerListener serverListener;
 	
-	private MPState serverState = MPState.LOBBY;
-	
 	private User ownerUser;
 	private int port;
 	private final int minUsers;
@@ -100,8 +98,6 @@ public class ServerStream {
 	}
 
 	public void startGame() {
-		this.serverState = MPState.GAME;
-
 		// TODO
 		// this.game = new Game();
 	}
@@ -177,14 +173,21 @@ public class ServerStream {
 	
 	public boolean isBanned(String username, InetAddress address)
 	{
+		try {
+
+		} catch (Exception e) {
+			System.out.println("Error while checking ban: " + e.getMessage());
+			return true;
+		}
+
 		if(username != null)
 		{
-			if(this.bannedUsernames.contains(username))
+			if (this.bannedUsernames.contains(username))
 				return true;
 		}
 		if(address != null)
 		{
-			if(this.bannedIPaddresses.contains(address))
+			if (this.bannedIPaddresses.contains(address))
 					return true;
 		}
 		return false;

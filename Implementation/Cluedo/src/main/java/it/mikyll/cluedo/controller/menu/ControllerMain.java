@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class ControllerMain implements IController {
     @FXML private AnchorPane anchorPaneRoot;
     @FXML private VBox vboxMainMenu;
+    @FXML private VBox vboxSettingsInfoControls;
 
     @FXML private Button buttonSinglePlayer;
     @FXML private Button buttonMultiPlayer;
@@ -24,7 +25,8 @@ public class ControllerMain implements IController {
 
     public void initialize()
     {
-        vboxMainMenu.setVisible(true);
+        this.vboxMainMenu.setVisible(true);
+        this.vboxSettingsInfoControls.setVisible(true);
     }
 
     // MainMenu functions =====================================================
