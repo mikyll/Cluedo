@@ -5,12 +5,12 @@ package it.mikyll.cluedo.model.game.clues;
  */
 public enum Character implements Clue {
 	NONE(""),
-	PURPLE("Victor Plum"),
+	PLUM("Victor Plum"),
 	WHITE("Diane White"),
-	RED("Kassandra Scarlet"),
+	SCARLET("Kassandra Scarlet"),
 	GREEN("Jacob Green"),
-	YELLOW("Jack Mustard"),
-	BLUE("Eleanor Peacock");
+	MUSTARD("Jack Mustard"),
+	PEACOCK("Eleanor Peacock");
 	
 	private String name;
 	

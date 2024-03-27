@@ -3,93 +3,552 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: yellow;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/mappa2.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="48.0" layoutY="37.0" text="STUDIO" textFill="WHITE" />
-            <VBox fx:id="vboxMenu" alignment="CENTER" disable="true" layoutX="42.0" layoutY="100.0" prefHeight="300.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: white;">
+<AnchorPane fx:id="anchorPaneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane fx:id="borderPaneGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane fx:id="anchorPaneCenter" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: yellow;" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="100.0" text="RESUME" />
-                  <Button mnemonicParsing="false" prefWidth="100.0" text="RULES" />
-                  <Button mnemonicParsing="false" prefWidth="100.0" text="SETTINGS" />
-                  <Button mnemonicParsing="false" prefWidth="100.0" text="QUIT" />
+                  <ImageView fx:id="imageViewBoard" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../images/map/map.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewBoardLabels" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../images/map/map_labels_it.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="482.0" layoutY="149.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: yellow; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPawnScarlet" layoutX="336.0" layoutY="4.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: red; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPawnWhite1" layoutX="191.0" layoutY="482.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: green; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPawnWhite" layoutX="295.0" layoutY="482.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPawnPeacock" layoutX="4.0" layoutY="377.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: blue; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPawnPlum" layoutX="4.0" layoutY="108.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: purple; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
+                     <font>
+                        <Font size="5.0" />
+                     </font>
+                  </Label>
                </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-   </center>
-   <top>
-      <HBox prefHeight="50.0" prefWidth="1080.0" spacing="50.0" style="-fx-border-color: magenta;" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="ICONA MENU" />
-            <Label text="TIMER" />
-            <Label text="TURNO CORRENTE" />
-            <Label text="ALTRE INFO MINORI" />
-         </children>
-      </HBox>
-   </top>
-   <left>
-      <HBox alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="300.0" style="-fx-border-color: cyan;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="560.0" prefWidth="280.0">
+            </AnchorPane>
+         </center>
+         <top>
+            <HBox prefHeight="50.0" prefWidth="1080.0" spacing="20.0" style="-fx-border-color: magenta;" BorderPane.alignment="CENTER">
                <children>
-                  <TextArea prefHeight="500.0" prefWidth="274.0" text="Chat" />
-                  <HBox prefHeight="50.0" prefWidth="290.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#toggleMenu" text="Menu" />
+                  <Label text="ICONA MENU" />
+                  <Label text="TIMER" />
+                  <Label text="TURNO CORRENTE" />
+                  <Button mnemonicParsing="false" onAction="#showTurnView" text="OpenTurn" />
+                  <Button mnemonicParsing="false" onAction="#showCharacterSelectionView" text="OpenChar" />
+                  <Button mnemonicParsing="false" onAction="#showPlayersListView" text="OpenPlayers" />
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="98.0" prefWidth="538.0">
                      <children>
-                        <TextField prefHeight="40.0" prefWidth="220.0" text="Messaggio" />
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="70.0" text="Send" />
+                        <Label text="INFO GIOCATORE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="98.0" prefWidth="530.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Move" />
+                        <Button mnemonicParsing="false" text="Ask Clue" />
+                        <Button mnemonicParsing="false" text="Accusation" />
+                        <Button mnemonicParsing="false" text="End Turn" />
+                        <Button mnemonicParsing="false" text="Clue Sheet" />
+                        <Button mnemonicParsing="false" text="Notepad" />
                      </children>
                   </HBox>
                </children>
+            </HBox>
+         </bottom>
+         <right>
+            <TabPane fx:id="tabPaneRight" prefHeight="200.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                  <Tab text="Objective">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                <Tab text="Clue Sheet">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab fx:id="tabNotepad" text="Notepad">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextArea fx:id="textAreaNotepad" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </TabPane>
+         </right>
+         <left>
+            <VBox fx:id="vboxLeft" alignment="TOP_CENTER" prefHeight="560.0" prefWidth="280.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Users list" />
+                  <ListView fx:id="listViewPlayers" prefHeight="250.0" prefWidth="263.0" />
+                  <Label text="Chat">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="textAreaChat" editable="false" prefHeight="300.0" prefWidth="263.0" wrapText="true" />
+                  <HBox prefHeight="50.0" prefWidth="290.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="textFieldChat" onAction="#sendChatMessage" prefHeight="30.0" prefWidth="200.0" promptText="message" />
+                        <Button fx:id="buttonChatSend" mnemonicParsing="false" onAction="#sendChatMessage" prefHeight="30.0" prefWidth="80.0" text="Send" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </VBox>
-            <Label alignment="CENTER" prefHeight="121.0" prefWidth="22.0" style="-fx-border-color: black;" text="&lt;" />
+         </left>
+      </BorderPane>
+      <VBox fx:id="vboxTurn" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label text="Your turn is..." textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fx:id="imageViewDice" fitHeight="200.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/dice_rolling.gif" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelTurn" text="1st" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonOkTurn" disable="true" mnemonicParsing="false" onAction="#closeTurnView" prefHeight="39.0" prefWidth="141.0" text="Ok">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxCharacterSelection" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label text="Choose your character" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button id="previous" fx:id="buttonPreviousCharacter" mnemonicParsing="false" prefHeight="40.0" prefWidth="30.0" />
+                  <ImageView fx:id="imageViewCharacterSelection" fitHeight="200.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/characters/pg0%20-%20Kassandra%20Scarlet%20(ROSSO).png" />
+                     </image>
+                  </ImageView>
+                  <Button id="next" fx:id="buttonNextCharacter" mnemonicParsing="false" prefHeight="40.0" prefWidth="30.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label fx:id="labelTurn111" prefHeight="40.0" prefWidth="40.0" textFill="WHITE" visible="false">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelCharacterSelectionName" text="Kassandra Scarlet" textFill="WHITE">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelCharacterSelectionColor" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: red; -fx-background-radius: 50;" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="buttonConfirmCharacter" mnemonicParsing="false" onAction="#closeCharacterSelectionView" prefHeight="39.0" prefWidth="141.0" text="Confirm">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxPlayersList" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label text="Players List" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="300.0" prefWidth="870.0" spacing="5.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="1st" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg0%20-%20Kassandra%20Scarlet%20(ROSSO).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color red="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="mikyll" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Kassandra Scarlet" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="2nd" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg1%20-%20Victor%20Plum%20(VIOLA).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color red="0.501960813999176" blue="0.501960813999176" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="bot1" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Viktor Plum" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="3rd" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg2%20-%20Jack%20Mustard%20(GIALLO).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="bot2" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Jack Mustard" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="4th" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg3%20-%20Jacob%20Green%20(VERDE).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color green="0.501960813999176" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="bot3" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Jacob Green" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="5th" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg4%20-%20Diane%20White%20(BIANCO).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="bot4" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Diane White" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="6th" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="125.0" fitWidth="334.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/characters/pg5%20-%20Eleanor%20Peacock%20(BLU).png" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="15.0" radius="7.0" spread="1.0" width="15.0">
+                                       <color>
+                                          <Color blue="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="125.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="60.0" prefWidth="125.0" text="bot5" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="playing as:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="188.0" text="Eleanor Peacock" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="buttonOkPlayersList" mnemonicParsing="false" onAction="#closePlayersListView" prefHeight="39.0" prefWidth="141.0" text="Ok">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
-      </HBox>
-   </left>
-   <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+      </VBox>
+      <VBox fx:id="vboxMenu" alignment="CENTER" prefHeight="300.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="210.0">
          <children>
-            <HBox prefHeight="98.0" prefWidth="538.0">
-               <children>
-                  <Label text="INFO GIOCATORE" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="530.0" spacing="5.0">
-               <children>
-                  <Button mnemonicParsing="false" text="Move" />
-                  <Button mnemonicParsing="false" text="Ask Clue" />
-                  <Button mnemonicParsing="false" text="Accusation" />
-                  <Button mnemonicParsing="false" text="End Turn" />
-                  <Button mnemonicParsing="false" text="Clue Sheet" />
-                  <Button mnemonicParsing="false" text="Notepad" />
-               </children>
-            </HBox>
+            <Button fx:id="buttonResume" mnemonicParsing="false" onAction="#toggleMenu" prefWidth="100.0" text="RESUME" />
+            <Button mnemonicParsing="false" prefWidth="100.0" text="RULES" />
+            <Button mnemonicParsing="false" prefWidth="100.0" text="SETTINGS" />
+            <Button mnemonicParsing="false" onAction="#quit" prefWidth="100.0" text="QUIT" />
          </children>
-      </HBox>
-   </bottom>
-   <right>
-      <AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-border-color: green;" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="136.0" layoutY="128.0" text="Taccuino o altre viste" />
-         </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+      </VBox>
+   </children>
+</AnchorPane>

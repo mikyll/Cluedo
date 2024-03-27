@@ -1,9 +1,11 @@
 package it.mikyll.cluedo.controller.navigation;
 
+import it.mikyll.cluedo.controller.game.ControllerGame;
 import it.mikyll.cluedo.controller.menu.*;
 import it.mikyll.cluedo.model.settings.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -19,6 +21,8 @@ public class Navigator {
     public static synchronized void initStage(Stage appStage)
     {
         stage = appStage;
+        stage.setFullScreenExitHint("");
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         loadMenuScenes();
     }
@@ -74,6 +78,10 @@ public class Navigator {
         ControllerRulesHelp ctrlRH = new ControllerRulesHelp();
         views.put(NavEntry.RULES_HELP, loadScene("views/ViewMenuRulesHelp.fxml", ctrlRH));
         controllers.put(NavEntry.RULES_HELP, ctrlRH);
+
+        ControllerGame ctrlGame = new ControllerGame();
+        views.put(NavEntry.GAME, loadScene("views/ViewGame.fxml", ctrlGame));
+        controllers.put(NavEntry.GAME, ctrlGame);
     }
 
     public static synchronized void switchView(NavEntry navEntry)

@@ -58,8 +58,6 @@ public class ServerStream {
 		writers.add(null);
 		
 		this.serverListener = new ServerListener(port);
-		
-		// If we reach there, it means that everything went fine, therefore we can switch view (from the ControllerMenu)
 	}
 
 	public void startServer()

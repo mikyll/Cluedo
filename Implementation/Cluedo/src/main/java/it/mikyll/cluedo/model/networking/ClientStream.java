@@ -105,7 +105,7 @@ public class ClientStream {
 		@Override
 		public void run()
 		{
-			System.out.println("Client: running. Username: " + username);
+			System.out.println("Client (" + this.getId() + "): running. Username: " + username);
 			try {
 				this.socket = new Socket(address, port);
 				
@@ -224,8 +224,11 @@ public class ClientStream {
 	
 	private void sendMessage(Message message)
 	{
+
 		try {
-			this.output.writeObject(message);
+			if (output != null) {
+				this.output.writeObject(message);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

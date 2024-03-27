@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private static SimpleDateFormat tformatter = new SimpleDateFormat("[HH:mm:ss]");

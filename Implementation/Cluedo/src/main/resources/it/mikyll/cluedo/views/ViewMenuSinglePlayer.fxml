@@ -58,7 +58,7 @@
                </children>
             </HBox>
             <Separator prefHeight="90.0" prefWidth="200.0" visible="false" />
-            <Button fx:id="buttonStartSinglePlayer" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
+            <Button fx:id="buttonStartSinglePlayer" mnemonicParsing="false" onAction="#startGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
          </children>
          <padding>
             <Insets left="50.0" right="50.0" />

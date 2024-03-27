@@ -3,6 +3,7 @@ package it.mikyll.cluedo.controller.menu;
 import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
+import it.mikyll.cluedo.model.game.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,7 +26,6 @@ public class ControllerSinglePlayer implements IController {
     public void initialize() {
         this.vboxBackControls.setVisible(true);
         this.vboxSinglePlayer.setVisible(true);
-
     }
 
     @FXML public void selectBack(ActionEvent event)
@@ -33,5 +33,12 @@ public class ControllerSinglePlayer implements IController {
         System.out.println("User selected Back");
 
         Navigator.switchView(NavEntry.MAIN);
+    }
+
+    @FXML public void startGame(ActionEvent event)
+    {
+        // TODO (test)
+
+        Navigator.switchView(NavEntry.GAME);
     }
 }
