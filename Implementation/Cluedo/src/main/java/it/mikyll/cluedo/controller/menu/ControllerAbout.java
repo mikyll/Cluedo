@@ -6,8 +6,10 @@ import it.mikyll.cluedo.controller.navigation.Navigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 
 public class ControllerAbout implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -16,11 +18,15 @@ public class ControllerAbout implements IController {
 
     @FXML private Button buttonBack;
 
+    @FXML private ImageView imageViewAuthorPicture;
 
     public void initialize()
     {
         this.vboxAbout.setVisible(true);
         this.vboxBackControls.setVisible(true);
+
+        double radiusP = imageViewAuthorPicture.getFitWidth() / 2;
+        imageViewAuthorPicture.setClip(new Circle(radiusP, radiusP, radiusP));
     }
 
     @FXML

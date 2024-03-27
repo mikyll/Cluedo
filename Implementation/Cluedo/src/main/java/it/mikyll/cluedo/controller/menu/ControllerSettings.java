@@ -23,7 +23,7 @@ public class ControllerSettings implements IController {
 
     @FXML private Button buttonBack;
 
-    @FXML private CheckBox checkBoxToggleFullscreen;
+    @FXML private CheckBox checkBoxToggleChat;
     @FXML private CheckBox checkBoxToggleMusic;
     @FXML private Slider sliderMusicVolume;
     @FXML private CheckBox checkBoxToggleSoundEffects;
@@ -50,7 +50,7 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void toggleFullscreen(ActionEvent e)
+    public void toggleChat(ActionEvent e)
     {
         // TODO ?
     }
@@ -100,7 +100,9 @@ public class ControllerSettings implements IController {
     @FXML public void saveSettings(ActionEvent e)
     {
         Settings settings = Settings.getInstance();
+
         // language
+        settings.setChatEnabled(checkBoxToggleChat.isSelected());
         settings.setMusicEnabled(checkBoxToggleMusic.isSelected());
         settings.setMusicVolume(sliderMusicVolume.getValue());
         settings.setSoundEffectsEnabled(checkBoxToggleSoundEffects.isSelected());
