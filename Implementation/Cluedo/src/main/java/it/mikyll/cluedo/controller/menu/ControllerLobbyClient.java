@@ -8,6 +8,7 @@ import it.mikyll.cluedo.model.networking.User;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
+import it.mikyll.cluedo.model.settings.Settings;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -37,6 +38,8 @@ public class ControllerLobbyClient implements IController {
     @FXML private Button buttonBack;
 
     // Lobby controls:
+    @FXML private VBox vboxChat;
+
     @FXML private ListView<HBox> listViewUsers;
     private ArrayList<Label> listLabelUsername = new ArrayList<Label>();
     private ArrayList<Label> listLabelReady = new ArrayList<Label>();
@@ -47,13 +50,21 @@ public class ControllerLobbyClient implements IController {
     @FXML private HBox hboxIPaddress;
     @FXML private Label labelLobbyLANaddress;
 
+    private final Settings settings;
     private ClientStream client;
     private String username;
+
+    public ControllerLobbyClient()
+    {
+        this.settings = Settings.getInstance();
+    }
 
     public void initialize()
     {
         this.vboxBackControls.setVisible(true);
         this.vboxLobbyClient.setVisible(true);
+
+        this.vboxChat.setVisible(this.settings.isChatEnabled());
 
         this.listViewUsers.setItems(FXCollections.observableArrayList());
 
@@ -137,7 +148,6 @@ public class ControllerLobbyClient implements IController {
     // Utilities ==============================================================
     public void closeConnection()
     {
-        // TODO
         if(this.client != null)
         {
             this.client.sendClose();

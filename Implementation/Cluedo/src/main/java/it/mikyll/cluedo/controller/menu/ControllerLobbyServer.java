@@ -8,6 +8,7 @@ import it.mikyll.cluedo.model.networking.User;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
+import it.mikyll.cluedo.model.settings.Settings;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -40,6 +41,8 @@ public class ControllerLobbyServer implements IController {
     @FXML private Button buttonBack;
 
     // Lobby controls:
+    @FXML private VBox vboxChat;
+
     @FXML private ListView<HBox> listViewUsers;
     private ArrayList<Label> listLabelUsername = new ArrayList<Label>();
     private ArrayList<Label> listLabelReady = new ArrayList<Label>();
@@ -64,8 +67,14 @@ public class ControllerLobbyServer implements IController {
     @FXML private Label labelLobbyPrivacy;
     @FXML private Button buttonLobbyPrivacy;
 
+    private final Settings settings;
     private ServerStream server;
     private String username;
+
+    public ControllerLobbyServer()
+    {
+        this.settings = Settings.getInstance();
+    }
 
     public void initialize()
     {
@@ -73,6 +82,8 @@ public class ControllerLobbyServer implements IController {
         this.vboxLobbyServer.setVisible(true);
         this.vboxLobbySettingsControls.setVisible(true);
         this.buttonLobbySettings.setDisable(false);
+
+        this.vboxChat.setVisible(this.settings.isChatEnabled());
 
         this.listViewUsers.setItems(FXCollections.observableArrayList());
         this.listViewBannedUsers.setItems(FXCollections.observableArrayList());

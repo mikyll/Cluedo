@@ -25,7 +25,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="200.0" text="Fullscreen" textFill="WHITE">
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Chat Enabled" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -34,7 +34,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
-                        <CheckBox fx:id="checkBoxToggleFullscreen" mnemonicParsing="false" onAction="#toggleFullscreen" />
+                        <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" onAction="#toggleChat" selected="true" />
                      </children>
                      <HBox.margin>
                         <Insets />

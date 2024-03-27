@@ -7,7 +7,7 @@ public class Settings {
 
     private static Settings instance = null;
 
-    private boolean fullscreen = false;
+    private boolean chatEnabled = true;
     private double windowWidth = 1060.0;
     private double windowHeight = 600.0;
     private Language language = Language.ENGLISH;
@@ -32,12 +32,12 @@ public class Settings {
         instance = settings;
     }
 
-    public boolean isFullscreen() {
-        return fullscreen;
+    public boolean isChatEnabled() {
+        return chatEnabled;
     }
 
-    public void setFullscreen(boolean fullscreen) {
-        this.fullscreen = fullscreen;
+    public void setChatEnabled(boolean chatEnabled) {
+        this.chatEnabled = chatEnabled;
     }
 
     public Language getLanguage() {
