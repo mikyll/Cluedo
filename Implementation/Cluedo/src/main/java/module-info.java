@@ -2,6 +2,12 @@ module it.mikyll.cluedo {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
+    requires com.google.gson;
+
+    exports it.mikyll.cluedo.model.settings to com.google.gson;
+    opens it.mikyll.cluedo.model.settings to com.google.gson;
+    exports it.mikyll.cluedo.model.localization to com.google.gson;
+    opens it.mikyll.cluedo.model.localization to com.google.gson;
 
     opens it.mikyll.cluedo.controller;
 

@@ -2,7 +2,7 @@ package it.mikyll.cluedo.application;
 
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
-import it.mikyll.cluedo.persistence.SettingsRepository;
+import it.mikyll.cluedo.persistence.SettingsManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             // load settings
-            Settings settings = SettingsRepository.loadSettings();
+            Settings settings = SettingsManager.loadSettings("");
             MusicPlayer player = MusicPlayer.getInstance();
             player.setVolume(settings.getMusicVolume());
             if (settings.isMusicEnabled())

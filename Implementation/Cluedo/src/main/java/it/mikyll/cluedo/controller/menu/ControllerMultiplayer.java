@@ -29,7 +29,7 @@ public class ControllerMultiplayer implements IController {
 
     @FXML private Button buttonBack;
 
-    // MultiPlayer cotrols:
+    // MultiPlayer controls:
     @FXML private Button buttonSelectCreateNewLobby;
     @FXML private Button buttonSelectJoinExistingLobby;
 

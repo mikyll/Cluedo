@@ -3,13 +3,15 @@ package it.mikyll.cluedo.model.settings;
 import it.mikyll.cluedo.model.localization.Language;
 
 public class Settings {
-    public static String RESOURCES_PATH = "/it/mikyll/cluedo/";
+    public final static String RESOURCES_PATH = "/it/mikyll/cluedo/";
 
     private static Settings instance = null;
 
+    private transient double windowWidth = 1060.0;
+    private transient double windowHeight = 600.0;
+
+    // Persistent fields
     private boolean chatEnabled = true;
-    private double windowWidth = 1060.0;
-    private double windowHeight = 600.0;
     private Language language = Language.ENGLISH;
     private boolean musicEnabled = false;
     private double musicVolume = 50.0;
@@ -25,6 +27,11 @@ public class Settings {
             instance = new Settings();
         }
         return instance;
+    }
+
+    public static synchronized void setInstance(Settings settings)
+    {
+        instance = settings;
     }
 
     public void setValues(Settings settings)
@@ -54,11 +61,6 @@ public class Settings {
 
     public void setWindowWidth(double windowWidth) {
         this.windowWidth = windowWidth;
-    }
-
-    public void setWindowSize(double windowWidth, double windowHeight) {
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
     }
 
     public double getWindowHeight() {

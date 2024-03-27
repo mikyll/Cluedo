@@ -10,26 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b4264c3-df6c-4481-9407-33d1fb368718" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/persistence/SettingsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerAbout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerAbout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerRulesHelp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerRulesHelp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/MainRefactor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/application/MainRefactor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMultiplayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSinglePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSinglePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/navigation/Navigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/navigation/Navigator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/clues/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/clues/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ClientStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ClientStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ServerStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/ServerStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/message/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/networking/message/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/settings/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/settings/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/persistence/SettingsRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuLobbyClient.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuLobbyClient.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuLobbyServer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuLobbyServer.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuSettings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuSettings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuSinglePlayer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuSinglePlayer.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +85,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Program Files/Java/javafx-sdk-11.0.2/bin/vcruntime140.dll",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3402163",
     "settings.editor.selected.configurable": "inlay.hints"

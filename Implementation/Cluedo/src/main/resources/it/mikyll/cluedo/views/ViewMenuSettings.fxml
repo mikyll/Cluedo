@@ -34,7 +34,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
-                        <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" onAction="#toggleChat" selected="true" />
+                        <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" selected="true" />
                      </children>
                      <HBox.margin>
                         <Insets />
@@ -58,7 +58,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
-                        <ComboBox fx:id="comboBoxLanguage" prefHeight="30.0" prefWidth="180.0" promptText="English" />
+                        <ComboBox fx:id="comboBoxLanguage" onAction="#selectLanguage" prefHeight="30.0" prefWidth="180.0" promptText="English" />
                      </children>
                   </HBox>
                </children>

@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
-import it.mikyll.cluedo.persistence.SettingsRepository;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -1303,7 +1302,7 @@ public class ControllerMenu {
 		settings.setMusicVolume(sliderMusicVolume.getValue());
 		settings.setSoundEffectsEnabled(checkBoxToggleSoundEffects.isSelected());
 		settings.setSoundEffectsVolume(sliderSoundEffectsVolume.getValue());
-		SettingsRepository.saveSettings(settings);
+		//SettingsRepository.saveSettings(settings);
 	}
 
 	@FXML public void cancelSettings(ActionEvent e)

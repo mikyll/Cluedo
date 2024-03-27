@@ -5,16 +5,13 @@ import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
-import it.mikyll.cluedo.persistence.SettingsRepository;
+import it.mikyll.cluedo.persistence.SettingsManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class ControllerSettings implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -32,6 +29,13 @@ public class ControllerSettings implements IController {
     @FXML private Button buttonCancelSettings;
 
     private Settings settings;
+    private MusicPlayer player;
+
+    public ControllerSettings()
+    {
+        this.settings = Settings.getInstance();
+        this.player = MusicPlayer.getInstance();
+    }
 
     public void initialize()
     {
@@ -39,26 +43,50 @@ public class ControllerSettings implements IController {
 
         this.vboxSettings.setVisible(true);
         this.vboxBackControls.setVisible(true);
+
+        this.checkBoxToggleChat.setSelected(settings.isChatEnabled());
+        this.checkBoxToggleMusic.setSelected(settings.isMusicEnabled());
+        this.sliderMusicVolume.setValue(settings.getMusicVolume());
+        this.sliderMusicVolume.setDisable(!settings.isMusicEnabled());
+        this.checkBoxToggleSoundEffects.setSelected(settings.isSoundEffectsEnabled());
+        this.sliderSoundEffectsVolume.setValue(settings.getSoundEffectsVolume());
+        this.sliderSoundEffectsVolume.setDisable(!settings.isSoundEffectsEnabled());
     }
 
     @FXML
-    public void selectBack(ActionEvent event)
+    public void selectBack(ActionEvent e)
     {
         System.out.println("User selected Back");
+
+        if (isSettingsChanged())
+        {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Changes not saved", ButtonType.YES, ButtonType.CANCEL);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Leaving this page will discard the changes in progress.\nLeave anyways?");
+            alert.showAndWait();
+            if(alert.getResult() == ButtonType.NO || alert.getResult() == ButtonType.CANCEL)
+            {
+                return;
+            }
+        }
+
+        player.setVolume(settings.getMusicVolume());
+        if (settings.isMusicEnabled())
+            player.play();
+        else player.stop();
 
         Navigator.switchView(NavEntry.MAIN);
     }
 
     @FXML
-    public void toggleChat(ActionEvent e)
+    public void selectLanguage(ActionEvent e)
     {
-        // TODO ?
+
     }
 
     @FXML
     public void toggleMusic(ActionEvent e)
     {
-        MusicPlayer player = MusicPlayer.getInstance();
         if (checkBoxToggleMusic.isSelected())
         {
             sliderMusicVolume.setDisable(false);
@@ -71,13 +99,15 @@ public class ControllerSettings implements IController {
         }
     }
 
-    @FXML public void updateMusicVolume(MouseEvent e)
+    @FXML
+    public void updateMusicVolume(MouseEvent e)
     {
         MusicPlayer player = MusicPlayer.getInstance();
         player.setVolume(sliderMusicVolume.getValue() / 100);
     }
 
-    @FXML public void toggleSoundEffects(ActionEvent e)
+    @FXML
+    public void toggleSoundEffects(ActionEvent e)
     {
         if (checkBoxToggleSoundEffects.isSelected())
         {
@@ -91,13 +121,15 @@ public class ControllerSettings implements IController {
         }
     }
 
-    @FXML public void updateSoundEffectsVolume(MouseEvent e)
+    @FXML
+    public void updateSoundEffectsVolume(MouseEvent e)
     {
         MusicPlayer player = MusicPlayer.getInstance();
         player.setVolume(sliderMusicVolume.getValue() / 100);
     }
 
-    @FXML public void saveSettings(ActionEvent e)
+    @FXML
+    public void saveSettings(ActionEvent e)
     {
         Settings settings = Settings.getInstance();
 
@@ -107,11 +139,21 @@ public class ControllerSettings implements IController {
         settings.setMusicVolume(sliderMusicVolume.getValue());
         settings.setSoundEffectsEnabled(checkBoxToggleSoundEffects.isSelected());
         settings.setSoundEffectsVolume(sliderSoundEffectsVolume.getValue());
-        SettingsRepository.saveSettings(settings);
+        SettingsManager.saveSettings(settings, ".settings.json");
     }
 
-    @FXML public void cancelSettings(ActionEvent e)
+    @FXML
+    public void cancelSettings(ActionEvent e)
     {
 
+    }
+
+    private boolean isSettingsChanged()
+    {
+        return this.checkBoxToggleChat.isSelected() != settings.isChatEnabled()
+                || this.checkBoxToggleMusic.isSelected() != settings.isMusicEnabled()
+                || this.sliderMusicVolume.getValue() != settings.getMusicVolume()
+                || this.checkBoxToggleSoundEffects.isSelected() != settings.isSoundEffectsEnabled()
+                || this.sliderSoundEffectsVolume.getValue() != settings.getSoundEffectsVolume();
     }
 }

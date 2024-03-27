@@ -1,0 +1,10 @@
+{
+  "windowWidth": 1060.0,
+  "windowHeight": 600.0,
+  "chatEnabled": true,
+  "language": "ENGLISH",
+  "musicEnabled": true,
+  "musicVolume": 0.0,
+  "soundEffectsEnabled": false,
+  "soundEffectsVolume": 50.0
+}
