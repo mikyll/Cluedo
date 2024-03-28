@@ -8,9 +8,12 @@ import it.mikyll.cluedo.model.networking.User;
  */
 public abstract class Player extends User {
 	
-	private int turn;
-	private Character character;
-	
+	private int turn = -1;
+	private Character character = null;
+
+	public Player(User user) {
+		super(user.getUsername());
+	}
 	public Player(String username) {
 		super(username);
 	}

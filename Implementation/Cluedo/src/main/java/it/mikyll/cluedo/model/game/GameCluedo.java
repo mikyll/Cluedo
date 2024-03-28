@@ -1,5 +1,7 @@
 package it.mikyll.cluedo.model.game;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.mikyll.cluedo.model.game.clues.Clue;
@@ -58,7 +60,16 @@ public class GameCluedo {
 		
 	}
 	
-	public void preparationPhase() {
+	public void preparationPhase()
+	{
+		// Shuffle players list
+		Collections.shuffle(this.players);
+
+		for (int i = 0; i < this.players.size(); i++)
+		{
+			this.players.get(i).setTurn(i+1);
+		}
+
 		// roll dice
 		
 		// choose character
@@ -87,7 +98,7 @@ public class GameCluedo {
 		
 		// If no one has none of the clues you asked, then you know the answer and must wait the next turn
 		
-		return Character.NONE;
+		return null;
 	}
 	
 	public boolean accuse(Player p, Character who, Weapon what, Room where) {

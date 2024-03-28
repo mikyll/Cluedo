@@ -18,6 +18,7 @@ public class Settings {
     private double musicVolume = 50.0;
     private boolean soundEffectsEnabled = false;
     private double soundEffectsVolume = 50.0;
+    private String timestampFormat = ""; // TODO
 
     private Settings() {}
 
