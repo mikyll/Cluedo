@@ -3,8 +3,8 @@
   "windowHeight": 600.0,
   "chatEnabled": true,
   "language": "ENGLISH",
-  "musicEnabled": true,
-  "musicVolume": 0.0,
-  "soundEffectsEnabled": false,
+  "musicEnabled": false,
+  "musicVolume": 100.0,
+  "soundEffectsEnabled": true,
   "soundEffectsVolume": 50.0
 }

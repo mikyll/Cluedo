@@ -542,6 +542,27 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
+      <VBox fx:id="vboxCharacterSelection1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label text="Ask a Clue Question" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="158.0" prefWidth="580.0" spacing="10.0" />
+            <Button fx:id="buttonConfirmCharacter1" mnemonicParsing="false" onAction="#closeCharacterSelectionView" prefHeight="39.0" prefWidth="141.0" text="Confirm">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </VBox>
       <VBox fx:id="vboxMenu" alignment="CENTER" prefHeight="300.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="210.0">
          <children>
             <Button fx:id="buttonResume" mnemonicParsing="false" onAction="#toggleMenu" prefWidth="100.0" text="RESUME" />

@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -26,5 +28,10 @@
             <Button id="info" fx:id="buttonAbout" mnemonicParsing="false" onAction="#selectAbout" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
+      <ImageView fitHeight="143.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="50.0">
+         <image>
+            <Image url="@../images/Culo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

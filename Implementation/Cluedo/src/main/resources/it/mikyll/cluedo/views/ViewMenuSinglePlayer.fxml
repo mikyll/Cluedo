@@ -20,12 +20,11 @@
       </VBox>
       <VBox fx:id="vboxSinglePlayer" alignment="CENTER" layoutX="280.0" layoutY="125.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="125.0">
          <children>
-            <Separator prefHeight="50.0" prefWidth="200.0" visible="false" />
             <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="200.0" text="Opponents Number" textFill="WHITE">
+                        <Label prefHeight="30.0" prefWidth="200.0" text="Human Players" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -34,7 +33,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Spinner prefHeight="30.0" prefWidth="60.0" />
+                        <Spinner fx:id="spinnerPlayersHuman" initialValue="1" max="6" min="1" prefHeight="30.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                </children>
@@ -43,7 +42,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="199.0" text="Difficulty" textFill="WHITE">
+                        <Label prefHeight="30.0" prefWidth="200.0" text="AI Players" textFill="WHITE">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -52,16 +51,34 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <ComboBox prefHeight="30.0" prefWidth="120.0" />
+                        <Spinner fx:id="spinnerPlayersAI" initialValue="1" max="5" min="0" prefHeight="30.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                </children>
             </HBox>
-            <Separator prefHeight="90.0" prefWidth="200.0" visible="false" />
+            <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="199.0" text="AI Difficulty" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="comboBoxDifficultyAI" prefHeight="30.0" prefWidth="120.0" promptText="Normal" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Separator minHeight="50.0" prefHeight="90.0" prefWidth="200.0" visible="false" />
             <Button fx:id="buttonStartSinglePlayer" mnemonicParsing="false" onAction="#startGame" prefHeight="30.0" prefWidth="200.0" text="Start Game" />
          </children>
          <padding>
-            <Insets left="50.0" right="50.0" />
+            <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
          </padding>
       </VBox>
    </children>

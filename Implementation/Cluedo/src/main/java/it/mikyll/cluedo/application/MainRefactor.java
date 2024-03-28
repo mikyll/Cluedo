@@ -26,11 +26,7 @@ public class MainRefactor extends Application {
             player.play();
         }
 
-        stage.setTitle("Cluedo");
-        stage.setResizable(false);
-
         Navigator.initStage(stage);
-        Navigator.switchView(NavEntry.MAIN);
     }
 
 
@@ -40,7 +36,6 @@ public class MainRefactor extends Application {
         ((ControllerLobbyServer) Navigator.getController(NavEntry.LOBBY_SERVER)).closeConnection();
         ((ControllerLobbyClient) Navigator.getController(NavEntry.LOBBY_CLIENT)).closeConnection();
         Platform.exit();
-        //System.exit(0);
     }
 
     public static void main(String[] args) {

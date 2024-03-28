@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.mikyll.cluedo.model.game.clues.Clue;
 import it.mikyll.cluedo.model.game.clues.Character;
-import it.mikyll.cluedo.model.game.clues.Place;
+import it.mikyll.cluedo.model.game.clues.Room;
 import it.mikyll.cluedo.model.game.clues.Weapon;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
@@ -14,6 +14,8 @@ import it.mikyll.cluedo.model.game.player.PlayerArtificial;
  */
 public class GameCluedo {
 	private List<Player> players;
+
+	private MurderEnvelope murderEnvelope;
 	// Timer
 	// User list
 	// Settings
@@ -76,7 +78,7 @@ public class GameCluedo {
 	
 	
 	
-	public Clue askClue(Player p, Character who, Weapon what, Place where) {
+	public Clue askClue(Player p, Character who, Weapon what, Room where) {
 		// ask the first player after p (by turns) if he has one of the clues.
 		
 		// Example:
@@ -88,7 +90,7 @@ public class GameCluedo {
 		return Character.NONE;
 	}
 	
-	public boolean accuse(Player p, Character who, Weapon what, Place where) {
+	public boolean accuse(Player p, Character who, Weapon what, Room where) {
 		// correct? The game ends, and p wins;
 		
 		// wrong? The game continues, and p is eliminated
