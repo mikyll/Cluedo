@@ -12,7 +12,7 @@ public class MusicPlayer {
     private static MediaPlayer mediaPlayer;
 
     private static Map<MusicTrack, Media> musicTracks;
-    private static double volume = 0.5;
+    private static double volume = 50.0;
     private static boolean isPlaying = false;
     private static MusicTrack loadedTrack = null;
 
@@ -28,7 +28,7 @@ public class MusicPlayer {
                 loadMusic();
             }
             mediaPlayer = new MediaPlayer(musicTracks.get(MusicTrack.MENU));
-            mediaPlayer.setVolume(volume);
+            mediaPlayer.setVolume(volume / 100);
             mediaPlayer.setCycleCount(Integer.MAX_VALUE);
         }
         return instance;
@@ -44,7 +44,7 @@ public class MusicPlayer {
     public void setVolume(double value)
     {
         volume = value;
-        mediaPlayer.setVolume(volume);
+        mediaPlayer.setVolume(volume / 100);
     }
 
 
@@ -53,7 +53,7 @@ public class MusicPlayer {
         this.stop();
         mediaPlayer = new MediaPlayer(musicTracks.get(musicTrack));
         loadedTrack = musicTrack;
-        mediaPlayer.setVolume(volume);
+        mediaPlayer.setVolume(volume / 100);
         mediaPlayer.setCycleCount(Integer.MAX_VALUE);
     }
 

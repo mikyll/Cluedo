@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="base" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="menu" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060" styleClass="base" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
          <children>
             <Button id="back" fx:id="buttonBack" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
          </children>

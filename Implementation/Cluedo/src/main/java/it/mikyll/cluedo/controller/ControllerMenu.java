@@ -1291,7 +1291,7 @@ public class ControllerMenu {
 	@FXML public void updateSoundEffectsVolume(MouseEvent e)
 	{
 		MusicPlayer player = MusicPlayer.getInstance();
-		player.setVolume(sliderMusicVolume.getValue() / 100);
+		player.setVolume(sliderMusicVolume.getValue());
 	}
 
 	@FXML public void saveSettings(ActionEvent e)

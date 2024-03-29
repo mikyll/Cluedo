@@ -51,7 +51,7 @@ public class Navigator {
             return scene;
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            ctrlLoading.showError(e.getMessage());
+            ctrlLoading.showError("Error while loading scene '" + filename + "': " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

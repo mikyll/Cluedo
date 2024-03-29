@@ -25,7 +25,7 @@ public class SettingsManager {
 
             Settings.setInstance(gson.fromJson(reader, Settings.class));
             settings = Settings.getInstance();
-        } catch (NullPointerException | IOException | JsonIOException e) {
+        } catch (Exception e) {
             System.out.println("Settings file corrupted or missing, it will be recreated with default settings.");
 
             settings = Settings.getInstance();

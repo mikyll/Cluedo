@@ -33,9 +33,11 @@ public class ControllerMain implements IController {
         this.vboxMainMenu.setVisible(true);
         this.vboxSettingsInfoControls.setVisible(true);
 
-        if (Settings.getInstance().isMusicEnabled())
+        Settings settings = Settings.getInstance();
+        if (settings.isMusicEnabled())
         {
             MusicPlayer musicPlayer = MusicPlayer.getInstance();
+            musicPlayer.setVolume(settings.getMusicVolume());
             musicPlayer.play(MusicTrack.MENU);
         }
     }

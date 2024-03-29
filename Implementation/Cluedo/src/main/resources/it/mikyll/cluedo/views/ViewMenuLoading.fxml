@@ -6,13 +6,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="base" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="menu-loading" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" styleClass="base" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ProgressBar fx:id="progressBarLoading" layoutX="325.0" layoutY="522.0" prefHeight="20.0" prefWidth="400.0" progress="0.0" AnchorPane.bottomAnchor="100.0" />
       <Label fx:id="labelLoading" alignment="TOP_LEFT" layoutX="325.0" layoutY="504.0" prefHeight="70.0" prefWidth="400.0" text="Loading View..." textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="20.0" />
-      <ImageView fitHeight="143.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="100.0">
+      <ImageView fitHeight="253.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="20.0">
          <image>
-            <Image url="@../images/Culo.png" />
+            <Image url="@../images/logo.png" />
          </image>
       </ImageView>
    </children>

@@ -1,10 +1,14 @@
-#base {
-	-fx-background-image: url('../images/background-cluedo.png');
-	/*-fx-background-repeat: repeat;*/ 
+.base {
 	-fx-background-size: 100% 100%;
 	-fx-background-position: center center;
 	/*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
-} 
+}
+#menu-loading {
+    -fx-background-image: url('../images/background-cluedo.png');
+}
+#menu {
+    -fx-background-image: url('../images/background-cluedo3.png');
+}
 /*#textAreaCrediti{
 	text-area-background: black;
 	-fx-text-inner-color: white;
@@ -121,21 +125,28 @@
 	-fx-background-image: url('../icons/icon_privacy_closed_red.png');
 }
 
-#github {
+.link {
+    -fx-fill: #008ebf;
+}
+.link:hover {
+    -fx-underline: true;
+}
+.icon-social {
 	-fx-background-size: 30px;
-	-fx-background-image: url('../icons/icon_github_light.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: 50%;
+}
+.icon-social:hover {
+    -fx-background-color: #008ebf88;
+    -fx-background-radius: 4;
+}
+#github {
+	-fx-background-image: url('../icons/icon_github_light.png');
 }
 #linkedin {
-	-fx-background-size: 30px;
 	-fx-background-image: url('../icons/icon_linkedin_light.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 50%;
 }
 #stackoverflow {
-	-fx-background-size: 25px;
 	-fx-background-image: url('../icons/icon_stackoverflow_light.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 50%;
+	-fx-background-size: 25px;
 }

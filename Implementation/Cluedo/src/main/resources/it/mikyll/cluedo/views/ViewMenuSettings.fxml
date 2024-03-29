@@ -7,14 +7,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="base" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="menu" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" styleClass="base" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
          <children>
             <Button id="back" fx:id="buttonBack" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
          </children>
@@ -56,15 +57,22 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
                         <ComboBox fx:id="comboBoxLanguage" onAction="#selectLanguage" prefHeight="30.0" prefWidth="180.0" promptText="English" />
                      </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
                   </HBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
                <children>
+                  <Separator orientation="VERTICAL" prefHeight="60.0" prefWidth="50.0" visible="false" />
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="30.0" prefWidth="200.0" text="Music Volume" textFill="WHITE">
@@ -74,16 +82,31 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
                         <CheckBox fx:id="checkBoxToggleMusic" mnemonicParsing="false" onAction="#toggleMusic" />
-                        <Slider fx:id="sliderMusicVolume" disable="true" majorTickUnit="50.0" onMouseReleased="#updateMusicVolume" value="50.0" />
+                        <Slider fx:id="sliderMusicVolume" blockIncrement="1.0" disable="true" majorTickUnit="1.0" minorTickCount="0" onMouseReleased="#updateMusicVolume" snapToTicks="true" value="50.0" />
                      </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
                   </HBox>
+                  <Label fx:id="labelMusicVolume" alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="40.0" style="-fx-background-color: white;" text="50" textAlignment="CENTER">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="60.0" minWidth="400.0" prefHeight="60.0" prefWidth="800.0">
                <children>
+                  <Separator orientation="VERTICAL" prefHeight="60.0" prefWidth="50.0" visible="false" />
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="30.0" prefWidth="200.0" text="Sound Effects Volume" textFill="WHITE">
@@ -93,12 +116,26 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                      <children>
                         <CheckBox fx:id="checkBoxToggleSoundEffects" mnemonicParsing="false" onAction="#toggleSoundEffects" />
-                        <Slider fx:id="sliderSoundEffectsVolume" disable="true" onMouseReleased="#updateSoundEffectsVolume" value="50.0" />
+                        <Slider fx:id="sliderSoundEffectsVolume" blockIncrement="1.0" disable="true" majorTickUnit="1.0" minorTickCount="0" onMouseReleased="#updateSoundEffectsVolume" snapToTicks="true" value="50.0" />
                      </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
                   </HBox>
+                  <Label fx:id="labelSoundEffectsVolume" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="40.0" style="-fx-background-color: white;" text="50" textAlignment="CENTER">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
             <Separator prefHeight="120.0" prefWidth="500.0" visible="false" />
