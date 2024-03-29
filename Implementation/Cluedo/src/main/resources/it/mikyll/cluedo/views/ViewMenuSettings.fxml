@@ -33,7 +33,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" selected="true" />
                      </children>
@@ -57,9 +57,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <ComboBox fx:id="comboBoxLanguage" onAction="#selectLanguage" prefHeight="30.0" prefWidth="180.0" promptText="English" />
+                        <ComboBox fx:id="comboBoxLanguage" onAction="#selectLanguage" prefHeight="30.0" prefWidth="170.0" promptText="English" />
                      </children>
                      <HBox.margin>
                         <Insets />
@@ -82,7 +82,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <CheckBox fx:id="checkBoxToggleMusic" mnemonicParsing="false" onAction="#toggleMusic" />
                         <Slider fx:id="sliderMusicVolume" blockIncrement="1.0" disable="true" majorTickUnit="1.0" minorTickCount="0" onMouseReleased="#updateMusicVolume" snapToTicks="true" value="50.0" />
@@ -116,7 +116,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <CheckBox fx:id="checkBoxToggleSoundEffects" mnemonicParsing="false" onAction="#toggleSoundEffects" />
                         <Slider fx:id="sliderSoundEffectsVolume" blockIncrement="1.0" disable="true" majorTickUnit="1.0" minorTickCount="0" onMouseReleased="#updateSoundEffectsVolume" snapToTicks="true" value="50.0" />

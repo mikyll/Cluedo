@@ -58,7 +58,7 @@ versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
 [forks-url]: https://github.com/mikyll/Cluedo/network/members
 [stars-shield]: https://img.shields.io/github/stars/mikyll/Cluedo
 [stars-url]: https://github.com/mikyll/Cluedo/stargazers
-[issues-shield]: https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg
+[issues-shield]: https://img.shields.io/badge/license-CC_BY--NC--SA_4.0-lightgrey.svg
 [issues-url]: https://github.com/mikyll/Cluedo/issues
 [license-shield]: https://img.shields.io/github/license/mikyll/Cluedo
 [license-url]: https://github.com/mikyll/Cluedo/blob/master/LICENSE
