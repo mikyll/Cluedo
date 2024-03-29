@@ -107,7 +107,6 @@ public class Navigator {
     {
         Platform.runLater(() -> {
             stage.setScene(views.get(navEntry));
-            //controllers.get(navEntry).initialize();
             controllers.get(navEntry).start();
         });
     }

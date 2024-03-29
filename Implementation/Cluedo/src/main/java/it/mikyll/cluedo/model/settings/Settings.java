@@ -3,7 +3,8 @@ package it.mikyll.cluedo.model.settings;
 import it.mikyll.cluedo.model.localization.Language;
 
 public class Settings {
-    public final static String APP_TITLE = "Cluedo";
+    public final static String APP_TITLE = "Culo";
+    public final static String APP_VERSION = "v1.0-alpha";
     public final static String RESOURCES_PATH = "/it/mikyll/cluedo/";
 
     private static Settings instance = null;

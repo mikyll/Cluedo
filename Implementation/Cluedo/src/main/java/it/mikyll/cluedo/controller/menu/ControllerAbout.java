@@ -3,6 +3,7 @@ package it.mikyll.cluedo.controller.menu;
 import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
+import it.mikyll.cluedo.model.settings.Settings;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class ControllerAbout implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -24,6 +26,7 @@ public class ControllerAbout implements IController {
 
     @FXML private Label labelAppName;
     @FXML private Label labelAppVersion;
+    @FXML private Text textAppName;
 
     @FXML private ImageView imageViewContributor1;
     @FXML private ImageView imageViewContributor2;
@@ -38,6 +41,10 @@ public class ControllerAbout implements IController {
         imageViewContributor1.setClip(new Circle(radiusP, radiusP, radiusP));
         imageViewContributor2.setClip(new Circle(radiusP, radiusP, radiusP));
         imageViewContributor3.setClip(new Circle(radiusP, radiusP, radiusP));
+
+        labelAppName.setText(Settings.APP_TITLE);
+        labelAppVersion.setText(Settings.APP_VERSION);
+        textAppName.setText(Settings.APP_TITLE);
     }
 
     public void start()

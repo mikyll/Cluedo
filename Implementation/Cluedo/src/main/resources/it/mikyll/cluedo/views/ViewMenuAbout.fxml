@@ -35,7 +35,21 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Separator prefHeight="20.0" prefWidth="602.0" visible="false" />
+                  <Separator prefHeight="20.0" prefWidth="560.0" visible="false" />
+                  <TextFlow prefHeight="30.0" prefWidth="560.0" textAlignment="JUSTIFY">
+                     <children>
+                        <Text fx:id="textAppName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Culo" textAlignment="JUSTIFY" wrappingWidth="44.66717529296875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" is a JavaFX application that implements the board game &quot;Cluedo&quot; (Clue)." textAlignment="JUSTIFY" wrappingWidth="44.66717529296875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
                   <TextFlow prefHeight="60.0" prefWidth="560.0" textAlignment="JUSTIFY">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="First broken version was created in 2020 as a prototype for our project for the course of" textAlignment="JUSTIFY" wrappingWidth="601.548828125">
@@ -147,11 +161,11 @@
             </HBox>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
          </padding></VBox>
       <VBox fx:id="vboxBackControls1" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="150.0">
          <children>
-            <Button id="back" fx:id="buttonBack1" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
+            <Button id="back" fx:id="buttonBack1" disable="true" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
    </children>
