@@ -18,4 +18,9 @@ public class ControllerPreparation implements IController {
     {
 
     }
+
+    public void start()
+    {
+
+    }
 }

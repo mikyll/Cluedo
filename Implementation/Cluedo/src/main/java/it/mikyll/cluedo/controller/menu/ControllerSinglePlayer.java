@@ -32,16 +32,22 @@ public class ControllerSinglePlayer implements IController {
 
     public ControllerSinglePlayer() {}
 
-    public void initialize() {
-        this.vboxBackControls.setVisible(true);
-        this.vboxSinglePlayer.setVisible(true);
-
+    public void initialize()
+    {
         this.spinnerPlayersHuman.valueProperty().addListener(e -> {
             this.buttonStartSinglePlayer.setDisable(!canStart());
         });
         this.spinnerPlayersAI.valueProperty().addListener(e -> {
             this.buttonStartSinglePlayer.setDisable(!canStart());
         });
+    }
+
+    public void start()
+    {
+        System.out.println("User selected Single Player");
+
+        this.vboxBackControls.setVisible(true);
+        this.vboxSinglePlayer.setVisible(true);
     }
 
     @FXML

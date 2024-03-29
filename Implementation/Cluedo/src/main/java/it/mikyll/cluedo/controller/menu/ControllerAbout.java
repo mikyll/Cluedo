@@ -29,6 +29,11 @@ public class ControllerAbout implements IController {
         imageViewAuthorPicture.setClip(new Circle(radiusP, radiusP, radiusP));
     }
 
+    public void start()
+    {
+        System.out.println("User selected About");
+    }
+
     @FXML
     public void selectBack(ActionEvent event)
     {

@@ -214,7 +214,7 @@
       </VBox>
       <VBox fx:id="vboxCharacterSelection" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="570.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Label prefHeight="100.0" prefWidth="290.0" text="Choose your Character" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label fx:id="labelCharacterSelectionTitle" prefHeight="100.0" prefWidth="290.0" text="Choose your Character" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="30.0" />
                </font>
@@ -579,7 +579,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <Button fx:id="buttonOkPlayersList" mnemonicParsing="false" onAction="#closePlayersListView" prefHeight="39.0" prefWidth="141.0" text="Ok">
+            <Button fx:id="buttonOkPlayersListOld" mnemonicParsing="false" onAction="#closePlayersListView" prefHeight="39.0" prefWidth="141.0" text="Ok">
                <font>
                   <Font size="18.0" />
                </font>
@@ -600,7 +600,7 @@
                </VBox.margin>
             </Label>
             <HBox fx:id="hboxListPlayersFull" alignment="CENTER" prefHeight="300.0" prefWidth="1000.0" />
-            <Button fx:id="buttonOkPlayersList1" mnemonicParsing="false" onAction="#closePlayersListView" prefHeight="39.0" prefWidth="141.0" text="Ok">
+            <Button fx:id="buttonOkPlayersList" mnemonicParsing="false" onAction="#closePlayersListView" prefHeight="39.0" prefWidth="141.0" text="Ok">
                <font>
                   <Font size="18.0" />
                </font>
@@ -670,7 +670,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="buttonConfirmCharacter1" mnemonicParsing="false" onAction="#closeCharacterSelectionView" prefHeight="39.0" prefWidth="141.0" text="Ask">
+            <Button fx:id="buttonAskClue" mnemonicParsing="false" prefHeight="39.0" prefWidth="141.0" text="Ask">
                <font>
                   <Font size="18.0" />
                </font>

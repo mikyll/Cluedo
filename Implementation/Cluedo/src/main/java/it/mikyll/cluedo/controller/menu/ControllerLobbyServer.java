@@ -78,40 +78,10 @@ public class ControllerLobbyServer implements IController {
 
     public void initialize()
     {
-        this.vboxBackControls.setVisible(true);
-        this.vboxLobbyServer.setVisible(true);
-        this.vboxLobbySettingsControls.setVisible(true);
-        this.buttonLobbySettings.setDisable(false);
-
-        this.vboxChat.setVisible(this.settings.isChatEnabled());
-
         this.listViewUsers.setItems(FXCollections.observableArrayList());
         this.listViewBannedUsers.setItems(FXCollections.observableArrayList());
 
-        this.clearLists();
-        this.clearChat();
-
         this.setServerAddress();
-        this.hboxIPaddress.setVisible(true);
-        this.labelLobbyPrivacy.setId("privacyOpen");
-        this.buttonLobbyPrivacy.setText(" Open");
-
-        // TODO
-        if (this.server != null)
-        {
-            this.addUser(this.username, true, true);
-
-            this.addJoinMessage(new Message(MessageType.CHAT, this.username, ""));
-            this.buttonStartGame.setDisable(true);
-
-            this.server.setConnectRequestMessageHandler(connectRequestHandler);
-            this.server.setChatMessageHandler(chatHandler);
-            this.server.setReadyMessageHandler(readyHandler);
-            this.server.setDisconnectMessageHandler(disconnectHandler);
-            this.server.setGenericMessageHandler(genericHandler);
-
-            this.server.startServer();
-        }
 
         // TODO
         /*Platform.runLater(() -> {
@@ -122,7 +92,36 @@ public class ControllerLobbyServer implements IController {
         });*/
     }
 
-    public void setProperties(ServerStream server, String username)
+    public void start()
+    {
+        this.vboxBackControls.setVisible(true);
+        this.vboxLobbyServer.setVisible(true);
+        this.vboxLobbySettingsControls.setVisible(true);
+        this.buttonLobbySettings.setDisable(false);
+
+        this.clearLists();
+        this.addUser(this.username, true, true);
+
+        this.clearChat();
+        this.vboxChat.setVisible(this.settings.isChatEnabled());
+        this.addJoinMessage(new Message(MessageType.CHAT, this.username, ""));
+
+        this.labelLobbyPrivacy.setId("privacyOpen");
+        this.buttonLobbyPrivacy.setText("Open");
+
+        this.buttonStartGame.setDisable(true);
+
+        // Server setup
+        this.server.setConnectRequestMessageHandler(connectRequestHandler);
+        this.server.setChatMessageHandler(chatHandler);
+        this.server.setReadyMessageHandler(readyHandler);
+        this.server.setDisconnectMessageHandler(disconnectHandler);
+        this.server.setGenericMessageHandler(genericHandler);
+
+        this.server.startServer();
+    }
+
+    protected void setProperties(ServerStream server, String username)
     {
         this.server = server;
         this.username = username;
@@ -139,7 +138,6 @@ public class ControllerLobbyServer implements IController {
     }
 
     // Lobby functions ========================================================
-
     @FXML public void selectLobbySettings(ActionEvent event)
     {
         System.out.println("User selected Lobby Settings");

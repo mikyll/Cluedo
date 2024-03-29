@@ -1,4 +1,4 @@
-package it.mikyll.cluedo.controller;
+package it.mikyll.cluedo.controller.menu;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -11,8 +11,6 @@ import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.model.settings.Settings;
 import javafx.scene.paint.Color;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -50,6 +48,8 @@ public class ControllerLoading implements IController {
         this.labelLoading.setText("Loaded scene 'views/ViewMenuLoading.fxml'");
     }
 
+    public void start() {}
+
     public void incrementProgressBar(String text)
     {
         if (increment > 0)
@@ -57,10 +57,21 @@ public class ControllerLoading implements IController {
             double newProgress = progressBarLoading.getProgress() + increment;
             Platform.runLater(() -> {
                 progressBarLoading.setProgress(newProgress);
+                labelLoading.setTextFill(Color.WHITE);
                 labelLoading.setText(text);
             });
         }
     }
+
+    public void showError(String text)
+    {
+        Platform.runLater(() -> {
+            this.progressBarLoading.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+            this.labelLoading.setTextFill(Color.RED);
+            this.labelLoading.setText(text);
+        });
+    }
+
 
     private boolean runningInJAR()
     {

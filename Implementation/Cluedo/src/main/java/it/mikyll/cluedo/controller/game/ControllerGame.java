@@ -124,15 +124,6 @@ public class ControllerGame implements IController {
     @Override
     public void initialize()
     {
-        if (anchorPaneRoot != null && anchorPaneRoot.getScene() != null)
-        {
-            Stage stage = (Stage) anchorPaneRoot.getScene().getWindow();
-            if (stage != null)
-            {
-                stage.setFullScreen(true);
-            }
-        }
-
         imageViewBoard.fitWidthProperty().bind(anchorPaneCenter.widthProperty());
         imageViewBoard.fitHeightProperty().bind(anchorPaneCenter.heightProperty());
         imageViewBoard.setPreserveRatio(true);
@@ -142,12 +133,27 @@ public class ControllerGame implements IController {
         imageViewBoardLabels.setPreserveRatio(true);
         imageViewBoardLabels.setManaged(false);
 
+        Platform.runLater(() -> {
+            this.anchorPaneRoot.getScene().setOnKeyPressed(e -> {
+                if(e.getCode() == KeyCode.ESCAPE)
+                    this.toggleMenu(new ActionEvent());
+            });
+        });
+    }
+
+    public void start()
+    {
+        System.out.println("User selected Game");
+
+        Navigator.setFullscreen(true);
+
         this.vboxTurn.setVisible(false);
         this.vboxWaitingCharacterSelection.setVisible(false);
         this.vboxCharacterSelection.setVisible(false);
         this.vboxPlayersList.setVisible(false);
         this.vboxMenu.setVisible(false);
 
+        // Get board size
         Image boardImage = imageViewBoard.getImage();
         double boardAspectRatio = boardImage.getWidth() / boardImage.getHeight();
         double boardWidth = Math.min(imageViewBoard.getFitWidth(), imageViewBoard.getFitHeight() * boardAspectRatio);
@@ -167,14 +173,7 @@ public class ControllerGame implements IController {
 
         // PlayersList pane
         showTurnView(new ActionEvent());
-
-        Platform.runLater(() -> {
-            this.anchorPaneRoot.getScene().setOnKeyPressed(e -> {
-                if(e.getCode() == KeyCode.ESCAPE)
-                    this.toggleMenu(new ActionEvent());
-            });
-        });
-
+        
         // NB: in Single Player we won't show the turn animation, since there might be multiple human players
 
         // Character selection
@@ -212,7 +211,6 @@ public class ControllerGame implements IController {
 
         Label labelPlayer = new Label(player.getTurn() + ". " + player.getUsername());
         labelPlayer.setFont(Font.font(16.0));
-        System.out.println(this.vboxLeft.getWidth());
         labelPlayer.setPrefWidth(220.0);
         labelPlayer.setAlignment(Pos.CENTER_LEFT);
         hboxResult.getChildren().add(labelPlayer);
@@ -284,7 +282,7 @@ public class ControllerGame implements IController {
     }
 
     @FXML
-    public void previousCharacter(ActionEvent e)
+    public void previousCharacter(ActionEvent event)
     {
         if (selectedCharacter <= 0)
             return;
@@ -294,7 +292,7 @@ public class ControllerGame implements IController {
     }
 
     @FXML
-    public void nextCharacter(ActionEvent e)
+    public void nextCharacter(ActionEvent event)
     {
         if (selectedCharacter >= mapCharacterImages.keySet().size())
             return;

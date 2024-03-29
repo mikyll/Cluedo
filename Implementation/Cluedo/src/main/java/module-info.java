@@ -15,6 +15,6 @@ module it.mikyll.cluedo {
     opens it.mikyll.cluedo.application to javafx.fxml;
 
     opens it.mikyll.cluedo.controller.game to javafx.fxml;
-    opens it.mikyll.cluedo.controller.menu to javafx.fxml;
     opens it.mikyll.cluedo.controller.navigation to javafx.fxml;
+    opens it.mikyll.cluedo.controller.menu;
 }

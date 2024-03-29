@@ -37,9 +37,11 @@ public class ControllerSettings implements IController {
         this.player = MusicPlayer.getInstance();
     }
 
-    public void initialize()
+    public void initialize() {}
+
+    public void start()
     {
-        this.settings = Settings.getInstance();
+        System.out.println("User selected Single Player");
 
         this.vboxSettings.setVisible(true);
         this.vboxBackControls.setVisible(true);
@@ -54,7 +56,7 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void selectBack(ActionEvent e)
+    public void selectBack(ActionEvent event)
     {
         System.out.println("User selected Back");
 
@@ -79,13 +81,13 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void selectLanguage(ActionEvent e)
+    public void selectLanguage(ActionEvent event)
     {
 
     }
 
     @FXML
-    public void toggleMusic(ActionEvent e)
+    public void toggleMusic(ActionEvent event)
     {
         if (checkBoxToggleMusic.isSelected())
         {
@@ -100,14 +102,14 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void updateMusicVolume(MouseEvent e)
+    public void updateMusicVolume(MouseEvent event)
     {
         MusicPlayer player = MusicPlayer.getInstance();
         player.setVolume(sliderMusicVolume.getValue() / 100);
     }
 
     @FXML
-    public void toggleSoundEffects(ActionEvent e)
+    public void toggleSoundEffects(ActionEvent event)
     {
         if (checkBoxToggleSoundEffects.isSelected())
         {
@@ -122,18 +124,18 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void updateSoundEffectsVolume(MouseEvent e)
+    public void updateSoundEffectsVolume(MouseEvent event)
     {
         MusicPlayer player = MusicPlayer.getInstance();
         player.setVolume(sliderMusicVolume.getValue() / 100);
     }
 
     @FXML
-    public void saveSettings(ActionEvent e)
+    public void saveSettings(ActionEvent event)
     {
         Settings settings = Settings.getInstance();
 
-        // language
+        // Language
         settings.setChatEnabled(checkBoxToggleChat.isSelected());
         settings.setMusicEnabled(checkBoxToggleMusic.isSelected());
         settings.setMusicVolume(sliderMusicVolume.getValue());
@@ -143,9 +145,9 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
-    public void cancelSettings(ActionEvent e)
+    public void cancelSettings(ActionEvent event)
     {
-
+        // TODO
     }
 
     private boolean isSettingsChanged()

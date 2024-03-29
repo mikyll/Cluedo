@@ -1,6 +1,6 @@
 package it.mikyll.cluedo.controller.navigation;
 
-import it.mikyll.cluedo.controller.ControllerLoading;
+import it.mikyll.cluedo.controller.menu.ControllerLoading;
 import it.mikyll.cluedo.controller.game.ControllerGame;
 import it.mikyll.cluedo.controller.menu.*;
 import it.mikyll.cluedo.model.settings.Settings;
@@ -48,6 +48,8 @@ public class Navigator {
 
             return scene;
         } catch (IOException e) {
+            System.out.println(e.getMessage());
+            ctrlLoading.showError(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -103,12 +105,18 @@ public class Navigator {
     {
         Platform.runLater(() -> {
             stage.setScene(views.get(navEntry));
-            controllers.get(navEntry).initialize();
+            //controllers.get(navEntry).initialize();
+            controllers.get(navEntry).start();
         });
     }
 
     public static synchronized IController getController(NavEntry menuEntry)
     {
         return controllers.get(menuEntry);
+    }
+
+    public static void setFullscreen(boolean value)
+    {
+        stage.setFullScreen(value);
     }
 }

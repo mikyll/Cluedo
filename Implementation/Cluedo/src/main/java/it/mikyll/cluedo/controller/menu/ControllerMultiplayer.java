@@ -56,12 +56,8 @@ public class ControllerMultiplayer implements IController {
 
     public ControllerMultiplayer() {}
 
-    public void initialize() {
-        this.vboxBackControls.setVisible(true);
-        this.vboxMultiPlayer.setVisible(true);
-        this.vboxCreateNewLobby.setVisible(false);
-        this.vboxJoinExistingLobby.setVisible(false);
-
+    public void initialize()
+    {
         this.textFieldPortCreate.setPromptText("default: " + ServerStream.DEFAULT_PORT);
         this.textFieldPortJoin.setPromptText("default: " + ServerStream.DEFAULT_PORT);
 
@@ -71,6 +67,16 @@ public class ControllerMultiplayer implements IController {
         this.spinnerLobbySizeMax.valueProperty().addListener((changed, oldval, newval) -> {
             this.spinnerLobbySizeMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, newval, this.spinnerLobbySizeMin.getValue()));
         });
+    }
+
+    public void start()
+    {
+        System.out.println("User selected Multiplayer");
+
+        this.vboxBackControls.setVisible(true);
+        this.vboxMultiPlayer.setVisible(true);
+        this.vboxCreateNewLobby.setVisible(false);
+        this.vboxJoinExistingLobby.setVisible(false);
     }
 
     @FXML
@@ -95,7 +101,8 @@ public class ControllerMultiplayer implements IController {
         }
     }
 
-    @FXML public void selectCreateNewLobby(ActionEvent event)
+    @FXML
+    public void selectCreateNewLobby(ActionEvent event)
     {
         System.out.println("User selected Create New Lobby");
 
@@ -118,7 +125,8 @@ public class ControllerMultiplayer implements IController {
         this.buttonCreateLobby.setDisable(!User.validateUsername(this.textFieldUsernameCreate.getText()));
     }
 
-    @FXML public void selectJoinExistingLobby(ActionEvent event)
+    @FXML
+    public void selectJoinExistingLobby(ActionEvent event)
     {
         System.out.println("User selected Join Existing Lobby");
 
@@ -160,7 +168,8 @@ public class ControllerMultiplayer implements IController {
         return result;
     }
 
-    @FXML private boolean checkEnableCreateNewLobby()
+    @FXML
+    private boolean checkEnableCreateNewLobby()
     {
         boolean disableCreateButton = false, errorUsername = false, errorPort = false;
 
@@ -185,7 +194,8 @@ public class ControllerMultiplayer implements IController {
         return !disableCreateButton;
     }
 
-    @FXML public void createLobby(ActionEvent event)
+    @FXML
+    public void createLobby(ActionEvent event)
     {
         System.out.println("User selected Create Lobby");
 
@@ -195,7 +205,6 @@ public class ControllerMultiplayer implements IController {
         if(this.textFieldPortCreate.getText().isEmpty())
             this.textFieldPortCreate.setText("" + ServerStream.DEFAULT_PORT);
 
-        // TODO
         String username = this.textFieldUsernameCreate.getText();
 
         // create new room -> start server (if OK switch to Server Room View)
@@ -244,7 +253,8 @@ public class ControllerMultiplayer implements IController {
         return PATTERN_IP.matcher(address).matches();
     }
 
-    @FXML private boolean checkEnableJoinExistingLobby()
+    @FXML
+    private boolean checkEnableJoinExistingLobby()
     {
         boolean disableJoinButton = false, errorUsername = false, errorIP = false, errorPort = false;
 
@@ -277,7 +287,8 @@ public class ControllerMultiplayer implements IController {
         return !disableJoinButton;
     }
 
-    @FXML public void joinLobby(ActionEvent event)
+    @FXML
+    public void joinLobby(ActionEvent event)
     {
         if (!this.checkEnableJoinExistingLobby())
             return;
@@ -289,7 +300,6 @@ public class ControllerMultiplayer implements IController {
         if(this.textFieldPortJoin.getText().isEmpty())
             this.textFieldPortJoin.setText("" + ServerStream.DEFAULT_PORT);
 
-        // TODO
         String username = this.textFieldUsernameJoin.getText();
 
         this.hboxConnectionJoin.setVisible(true);
@@ -325,15 +335,14 @@ public class ControllerMultiplayer implements IController {
 
         // Go to Lobby
         Platform.runLater(() -> {
-            Navigator.switchView(NavEntry.LOBBY_CLIENT);
-
             ControllerLobbyClient ctrlLC = (ControllerLobbyClient) Navigator.getController(NavEntry.LOBBY_CLIENT);
-
-            ctrlLC.setUsers(User.stringToUserList(msg.getContent()));
+            ctrlLC.setUsersList(User.stringToUserList(msg.getContent()));
 
             // add chat message
             msg.setUsername(this.textFieldUsernameJoin.getText());
             ctrlLC.addJoinMessage(msg);
+
+            Navigator.switchView(NavEntry.LOBBY_CLIENT);
         });
     };
 }

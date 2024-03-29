@@ -23,45 +23,42 @@ public class ControllerMain implements IController {
     @FXML private Button buttonSettings;
     @FXML private Button buttonAbout;
 
-    public void initialize()
+    public void initialize() {}
+
+    public void start()
     {
         this.vboxMainMenu.setVisible(true);
         this.vboxSettingsInfoControls.setVisible(true);
     }
 
     // MainMenu functions =====================================================
-    @FXML public void selectSinglePlayer(ActionEvent event)
+    @FXML
+    public void selectSinglePlayer(ActionEvent event)
     {
-        System.out.println("User selected Single Player");
-
         Navigator.switchView(NavEntry.SINGLE_PLAYER);
     }
 
-    @FXML public void selectMultiplayer(ActionEvent event)
+    @FXML
+    public void selectMultiplayer(ActionEvent event)
     {
-        System.out.println("User selected Multiplayer");
-
         Navigator.switchView(NavEntry.MULTIPLAYER);
     }
 
-    @FXML public void selectRulesHelp(ActionEvent event)
+    @FXML
+    public void selectRulesHelp(ActionEvent event)
     {
-        System.out.println("User selected Rules & Help");
-
         Navigator.switchView(NavEntry.RULES_HELP);
     }
 
-    @FXML public void selectSettings(ActionEvent event)
+    @FXML
+    public void selectSettings(ActionEvent event)
     {
-        System.out.println("User selected Settings");
-
         Navigator.switchView(NavEntry.SETTINGS);
     }
 
-    @FXML public void selectAbout(ActionEvent event)
+    @FXML
+    public void selectAbout(ActionEvent event)
     {
-        System.out.println("User selected Info");
-
         Navigator.switchView(NavEntry.ABOUT);
     }
 }

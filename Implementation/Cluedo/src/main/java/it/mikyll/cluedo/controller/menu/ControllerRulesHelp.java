@@ -43,7 +43,9 @@ public class ControllerRulesHelp implements IController {
         }
     }
 
-    public void initialize()
+    public void initialize() {}
+
+    public void start()
     {
         this.vboxBackControls.setVisible(true);
         this.vboxRulesHelp.setVisible(true);

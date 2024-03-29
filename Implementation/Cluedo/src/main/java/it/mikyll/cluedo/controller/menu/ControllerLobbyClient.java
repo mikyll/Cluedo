@@ -61,37 +61,51 @@ public class ControllerLobbyClient implements IController {
 
     public void initialize()
     {
+        this.listViewUsers.setItems(FXCollections.observableArrayList());
+
+        // TODO
+    }
+
+    public void start()
+    {
         this.vboxBackControls.setVisible(true);
         this.vboxLobbyClient.setVisible(true);
 
         this.vboxChat.setVisible(this.settings.isChatEnabled());
-
-        this.listViewUsers.setItems(FXCollections.observableArrayList());
-
-        this.buttonReady.setVisible(true);
-        this.buttonReady.setText(" Not ready");
-        this.buttonReady.setStyle("-fx-background-color: red");
-
-        this.clearLists();
         this.clearChat();
 
-        // TODO
-        if (this.client != null)
-        {
-            this.client.setUserJoinedMessageHandler(userJoinedHandler);
-            this.client.setChatMessageHandler(chatHandler);
-            this.client.setDisconnectMessageHandler(disconnectHandler);
-            this.client.setReadyMessageHandler(readyHandler);
-            this.client.setKickMessageHandler(kickHandler);
-            this.client.setBanMessageHandler(banHandler);
-            this.client.setGenericMessageHandler(banHandler);
-        }
+        this.buttonReady.setText("Not ready");
+        this.buttonReady.setStyle("-fx-background-color: red");
+
+        // client setup
+        this.client.setUserJoinedMessageHandler(userJoinedHandler);
+        this.client.setChatMessageHandler(chatHandler);
+        this.client.setDisconnectMessageHandler(disconnectHandler);
+        this.client.setReadyMessageHandler(readyHandler);
+        this.client.setKickMessageHandler(kickHandler);
+        this.client.setBanMessageHandler(banHandler);
+        this.client.setGenericMessageHandler(banHandler);
     }
 
-    public void setProperties(ClientStream client, String username)
+    protected void setProperties(ClientStream client, String username)
     {
         this.client = client;
         this.username = username;
+    }
+
+    // It's called only by client, when it receives a user_list
+    protected void setUsersList(List<User> users)
+    {
+        this.clearLists();
+
+        if(this.client != null)
+        {
+            this.addUser(users.get(0).getUsername(), true, true);
+            for(int i = 1; i < users.size(); i++)
+            {
+                this.addUser(users.get(i).getUsername(), false, users.get(i).isReady());
+            }
+        }
     }
 
     @FXML
@@ -152,21 +166,6 @@ public class ControllerLobbyClient implements IController {
         {
             this.client.sendClose();
             this.client = null;
-        }
-    }
-
-    // it's called only by client, when it receives a user_list
-    protected void setUsers(List<User> users)
-    {
-        this.clearLists();
-
-        if(this.client != null)
-        {
-            this.addUser(users.get(0).getUsername(), true, true);
-            for(int i = 1; i < users.size(); i++)
-            {
-                this.addUser(users.get(i).getUsername(), false, users.get(i).isReady());
-            }
         }
     }
 
