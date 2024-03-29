@@ -8,6 +8,8 @@ import it.mikyll.cluedo.model.game.clues.Character;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
+import it.mikyll.cluedo.model.sounds.MusicPlayer;
+import it.mikyll.cluedo.model.sounds.MusicTrack;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -145,6 +147,12 @@ public class ControllerGame implements IController {
     {
         System.out.println("User selected Game");
 
+        if (Settings.getInstance().isMusicEnabled())
+        {
+            MusicPlayer musicPlayer = MusicPlayer.getInstance();
+            musicPlayer.play(MusicTrack.GAME);
+        }
+
         Navigator.setFullscreen(true);
 
         this.vboxTurn.setVisible(false);
@@ -173,7 +181,7 @@ public class ControllerGame implements IController {
 
         // PlayersList pane
         showTurnView(new ActionEvent());
-        
+
         // NB: in Single Player we won't show the turn animation, since there might be multiple human players
 
         // Character selection

@@ -2,49 +2,157 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane id="base" fx:id="anchorPaneRoot" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="vboxBackControls" alignment="CENTER" layoutX="200.0" layoutY="505.0" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+      <VBox fx:id="vboxBackControls" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
          <children>
             <Button id="back" fx:id="buttonBack" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </VBox>
-      <VBox fx:id="vboxAbout" layoutX="280.0" layoutY="125.0" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.85);">
+      <VBox fx:id="vboxAbout" layoutX="230.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: rgba(0,0,0,0.85);">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="450.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="560.0">
                <children>
-                  <Label text="Cluedo" textFill="WHITE">
+                  <Label fx:id="labelAppName" text="Cluedo" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label text="v0.1-beta" textFill="WHITE">
+                  <Label fx:id="labelAppVersion" text="v1.0-alpha" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
+                  <Separator prefHeight="20.0" prefWidth="602.0" visible="false" />
+                  <TextFlow prefHeight="60.0" prefWidth="560.0" textAlignment="JUSTIFY">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="First broken version was created in 2020 as a prototype for our project for the course of" textAlignment="JUSTIFY" wrappingWidth="601.548828125">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Hyperlink onAction="#openSoftwareEngineering" text="Software Engineering T">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Hyperlink>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="at" textAlignment="JUSTIFY" wrappingWidth="601.548828125">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Hyperlink onAction="#openAlmaMater" text="Alma Mater Studiorum - University of Bologna">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </TextFlow>
+                  <TextFlow prefHeight="30.0" prefWidth="560.0" textAlignment="JUSTIFY">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="I later decided to refactor and complete it for fun and to improve my Java &amp; JavaFX skills." textAlignment="JUSTIFY" wrappingWidth="44.66717529296875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="450.0" spacing="150.0">
+            <HBox fx:id="hboxContributors" alignment="CENTER" prefHeight="170.0" prefWidth="560.0" spacing="50.0">
                <children>
-                  <ImageView fx:id="imageViewAuthorPicture" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50;">
-                     <image>
-                        <Image url="@../images/about/mikyll_avatar.png" />
-                     </image>
-                  </ImageView>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imageViewContributor1" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50;">
+                           <image>
+                              <Image url="@../images/about/mikyll_avatar.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Michele Righi" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label id="github" onMouseClicked="#openGitHubContributor1" prefHeight="30.0" prefWidth="30.0" />
+                              <Label id="linkedin" onMouseClicked="#openLinkedinContributor1" prefHeight="30.0" prefWidth="30.0" />
+                              <Label id="stackoverflow" onMouseClicked="#openStackoverflowContributor1" prefHeight="30.0" prefWidth="30.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imageViewContributor2" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50;">
+                           <image>
+                              <Image url="@../images/about/lorenzo_avatar.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Lorenzo Righi" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label id="github" onMouseClicked="#openGitHubContributor2" prefHeight="30.0" prefWidth="30.0" />
+                              <Label id="linkedin" onMouseClicked="#openLinkedinContributor2" prefHeight="30.0" prefWidth="30.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imageViewContributor3" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50;">
+                           <image>
+                              <Image url="@../images/about/enrico_avatar.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Enrico Sarneri" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label id="github" onMouseClicked="#openGitHubContributor3" prefHeight="30.0" prefWidth="30.0" />
+                              <Label id="linkedin" onMouseClicked="#openLinkedinContributor3" prefHeight="30.0" prefWidth="30.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
          <padding>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding></VBox>
+      <VBox fx:id="vboxBackControls1" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="150.0">
+         <children>
+            <Button id="back" fx:id="buttonBack1" mnemonicParsing="false" onAction="#selectBack" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

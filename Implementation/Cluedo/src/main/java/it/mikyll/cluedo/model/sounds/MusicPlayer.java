@@ -13,8 +13,11 @@ public class MusicPlayer {
 
     private static Map<MusicTrack, Media> musicTracks;
     private static double volume = 0.5;
+    private static boolean isPlaying = false;
+    private static MusicTrack loadedTrack = null;
 
     private MusicPlayer() {}
+
     public static synchronized MusicPlayer getInstance()
     {
         if(instance == null)
@@ -38,10 +41,6 @@ public class MusicPlayer {
         musicTracks.put(MusicTrack.GAME, new Media(MusicPlayer.class.getResource(Settings.RESOURCES_PATH + "music/George Arkomanis - Relaxation In Mystery.mp3").toString()));
     }
 
-    public MediaPlayer getMediaPlayer()
-    {
-        return mediaPlayer;
-    }
     public void setVolume(double value)
     {
         volume = value;
@@ -51,18 +50,33 @@ public class MusicPlayer {
 
     public void setTrack(MusicTrack musicTrack)
     {
+        this.stop();
         mediaPlayer = new MediaPlayer(musicTracks.get(musicTrack));
+        loadedTrack = musicTrack;
         mediaPlayer.setVolume(volume);
         mediaPlayer.setCycleCount(Integer.MAX_VALUE);
     }
 
     public void play()
     {
+        this.stop();
         mediaPlayer.play();
+        isPlaying = true;
+    }
+
+    public void play(MusicTrack musicTrack)
+    {
+        if (!isPlaying || musicTrack != loadedTrack)
+        {
+            this.setTrack(musicTrack);
+            mediaPlayer.play();
+            isPlaying = true;
+        }
     }
 
     public void stop()
     {
         mediaPlayer.stop();
+        isPlaying = false;
     }
 }

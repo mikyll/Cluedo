@@ -5,6 +5,7 @@ import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
+import it.mikyll.cluedo.model.sounds.MusicTrack;
 import it.mikyll.cluedo.persistence.SettingsManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,6 +47,14 @@ public class ControllerSettings implements IController {
         this.vboxSettings.setVisible(true);
         this.vboxBackControls.setVisible(true);
 
+        updateElements();
+        updateMusic();
+    }
+
+    private void updateElements()
+    {
+        Settings settings = Settings.getInstance();
+
         this.checkBoxToggleChat.setSelected(settings.isChatEnabled());
         this.checkBoxToggleMusic.setSelected(settings.isMusicEnabled());
         this.sliderMusicVolume.setValue(settings.getMusicVolume());
@@ -53,6 +62,16 @@ public class ControllerSettings implements IController {
         this.checkBoxToggleSoundEffects.setSelected(settings.isSoundEffectsEnabled());
         this.sliderSoundEffectsVolume.setValue(settings.getSoundEffectsVolume());
         this.sliderSoundEffectsVolume.setDisable(!settings.isSoundEffectsEnabled());
+    }
+
+    private void updateMusic()
+    {
+        if (settings.isMusicEnabled())
+        {
+            MusicPlayer musicPlayer = MusicPlayer.getInstance();
+            musicPlayer.setVolume(settings.getMusicVolume());
+            musicPlayer.play(MusicTrack.MENU);
+        }
     }
 
     @FXML
@@ -72,10 +91,7 @@ public class ControllerSettings implements IController {
             }
         }
 
-        player.setVolume(settings.getMusicVolume());
-        if (settings.isMusicEnabled())
-            player.play();
-        else player.stop();
+        updateMusic();
 
         Navigator.switchView(NavEntry.MAIN);
     }
@@ -147,7 +163,8 @@ public class ControllerSettings implements IController {
     @FXML
     public void cancelSettings(ActionEvent event)
     {
-        // TODO
+        updateElements();
+        updateMusic();
     }
 
     private boolean isSettingsChanged()

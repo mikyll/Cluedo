@@ -1,9 +1,12 @@
 package it.mikyll.cluedo.controller.menu;
 
+import it.mikyll.cluedo.controller.ControllerGame;
 import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.model.settings.Settings;
+import it.mikyll.cluedo.model.sounds.MusicPlayer;
+import it.mikyll.cluedo.model.sounds.MusicTrack;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,6 +32,12 @@ public class ControllerMain implements IController {
     {
         this.vboxMainMenu.setVisible(true);
         this.vboxSettingsInfoControls.setVisible(true);
+
+        if (Settings.getInstance().isMusicEnabled())
+        {
+            MusicPlayer musicPlayer = MusicPlayer.getInstance();
+            musicPlayer.play(MusicTrack.MENU);
+        }
     }
 
     // MainMenu functions =====================================================

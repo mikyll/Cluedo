@@ -15,8 +15,7 @@ import javafx.stage.Stage;
 public class MainRefactor extends Application {
     @Override
     public void start(Stage stage) {
-        Settings settings = Settings.getInstance();
-        settings = SettingsManager.loadSettings(SettingsManager.SETTINGS_FILENAME);
+        Settings settings = SettingsManager.loadSettings(SettingsManager.SETTINGS_FILENAME);
 
         if (settings.isMusicEnabled())
         {
@@ -27,6 +26,7 @@ public class MainRefactor extends Application {
         }
 
         Navigator.initStage(stage);
+        Navigator.setHostServices(this.getHostServices());
     }
 
 

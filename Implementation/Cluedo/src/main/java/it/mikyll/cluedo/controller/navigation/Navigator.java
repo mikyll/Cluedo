@@ -4,6 +4,7 @@ import it.mikyll.cluedo.controller.menu.ControllerLoading;
 import it.mikyll.cluedo.controller.game.ControllerGame;
 import it.mikyll.cluedo.controller.menu.*;
 import it.mikyll.cluedo.model.settings.Settings;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ public class Navigator {
     private static Map<NavEntry, Scene> views;
     private static Map<NavEntry, IController> controllers;
     private static ControllerLoading ctrlLoading;
+    private static HostServices hostServices;
 
     public static synchronized void initStage(Stage appStage) {
         stage = appStage;
@@ -118,5 +120,15 @@ public class Navigator {
     public static void setFullscreen(boolean value)
     {
         stage.setFullScreen(value);
+    }
+
+    public static void setHostServices(HostServices hostServicesRef)
+    {
+        hostServices = hostServicesRef;
+    }
+    public static void openURL(String url)
+    {
+        if (hostServices != null)
+            hostServices.showDocument(url);
     }
 }

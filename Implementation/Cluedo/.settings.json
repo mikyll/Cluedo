@@ -4,7 +4,8 @@
   "chatEnabled": true,
   "language": "ENGLISH",
   "musicEnabled": false,
-  "musicVolume": 100.0,
+  "musicVolume": 63.05732484076435,
   "soundEffectsEnabled": true,
-  "soundEffectsVolume": 50.0
+  "soundEffectsVolume": 50.0,
+  "timestampFormat": ""
 }
