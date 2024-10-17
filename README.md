@@ -22,8 +22,15 @@ Nato come progetto del corso di Ingegneria del Software della triennale in Ingeg
 TO-DO
 
 ### Roadmap
-- [ ] Scrivere le classi del game engine (prendere spunto anche da Tablut magari)
-- [ ] Poi adattarci la grafica
+
+- [ ] Game Engine
+  - [ ] Classi e metodi utili (e.g. ottenere la lista delle possibili posizioni di arrivo)
+- [ ] AI
+- [ ] Grafica:
+  - [ ] Taccuino, note etc. devono essere finestre aggiuntive (dialog?) e possono essere aperte contemporaneamente
+  - [ ] Implementazione GUI Swing
+  - [ ] Permettere la scelta di CLI, GUI JavaFX e GUI Java Swing
+
 - [ ] Sfruttare le classi del JavaFX multiplayer lobby system per il multigiocatore
 - [ ] Una volta ottenuto un prototipo giocabile, fare la grafica. NB: l'associazione delle caselle ai punti specifici nella mappa la fa il controller.
 * NB: modificarlo e scriverlo in INGLESE principalmente.
