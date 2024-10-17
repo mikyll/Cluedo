@@ -11,17 +11,37 @@
 
 </div>
 
-# Cluedo
-Applicazione per il gioco Cluedo, NON UFFICIALE e SENZA SCOPO DI LUCRO.
+# Clueless
 
-Nato come progetto del corso di Ingegneria del Software della triennale in Ingegneria Informatica presso l'unibo, ho deciso di portarlo a termine, sostituendo il prototipo con quello che sarà un gioco completo e funzionante.
+Clueless is a Java application that implements an unofficial version of the Cluedo game.
 
-*In corso di sviluppo: quando avrò tempo lo porterò a termine*.
+**NB**: This is not an official Hasbro product, is not endorsed or sponsored by Hasbro, and is not intended for commercial use. It is distributed for personal use and educational purposes only, with no intent to infringe upon Hasbro's rights.
 
-### Esecuzione
-TO-DO
+It was born as a project for the course Software Engineering T at Alma Mater Studiorum, University of Bologna. I later decided to improve and complete it, as a full working game.
+
+_It's still under development._
+
 
 ### Roadmap
+
+- [ ] Change the repo name to Clueless
+- [ ] Rewrite server logic under model
+- [ ] make GUI selectable (via args):
+  - [ ] JavaFX
+  - [ ] Swing
+  - [ ] TUI
+- [ ] Game engine (methods such as one to get the list of destination boxes given a step counter)
+- [ ] clue sheet and notepad as dialog windows (both can be open at the same time)
+- [ ] AI players:
+  - [ ] allow to start a game with no human players (spectator mode)
+  - [ ] extra config:
+    - [ ] choose the search tree depth/width limit
+    - [ ] choose the algorithm
+    - [ ] ...
+- [ ] game state savings
+
+<!--
+
 - [ ] Scrivere le classi del game engine (prendere spunto anche da Tablut magari)
 - [ ] Poi adattarci la grafica
 - [ ] Sfruttare le classi del JavaFX multiplayer lobby system per il multigiocatore
@@ -37,26 +57,16 @@ TO-DO
 
 Niente gestore sicurezza che tanto non serve a una mazza.
 
-### Multiplayer execution flow:
-1. Un utente1 inserisce il nickname e seleziona "crea una lobby";
-2. viene creato il Server:
-  - il server crea un thread che crea una socket, la binda all'address locale, porta 9001 e si mette in ascolto (il thread viene creato perché ascoltare sulla socket è un'operazione bloccante;
-4. un utente2 inserisce il nickname, l'IP del server a cui si vuole connettere, e prova ad unirsi ad una stanza.
-5. dunque viene creato il Client:
-  - il client crea un thread che crea la socket, si connette al server, e gli invia un messaggio CONNECT;
-  - il server risponde dicendo se è possibile la connessione (CONNECT_OK, in caso affermativo, CONNECT_FAILED, in caso negativo);
-  - una volta ricevuto l'OK, il client riceve un secondo messaggio, contenente la lista degli utenti connessi (così può aggiornare l'interfaccia grafica);
-  - dopodiché si mette in ascolto per i messaggi futuri.
-
-
-
 ### Built With
 versione Java: JavaSE-11 (jdk-11.0.11)<br/>
 versione JavaFX: JavaFX 11 (javafx-sdk-11.0.2)
 
+-->
+
 ### References
-- Progetto utilissimo per implementare la chat della lobby: [JavaFX-Chat](https://github.com/DomHeal/JavaFX-Chat)
-- Tutorial Gioco JavaFX: [Space Shooter](https://www.youtube.com/watch?v=6BKI26gxK2Q)
+
+- Mega useful project for lobby chat: [JavaFX-Chat](https://github.com/DomHeal/JavaFX-Chat)
+- JavaFX game tutorial: [Space Shooter](https://www.youtube.com/watch?v=6BKI26gxK2Q)
 - Simple API with high-level abstraction, to build a game without troubles: [Java FXGL](https://www.youtube.com/watch?v=gj0yKmsKwvc)
 
 <div align="center">
