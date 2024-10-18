@@ -9,6 +9,7 @@ import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
 import it.mikyll.cluedo.model.settings.Settings;
+import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Window;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -50,6 +52,8 @@ public class ControllerLobbyClient implements IController {
     @FXML private HBox hboxIPaddress;
     @FXML private Label labelLobbyLANaddress;
 
+    private Window window;
+
     private final Settings settings;
     private ClientStream client;
     private String username;
@@ -68,6 +72,8 @@ public class ControllerLobbyClient implements IController {
 
     public void start()
     {
+        window = this.anchorPaneRoot.getScene().getWindow();
+
         this.vboxBackControls.setVisible(true);
         this.vboxLobbyClient.setVisible(true);
 
@@ -301,9 +307,8 @@ public class ControllerLobbyClient implements IController {
             if (msg.getUsername().equals(this.username)) {
                 this.selectBack(new ActionEvent());
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Disconnected from server");
-                alert.setTitle("Error Dialog");
-                alert.setContentText(msg.getContent());
+                CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.INFORMATION,
+                        "Disconnected from server", msg.getContent());
                 alert.show();
             } else {
                 this.addLeaveMessage(msg);
@@ -323,9 +328,8 @@ public class ControllerLobbyClient implements IController {
             if (msg.getUsername().equals(this.username)) {
                 this.selectBack(new ActionEvent());
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Disconnected from server");
-                alert.setTitle("Error Dialog");
-                alert.setContentText(msg.getContent());
+                CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.INFORMATION,
+                        "Disconnected from server", msg.getContent());
                 alert.show();
             } else {
                 this.removeUser(msg.getUsername());
@@ -341,9 +345,7 @@ public class ControllerLobbyClient implements IController {
             if (msg.getUsername().equals(this.username)) {
                 this.selectBack(new ActionEvent());
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Disconnected from server");
-                alert.setTitle("Error Dialog");
-                alert.setContentText(msg.getContent());
+                CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.INFORMATION, "Disconnected from Server", msg.getContent());
                 alert.show();
             } else {
                 this.removeUser(msg.getUsername());

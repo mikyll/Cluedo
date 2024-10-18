@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
+import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,11 +38,13 @@ import it.mikyll.cluedo.model.networking.User;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
 import it.mikyll.cluedo.model.networking.message.MessageType;
+import javafx.stage.Window;
 
 public class ControllerMenu {
 	private static final Pattern PATTERN_USERNAME = Pattern.compile("^[a-zA-Z0-9]{3,15}$");
 	private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
-	
+
+	@FXML private AnchorPane anchorPaneRoot;
 	@FXML private VBox vboxMainMenu;
 	@FXML private VBox vboxSettingsInfoControls;
 	@FXML private VBox vboxBackControls;
@@ -130,10 +134,12 @@ public class ControllerMenu {
 	@FXML private Slider sliderSoundEffectsVolume;
 	@FXML private Button buttonSaveSettings;
 	@FXML private Button buttonCancelSettings;
-	
+
 	// Info controls:
 	// [...]
-	
+
+	private Window window;
+
 	private ServerStream server;
 	private ClientStream client;
 	private String username;
@@ -179,7 +185,11 @@ public class ControllerMenu {
 			});
 		});
 	}
-	
+
+	public void start() {
+		window = this.anchorPaneRoot.getScene().getWindow();
+	}
+
 	// MainMenu functions =====================================================
 	@FXML public void selectSinglePlayer(ActionEvent event) 
 	{
@@ -295,9 +305,7 @@ public class ControllerMenu {
 		}
 		else if(this.vboxLobby.isVisible())
 		{
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Leave the lobby?", ButtonType.YES, ButtonType.NO);
-			alert.setTitle("Confirmation Dialog");
-			alert.setContentText("Are you sure you want to leave the lobby?");
+			CenteredAlert alert = new CenteredAlert(window, AlertType.CONFIRMATION, "Leave the Lobby?", "Are you sure you want to leave the lobby?", ButtonType.YES, ButtonType.NO);
 			alert.showAndWait();
 			if (alert.getResult() == ButtonType.YES)
 			{
@@ -465,14 +473,13 @@ public class ControllerMenu {
 			System.out.println("Server: ServerSocket creation failed");
 			if(e instanceof BindException)
 			{
-				System.out.println("Server: another socket is already binded to this address and port");
+				System.out.println("Server: another socket is already bound to this address and port");
 				try(final DatagramSocket socket = new DatagramSocket()) {
 					socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
 					String privateIP = socket.getLocalAddress().getHostAddress();
 					
-					Alert alert = new Alert(AlertType.ERROR, "Room creation failed");
-					alert.setTitle("Error Dialog");
-					alert.setContentText("Another socket is already binded to " + privateIP + ":" + this.textFieldPortCreate.getText());
+					CenteredAlert alert = new CenteredAlert(window, AlertType.ERROR, "Room Creation Failed",
+							"Another socket is already bound to " + privateIP + ":" + this.textFieldPortCreate.getText());
 					alert.show();
 					
 					return;
@@ -1088,9 +1095,7 @@ public class ControllerMenu {
 				
 				case CONNECT_REFUSED:
 				{
-					Alert alert = new Alert(AlertType.ERROR, "Connection failed");
-					alert.setTitle("Error Dialog");
-					alert.setContentText(msg.getContent());
+					CenteredAlert alert = new CenteredAlert(window, AlertType.ERROR, "Connection Failed", msg.getContent());
 					alert.show();
 					this.hboxConnectionJoin.setVisible(false);
 					
@@ -1131,9 +1136,7 @@ public class ControllerMenu {
 						{
 							this.selectBack(new ActionEvent());
 							
-							Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
-							alert.setTitle("Error Dialog");
-							alert.setContentText(msg.getContent());
+							CenteredAlert alert = new CenteredAlert(window, AlertType.INFORMATION, "Disconnected from Server", msg.getContent());
 							alert.show();
 						}
 						else
@@ -1171,9 +1174,7 @@ public class ControllerMenu {
 					{
 						this.selectBack(new ActionEvent());
 						
-						Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
-						alert.setTitle("Error Dialog");
-						alert.setContentText(msg.getContent());
+						CenteredAlert alert = new CenteredAlert(window, AlertType.INFORMATION, "Disconnected from Server");
 						alert.show();
 					}
 					else
@@ -1191,10 +1192,8 @@ public class ControllerMenu {
 					if(msg.getUsername().equals(this.username))
 					{
 						this.selectBack(new ActionEvent());
-						
-						Alert alert = new Alert(AlertType.INFORMATION, "Disconnected from server");
-						alert.setTitle("Error Dialog");
-						alert.setContentText(msg.getContent());
+
+						CenteredAlert alert = new CenteredAlert(window, AlertType.INFORMATION, "Disconnected from Server", msg.getContent());
 						alert.show();
 					}
 					else
