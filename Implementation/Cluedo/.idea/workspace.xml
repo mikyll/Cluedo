@@ -10,8 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b4264c3-df6c-4481-9407-33d1fb368718" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Cluedo_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Cluedo_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Cluedo_jar/Cluedo.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Cluedo_jar/Cluedo.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,9 +43,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2dyYg6hXXfXNhcjNuDeCrMjjPpv" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -75,7 +78,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Program Files/Java/javafx-sdk-11.0.2/bin/vcruntime140.dll",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3402163",
     "settings.editor.selected.configurable": "inlay.hints"
@@ -100,7 +103,7 @@
       <command value="startGam" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CluedoAppRefactor2">
+  <component name="RunManager" selected="Application.CluedoAppRefactor">
     <configuration name="CluedoApp" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.mikyll.cluedo.application.Main" />
       <module name="Cluedo" />
@@ -144,13 +147,6 @@
         <item itemvalue="Application.CluedoAppRefactor" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-11.0.16-jbr_dcevm-11.0.16-4caba194b151-788636e5" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
