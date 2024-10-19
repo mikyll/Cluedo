@@ -119,7 +119,7 @@
                            <children>
                               <ImageView fx:id="imageViewContributor1" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 50;">
                                  <image>
-                                    <Image url="@../images/about/mikyll_avatar.png" />
+                                    <Image url="@../images/about/michele_avatar.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
