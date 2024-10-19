@@ -196,7 +196,7 @@
          </padding></VBox>-->
       <HBox fx:id="hboxIPaddress" layoutX="14.0" layoutY="577.0" style="-fx-background-color: rgba(0,0,0,0.85);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
          <children>
-            <Label prefHeight="0.0" text=" LAN IP address: " textFill="WHITE" />
+            <Label prefHeight="0.0" text=" Lobby IP address (LAN):  " textFill="WHITE" />
             <Label fx:id="labelLobbyLANaddress" prefHeight="0.0" text="255.255.255.255" textFill="WHITE" />
          </children>
       </HBox>

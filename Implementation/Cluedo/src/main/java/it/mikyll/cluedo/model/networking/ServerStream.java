@@ -74,6 +74,7 @@ public class ServerStream {
 		}
 	}
 
+	public int getPort() {return this.port;}
 	public void setConnectRequestMessageHandler(IMessageHandler msgHandler)
 	{
 		this.connectRequestHandler = msgHandler;

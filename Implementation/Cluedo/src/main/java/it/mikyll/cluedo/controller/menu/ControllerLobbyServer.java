@@ -15,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -79,11 +78,6 @@ public class ControllerLobbyServer implements IController {
         this.listViewUsers.setItems(FXCollections.observableArrayList());
         this.listViewBannedUsers.setItems(FXCollections.observableArrayList());
 
-        if (isInternetConnectionAvailable())
-        {
-            this.setServerAddress(getPrivateIP());
-        }
-
         // TODO
         /*Platform.runLater(() -> {
             this.vboxMainMenu.getScene().setOnKeyPressed(e -> {
@@ -120,6 +114,11 @@ public class ControllerLobbyServer implements IController {
         this.server.setGenericMessageHandler(genericHandler);
 
         this.server.startServer();
+
+        if (isInternetConnectionAvailable())
+        {
+            this.setServerAddress(getPrivateIP());
+        }
     }
 
     protected void setProperties(ServerStream server, String username)
@@ -614,7 +613,11 @@ public class ControllerLobbyServer implements IController {
 
     private void setServerAddress(String ip)
     {
-        this.labelLobbyLANaddress.setText(ip);
+        String address = ip;
+        if (this.server != null) {
+            address += " : " + this.server.getPort();
+        }
+        this.labelLobbyLANaddress.setText(address);
     }
 
     private void clearLists()
