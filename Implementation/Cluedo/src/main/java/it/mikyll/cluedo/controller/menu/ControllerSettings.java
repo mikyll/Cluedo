@@ -7,6 +7,7 @@ import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
 import it.mikyll.cluedo.persistence.SettingsManager;
+import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 
 public class ControllerSettings implements IController {
     @FXML private AnchorPane anchorPaneRoot;
@@ -32,6 +34,8 @@ public class ControllerSettings implements IController {
 
     @FXML private Button buttonSaveSettings;
     @FXML private Button buttonCancelSettings;
+
+    private Window window;
 
     private final Settings settings;
     private final MusicPlayer musicPlayer;
@@ -56,6 +60,8 @@ public class ControllerSettings implements IController {
     {
         System.out.println("User selected Settings");
 
+        window = this.anchorPaneRoot.getScene().getWindow();
+
         this.vboxSettings.setVisible(true);
         this.vboxBackControls.setVisible(true);
 
@@ -72,9 +78,8 @@ public class ControllerSettings implements IController {
 
         if (isSettingsChanged())
         {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Changes not saved", ButtonType.YES, ButtonType.CANCEL);
-            alert.setTitle("Error Dialog");
-            alert.setContentText("Leaving this page will discard the changes in progress.\nLeave anyways?");
+            CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.CONFIRMATION, "Changes Not Saved",
+                    "Leaving this page will discard the changes in progress.\nLeave anyways?", ButtonType.YES, ButtonType.CANCEL);
             alert.showAndWait();
             if(alert.getResult() == ButtonType.NO || alert.getResult() == ButtonType.CANCEL)
             {

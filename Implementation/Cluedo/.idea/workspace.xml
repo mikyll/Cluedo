@@ -10,11 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b4264c3-df6c-4481-9407-33d1fb368718" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/view/gui/javafx/CenteredAlert.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuAbout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/ControllerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerLobbyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerMultiplayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/controller/menu/ControllerSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/GameCluedo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/GameCluedo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/mikyll/cluedo/model/game/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewGame.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuMultiplayer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/ViewMenuMultiplayer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/extra/ViewMenu2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/it/mikyll/cluedo/views/extra/ViewMenu2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +80,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feat__centered__dialogs",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Program Files/Java/javafx-sdk-11.0.2/bin/vcruntime140.dll",
@@ -103,7 +109,7 @@
       <command value="startGam" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CluedoAppRefactor">
+  <component name="RunManager" selected="Application.CluedoAppRefactor2">
     <configuration name="CluedoApp" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.mikyll.cluedo.application.Main" />
       <module name="Cluedo" />

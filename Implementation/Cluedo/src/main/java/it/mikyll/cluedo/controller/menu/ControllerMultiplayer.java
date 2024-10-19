@@ -8,6 +8,7 @@ import it.mikyll.cluedo.model.networking.ServerStream;
 import it.mikyll.cluedo.model.networking.User;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
+import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.*;
@@ -52,6 +55,8 @@ public class ControllerMultiplayer implements IController {
     @FXML private HBox hboxConnectionJoin;
     @FXML private Button buttonJoinLobby;
 
+    private Window window;
+
     private static final Pattern PATTERN_IP = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     public ControllerMultiplayer() {}
@@ -72,6 +77,8 @@ public class ControllerMultiplayer implements IController {
     public void start()
     {
         System.out.println("User selected Multiplayer");
+
+        this.window = anchorPaneRoot.getScene().getWindow();
 
         this.vboxBackControls.setVisible(true);
         this.vboxMultiPlayer.setVisible(true);
@@ -229,14 +236,13 @@ public class ControllerMultiplayer implements IController {
             System.out.println("Server: ServerSocket creation failed");
             if(e instanceof BindException)
             {
-                System.out.println("Server: another socket is already binded to this address and port");
+                System.out.println("Server: another socket is already bound to this address and port");
                 try(final DatagramSocket socket = new DatagramSocket()) {
                     socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
                     String privateIP = socket.getLocalAddress().getHostAddress();
 
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Room creation failed");
-                    alert.setTitle("Error Dialog");
-                    alert.setContentText("Another socket is already binded to " + privateIP + ":" + this.textFieldPortCreate.getText());
+                    CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.ERROR, "Room Creation Failed",
+                            "Another socket is already bound to " + privateIP + ":" + this.textFieldPortCreate.getText());
                     alert.show();
                 } catch (SocketException e1) {
                     e1.printStackTrace();
@@ -323,9 +329,7 @@ public class ControllerMultiplayer implements IController {
         System.out.println("ControllerMultiplayer: received CONNECT_REFUSED message");
 
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Connection failed");
-            alert.setTitle("Error Dialog");
-            alert.setContentText(msg.getContent());
+            CenteredAlert alert = new CenteredAlert(window, Alert.AlertType.ERROR, "Connection Failed", msg.getContent());
             alert.show();
             this.hboxConnectionJoin.setVisible(false);
         });
