@@ -93,6 +93,12 @@ public class ControllerSettings implements IController {
     }
 
     @FXML
+    public void toggleChat(ActionEvent event)
+    {
+        updateButtons();
+    }
+
+    @FXML
     public void selectLanguage(ActionEvent event)
     {
         updateButtons();

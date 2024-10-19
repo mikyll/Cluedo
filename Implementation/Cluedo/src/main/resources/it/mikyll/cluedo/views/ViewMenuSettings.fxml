@@ -35,7 +35,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" selected="true" />
+                        <CheckBox fx:id="checkBoxToggleChat" mnemonicParsing="false" selected="true" onAction="#toggleChat" />
                      </children>
                      <HBox.margin>
                         <Insets />
