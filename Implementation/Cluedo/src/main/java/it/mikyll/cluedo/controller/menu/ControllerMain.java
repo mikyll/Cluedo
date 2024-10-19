@@ -26,7 +26,9 @@ public class ControllerMain implements IController {
     @FXML private Button buttonSettings;
     @FXML private Button buttonAbout;
 
-    public void initialize() {}
+    public void initialize() {
+        this.buttonMultiPlayer.setDisable(!ControllerLobbyServer.isInternetConnectionAvailable());
+    }
 
     public void start()
     {

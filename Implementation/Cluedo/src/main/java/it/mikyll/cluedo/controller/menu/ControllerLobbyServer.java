@@ -25,10 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.io.UncheckedIOException;
+import java.net.*;
 import java.util.ArrayList;
 
 public class ControllerLobbyServer implements IController {
@@ -81,7 +79,10 @@ public class ControllerLobbyServer implements IController {
         this.listViewUsers.setItems(FXCollections.observableArrayList());
         this.listViewBannedUsers.setItems(FXCollections.observableArrayList());
 
-        this.setServerAddress();
+        if (isInternetConnectionAvailable())
+        {
+            this.setServerAddress(getPrivateIP());
+        }
 
         // TODO
         /*Platform.runLater(() -> {
@@ -579,18 +580,41 @@ public class ControllerLobbyServer implements IController {
         System.out.println("ControllerLobbyServer: received " + msg.getMsgType() + " message");
     };
 
-
-    private void setServerAddress()
+    static public boolean isInternetConnectionAvailable()
     {
+        boolean result = false;
+
         try(final DatagramSocket socket = new DatagramSocket()) {
             socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-            String privateIP = socket.getLocalAddress().getHostAddress();
-            this.labelLobbyLANaddress.setText(privateIP);
+
+            result = true;
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {
             e.printStackTrace();
+        } catch (UncheckedIOException e) {
+            System.out.println("No Internet connection");
+            e.printStackTrace();
         }
+
+        return result;
+    }
+
+    private String getPrivateIP()
+    {
+        String ip = "";
+        try(final DatagramSocket socket = new DatagramSocket()) {
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+            ip = socket.getLocalAddress().getHostAddress();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return ip;
+    }
+
+    private void setServerAddress(String ip)
+    {
+        this.labelLobbyLANaddress.setText(ip);
     }
 
     private void clearLists()
