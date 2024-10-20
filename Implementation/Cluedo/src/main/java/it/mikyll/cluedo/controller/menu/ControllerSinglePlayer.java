@@ -4,7 +4,7 @@ import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.controller.game.ControllerGame;
-import it.mikyll.cluedo.model.game.clues.Character;
+import it.mikyll.cluedo.model.game.clues.Characters;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
 import it.mikyll.cluedo.model.game.player.PlayerHuman;
@@ -66,7 +66,7 @@ public class ControllerSinglePlayer implements IController {
 
         List<Player> listPlayers = new ArrayList<>();
 
-        List<Character> availableCharacters = new ArrayList<>(Arrays.asList(Character.values()));
+        List<Characters> availableCharacters = new ArrayList<>(Arrays.asList(Characters.values()));
         Random rand = new Random();
         for (int i = 0; i < this.spinnerPlayersHuman.getValue(); i++)
         {

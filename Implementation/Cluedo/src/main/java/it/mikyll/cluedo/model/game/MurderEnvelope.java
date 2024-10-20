@@ -1,41 +1,40 @@
 package it.mikyll.cluedo.model.game;
 
-import it.mikyll.cluedo.model.game.clues.Character;
-import it.mikyll.cluedo.model.game.clues.Room;
-import it.mikyll.cluedo.model.game.clues.Weapon;
+import it.mikyll.cluedo.model.game.clues.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class MurderEnvelope {
-    private final Character murderer;
-    private final Weapon weapon;
-    private final Room crimeScene;
+    private Clue murderer;
+    private Clue weapon;
+    private Clue room;
 
-    public MurderEnvelope()
+    public MurderEnvelope(List<Clue> clueList)
     {
-        Random random = new Random();
+        Collections.shuffle(clueList);
 
-        this.murderer = Character.values()[random.nextInt(Character.values().length)];
-        this.weapon = Weapon.values()[random.nextInt(Weapon.values().length)];
-        this.crimeScene = Room.values()[random.nextInt(Room.values().length)];
+        for (Clue c : clueList)
+        {
+            if (murderer == null && c.getType().equals(ClueType.CHARACTER))
+                this.murderer = c;
+            if (weapon == null && c.getType().equals(ClueType.WEAPON))
+                this.weapon = c;
+            if (room == null && c.getType().equals(ClueType.ROOM))
+                this.room = c;
+        }
     }
 
-    public MurderEnvelope(Character murderer, Weapon weapon, Room crimeScene)
-    {
-        this.murderer = murderer;
-        this.weapon = weapon;
-        this.crimeScene = crimeScene;
-    }
-
-    public boolean makeAccusation(Character murderer, Weapon weapon, Room crimeScene)
+    public boolean makeAccusation(Clue murderer, Clue weapon, Clue room)
     {
         return this.murderer.equals(murderer)
                 && this.weapon.equals(weapon)
-                && this.crimeScene.equals(crimeScene);
+                && this.room.equals(room);
     }
 
     public String toString()
     {
-        return "The murderer is " + this.murderer + ", who killed Samuel Black with a " + this.weapon + " in " + this.crimeScene;
+        return "The murderer is " + this.murderer.getName() + ", who killed Samuel Black with a " + this.weapon.getName() + " in " + this.room.getName();
     }
 }

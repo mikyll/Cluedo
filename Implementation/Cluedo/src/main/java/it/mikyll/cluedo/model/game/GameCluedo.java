@@ -1,23 +1,39 @@
 package it.mikyll.cluedo.model.game;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import it.mikyll.cluedo.model.game.clues.Clue;
+import it.mikyll.cluedo.model.game.board.Board;
+import it.mikyll.cluedo.model.game.board.Position;
+import it.mikyll.cluedo.model.game.clues.*;
 import it.mikyll.cluedo.model.game.clues.Character;
-import it.mikyll.cluedo.model.game.clues.Room;
-import it.mikyll.cluedo.model.game.clues.Weapon;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
+import it.mikyll.cluedo.model.game.player.PlayerHuman;
+import it.mikyll.cluedo.persistence.CluesLoader;
 
 /*
  * Game class
  */
 public class GameCluedo {
-	private List<Player> players;
+	public static void main(String[] args)
+	{
+		List<Player> players = new ArrayList<>();
+		players.add(new PlayerHuman("mikyll"));
+		players.add(new PlayerArtificial("Comp1"));
 
+		GameCluedo game = new GameCluedo(players);
+
+		game.initCluesList();
+
+		//game.startGame();
+
+		// TODO
+	}
+
+	private Board board;
+	private List<Player> players;
 	private MurderEnvelope murderEnvelope;
+
 	// Timer
 	// User list
 	// Settings
@@ -33,21 +49,61 @@ public class GameCluedo {
 	/*
 	 * Constructor. It takes a list of users and the game settings
 	 */
-	public GameCluedo(List<Player> players, int playerNumber) {
+	public GameCluedo(List<Player> players) {
 		this.players = players;
-		
-		// Add artificial players if there aren't enough players
-		for(int i = players.size(); i < playerNumber; i++) {
-			Player p = new PlayerArtificial("AI " + i);
-			this.players.add(p);
+	}
+
+	public void startGame() {
+		// Init board
+		board = new Board();
+
+		// Init murder envelope
+		murderEnvelope = new MurderEnvelope(null);
+
+
+		// Assign player turns
+		Collections.shuffle(this.players);
+		for (int i = 0; i < this.players.size(); i++) {
+			this.players.get(i).setTurn(i+1);
+		}
+
+		// Init Players positions
+		List<Position> initPos = Arrays.asList(new Position(1, 1), new Position(1, 2));
+		Collections.shuffle(initPos);
+		for (Player p : this.players) {
+			p.setPosition(initPos.get(0));
+			initPos.remove(0);
+		}
+
+		// Preparation phase
+
+		// Prepare cards & murdererEnvelope
+
+		// Game start
+	}
+
+	public void initCluesList()
+	{
+		List<Character> characters = CluesLoader.loadCharacters();
+
+		// TODO: test
+		for (Character character : characters)
+		{
+			System.out.println(character.toString());
 		}
 	}
-	
-	public void startGame() {
-		// Preparation phase
-		// shuffle players list multiple times for N seconds, each time sleeping M seconds (and update GUI, so it's nice to see them shuffled) 
-		
-		// Game start
+
+	public void initMurderEnvelope()
+	{
+
+	}
+
+	public void initPreparationPhase() {
+
+	}
+
+	public void movePlayer(Player player, Position newPos) {
+
 	}
 	
 	// everybody lost
@@ -78,7 +134,7 @@ public class GameCluedo {
 		// roll initial cards
 	}
 	
-	public void setCharacter(Player p, Character character) {
+	public void setCharacter(Player p, Characters character) {
 		
 	}
 	
@@ -89,7 +145,7 @@ public class GameCluedo {
 	
 	
 	
-	public Clue askClue(Player p, Character who, Weapon what, Room where) {
+	public Clue askClue(Player p, Characters who, Weapons what, Rooms where) {
 		// ask the first player after p (by turns) if he has one of the clues.
 		
 		// Example:
@@ -101,10 +157,19 @@ public class GameCluedo {
 		return null;
 	}
 	
-	public boolean accuse(Player p, Character who, Weapon what, Room where) {
+	public boolean accuse(Player p, Characters who, Weapons what, Rooms where) {
 		// correct? The game ends, and p wins;
 		
 		// wrong? The game continues, and p is eliminated
 		return false;
+	}
+
+
+	public String toString() {
+		// TODO: prints the game state
+
+
+
+		return "";
 	}
 }

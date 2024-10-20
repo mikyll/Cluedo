@@ -19,7 +19,6 @@ public class MainRefactor extends Application {
         Navigator.setHostServices(this.getHostServices());
     }
 
-
     @Override
     public void stop()
     {

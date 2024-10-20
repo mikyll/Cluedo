@@ -1,7 +1,11 @@
 package it.mikyll.cluedo.model.game.player;
 
-import it.mikyll.cluedo.model.game.clues.Character;
+import it.mikyll.cluedo.model.game.board.Position;
+import it.mikyll.cluedo.model.game.clues.Characters;
+import it.mikyll.cluedo.model.game.clues.Clue;
 import it.mikyll.cluedo.model.networking.User;
+
+import java.util.Set;
 
 /*
  * An User becomes a Player when the game starts.
@@ -9,7 +13,10 @@ import it.mikyll.cluedo.model.networking.User;
 public abstract class Player extends User {
 	
 	private int turn = -1;
-	private Character character = null;
+	private Characters character = null;
+	private Position position;
+	private Set<Clue> clues;
+	private String notebook = "";
 
 	public Player(User user) {
 		super(user.getUsername());
@@ -20,8 +27,10 @@ public abstract class Player extends User {
 	
 	public void setTurn(int turn) {this.turn = turn;}
 	public int getTurn() {return turn;}
-	public void setCharacter(Character character) {this.character = character;}
-	public Character getCharacter() {return character;}
+	public void setCharacter(Characters character) {this.character = character;}
+	public Characters getCharacter() {return character;}
+	public Position getPosition() {return position;}
+	public void setPosition(Position position) {this.position = position;}
 
 	public boolean wasMoved() {
 		return false;

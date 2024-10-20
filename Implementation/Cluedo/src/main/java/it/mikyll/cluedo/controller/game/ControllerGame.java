@@ -4,7 +4,7 @@ import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.model.game.GameCluedo;
-import it.mikyll.cluedo.model.game.clues.Character;
+import it.mikyll.cluedo.model.game.clues.Characters;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
@@ -30,7 +30,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -59,9 +58,9 @@ public class ControllerGame implements IController {
     @FXML private Label labelCharacterSelectionName;
     @FXML private Label labelCharacterSelectionColor;
     @FXML private Button buttonConfirmCharacter;
-    private List<Character> availableCharacters;
+    private List<Characters> availableCharacters;
     private final Image imageCharacterSelection;
-    private final Map<Character, Image> mapCharacterImages;
+    private final Map<Characters, Image> mapCharacterImages;
     private int selectedCharacter = 0;
 
     // PlayersList pane
@@ -114,9 +113,9 @@ public class ControllerGame implements IController {
         // Load character images
         this.imageCharacterSelection = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice_rolling.gif").toString());
         this.mapCharacterImages = new HashMap<>();
-        for(int i = 0; i < Character.values().length; i++)
+        for(int i = 0; i < Characters.values().length; i++)
         {
-            Character character = Character.values()[i];
+            Characters character = Characters.values()[i];
             String name = character.toString().toLowerCase();
             Image characterImage = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/characters/" + name + ".png").toString());
             this.mapCharacterImages.put(character, characterImage);
@@ -174,7 +173,7 @@ public class ControllerGame implements IController {
         this.tabPaneRight.setPrefWidth(anchorPaneRoot.getWidth() - (vboxLeft.getWidth() + boardWidth));
 
         // Character Selection pane
-        availableCharacters = new ArrayList<>(Arrays.asList(Character.values()));
+        availableCharacters = new ArrayList<>(Arrays.asList(Characters.values()));
         vboxCharacterSelection.setPrefWidth(anchorPaneRoot.getWidth() - (vboxLeft.getWidth() + boardWidth));
         selectedCharacter = 0;
         updateSelectedCharacter();
@@ -268,9 +267,9 @@ public class ControllerGame implements IController {
     // Character Selection ====================================================
     private void updateSelectedCharacter()
     {
-        imageViewCharacterSelection.setImage(this.mapCharacterImages.get(Character.values()[selectedCharacter]));
-        labelCharacterSelectionName.setText(Character.values()[selectedCharacter].getName());
-        String styleNew = labelCharacterSelectionColor.getStyle().replaceFirst("(-fx-background-color:)[^;]+;", "-fx-background-color: " + Character.values()[selectedCharacter].getColorHEX() + ";");
+        imageViewCharacterSelection.setImage(this.mapCharacterImages.get(Characters.values()[selectedCharacter]));
+        labelCharacterSelectionName.setText(Characters.values()[selectedCharacter].getName());
+        String styleNew = labelCharacterSelectionColor.getStyle().replaceFirst("(-fx-background-color:)[^;]+;", "-fx-background-color: " + Characters.values()[selectedCharacter].getColorHEX() + ";");
         labelCharacterSelectionColor.setStyle(styleNew);
 
         buttonPreviousCharacter.setDisable(selectedCharacter <= 0);
@@ -331,7 +330,7 @@ public class ControllerGame implements IController {
         this.setBlur(borderPaneGame, false);
     }
 
-    private VBox buildVBoxPlayerFullElement(int turn, Character character, String username, boolean isPlayer)
+    private VBox buildVBoxPlayerFullElement(int turn, Characters character, String username, boolean isPlayer)
     {
         VBox vboxResult = new VBox();
         vboxResult.setAlignment(Pos.TOP_CENTER);
