@@ -1,0 +1,38 @@
+[
+    {
+        "id": "scarlet",
+        "name": "Kassandra Scarlet",
+        "description": "A striking young woman, Kassandra Scarlet is the embodiment of charm and intrigue. Dressed in elegant red, she captivates those around her with a mix of confidence and mystery. Sharp-witted and seductive, she moves effortlessly through high society, but her calculating nature suggests hidden motives beneath the polished exterior.",
+        "color": "red"
+    },
+    {
+        "id": "mustard",
+        "name": "Jack Mustard",
+        "description": "An imposing figure, Jack Mustard is the picture of military pride and discipline. His years of service have given him a dignified air, yet behind his stoic demeanor lies a man burdened by the weight of his past. Proud and assertive, his strength is evident, but so is his capacity for ruthlessness when duty calls.",
+        "color": "yellow"
+    },
+    {
+        "id": "white",
+        "name": "Diane White",
+        "description": "A woman hardened by years of service, Diane White knows every corner of the mansion like the back of her hand. Though quiet and unassuming, her sharp eyes miss nothing. Beneath her reserved exterior lies a complex woman, one who holds a deep understanding of the lives and secrets of those around her, and perhaps her own bitter grievances.",
+        "color": "WHITE"
+    },
+    {
+        "id": "green",
+        "name": "Jacob Green",
+        "description": "Polished and smooth-talking, Jacob Green is a man who always seems to be one step ahead. With a veneer of respectability and charm, he moves seamlessly through life, but beneath the surface, his true intentions remain a mystery. He is a man who knows how to conceal his true self, smiling while keeping his cards close to his chest.",
+        "color": "GREEN"
+    },
+    {
+        "id": "peacock",
+        "name": "Eleanor Peacock",
+        "description": "With her regal posture and elegant attire, Eleanor Peacock commands attention wherever she goes. A woman of wealth and high social standing, she radiates sophistication, yet her calculating mind is ever at work. Beneath her polished exterior lies a woman driven by ambition and a thirst for power, willing to do whatever it takes to maintain her position.",
+        "color": "BLUE"
+    },
+    {
+        "id": "plum",
+        "name": "Victor Plum",
+        "description": "A brilliant academic, Victor Plum is a man of intellect and deep curiosity. His mind is sharp, but his social awkwardness often betrays him in conversation. Beneath his scholarly appearance, there's an air of eccentricity, and perhaps even obsession. His knowledge is vast, but it is his secrets that might be most compelling.",
+        "color": "PURPLE"
+    }
+]
