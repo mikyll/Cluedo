@@ -39,6 +39,7 @@ _It's still under development._
     - [ ] choose the algorithm
     - [ ] ...
 - [ ] game state savings
+- [ ] Investigate `.getResourceStream()` not working for path levels greater than 0 (only works for files in root, e.g. `classes/file.txt` works but `classes/it/mikyll/cluedo/file.txt` does not)
 
 <!--
 
