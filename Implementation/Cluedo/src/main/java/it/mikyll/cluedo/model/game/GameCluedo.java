@@ -9,7 +9,7 @@ import it.mikyll.cluedo.model.game.clues.Character;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
 import it.mikyll.cluedo.model.game.player.PlayerHuman;
-import it.mikyll.cluedo.persistence.CluesLoader;
+import it.mikyll.cluedo.persistence.AssetLoader;
 
 /*
  * Game class
@@ -31,6 +31,7 @@ public class GameCluedo {
 	}
 
 	private Board board;
+	private List<Clue> totalCluesList;
 	private List<Player> players;
 	private MurderEnvelope murderEnvelope;
 
@@ -58,13 +59,25 @@ public class GameCluedo {
 		board = new Board();
 
 		// Init murder envelope
-		murderEnvelope = new MurderEnvelope(null);
-
+		totalCluesList = new ArrayList<>();
+		totalCluesList.addAll(AssetLoader.loadCharacters());
+		totalCluesList.addAll(AssetLoader.loadRooms());
+		totalCluesList.addAll(AssetLoader.loadWeapons());
+		List<Clue> assignableCluesList = new ArrayList<>(totalCluesList);
+		murderEnvelope = new MurderEnvelope(assignableCluesList);
 
 		// Assign player turns
 		Collections.shuffle(this.players);
 		for (int i = 0; i < this.players.size(); i++) {
 			this.players.get(i).setTurn(i+1);
+		}
+
+		for (int i = 0; !assignableCluesList.isEmpty(); i++) {
+			Clue clue = assignableCluesList.get(0);
+			Player player = players.get(i);
+
+			player.getClues().add(clue);
+			assignableCluesList.remove(0);
 		}
 
 		// Init Players positions
@@ -75,7 +88,11 @@ public class GameCluedo {
 			initPos.remove(0);
 		}
 
+		// Assign clue cards
+
+
 		// Preparation phase
+
 
 		// Prepare cards & murdererEnvelope
 
@@ -84,7 +101,7 @@ public class GameCluedo {
 
 	public void initCluesList()
 	{
-		List<Character> characters = CluesLoader.loadCharacters();
+		List<Character> characters = AssetLoader.loadCharacters();
 
 		// TODO: test
 		for (Character character : characters)

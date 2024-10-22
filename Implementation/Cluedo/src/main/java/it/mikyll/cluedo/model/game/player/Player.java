@@ -24,11 +24,15 @@ public abstract class Player extends User {
 	public Player(String username) {
 		super(username);
 	}
-	
-	public void setTurn(int turn) {this.turn = turn;}
+
+	public Set<Clue> getClues() {return clues;}
+	public void setClues(Set<Clue> clues) {this.clues = clues;}
+	public String getNotebook() {return notebook;}
+	public void setNotebook(String notebook) {this.notebook = notebook;}
 	public int getTurn() {return turn;}
-	public void setCharacter(Characters character) {this.character = character;}
+	public void setTurn(int turn) {this.turn = turn;}
 	public Characters getCharacter() {return character;}
+	public void setCharacter(Characters character) {this.character = character;}
 	public Position getPosition() {return position;}
 	public void setPosition(Position position) {this.position = position;}
 

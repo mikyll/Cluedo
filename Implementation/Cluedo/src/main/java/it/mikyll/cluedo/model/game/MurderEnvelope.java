@@ -24,6 +24,10 @@ public class MurderEnvelope {
             if (room == null && c.getType().equals(ClueType.ROOM))
                 this.room = c;
         }
+        clueList.remove(this.murderer);
+        clueList.remove(this.weapon);
+        clueList.remove(this.room);
+
     }
 
     public boolean makeAccusation(Clue murderer, Clue weapon, Clue room)
