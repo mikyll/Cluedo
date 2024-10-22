@@ -1,0 +1,317 @@
+{
+  "size": [24,24],
+  "rooms": [
+    {
+      "name": "Study",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "Library",
+      "cells": [
+        [6,1],
+        [6,2],
+        [6,3],
+        [6,4],
+        [6,5],
+        [7,0],
+        [7,1],
+        [7,2],
+        [7,3],
+        [7,4],
+        [7,5],
+        [7,6],
+        [8,0],
+        [8,1],
+        [8,2],
+        [8,3],
+        [8,4],
+        [8,5],
+        [8,6],
+        [9,0],
+        [9,1],
+        [9,2],
+        [9,3],
+        [9,4],
+        [9,5],
+        [9,6],
+        [10,1],
+        [10,2],
+        [10,3],
+        [10,4],
+        [10,5]
+      ]
+    },
+    {
+      "name": "dining room",
+      "cells": [
+        [13,0],
+        [13,1],
+        [13,2],
+        [13,3],
+        [13,4],
+        [13,5],
+        [13,6],
+        [14,0],
+        [14,1],
+        [14,2],
+        [14,3],
+        [14,4],
+        [14,5],
+        [14,6],
+        [15,0],
+        [15,1],
+        [15,2],
+        [15,3],
+        [15,4],
+        [15,5],
+        [15,6],
+        [16,0],
+        [16,1],
+        [16,2],
+        [16,3],
+        [16,4],
+        [16,5],
+        [16,6]
+      ]
+    },
+    {
+      "name": "billiard room"
+    },
+    {
+      "name": "garage"
+    },
+    {
+      "name": "bedroom"
+    },
+    {
+      "name": "living room"
+    },
+    {
+      "name": "kitchen"
+    },
+    {
+      "name": "courtyard"
+    }
+  ],
+  "starting_points": [
+    []
+  ],
+  "trapdoors": [
+    {
+      "peer1": [2, 0],
+      "peer2": [23,19]
+    },
+    {
+      "peer1": [4,23],
+      "peer2": [19,1]
+    }
+  ],
+  "doors": [
+    {
+      "position": [4,6],
+      "direction": "up",
+      "roomId": "study"
+    },
+    {
+      "position": [8,7],
+      "direction": "left",
+      "roomId": "library"
+    },
+    {
+      "position": [11,3],
+      "direction": "up",
+      "roomId": "library"
+    },
+    {
+      "position": [12,1],
+      "direction": "down",
+      "roomId": "billiard_room"
+    },
+    {
+      "position": [15,7],
+      "direction": "left",
+      "roomId": "billiard_room"
+    },
+    {
+      "position": [19,6],
+      "direction": "left",
+      "roomId": "courtyard"
+    },
+    {
+      "position": [17,10],
+      "direction": "down",
+      "roomId": "ball_room"
+    },
+    {
+      "position": [17,15],
+      "direction": "down",
+      "roomId": "ball_room"
+    },
+    {
+      "position": [20,8],
+      "direction": "right",
+      "roomId": "ball_room"
+    },
+    {
+      "position": [20,17],
+      "direction": "left",
+      "roomId": "ball_room"
+    },
+    {
+      "position": [18,20],
+      "direction": "down",
+      "roomId": "kitchen"
+    },
+    {
+      "position": [7,17],
+      "direction": "down",
+      "roomId": "dining_room"
+    },
+    {
+      "position": [11,15],
+      "direction": "right",
+      "roomId": "dining_room"
+    },
+    {
+      "position": [5,17],
+      "direction": "up",
+      "roomId": "living_room"
+    },
+    {
+      "position": [6,11],
+      "direction": "up",
+      "roomId": "entrance"
+    },
+    {
+      "position": [6,12],
+      "direction": "up",
+      "roomId": "entrance"
+    },
+    {
+      "position": [4,8],
+      "direction": "right",
+      "roomId": "entrance"
+    },
+    {
+      "position": [7,11],
+      "direction": "down",
+      "roomId": "cluedo_room"
+    },
+    {
+      "position": [11,8],
+      "direction": "right",
+      "roomId": "cluedo_room"
+    },
+    {
+      "position": [16,11],
+      "direction": "up",
+      "roomId": "cluedo_room"
+    },
+    {
+      "position": [11,14],
+      "direction": "left",
+      "roomId": "cluedo_room"
+    }
+  ]
+}

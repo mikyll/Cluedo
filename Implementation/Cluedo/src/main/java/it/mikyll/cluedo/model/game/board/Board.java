@@ -7,6 +7,12 @@ import java.util.*;
 public class Board {
     private static final int BOARD_SIZE = 24;
 
+    private int[] size;
+    private List<Trapdoor> trapdoors;
+    private List<StartingPoint> startingPoints;
+    //private List<Room> rooms;
+    private List<Door> doors;
+
     private final CellType[][] cells = new CellType[BOARD_SIZE][BOARD_SIZE];
     //private Set<Room> rooms;
     private final List<int[]> initPositions = new ArrayList<>();

@@ -19,4 +19,6 @@ module it.mikyll.cluedo {
     opens it.mikyll.cluedo.controller.game to javafx.fxml;
     opens it.mikyll.cluedo.controller.navigation to javafx.fxml;
     opens it.mikyll.cluedo.controller.menu;
+    exports it.mikyll.cluedo.model.game.board to com.google.gson;
+    opens it.mikyll.cluedo.model.game.board to com.google.gson;
 }
