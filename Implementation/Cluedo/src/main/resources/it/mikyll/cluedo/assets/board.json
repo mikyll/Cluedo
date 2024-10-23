@@ -1,7 +1,9 @@
 {
   "size": [24,24],
+  "accusation_room_id": "cluedo_room",
   "rooms": [
     {
+      "id": "study",
       "name": "Study",
       "cells": [
         [0,0],
@@ -32,6 +34,7 @@
       ]
     },
     {
+      "id": "library",
       "name": "Library",
       "cells": [
         [6,1],
@@ -68,6 +71,7 @@
       ]
     },
     {
+      "id": "billiard_room",
       "name": "Billiard Room",
       "cells": [
         [13,0],
@@ -101,6 +105,7 @@
       ]
     },
     {
+      "id": "courtyard",
       "name": "Courtyard",
       "cells": [
         [19,2],
@@ -139,6 +144,7 @@
       ]
     },
     {
+      "id": "ball_room",
       "name": "Ball Room",
       "cells": [
         [18,9],
@@ -188,6 +194,7 @@
       ]
     },
     {
+      "id": "kitchen",
       "name": "Kitchen",
       "cells": [
         [19,19],
@@ -217,6 +224,7 @@
       ]
     },
     {
+      "id": "dining_room",
       "name": "Dining Room",
       "cells": [
         [8,16],
@@ -283,6 +291,7 @@
       ]
     },
     {
+      "id": "living_room",
       "name": "Living Room",
       "cells": [
         [0,18],
@@ -321,6 +330,7 @@
       ]
     },
     {
+      "id": "entrance",
       "name": "Entrance",
       "cells": [
         [0,9],
@@ -362,6 +372,7 @@
       ]
     },
     {
+      "id": "cluedo_room",
       "name": "Cluedo Room",
       "cells": [
         [8,9],
@@ -531,5 +542,25 @@
       "direction": "left",
       "roomId": "cluedo_room"
     }
+  ],
+  "void_cells": [
+    [3,0],
+    [5,0],
+    [6,0],
+    [10,0],
+    [11,0],
+    [12,0],
+    [17,0],
+    [19,7],
+    [23,7],
+    [23,18],
+    [17,23],
+    [16,23],
+    [5,23],
+    [7,23],
+    [0,17],
+    [0,15],
+    [0,8],
+    [0,6]
   ]
 }
