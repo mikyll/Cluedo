@@ -1,5 +1,6 @@
 package it.mikyll.cluedo.model.game.board;
 
+import it.mikyll.cluedo.model.game.clues.Room;
 import it.mikyll.cluedo.model.game.player.Player;
 
 import java.util.*;
@@ -8,17 +9,90 @@ public class Board {
     private static final int BOARD_SIZE = 24;
 
     private int[] size;
+    private List<Room> rooms;
     private List<Trapdoor> trapdoors;
     private List<StartingPoint> startingPoints;
-    //private List<Room> rooms;
     private List<Door> doors;
+    private List<int[]> voidCells;
 
-    private final CellType[][] cells = new CellType[BOARD_SIZE][BOARD_SIZE];
+    private CellType[][] cells;
     //private Set<Room> rooms;
-    private final List<int[]> initPositions = new ArrayList<>();
-    private List<Player> players;
+    //private final List<int[]> initPositions = new ArrayList<>();
+    //private List<Player> players;
 
     public Board() {
+        this.size = new int[2];
+        this.trapdoors = new ArrayList<>();
+        this.startingPoints = new ArrayList<>();
+        this.doors = new ArrayList<>();
+        this.voidCells = new ArrayList<>();
+    }
+
+    public int[] getSize() {return size;}
+    public void setSize(int[] size) {this.size = size;}
+    public List<Room> getRooms() {return rooms;}
+    public void setRooms(List<Room> rooms) {this.rooms = rooms;}
+    public List<Trapdoor> getTrapdoors() {return trapdoors;}
+    public void setTrapdoors(List<Trapdoor> trapdoors) {this.trapdoors = trapdoors;}
+    public List<StartingPoint> getStartingPoints() {return startingPoints;}
+    public void setStartingPoints(List<StartingPoint> startingPoints) {this.startingPoints = startingPoints;}
+    public List<Door> getDoors() {return doors;}
+    public void setDoors(List<Door> doors) {this.doors = doors;}
+    public CellType[][] getCells() {return cells;}
+    public void setCells(CellType[][] cells) {this.cells = cells;}
+    public List<int[]> getVoidCells() {return voidCells;}
+    public void setVoidCells(List<int[]> voidCells) {this.voidCells = voidCells;}
+
+    // TODO
+    public void initCells()
+    {
+        for (int y = 0; y < this.size[0]; y++) {
+            for (int x = 0; x < this.size[1]; x++) {
+                this.cells[y][x] = CellType.EMPTY;
+            }
+        }
+
+        // Loop over rooms
+        for (Room r : this.rooms) {
+            for (int i = 0; i < r.getCells().size(); i++) {
+                int y = r.getCells().get(i)[0];
+                int x = r.getCells().get(i)[1];
+
+                if (this.cells[y][x].equals(CellType.EMPTY)) {
+                    this.cells[y][x] = CellType.ROOM;
+                }
+                else {
+                    System.out.println("ERROR: [" + y + "," + x + "] is not empty!");
+                }
+            }
+        }
+
+        // loop over all lists and build the cells (board representation)
+
+        // throw exception/issue warning if a cell is already populated
+    }
+
+    public String toString() {
+        String res = "";
+        for (int x = 0; x < cells.length; x++) {
+            for (int y = 0; y < cells[x].length; y++) {
+                res += " " + cells[x][y].getRepresentation() + " ";
+            }
+            res += "\n";
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Board b = new Board();
+
+        System.out.print(b);
+    }
+
+    /*
+    public Board() {
+        this.cells = new CellType[BOARD_SIZE][BOARD_SIZE];
+
         // Init cells
         for (int y = 0; y < cells.length; y++) {
             for (int x = 0; x < cells[y].length; x++) {
@@ -228,19 +302,7 @@ public class Board {
         }
     }
 
-    public String toString() {
-        String res = "";
-        for (int x = 0; x < cells.length; x++) {
-            for (int y = 0; y < cells[x].length; y++) {
-                res += " " + cells[x][y].getRepresentation() + " ";
-            }
-            res += "\n";
-        }
-        return res;
-    }
-
-
-	/*private boolean checkStep(Cell start, Cell end)
+	private boolean checkStep(Cell start, Cell end)
 	{
 		return false;
 	}
@@ -252,11 +314,6 @@ public class Board {
 		// For each, check if can reach
 
 		return cells;
-	}*/
-
-    public static void main(String[] args) {
-        Board b = new Board();
-
-        System.out.print(b);
-    }
+	}
+    */
 }

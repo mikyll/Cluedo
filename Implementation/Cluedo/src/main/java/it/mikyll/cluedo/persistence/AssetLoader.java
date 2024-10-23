@@ -32,8 +32,9 @@ public class AssetLoader {
         List<Room> rooms = loadRooms();
         for(Room r : rooms)
             System.out.println(r.toString());
-        //Board board = loadBoard();
-        //System.out.println(board.toString());
+        Board board = loadBoard();
+        //board.initCells();
+        //System.out.println(board);
     }
 
     public static List<Character> loadCharacters() {

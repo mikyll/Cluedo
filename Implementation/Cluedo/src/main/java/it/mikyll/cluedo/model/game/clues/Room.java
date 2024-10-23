@@ -8,21 +8,24 @@ import java.util.List;
 
 public class Room extends Clue {
     // TODO
-    //private String id;
     //private String description;
+    private String id;
     private List<int[]> cells;
 
-    public Room(String name) {
+    public Room(String id, String name) {
         super(name, ClueType.ROOM);
 
+        this.id = id;
         this.cells = new ArrayList<>();
     }
-    public Room(String name, int[]... cells) {
-        this(name);
+    public Room(String id, String name, int[]... cells) {
+        this(id, name);
 
         this.cells = Arrays.asList(cells);
     }
 
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
     public List<int[]> getCells() {return cells;}
     public void setCells(List<int[]> cells) {this.cells = cells;}
 
