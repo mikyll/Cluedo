@@ -426,16 +426,6 @@
     [6,23],
     [0,16]
   ],
-  "trapdoors": [
-    {
-      "peer1": [2, 0],
-      "peer2": [23,19]
-    },
-    {
-      "peer1": [4,23],
-      "peer2": [19,1]
-    }
-  ],
   "doors": [
     {
       "position": [4,6],
@@ -541,6 +531,16 @@
       "position": [11,14],
       "direction": "left",
       "roomId": "cluedo_room"
+    }
+  ],
+  "trapdoors": [
+    {
+      "peer1": [2, 0],
+      "peer2": [23,19]
+    },
+    {
+      "peer1": [4,23],
+      "peer2": [19,1]
     }
   ],
   "void_cells": [

@@ -1,5 +1,6 @@
 package it.mikyll.cluedo.persistence;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,8 +34,8 @@ public class AssetLoader {
         for(Room r : rooms)
             System.out.println(r.toString());
         Board board = loadBoard();
-        //board.initCells();
-        //System.out.println(board);
+        board.initCells();
+        System.out.println(board);
     }
 
     public static List<Character> loadCharacters() {
@@ -43,6 +44,7 @@ public class AssetLoader {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                 AssetLoader.class.getClassLoader().getResourceAsStream(CHARACTERS_FILENAME)))) {
             Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .excludeFieldsWithModifiers(Modifier.STATIC)
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                     .excludeFieldsWithModifiers(Modifier.FINAL)
@@ -62,6 +64,7 @@ public class AssetLoader {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                 AssetLoader.class.getClassLoader().getResourceAsStream(WEAPONS_FILENAME)))) {
             Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .excludeFieldsWithModifiers(Modifier.STATIC)
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                     .excludeFieldsWithModifiers(Modifier.FINAL)
@@ -81,6 +84,7 @@ public class AssetLoader {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                 AssetLoader.class.getClassLoader().getResourceAsStream(ROOMS_FILENAME)))) {
             Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .excludeFieldsWithModifiers(Modifier.STATIC)
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                     .excludeFieldsWithModifiers(Modifier.FINAL)
@@ -100,6 +104,7 @@ public class AssetLoader {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                 AssetLoader.class.getClassLoader().getResourceAsStream(BOARD_FILENAME)))) {
             Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .excludeFieldsWithModifiers(Modifier.STATIC)
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                     .excludeFieldsWithModifiers(Modifier.FINAL)

@@ -1,7 +1,6 @@
 package it.mikyll.cluedo.model.game.board;
 
 import it.mikyll.cluedo.model.game.clues.Room;
-import it.mikyll.cluedo.model.game.player.Player;
 
 import java.util.*;
 
@@ -10,9 +9,9 @@ public class Board {
 
     private int[] size;
     private List<Room> rooms;
-    private List<Trapdoor> trapdoors;
-    private List<StartingPoint> startingPoints;
+    private List<int[]> startingPoints;
     private List<Door> doors;
+    private List<Trapdoor> trapdoors;
     private List<int[]> voidCells;
 
     private CellType[][] cells;
@@ -22,8 +21,8 @@ public class Board {
 
     public Board() {
         this.size = new int[2];
-        this.trapdoors = new ArrayList<>();
         this.startingPoints = new ArrayList<>();
+        this.trapdoors = new ArrayList<>();
         this.doors = new ArrayList<>();
         this.voidCells = new ArrayList<>();
     }
@@ -34,8 +33,8 @@ public class Board {
     public void setRooms(List<Room> rooms) {this.rooms = rooms;}
     public List<Trapdoor> getTrapdoors() {return trapdoors;}
     public void setTrapdoors(List<Trapdoor> trapdoors) {this.trapdoors = trapdoors;}
-    public List<StartingPoint> getStartingPoints() {return startingPoints;}
-    public void setStartingPoints(List<StartingPoint> startingPoints) {this.startingPoints = startingPoints;}
+    public List<int[]> getStartingPoints() {return startingPoints;}
+    public void setStartingPoints(List<int[]> startingPoints) {this.startingPoints = startingPoints;}
     public List<Door> getDoors() {return doors;}
     public void setDoors(List<Door> doors) {this.doors = doors;}
     public CellType[][] getCells() {return cells;}
@@ -46,13 +45,15 @@ public class Board {
     // TODO
     public void initCells()
     {
+        this.cells = new CellType[this.size[0]][this.size[1]];
+
         for (int y = 0; y < this.size[0]; y++) {
             for (int x = 0; x < this.size[1]; x++) {
                 this.cells[y][x] = CellType.EMPTY;
             }
         }
 
-        // Loop over rooms
+        // Init rooms
         for (Room r : this.rooms) {
             for (int i = 0; i < r.getCells().size(); i++) {
                 int y = r.getCells().get(i)[0];
@@ -62,8 +63,80 @@ public class Board {
                     this.cells[y][x] = CellType.ROOM;
                 }
                 else {
-                    System.out.println("ERROR: [" + y + "," + x + "] is not empty!");
+                    System.out.println("ERROR Room: [" + y + "," + x + "] is not empty!");
                 }
+            }
+        }
+
+        // Init starting points
+        for (int[] s : this.startingPoints) {
+            int y = s[0];
+            int x = s[1];
+            if (this.cells[y][x].equals(CellType.EMPTY)) {
+                this.cells[y][x] = CellType.INIT;
+            }
+            else {
+                System.out.println("ERROR Starting Point: [" + y + "," + x + "] is not empty!");
+            }
+        }
+
+        // Doors
+        for (Door d : this.doors) {
+            int y = d.getPosition()[0];
+            int x = d.getPosition()[1];
+            if (this.cells[y][x].equals(CellType.EMPTY)) {
+                Direction dir = Direction.valueOf(d.getDirection().toUpperCase());
+                switch (dir) {
+                    case UP:
+                        this.cells[y][x] = CellType.DOOR_UP;
+                        break;
+                    case DOWN:
+                        this.cells[y][x] = CellType.DOOR_DOWN;
+                        break;
+                    case LEFT:
+                        this.cells[y][x] = CellType.DOOR_LEFT;
+                        break;
+                    case RIGHT:
+                        this.cells[y][x] = CellType.DOOR_RIGHT;
+                        break;
+                }
+            }
+            else {
+                System.out.println("ERROR Door: [" + y + "," + x + "] is not empty!");
+            }
+        }
+
+        // Trapdoors
+
+        for (Trapdoor t : this.trapdoors) {
+            int y = t.getPeer1()[0];
+            int x = t.getPeer1()[1];
+            if (this.cells[y][x].equals(CellType.EMPTY)) {
+                this.cells[y][x] = CellType.TRAPDOOR;
+            }
+            else {
+                System.out.println("ERROR Trapdoor.peer1: [" + y + "," + x + "] is not empty!");
+            }
+
+            y = t.getPeer2()[0];
+            x = t.getPeer2()[1];
+            if (this.cells[y][x].equals(CellType.EMPTY)) {
+                this.cells[y][x] = CellType.TRAPDOOR;
+            }
+            else {
+                System.out.println("ERROR Trapdoor.peer2: [" + y + "," + x + "] is not empty!");
+            }
+        }
+
+        // void cells
+        for (int[] v : this.voidCells) {
+            int y = v[0];
+            int x = v[1];
+            if (this.cells[y][x].equals(CellType.EMPTY)) {
+                this.cells[y][x] = CellType.NONE;
+            }
+            else {
+                System.out.println("ERROR Void: [" + y + "," + x + "] is not empty!");
             }
         }
 
