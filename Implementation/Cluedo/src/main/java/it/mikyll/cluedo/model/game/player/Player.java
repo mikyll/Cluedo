@@ -14,7 +14,7 @@ public abstract class Player extends User {
 	
 	private int turn = -1;
 	private Characters character = null;
-	private Position position;
+	private int[] position;
 	private Set<Clue> clues;
 	private String notebook = "";
 
@@ -33,8 +33,8 @@ public abstract class Player extends User {
 	public void setTurn(int turn) {this.turn = turn;}
 	public Characters getCharacter() {return character;}
 	public void setCharacter(Characters character) {this.character = character;}
-	public Position getPosition() {return position;}
-	public void setPosition(Position position) {this.position = position;}
+	public int[] getPosition() {return position;}
+	public void setPosition(int[] position) {this.position = position;}
 
 	public boolean wasMoved() {
 		return false;

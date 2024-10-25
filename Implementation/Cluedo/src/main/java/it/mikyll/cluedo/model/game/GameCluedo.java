@@ -23,9 +23,23 @@ public class GameCluedo {
 
 		GameCluedo game = new GameCluedo(players);
 
-		game.initCluesList();
+		game.prepareGame();
 
-		//game.startGame();
+		// loop over players list and if a player is AI choose random character
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			Player p = game.getPlayers().get(i);
+
+			if (p instanceof PlayerHuman) {
+				Scanner scanner = new Scanner(System.in);
+				System.out.println("Choose a character: ");
+				System.out.println(game.getAvailableCharactersString());
+
+				int charNum = Integer.parseInt(scanner.nextLine());
+			}
+		}
+
+
+		//start
 
 		// TODO
 	}
@@ -34,6 +48,9 @@ public class GameCluedo {
 	private List<Clue> totalCluesList;
 	private List<Player> players;
 	private MurderEnvelope murderEnvelope;
+	private List<Character> availableCharacters;
+	private boolean canStart;
+	private int currentTurn;
 
 	// Timer
 	// User list
@@ -52,11 +69,21 @@ public class GameCluedo {
 	 */
 	public GameCluedo(List<Player> players) {
 		this.players = players;
+
+		this.canStart = false;
+		this.currentTurn = 0;
 	}
 
-	public void startGame() {
+	public List<Player> getPlayers() {return players;}
+	public void setPlayers(List<Player> players) {this.players = players;}
+	public List<Character> getAvailableCharacters() {return availableCharacters;}
+	public void setAvailableCharacters(List<Character> availableCharacters) {this.availableCharacters = availableCharacters;}
+
+
+	public void prepareGame() {
 		// Init board
-		board = new Board();
+		board = AssetLoader.loadBoard();
+		board.initCells();
 
 		// Init murder envelope
 		totalCluesList = new ArrayList<>();
@@ -64,7 +91,18 @@ public class GameCluedo {
 		totalCluesList.addAll(AssetLoader.loadRooms());
 		totalCluesList.addAll(AssetLoader.loadWeapons());
 		List<Clue> assignableCluesList = new ArrayList<>(totalCluesList);
+		System.out.println("assignable clue list: " + assignableCluesList.size());
 		murderEnvelope = new MurderEnvelope(assignableCluesList);
+
+		System.out.println("assignable clue list: " + assignableCluesList.size());
+
+		// Init available characters
+		this.availableCharacters = new ArrayList<>();
+		for (Clue c : totalCluesList) {
+			if (c.getType().equals(ClueType.CHARACTER)) {
+				this.availableCharacters.add((Character) c);
+			}
+		}
 
 		// Assign player turns
 		Collections.shuffle(this.players);
@@ -72,6 +110,7 @@ public class GameCluedo {
 			this.players.get(i).setTurn(i+1);
 		}
 
+		// Assign clue cards
 		for (int i = 0; !assignableCluesList.isEmpty(); i++) {
 			Clue clue = assignableCluesList.get(0);
 			Player player = players.get(i);
@@ -80,34 +119,21 @@ public class GameCluedo {
 			assignableCluesList.remove(0);
 		}
 
-		// Init Players positions
-		List<Position> initPos = Arrays.asList(new Position(1, 1), new Position(1, 2));
+		// Init player positions
+		List<int[]> initPos = this.board.getStartingPoints();
 		Collections.shuffle(initPos);
-		for (Player p : this.players) {
-			p.setPosition(initPos.get(0));
-			initPos.remove(0);
+		for (int i = 0; i < this.players.size(); i++) {
+			this.players.get(0).setPosition(initPos.get(i));
 		}
-
-		// Assign clue cards
-
 
 		// Preparation phase
 
 
-		// Prepare cards & murdererEnvelope
-
 		// Game start
 	}
 
-	public void initCluesList()
-	{
-		List<Character> characters = AssetLoader.loadCharacters();
-
-		// TODO: test
-		for (Character character : characters)
-		{
-			System.out.println(character.toString());
-		}
+	public void setPlayerCharacter(Player player, Character character) {
+		// TODO
 	}
 
 	public void initMurderEnvelope()
@@ -181,10 +207,24 @@ public class GameCluedo {
 		return false;
 	}
 
+	public String getAvailableCharactersString() {
+		StringBuilder result = new StringBuilder();
+
+		for (int i = 0; i < availableCharacters.size(); i++) {
+			result.append(i).append(") ").append(availableCharacters.get(i).getName()).append("\n");
+		}
+
+		return result.toString();
+	}
+
 
 	public String toString() {
 		// TODO: prints the game state
 
+		// Game Phase
+		String result = "Phase: ...\n"
+				+ "Player turn: ...";
+		// Player turn
 
 
 		return "";

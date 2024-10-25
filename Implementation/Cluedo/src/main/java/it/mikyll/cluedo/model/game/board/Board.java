@@ -1,6 +1,7 @@
 package it.mikyll.cluedo.model.game.board;
 
 import it.mikyll.cluedo.model.game.clues.Room;
+import it.mikyll.cluedo.model.game.player.Player;
 
 import java.util.*;
 
@@ -15,9 +16,6 @@ public class Board {
     private List<int[]> voidCells;
 
     private CellType[][] cells;
-    //private Set<Room> rooms;
-    //private final List<int[]> initPositions = new ArrayList<>();
-    //private List<Player> players;
 
     public Board() {
         this.size = new int[2];
