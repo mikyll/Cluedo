@@ -6,35 +6,26 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class CenteredAlert extends Alert {
+    private final Window window;
 
     public CenteredAlert(Window window, AlertType alertType, String title, String content) {
         super(alertType);
 
+        this.window = window;
         this.setTitle(title);
         this.setContentText(content);
-        centerAlert(window, this);
+        centerAlert();
     }
 
     public CenteredAlert(Window window, AlertType alertType, String title, String content, ButtonType... buttonTypes) {
         super(alertType, content, buttonTypes);
 
+        this.window = window;
         this.setTitle(title);
-        centerAlert(window, this);
+        centerAlert();
     }
 
-    public CenteredAlert(Window window, AlertType alertType, String s, ButtonType... buttonTypes) {
-        super(alertType, s, buttonTypes);
-
-        centerAlert(window, this);
-    }
-
-    public CenteredAlert(Window window, AlertType alertType) {
-        super(alertType);
-
-        centerAlert(window, this);
-    }
-
-    private void centerAlert(Window window, Alert alert) {
+    public void centerAlert() {
         Stage parentStage = (Stage) window;
         this.initOwner(parentStage);
         this.setOnShown(e -> {
@@ -46,6 +37,8 @@ public class CenteredAlert extends Alert {
 
             // Get the dimensions of the alert window
             Stage alertStage = (Stage) this.getDialogPane().getScene().getWindow();
+            alertStage.setAlwaysOnTop(true);
+
             double alertWidth = alertStage.getWidth();
             double alertHeight = alertStage.getHeight();
 

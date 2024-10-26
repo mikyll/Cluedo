@@ -5,11 +5,14 @@ import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.model.game.GameCluedo;
 import it.mikyll.cluedo.model.game.clues.Characters;
+import it.mikyll.cluedo.model.game.clues.Character;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
+import it.mikyll.cluedo.persistence.AssetLoader;
+import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
@@ -30,6 +34,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -39,11 +45,7 @@ public class ControllerGame implements IController {
     @FXML private BorderPane borderPaneGame;
     @FXML private VBox vboxMenu;
 
-    // Turn pane
-    @FXML private VBox vboxTurn;
-    @FXML private ImageView imageViewDice;
-    @FXML private Label labelTurn;
-    @FXML private Button buttonOkTurn;
+    // Dice stuff
     private final Image imageRollingDice;
     private final List<Image> diceImagesList;
 
@@ -57,11 +59,19 @@ public class ControllerGame implements IController {
     @FXML private Button buttonNextCharacter;
     @FXML private Label labelCharacterSelectionName;
     @FXML private Label labelCharacterSelectionColor;
+    @FXML private Label labelCharacterSelectionDescription;
+    @FXML private Tooltip tooltipCharacterSelectionDescription;
     @FXML private Button buttonConfirmCharacter;
-    private List<Characters> availableCharacters;
+    private List<Character> characters;
+    private Map<String, Image> mapCharacterImages;
+    private List<Character> availableCharacters;
+    private int selectedCharacter = 0;
+
+
+    /*private List<Characters> availableCharacters;
     private final Image imageCharacterSelection;
     private final Map<Characters, Image> mapCharacterImages;
-    private int selectedCharacter = 0;
+    private int selectedCharacter = 0;*/
 
     // PlayersList pane
     @FXML private VBox vboxPlayersList;
@@ -95,6 +105,8 @@ public class ControllerGame implements IController {
     // Menu controls
     @FXML private Button buttonResume;
 
+    private Window window;
+
     private GameCluedo game;
     private ClientStream client;
 
@@ -102,16 +114,25 @@ public class ControllerGame implements IController {
 
     public ControllerGame()
     {
+        // Load characters
+        this.characters = AssetLoader.loadCharacters();
+        this.mapCharacterImages = new HashMap<>();
+        for (Character character : this.characters) {
+            String filename = character.getId() + ".png";
+            Image characterImage = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/characters/" + filename).toString());
+            this.mapCharacterImages.put(character.getId(), characterImage);
+        }
+
         // Load dice images
-        this.imageRollingDice = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice_rolling.gif").toString());
+        this.imageRollingDice = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice/dice_rolling.gif").toString());
         this.diceImagesList = new ArrayList<>();
         for(int i = 1; i <= 6; i++)
         {
-            this.diceImagesList.add(new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice" + i + ".png").toString()));
+            this.diceImagesList.add(new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice/dice" + i + ".png").toString()));
         }
 
         // Load character images
-        this.imageCharacterSelection = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/dice_rolling.gif").toString());
+        /*this.imageCharacterSelection = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/characters/scarlet.png").toString());
         this.mapCharacterImages = new HashMap<>();
         for(int i = 0; i < Characters.values().length; i++)
         {
@@ -119,7 +140,7 @@ public class ControllerGame implements IController {
             String name = character.toString().toLowerCase();
             Image characterImage = new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/characters/" + name + ".png").toString());
             this.mapCharacterImages.put(character, characterImage);
-        }
+        }*/
     }
 
     @Override
@@ -146,15 +167,18 @@ public class ControllerGame implements IController {
     {
         System.out.println("User selected Game");
 
-        if (Settings.getInstance().isMusicEnabled())
+        this.window = anchorPaneRoot.getScene().getWindow();
+
+        Settings settings = Settings.getInstance();
+        if (settings.isMusicEnabled())
         {
             MusicPlayer musicPlayer = MusicPlayer.getInstance();
+            musicPlayer.setVolume(settings.getMusicVolume());
             musicPlayer.play(MusicTrack.GAME);
         }
 
         Navigator.setFullscreen(true);
 
-        this.vboxTurn.setVisible(false);
         this.vboxWaitingCharacterSelection.setVisible(false);
         this.vboxCharacterSelection.setVisible(false);
         this.vboxPlayersList.setVisible(false);
@@ -173,13 +197,14 @@ public class ControllerGame implements IController {
         this.tabPaneRight.setPrefWidth(anchorPaneRoot.getWidth() - (vboxLeft.getWidth() + boardWidth));
 
         // Character Selection pane
-        availableCharacters = new ArrayList<>(Arrays.asList(Characters.values()));
+        availableCharacters = new ArrayList<>(this.characters);
         vboxCharacterSelection.setPrefWidth(anchorPaneRoot.getWidth() - (vboxLeft.getWidth() + boardWidth));
         selectedCharacter = 0;
         updateSelectedCharacter();
 
         // PlayersList pane
-        showTurnView(new ActionEvent());
+        //showRollingDiceTurn(3);
+        showCharacterSelectionView(new ActionEvent());
 
         // NB: in Single Player we won't show the turn animation, since there might be multiple human players
 
@@ -236,41 +261,63 @@ public class ControllerGame implements IController {
     }
 
     // Turn view ==============================================================
-
     @FXML
-    public void showTurnView(ActionEvent event)
-    {
-        this.imageViewDice.setImage(imageRollingDice);
-        this.labelTurn.setVisible(false);
-        this.buttonOkTurn.setDisable(true);
-
-        this.vboxTurn.setVisible(true);
-        this.setBlur(borderPaneGame, true);
-
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(event1 -> {
-            this.imageViewDice.setImage(this.diceImagesList.get(this.playerTurn -1));
-            this.labelTurn.setText(playerTurn + (playerTurn == 1 ? "st" : (playerTurn == 2 ? "nd" : playerTurn == 3 ? "rd" : "th")));
-            this.labelTurn.setVisible(true);
-            this.buttonOkTurn.setDisable(false);
-        });
-        delay.play();
+    public void showRollingDiceTurn(ActionEvent event) {
+        this.showRollingDiceTurn(4);
     }
 
-    @FXML
-    public void closeTurnView()
+    private void showRollingDiceTurn(int diceValue)
     {
-        this.vboxTurn.setVisible(false);
-        this.setBlur(borderPaneGame, false);
+        if (diceValue < 1 || diceValue > 6)
+            throw new IllegalArgumentException("Invalid dice value");
+
+        CenteredAlert alert = new CenteredAlert(this.window, AlertType.INFORMATION, "Turn", "Rolling dice for your turn...");
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("");
+        alert.getDialogPane().setMaxSize(400, 200);
+        alert.centerAlert();
+        HBox hboxRollingDice = new HBox();
+        hboxRollingDice.setAlignment(Pos.CENTER);
+        hboxRollingDice.setSpacing(50.0);
+        ImageView imageViewDice = new ImageView(imageRollingDice);
+        Label labelTurn = new Label("Rolling dice...");
+        labelTurn.setFont(Font.font(24.0));
+        hboxRollingDice.getChildren().add(imageViewDice);
+        hboxRollingDice.getChildren().add(labelTurn);
+        alert.setGraphic(hboxRollingDice);
+        ButtonBar buttonBar = (ButtonBar) alert.getDialogPane().getChildren().get(2);
+        alert.getDialogPane().getChildren().remove(1);
+        buttonBar.setDisable(true);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished((ActionEvent e) -> {
+            imageViewDice.setImage(diceImagesList.get(diceValue - 1));
+            String suffix = diceValue == 1 ? "st" : diceValue == 2 ? "nd" : diceValue == 3 ? "rd" : "th";
+            labelTurn.setText("Your turn is: " + diceValue + suffix);
+            buttonBar.setDisable(false);
+        });
+        alert.setOnShowing((DialogEvent e) -> {
+            this.setBlur(borderPaneGame, true);
+            delay.play();
+        });
+        alert.setOnCloseRequest((DialogEvent e) -> {
+            // TODO: Update playersList
+            this.setBlur(borderPaneGame, false);
+        });
+        alert.show();
     }
 
     // Character Selection ====================================================
     private void updateSelectedCharacter()
     {
-        imageViewCharacterSelection.setImage(this.mapCharacterImages.get(Characters.values()[selectedCharacter]));
-        labelCharacterSelectionName.setText(Characters.values()[selectedCharacter].getName());
-        String styleNew = labelCharacterSelectionColor.getStyle().replaceFirst("(-fx-background-color:)[^;]+;", "-fx-background-color: " + Characters.values()[selectedCharacter].getColorHEX() + ";");
+        Character currentCharacter = this.characters.get(selectedCharacter);
+
+        imageViewCharacterSelection.setImage(this.mapCharacterImages.get(currentCharacter.getId()));
+        labelCharacterSelectionName.setText(currentCharacter.getName());
+        String styleNew = labelCharacterSelectionColor.getStyle().replaceFirst("(-fx-background-color:)[^;]+;", "-fx-background-color: " + currentCharacter.getColor() + ";");
         labelCharacterSelectionColor.setStyle(styleNew);
+        labelCharacterSelectionDescription.setText(currentCharacter.getDescription());
+        tooltipCharacterSelectionDescription.setText(currentCharacter.getDescription());
 
         buttonPreviousCharacter.setDisable(selectedCharacter <= 0);
         buttonNextCharacter.setDisable(selectedCharacter >= mapCharacterImages.keySet().size() - 1);
