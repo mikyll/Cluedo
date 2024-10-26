@@ -21,8 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -1174,7 +1174,7 @@ public class ControllerMenu {
 					{
 						this.selectBack(new ActionEvent());
 						
-						CenteredAlert alert = new CenteredAlert(window, AlertType.INFORMATION, "Disconnected from Server");
+						CenteredAlert alert = new CenteredAlert(window, AlertType.INFORMATION, "Disconnected from Server", msg.getContent());
 						alert.show();
 					}
 					else
