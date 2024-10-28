@@ -1,6 +1,10 @@
 package it.mikyll.cluedo.model.game.clues;
 
 public class Weapon extends Clue {
+    public Weapon() {
+        super(ClueType.WEAPON);
+    }
+
     public Weapon(String name) {
         super(name, ClueType.WEAPON);
     }

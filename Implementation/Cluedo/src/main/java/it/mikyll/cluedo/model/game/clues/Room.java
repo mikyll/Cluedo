@@ -12,16 +12,16 @@ public class Room extends Clue {
     private String id;
     private List<int[]> cells;
 
-    public Room(String id, String name) {
+    public Room() {
+        super(ClueType.ROOM);
+    }
+
+    public Room(String id, String name, List<int[]> cells) {
         super(name, ClueType.ROOM);
 
         this.id = id;
         this.cells = new ArrayList<>();
-    }
-    public Room(String id, String name, int[]... cells) {
-        this(id, name);
-
-        this.cells = Arrays.asList(cells);
+        this.cells = cells;
     }
 
     public String getId() {return id;}

@@ -5,6 +5,10 @@ public class Character extends Clue {
     private String description;
     private String color;
 
+    public Character() {
+        super(ClueType.CHARACTER);
+    }
+
     public Character(String id, String name, String description, String color) {
         super(name, ClueType.CHARACTER);
         this.id = id;

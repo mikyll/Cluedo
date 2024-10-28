@@ -6,6 +6,10 @@ public abstract class Clue {
 	private String name;
     private ClueType type;
 
+    public Clue(ClueType type) {
+        this.type = type;
+    }
+
     public Clue(String name, ClueType type) {
         this.name = name;
         this.type = type;
