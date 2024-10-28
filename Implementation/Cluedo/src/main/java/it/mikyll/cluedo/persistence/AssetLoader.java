@@ -30,9 +30,9 @@ public class AssetLoader {
         for(Weapon w : weapons)
             System.out.println(w.toString());
 
-        List<Room> rooms = loadRooms();
+        /*List<Room> rooms = loadRooms();
         for(Room r : rooms)
-            System.out.println(r.toString());
+            System.out.println(r.toString());*/
         Board board = loadBoard();
         board.initCells();
         System.out.println(board);
