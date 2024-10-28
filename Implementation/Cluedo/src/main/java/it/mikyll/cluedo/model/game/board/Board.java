@@ -14,6 +14,8 @@ public class Board {
     private List<Door> doors;
     private List<Trapdoor> trapdoors;
     private List<int[]> voidCells;
+    // TODO
+    //private List<BonusCell> bonusCells
 
     private CellType[][] cells;
 
@@ -105,7 +107,6 @@ public class Board {
         }
 
         // Trapdoors
-
         for (Trapdoor t : this.trapdoors) {
             int y = t.getPeer1()[0];
             int x = t.getPeer1()[1];
@@ -126,7 +127,7 @@ public class Board {
             }
         }
 
-        // void cells
+        // Void cells
         for (int[] v : this.voidCells) {
             int y = v[0];
             int x = v[1];
@@ -143,15 +144,41 @@ public class Board {
         // throw exception/issue warning if a cell is already populated
     }
 
-    public String toString() {
-        String res = "";
-        for (int x = 0; x < cells.length; x++) {
-            for (int y = 0; y < cells[x].length; y++) {
-                res += " " + cells[x][y].getRepresentation() + " ";
-            }
-            res += "\n";
+    public Set<String> getAllowedDirections(int y, int x) {
+        Set<String> res = new HashSet<>();
+        // UP
+        if (y > 0 &&
+                cells[y][x].isReachable(cells[y][x], y, x, y-1, x)) {
+            res.add("UP");
         }
+        // DOWN
+        if (y < size[0]-1 &&
+                cells[y][x].isReachable(cells[y][x], y, x, y+1, x)) {
+            res.add("DOWN");
+        }
+        // LEFT
+        if (x > 0 &&
+                cells[y][x].isReachable(cells[y][x], y, x, y, x-1)) {
+            res.add("LEFT");
+        }
+        // RIGHT
+        if (x < size[1]-1 &&
+                cells[y][x].isReachable(cells[y][x], y, x, y, x+1)) {
+            res.add("RIGHT");
+        }
+
         return res;
+    }
+
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        for (int y = 0; y < cells.length; y++) {
+            for (int x = 0; x < cells[y].length; x++) {
+                res.append(" ").append(cells[y][x].getRepresentation()).append(" ");
+            }
+            res.append("\n");
+        }
+        return res.toString();
     }
 
     public static void main(String[] args) {
