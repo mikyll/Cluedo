@@ -154,6 +154,11 @@ public class ControllerGame implements IController {
         imageViewBoardLabels.fitHeightProperty().bind(anchorPaneCenter.heightProperty());
         imageViewBoardLabels.setPreserveRatio(true);
         imageViewBoardLabels.setManaged(false);
+        
+        this.vboxWaitingCharacterSelection.setVisible(false);
+        this.vboxCharacterSelection.setVisible(false);
+        this.vboxPlayersList.setVisible(false);
+        this.vboxMenu.setVisible(false);
 
         Platform.runLater(() -> {
             this.anchorPaneRoot.getScene().setOnKeyPressed(e -> {
@@ -178,11 +183,6 @@ public class ControllerGame implements IController {
         }
 
         Navigator.setFullscreen(true);
-
-        this.vboxWaitingCharacterSelection.setVisible(false);
-        this.vboxCharacterSelection.setVisible(false);
-        this.vboxPlayersList.setVisible(false);
-        this.vboxMenu.setVisible(false);
 
         // Get board size
         Image boardImage = imageViewBoard.getImage();
@@ -253,7 +253,7 @@ public class ControllerGame implements IController {
             labelCharacter.setPrefWidth(20.0);
             labelCharacter.setPrefHeight(20.0);
             labelCharacter.setAlignment(Pos.CENTER_LEFT);
-            labelCharacter.setStyle("-fx-background-color: " + player.getCharacter().getColorHEX() + "; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;");
+            labelCharacter.setStyle("-fx-background-color: " + player.getCharacter().getColor() + "; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;");
             hboxResult.getChildren().add(labelCharacter);
         }
 
@@ -377,7 +377,7 @@ public class ControllerGame implements IController {
         this.setBlur(borderPaneGame, false);
     }
 
-    private VBox buildVBoxPlayerFullElement(int turn, Characters character, String username, boolean isPlayer)
+    private VBox buildVBoxPlayerFullElement(int turn, Character character, String username, boolean isPlayer)
     {
         VBox vboxResult = new VBox();
         vboxResult.setAlignment(Pos.TOP_CENTER);
@@ -392,12 +392,12 @@ public class ControllerGame implements IController {
         VBox.setMargin(hboxCharacter, new Insets(10, 0, 30, 0));
         hboxCharacter.setSpacing(10);
 
-        Image characterImage = mapCharacterImages.get(character);
+        Image characterImage = mapCharacterImages.get(character.getId());
         ImageView imageViewCharacter = new ImageView(characterImage);
         imageViewCharacter.setFitWidth(125);
         imageViewCharacter.setFitHeight(125);
         DropShadow imageViewEffect = new DropShadow();
-        imageViewEffect.setColor(character.getColor());
+        imageViewEffect.setColor(Color.web(character.getColor()));
         imageViewEffect.setWidth(15);
         imageViewEffect.setHeight(15);
         imageViewEffect.setRadius(7);
