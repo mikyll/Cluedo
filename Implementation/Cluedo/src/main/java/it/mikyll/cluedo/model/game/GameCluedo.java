@@ -25,7 +25,7 @@ public class GameCluedo {
 		players.add(new PlayerArtificial("Comp1"));
 		players.add(new PlayerArtificial("Comp2"));
 
-		GameCluedo game = new GameCluedo(players);
+		GameCluedo game = new GameCluedo(players, 2);
 
 		game.prepareGame();
 		System.out.println("--------------------------------");
@@ -73,6 +73,7 @@ public class GameCluedo {
 		// TODO
 	}
 
+	private int numDices;
 	private Random random;
 	private Board board;
 	private List<Clue> totalCluesList;
@@ -81,6 +82,7 @@ public class GameCluedo {
 	private List<Character> availableCharacters;
 	private boolean canStart;
 	private int currentTurn;
+	private int currentPlayer;
 	private int[][] playerCells;
 
 	// Timer
@@ -98,9 +100,10 @@ public class GameCluedo {
 	/*
 	 * Constructor. It takes a list of users and the game settings
 	 */
-	public GameCluedo(List<Player> players) {
+	public GameCluedo(List<Player> players, int numDices) {
 		this.random = new Random(1);
 		this.players = players;
+		this.numDices = numDices;
 
 		this.canStart = false;
 		this.currentTurn = 0;
@@ -297,30 +300,34 @@ public class GameCluedo {
 		return reachable;
 	}*/
 
+
+	public void movePlayer(int iPlayer, int[] newPos) {
+		this.movePlayer(players.get(iPlayer), newPos);
+	}
 	public void movePlayer(Player player, int[] newPos) {
 		int[] src = player.getPosition();
 		this.playerCells[src[0]][src[1]] = -1;
 	}
 	
-	// everybody lost
-	public void endGame() {
-		
-	}
-	
-	// player wins
-	public void endGame(Player winner) {
-		
-	}
-	
-	public void setCharacter(Player p, Characters character) {
-		
-	}
-	
 	// get random number (2-12)
-	public int rollDice() {
-		return -1;
+	public int rollDices() {
+		return this.random.nextInt(this.numDices * 6 - this.numDices) + this.numDices;
 	}
-	
+
+	public void doTurn() {
+		this.currentPlayer = 0;
+
+		String str = "Player N";
+
+		// build actions list?
+	}
+
+	public void nextPlayer() {
+		if (currentTurn >= players.size() - 1) {
+			currentTurn = 0;
+			// restart turn stuff
+		}
+	}
 	
 	
 	public Clue makeAccusation(Player player, Room room, Character character, Weapon weapon) {
@@ -418,7 +425,17 @@ public class GameCluedo {
 				+ "Player turn: ...";
 		// Player turn
 
-
 		return "";
+	}
+
+	public String toStringActions() {
+        return "1) print game state\n" +
+                "2) move\n" +
+				"3) open clue sheet\n" +
+				"4) open notebook\n" +
+				"5) ask clue\n" +
+				"6) make final accusation\n" +
+				"N) end turn\n" +
+				"Choice: ";
 	}
 }
