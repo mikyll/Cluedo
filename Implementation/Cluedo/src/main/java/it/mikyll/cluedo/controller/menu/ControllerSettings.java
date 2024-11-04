@@ -74,7 +74,7 @@ public class ControllerSettings implements IController {
     @FXML
     public void selectBack(ActionEvent event)
     {
-        System.out.println("User selected Back");
+        System.out.println("User selected Back (Main)");
 
         if (isSettingsChanged())
         {
@@ -86,7 +86,6 @@ public class ControllerSettings implements IController {
                 return;
             }
         }
-
         updateMusic();
 
         Navigator.switchView(NavEntry.MAIN);
@@ -175,7 +174,6 @@ public class ControllerSettings implements IController {
     {
         syncElementsWithSettings();
         updateMusic();
-
         updateButtons();
     }
 
@@ -205,6 +203,10 @@ public class ControllerSettings implements IController {
         {
             musicPlayer.setVolume(settings.getMusicVolume());
             musicPlayer.play(MusicTrack.MENU);
+        }
+        else
+        {
+            musicPlayer.stop();
         }
 
         updateButtons();
