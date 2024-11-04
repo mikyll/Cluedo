@@ -42,8 +42,6 @@ public class ServerStream {
 	private ArrayList<String> bannedUsernames = new ArrayList<String>();
 	private ArrayList<InetAddress> bannedIPaddresses = new ArrayList<InetAddress>();
 	
-	private GameCluedo game;
-	
 	public ServerStream(String username, int port, int minUsers, int maxUsers, boolean isOpen) throws IOException
 	{
 		this.port = port;

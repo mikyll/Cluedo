@@ -1,4 +1,6 @@
-package it.mikyll.cluedo.model.game.server;
+package it.mikyll.cluedo.model.networking;
+
+import it.mikyll.cluedo.model.game.GameCluedo;
 
 public class GameServer {
     /*
@@ -31,4 +33,9 @@ public class GameServer {
 
 
     // Creates a new Game object
+    private GameCluedo game;
+
+    public GameServer() {
+
+    }
 }

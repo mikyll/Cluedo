@@ -1,0 +1,26 @@
+[
+  {
+    "id": "wrench",
+    "name": "Wrench"
+  },
+  {
+    "id": "candlestick",
+    "name": "Candlestick"
+  },
+  {
+    "id": "pipe",
+    "name": "Lead pipe"
+  },
+  {
+    "id": "rope",
+    "name": "Rope"
+  },
+  {
+    "id": "pistol",
+    "name": "Pistol"
+  },
+  {
+    "id": "knife",
+    "name": "Knife"
+  }
+]

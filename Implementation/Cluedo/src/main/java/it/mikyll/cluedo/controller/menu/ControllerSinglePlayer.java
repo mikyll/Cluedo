@@ -5,9 +5,11 @@ import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.controller.game.ControllerGame;
 import it.mikyll.cluedo.model.game.clues.Character;
+import it.mikyll.cluedo.model.game.clues.Characters;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
 import it.mikyll.cluedo.model.game.player.PlayerHuman;
+import it.mikyll.cluedo.persistence.AssetLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,7 +32,13 @@ public class ControllerSinglePlayer implements IController {
     @FXML private Spinner<Integer> spinnerPlayersAI;
     @FXML private Button buttonStartSinglePlayer;
 
-    public ControllerSinglePlayer() {}
+    // TODO: fix
+    private List<Character> characters;
+
+    public ControllerSinglePlayer() {
+        // TODO: fix
+        characters = AssetLoader.loadCharacters();
+    }
 
     public void initialize()
     {
@@ -66,7 +74,7 @@ public class ControllerSinglePlayer implements IController {
 
         List<Player> listPlayers = new ArrayList<>();
 
-        List<Character> availableCharacters = new ArrayList<>(Arrays.asList(Character.values()));
+        List<Character> availableCharacters = new ArrayList<>(characters);
         Random rand = new Random();
         for (int i = 0; i < this.spinnerPlayersHuman.getValue(); i++)
         {

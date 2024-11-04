@@ -15,10 +15,10 @@ public class MainRefactor extends Application {
     public void start(Stage stage) {
         SettingsManager.loadSettings(SettingsManager.SETTINGS_FILENAME);
 
-        Navigator.initStage(stage);
+        Navigator.initStage(stage, NavEntry.GAME);
+        // TODO: add handle update loading assets?
         Navigator.setHostServices(this.getHostServices());
     }
-
 
     @Override
     public void stop()

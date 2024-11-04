@@ -1,8 +1,17 @@
 package it.mikyll.cluedo.model.game.clues;
 
-/*
- * WHAT
- */
-public enum Weapon implements Clue {
-	WRENCH, CANDLESTICK, DAGGER, PISTOL, LEAD_PIPE, ROPE;
+public class Weapon extends Clue {
+    public Weapon() {
+        super(ClueType.WEAPON);
+    }
+
+    public Weapon(String name) {
+        super(name, ClueType.WEAPON);
+    }
+
+    public String toString()
+    {
+        // TODO
+        return "Name: " + this.getName();
+    }
 }

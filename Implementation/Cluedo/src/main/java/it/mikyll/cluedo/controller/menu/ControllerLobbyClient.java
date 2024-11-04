@@ -77,8 +77,9 @@ public class ControllerLobbyClient implements IController {
         this.vboxBackControls.setVisible(true);
         this.vboxLobbyClient.setVisible(true);
 
-        this.vboxChat.setVisible(this.settings.isChatEnabled());
         this.clearChat();
+        this.vboxChat.setVisible(this.settings.isChatEnabled());
+        this.addJoinMessage(new Message(MessageType.CHAT, this.username, ""));
 
         this.buttonReady.setText("Not ready");
         this.buttonReady.setStyle("-fx-background-color: red");

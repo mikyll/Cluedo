@@ -8,6 +8,7 @@ import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,9 +24,10 @@ public class Navigator {
     private static ControllerLoading ctrlLoading;
     private static HostServices hostServices;
 
-    public static synchronized void initStage(Stage appStage) {
+    public static synchronized void initStage(Stage appStage, NavEntry switchToAfterLoading) {
         stage = appStage;
         stage.setTitle(Settings.APP_TITLE);
+        stage.getIcons().add(new Image(Navigator.class.getResource(Settings.RESOURCES_PATH + "assets/gfx/icons/clueless_icon.png").toString()));
         stage.setResizable(false);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -34,14 +36,14 @@ public class Navigator {
         stage.setScene(loadScene("views/ViewMenuLoading.fxml", ctrlLoading));
         stage.show();
 
-        loadMenuScenes();
+        loadMenuScenes(switchToAfterLoading);
     }
 
     private static Scene loadScene(String filename, IController controller) {
         try {
             FXMLLoader loader = new FXMLLoader(ControllerMain.class.getResource(Settings.RESOURCES_PATH + filename));
             loader.setController(controller);
-            AnchorPane view = (AnchorPane) loader.load();
+            AnchorPane view = loader.load();
 
             Scene scene = new Scene(view);
             scene.getStylesheets().add(Navigator.class.getResource(Settings.RESOURCES_PATH + "styles/application.css").toExternalForm());
@@ -56,7 +58,7 @@ public class Navigator {
         }
     }
 
-    private static void loadMenuScenes() {
+    private static void loadMenuScenes(NavEntry switchToAfterLoading) {
         Thread loadingThread = new Thread(() -> {
             views = new HashMap<>();
             controllers = new HashMap<>();
@@ -97,7 +99,7 @@ public class Navigator {
             views.put(NavEntry.GAME, loadScene("views/ViewGame.fxml", ctrlGame));
             controllers.put(NavEntry.GAME, ctrlGame);
 
-            switchView(NavEntry.MAIN);
+            switchView(switchToAfterLoading);
         });
 
         loadingThread.start();
