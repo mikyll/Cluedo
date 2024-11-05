@@ -193,10 +193,10 @@ public class GameCluedo {
 
 		// Possible moves in each direction (up, down, left, right)
 		int[][] directions = {
-				{-1, 0}, // up
-				{1, 0},  // down
-				{0, -1}, // left
-				{0, 1}   // right
+			{-1, 0}, // up
+			{1, 0},  // down
+			{0, -1}, // left
+			{0, 1}   // right
 		};
 
 		// Use a queue to track positions and remaining steps
@@ -213,7 +213,8 @@ public class GameCluedo {
 			reachable[row][col] = true;
 
 			// If no more steps, skip to the next position in the queue
-			if (remainingSteps == 0) continue;
+			if (remainingSteps == 0)
+				continue;
 
 			// Explore each direction
 			for (int[] dir : directions) {
@@ -226,8 +227,22 @@ public class GameCluedo {
 					CellType nextCellType = board.getCells()[newRow][newCol];
 					CellType currentCellType = board.getCells()[row][col];
 
+					// If:
+					// 	- curr not already present AND next.type.EMPTY
+					//  - next.type.DOOR
+					//  - curr.type.DOOR &&
 					if (!reachable[newRow][newCol] && nextCellType.equals(CellType.EMPTY) ||
 							nextCellType.isDoor()) {
+						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
+					}
+					else if (currentCellType.isDoor()) {
+						dir = currentCellType.getDir();
+						newRow = row + dir[0];
+						newCol = col + dir[1];
+
+						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
+					}
+					else if (currentCellType.equals(CellType.ROOM) && nextCellType.equals(CellType.ROOM)) {
 						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
 					}
 				}

@@ -25,6 +25,21 @@ public enum CellType {
     public boolean isDoor() {
         return this.equals(DOOR_UP) || this.equals(DOOR_DOWN) || this.equals(DOOR_LEFT) || this.equals(DOOR_RIGHT);
     }
+    public int[] getDir() {
+        switch (this) {
+            case DOOR_UP:
+                return new int[]{-1, 0};
+            case DOOR_DOWN:
+                return new int[]{1, 0};
+            case DOOR_LEFT:
+                return new int[]{0, -1};
+            case DOOR_RIGHT:
+                return new int[]{0, 1};
+            default:
+                return new int[]{-1,-1};
+        }
+    }
+
     public boolean isReachable(CellType src, int ySrc, int xSrc, int yDst, int xDst) {
         return this.equals(EMPTY)
                 || this.equals(INIT)
