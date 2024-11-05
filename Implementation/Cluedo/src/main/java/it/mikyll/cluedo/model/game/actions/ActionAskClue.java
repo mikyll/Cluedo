@@ -1,12 +1,11 @@
 package it.mikyll.cluedo.model.game.actions;
 
 import it.mikyll.cluedo.model.game.GameCluedo;
+import it.mikyll.cluedo.model.game.player.Player;
 
-public class ActionAskClue implements GameAction {
-    private GameCluedo game;
-
-    public ActionAskClue(GameCluedo game) {
-        this.game = game;
+public class ActionAskClue extends GameAction {
+    public ActionAskClue(GameCluedo game, Player player) {
+        super(game, player);
     }
 
     @Override
