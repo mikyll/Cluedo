@@ -193,15 +193,16 @@ public class GameCluedo {
 
 		// Possible moves in each direction (up, down, left, right)
 		int[][] directions = {
-			{-1, 0}, // up
-			{1, 0},  // down
-			{0, -1}, // left
-			{0, 1}   // right
+				{-1, 0}, // up
+				{1, 0},  // down
+				{0, -1}, // left
+				{0, 1}   // right
 		};
 
 		// Use a queue to track positions and remaining steps
 		Queue<int[]> queue = new LinkedList<>();
 		queue.add(new int[] {srcPos[0], srcPos[1], steps});
+		reachable[srcPos[0]][srcPos[1]] = steps + 1;  // Mark starting cell as reachable
 
 		while (!queue.isEmpty()) {
 			int[] current = queue.poll();
@@ -209,12 +210,8 @@ public class GameCluedo {
 			int col = current[1];
 			int remainingSteps = current[2];
 
-			// Mark the cell as reachable
-			reachable[row][col] = remainingSteps + 1;
-
 			// If no more steps, skip to the next position in the queue
-			if (remainingSteps == 0)
-				continue;
+			if (remainingSteps == 0) continue;
 
 			// Explore each direction
 			for (int[] dir : directions) {
@@ -223,29 +220,21 @@ public class GameCluedo {
 
 				// Check if the new position is within board bounds
 				if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-					// Check cell types: allow moving into "Room" only if the current cell is a "Door"
 					CellType nextCellType = board.getCells()[newRow][newCol];
 					CellType currentCellType = board.getCells()[row][col];
 
-					// If:
-					// 	- curr not already present AND next.type.EMPTY
-					//  - next.type.DOOR
-					//  - curr.type.DOOR &&
+					// Check if we can reach this cell with fewer steps
+					if (reachable[newRow][newCol] == 0 || reachable[newRow][newCol] < remainingSteps) {
+						// Determine if movement to this cell is allowed
+						boolean canMove = (nextCellType.equals(CellType.EMPTY) ||
+								nextCellType.isDoor() ||
+								(currentCellType.isDoor() && nextCellType.equals(CellType.ROOM)) ||
+								(currentCellType.equals(CellType.ROOM) && nextCellType.equals(CellType.ROOM)));
 
-					// TODO: check if a reachable position can be reached with lower steps
-					if (reachable[newRow][newCol] == 0 && nextCellType.equals(CellType.EMPTY) ||
-							nextCellType.isDoor()) {
-						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
-					}
-					else if (currentCellType.isDoor()) {
-						dir = currentCellType.getDir();
-						newRow = row + dir[0];
-						newCol = col + dir[1];
-
-						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
-					}
-					else if (currentCellType.equals(CellType.ROOM) && nextCellType.equals(CellType.ROOM)) {
-						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
+						if (canMove) {
+							reachable[newRow][newCol] = remainingSteps;
+							queue.add(new int[] {newRow, newCol, remainingSteps - 1});
+						}
 					}
 				}
 			}
