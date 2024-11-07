@@ -67,7 +67,7 @@ public class GameCluedo {
 
 		int iPlayer = 0;
 		System.out.println("Available moves for player #" + (iPlayer+1));
-		System.out.println(game.toStringBoardWithAvailableMoves(iPlayer, 10));
+		System.out.println(game.toStringBoardWithAvailableMoves(iPlayer, 10, true));
 		// start
 
 		// TODO
@@ -186,10 +186,10 @@ public class GameCluedo {
 		this.availableCharacters.remove(character);
 	}
 
-	public boolean[][] getAvailableDestinations(int[] srcPos, int steps) {
+	public int[][] getAvailableDestinations(int[] srcPos, int steps) {
 		int rows = board.getSize()[0];
 		int cols = board.getSize()[1];
-		boolean[][] reachable = new boolean[rows][cols];
+		int[][] reachable = new int[rows][cols];
 
 		// Possible moves in each direction (up, down, left, right)
 		int[][] directions = {
@@ -210,7 +210,7 @@ public class GameCluedo {
 			int remainingSteps = current[2];
 
 			// Mark the cell as reachable
-			reachable[row][col] = true;
+			reachable[row][col] = remainingSteps + 1;
 
 			// If no more steps, skip to the next position in the queue
 			if (remainingSteps == 0)
@@ -231,7 +231,9 @@ public class GameCluedo {
 					// 	- curr not already present AND next.type.EMPTY
 					//  - next.type.DOOR
 					//  - curr.type.DOOR &&
-					if (!reachable[newRow][newCol] && nextCellType.equals(CellType.EMPTY) ||
+
+					// TODO: check if a reachable position can be reached with lower steps
+					if (reachable[newRow][newCol] == 0 && nextCellType.equals(CellType.EMPTY) ||
 							nextCellType.isDoor()) {
 						queue.add(new int[] {newRow, newCol, remainingSteps - 1});
 					}
@@ -405,10 +407,15 @@ public class GameCluedo {
 		return res.toString();
 	}
 
-	public String toStringBoardWithAvailableMoves(int iPlayer, int steps) {
+	public String toStringBoardWithAvailableMoves(int iPlayer, int steps)
+	{
+		return toStringBoardWithAvailableMoves(iPlayer, steps, false);
+	}
+
+	public String toStringBoardWithAvailableMoves(int iPlayer, int steps, boolean printRemainingSteps) {
 		StringBuilder res = new StringBuilder();
 		CellType[][] cells = board.getCells();
-		boolean[][] destList = this.getAvailableDestinations(players.get(iPlayer).getPosition(), steps);
+		int[][] destList = this.getAvailableDestinations(players.get(iPlayer).getPosition(), steps);
 
 		for (int y = 0; y < board.getSize()[0]; y++) {
 			for (int x = 0; x < board.getSize()[1]; x++) {
@@ -419,8 +426,8 @@ public class GameCluedo {
 					else
 						value = "{" + playerCells[y][x] + "}";
 				}
-				else if (destList[y][x]) {
-					value = "(" + cells[y][x].getRepresentation() + ")";
+				else if (destList[y][x] > 0) {
+					value = "(" + (printRemainingSteps ? destList[y][x]-1 : cells[y][x].getRepresentation()) + ")";
 				} else {
 					value = " " + cells[y][x].getRepresentation() + " ";
 				}
@@ -431,6 +438,38 @@ public class GameCluedo {
 
 		return res.toString();
 	}
+
+	// With padding (for numbers greater than 9)
+	/*public String toStringBoardWithAvailableMoves(int iPlayer, int steps)
+	{
+		return toStringBoardWithAvailableMoves(iPlayer, steps, false);
+	}
+	public String toStringBoardWithAvailableMoves(int iPlayer, int steps, boolean printRemainingSteps) {
+		StringBuilder res = new StringBuilder();
+		CellType[][] cells = board.getCells();
+		int[][] destList = this.getAvailableDestinations(players.get(iPlayer).getPosition(), steps);
+
+		for (int y = 0; y < board.getSize()[0]; y++) {
+			for (int x = 0; x < board.getSize()[1]; x++) {
+				String value;
+				if (playerCells[y][x] != -1) {
+					if (playerCells[y][x] == currentTurn)
+						value = "[ " + playerCells[y][x] + "]";
+					else
+						value = "{" + (playerCells[y][x] < 10 ? " " : "") + playerCells[y][x] + "}";
+				}
+				else if (destList[y][x] > 0) {
+					value = "(" + (printRemainingSteps ? ((destList[y][x] < 10 ? " " : "") + destList[y][x]) : cells[y][x].getRepresentation()) + ")";
+				} else {
+					value = "  " + cells[y][x].getRepresentation() + " ";
+				}
+				res.append(value);
+			}
+			res.append("\n");
+		}
+
+		return res.toString();
+	}*/
 
 	public String toString() {
 		// TODO: prints the game state
