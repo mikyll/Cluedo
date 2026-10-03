@@ -1,5 +1,6 @@
 package it.mikyll.cluedo.model.game.player;
 
+import it.mikyll.cluedo.model.game.ClueQuestion;
 import it.mikyll.cluedo.model.game.clues.Character;
 import it.mikyll.cluedo.model.game.clues.Clue;
 import it.mikyll.cluedo.model.networking.User;
@@ -48,5 +49,9 @@ public abstract class Player extends User {
 
 	public boolean wasMoved() {
 		return moved;
+	}
+
+	// Called when a clue question asked by this player has been answered (or nobody could answer)
+	public void onClueQuestionAnswered(ClueQuestion question) {
 	}
 }

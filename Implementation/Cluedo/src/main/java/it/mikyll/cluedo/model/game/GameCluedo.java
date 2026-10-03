@@ -435,6 +435,7 @@ public class GameCluedo {
 
 		// Nobody could answer
 		this.clueQuestion = new ClueQuestion(player, character, weapon, room, null, List.of());
+		player.onClueQuestionAnswered(this.clueQuestion);
 		return this.clueQuestion;
 	}
 
@@ -452,6 +453,7 @@ public class GameCluedo {
 			throw new IllegalArgumentException("The clue must be one of the asked clues owned by " + answerer.getUsername());
 
 		clueQuestion.setShownClue(clue);
+		clueQuestion.getAsker().onClueQuestionAnswered(clueQuestion);
 	}
 
 	// Final accusation & turns ===============================================
