@@ -11,9 +11,12 @@ public class MurderEnvelope {
     private Clue weapon;
     private Clue room;
 
-    public MurderEnvelope(List<Clue> clueList)
+    /*
+     * Picks one random clue per type and removes them from the list.
+     */
+    public MurderEnvelope(List<Clue> clueList, Random random)
     {
-        Collections.shuffle(clueList);
+        Collections.shuffle(clueList, random);
 
         for (Clue c : clueList)
         {
@@ -24,11 +27,24 @@ public class MurderEnvelope {
             if (room == null && c.getType().equals(ClueType.ROOM))
                 this.room = c;
         }
+        if (murderer == null || weapon == null || room == null)
+            throw new IllegalArgumentException("The clue list must contain at least one character, one weapon and one room");
+
         clueList.remove(this.murderer);
         clueList.remove(this.weapon);
         clueList.remove(this.room);
-
     }
+
+    public MurderEnvelope(Clue murderer, Clue weapon, Clue room)
+    {
+        this.murderer = murderer;
+        this.weapon = weapon;
+        this.room = room;
+    }
+
+    public Clue getMurderer() {return murderer;}
+    public Clue getWeapon() {return weapon;}
+    public Clue getRoom() {return room;}
 
     public boolean makeAccusation(Clue murderer, Clue weapon, Clue room)
     {

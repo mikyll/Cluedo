@@ -45,10 +45,10 @@ public enum CellType {
                 || this.equals(INIT)
                 || this.equals(BONUS)
                 || (this.equals(ROOM)
-                    && (src.equals(DOOR_UP) && ySrc - yDst == 1)
-                    && (src.equals(DOOR_DOWN) && ySrc - yDst == -1)
-                    && (src.equals(DOOR_LEFT) && xSrc - xDst == 1)
-                    && (src.equals(DOOR_RIGHT) && xSrc - xDst == -1));
+                    && ((src.equals(DOOR_UP) && ySrc - yDst == 1)
+                    || (src.equals(DOOR_DOWN) && ySrc - yDst == -1)
+                    || (src.equals(DOOR_LEFT) && xSrc - xDst == 1)
+                    || (src.equals(DOOR_RIGHT) && xSrc - xDst == -1)));
     }
 
     public String getRepresentation() {

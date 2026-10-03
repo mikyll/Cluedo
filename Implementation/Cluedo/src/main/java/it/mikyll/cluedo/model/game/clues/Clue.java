@@ -1,6 +1,7 @@
 package it.mikyll.cluedo.model.game.clues;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public abstract class Clue {
 	private String name;
@@ -31,9 +32,24 @@ public abstract class Clue {
         this.type = type;
     }
 
-    public boolean equals(Clue other)
+    // Two clues are the same card if they have the same type and name (case insensitive).
+    // NB: this must override equals(Object), otherwise List.remove/contains would compare references.
+    @Override
+    public boolean equals(Object o)
     {
-        return this.type.equals(other.getType())
+        if (this == o)
+            return true;
+        if (!(o instanceof Clue))
+            return false;
+        Clue other = (Clue) o;
+        return this.type == other.getType()
+                && this.name != null
                 && this.name.equalsIgnoreCase(other.getName());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(type, name == null ? null : name.toLowerCase(Locale.ROOT));
     }
 }
