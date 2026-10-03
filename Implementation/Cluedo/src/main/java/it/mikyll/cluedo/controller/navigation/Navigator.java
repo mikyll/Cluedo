@@ -115,7 +115,7 @@ public class Navigator {
 
     public static synchronized IController getController(NavEntry menuEntry)
     {
-        return controllers.get(menuEntry);
+        return controllers == null ? null : controllers.get(menuEntry);
     }
 
     public static void setFullscreen(boolean value)

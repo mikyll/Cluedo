@@ -2,6 +2,7 @@ package it.mikyll.cluedo.model.sounds;
 
 import it.mikyll.cluedo.model.settings.Settings;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
@@ -23,13 +24,19 @@ public class MusicPlayer {
         if(instance == null)
         {
             instance = new MusicPlayer();
-            if (musicTracks == null)
-            {
-                loadMusic();
+            try {
+                if (musicTracks == null)
+                {
+                    loadMusic();
+                }
+                mediaPlayer = new MediaPlayer(musicTracks.get(MusicTrack.MENU));
+                mediaPlayer.setVolume(volume / 100);
+                mediaPlayer.setCycleCount(Integer.MAX_VALUE);
+            } catch (MediaException e) {
+                // Audio is not available (e.g. missing codecs): the game goes on without music
+                System.out.println("Music disabled: " + e.getMessage());
+                mediaPlayer = null;
             }
-            mediaPlayer = new MediaPlayer(musicTracks.get(MusicTrack.MENU));
-            mediaPlayer.setVolume(volume / 100);
-            mediaPlayer.setCycleCount(Integer.MAX_VALUE);
         }
         return instance;
     }
@@ -41,15 +48,23 @@ public class MusicPlayer {
         musicTracks.put(MusicTrack.GAME, new Media(MusicPlayer.class.getResource(Settings.RESOURCES_PATH + "music/George Arkomanis - Relaxation In Mystery.mp3").toString()));
     }
 
+    public boolean isAvailable()
+    {
+        return mediaPlayer != null;
+    }
+
     public void setVolume(double value)
     {
         volume = value;
-        mediaPlayer.setVolume(volume / 100);
+        if (isAvailable())
+            mediaPlayer.setVolume(volume / 100);
     }
 
 
     public void setTrack(MusicTrack musicTrack)
     {
+        if (!isAvailable())
+            return;
         this.stop();
         mediaPlayer = new MediaPlayer(musicTracks.get(musicTrack));
         loadedTrack = musicTrack;
@@ -59,6 +74,8 @@ public class MusicPlayer {
 
     public void play()
     {
+        if (!isAvailable())
+            return;
         this.stop();
         mediaPlayer.play();
         isPlaying = true;
@@ -66,7 +83,7 @@ public class MusicPlayer {
 
     public void play(MusicTrack musicTrack)
     {
-        if (!isPlaying || musicTrack != loadedTrack)
+        if (isAvailable() && (!isPlaying || musicTrack != loadedTrack))
         {
             this.setTrack(musicTrack);
             mediaPlayer.play();
@@ -76,7 +93,8 @@ public class MusicPlayer {
 
     public void stop()
     {
-        mediaPlayer.stop();
+        if (isAvailable())
+            mediaPlayer.stop();
         isPlaying = false;
     }
 }

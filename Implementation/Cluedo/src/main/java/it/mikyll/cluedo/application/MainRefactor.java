@@ -23,8 +23,13 @@ public class MainRefactor extends Application {
     @Override
     public void stop()
     {
-        ((ControllerLobbyServer) Navigator.getController(NavEntry.LOBBY_SERVER)).closeConnection();
-        ((ControllerLobbyClient) Navigator.getController(NavEntry.LOBBY_CLIENT)).closeConnection();
+        // The controllers don't exist if the app is closed while loading
+        ControllerLobbyServer ctrlLobbyServer = (ControllerLobbyServer) Navigator.getController(NavEntry.LOBBY_SERVER);
+        if (ctrlLobbyServer != null)
+            ctrlLobbyServer.closeConnection();
+        ControllerLobbyClient ctrlLobbyClient = (ControllerLobbyClient) Navigator.getController(NavEntry.LOBBY_CLIENT);
+        if (ctrlLobbyClient != null)
+            ctrlLobbyClient.closeConnection();
         Platform.exit();
     }
 
