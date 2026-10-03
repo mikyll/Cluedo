@@ -11,12 +11,11 @@ public class ActionEndTurn extends GameAction {
     @Override
     public boolean isAllowed() {
         // Check player turn
-
-        return true;
+        return getGame().canEndTurn(getPlayer());
     }
 
     @Override
     public void execute() {
-
+        getGame().nextPlayer();
     }
 }

@@ -14,10 +14,14 @@ public class Board {
     private List<Door> doors;
     private List<Trapdoor> trapdoors;
     private List<int[]> voidCells;
+    // Room where the final accusation must be made. It is not a clue card.
+    private String accusationRoomId;
     // TODO
     //private List<BonusCell> bonusCells
 
     private CellType[][] cells;
+    // Room of each cell (null for corridors), built by initCells()
+    private transient Room[][] roomCells;
 
     public Board() {
         this.size = new int[2];
@@ -41,6 +45,8 @@ public class Board {
     public void setCells(CellType[][] cells) {this.cells = cells;}
     public List<int[]> getVoidCells() {return voidCells;}
     public void setVoidCells(List<int[]> voidCells) {this.voidCells = voidCells;}
+    public String getAccusationRoomId() {return accusationRoomId;}
+    public void setAccusationRoomId(String accusationRoomId) {this.accusationRoomId = accusationRoomId;}
 
     // TODO
     public void initCells()
@@ -54,6 +60,7 @@ public class Board {
         }
 
         // Init rooms
+        this.roomCells = new Room[this.size[0]][this.size[1]];
         for (Room r : this.rooms) {
             for (int i = 0; i < r.getCells().size(); i++) {
                 int y = r.getCells().get(i)[0];
@@ -61,6 +68,7 @@ public class Board {
 
                 if (this.cells[y][x].equals(CellType.EMPTY)) {
                     this.cells[y][x] = CellType.ROOM;
+                    this.roomCells[y][x] = r;
                 }
                 else {
                     System.out.println("ERROR Room: [" + y + "," + x + "] is not empty!");
@@ -82,6 +90,7 @@ public class Board {
 
         // Doors
         for (Door d : this.doors) {
+            d.setRoom(this.getRoomById(d.getRoomId()));
             int y = d.getPosition()[0];
             int x = d.getPosition()[1];
             if (this.cells[y][x].equals(CellType.EMPTY)) {
@@ -142,6 +151,82 @@ public class Board {
         // loop over all lists and build the cells (board representation)
 
         // throw exception/issue warning if a cell is already populated
+    }
+
+    public boolean isInBounds(int y, int x) {
+        return y >= 0 && y < size[0] && x >= 0 && x < size[1];
+    }
+
+    // Cells a pawn can walk on (rooms are entered only through doors, see GameCluedo)
+    public boolean isWalkable(int y, int x) {
+        CellType type = cells[y][x];
+        return type.equals(CellType.EMPTY)
+                || type.equals(CellType.INIT)
+                || type.equals(CellType.BONUS)
+                || type.isDoor();
+    }
+
+    // Returns the room containing the cell, or null if the cell is not inside a room
+    public Room getRoomAt(int y, int x) {
+        return isInBounds(y, x) ? roomCells[y][x] : null;
+    }
+    public Room getRoomAt(int[] pos) {
+        return getRoomAt(pos[0], pos[1]);
+    }
+
+    public Room getRoomById(String id) {
+        for (Room r : rooms) {
+            if (r.getId().equals(id))
+                return r;
+        }
+        return null;
+    }
+
+    public boolean isAccusationRoom(Room room) {
+        return room != null && room.getId().equals(accusationRoomId);
+    }
+
+    // Rooms that are also clue cards (all except the accusation room)
+    public List<Room> getClueRooms() {
+        List<Room> result = new ArrayList<>();
+        for (Room r : rooms) {
+            if (!isAccusationRoom(r))
+                result.add(r);
+        }
+        return result;
+    }
+
+    public List<Door> getDoors(Room room) {
+        List<Door> result = new ArrayList<>();
+        for (Door d : doors) {
+            if (room.equals(d.getRoom()))
+                result.add(d);
+        }
+        return result;
+    }
+
+    // Returns the room reached through the trapdoor (secret passage) of the given room, or null if it has none.
+    // Each trapdoor peer is a cell next to the room it belongs to.
+    public Room getTrapdoorDestination(Room room) {
+        for (Trapdoor t : trapdoors) {
+            Room room1 = getAdjacentRoom(t.getPeer1());
+            Room room2 = getAdjacentRoom(t.getPeer2());
+            if (room.equals(room1))
+                return room2;
+            if (room.equals(room2))
+                return room1;
+        }
+        return null;
+    }
+
+    private Room getAdjacentRoom(int[] pos) {
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        for (int[] dir : directions) {
+            Room r = getRoomAt(pos[0] + dir[0], pos[1] + dir[1]);
+            if (r != null)
+                return r;
+        }
+        return null;
     }
 
     public Set<String> getAllowedDirections(int y, int x) {
