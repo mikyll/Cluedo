@@ -15,7 +15,7 @@ public class MainRefactor extends Application {
     public void start(Stage stage) {
         SettingsManager.loadSettings(SettingsManager.SETTINGS_FILENAME);
 
-        Navigator.initStage(stage, NavEntry.GAME);
+        Navigator.initStage(stage, NavEntry.MAIN);
         // TODO: add handle update loading assets?
         Navigator.setHostServices(this.getHostServices());
     }
