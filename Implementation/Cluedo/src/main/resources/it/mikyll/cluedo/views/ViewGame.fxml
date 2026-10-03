@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -38,36 +39,8 @@
                         <Image url="@../images/map/map_labels_it.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="482.0" layoutY="149.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: yellow; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelPawnScarlet" layoutX="336.0" layoutY="4.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: red; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelPawnWhite1" layoutX="191.0" layoutY="482.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: green; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelPawnWhite" layoutX="295.0" layoutY="482.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelPawnPeacock" layoutX="4.0" layoutY="377.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: blue; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelPawnPlum" layoutX="4.0" layoutY="108.0" prefHeight="16.0" prefWidth="16.0" style="-fx-background-color: purple; -fx-background-radius: 50; -fx-border-color: black; -fx-border-radius: 50;">
-                     <font>
-                        <Font size="5.0" />
-                     </font>
-                  </Label>
+                  <!-- Pawns and reachable cells are drawn here by ControllerGame -->
+                  <Pane fx:id="paneBoardOverlay" pickOnBounds="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </center>
@@ -76,12 +49,12 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                   <Button mnemonicParsing="false" onAction="#toggleMenu" text="Menu" />
-                  <Label text="ICONA MENU" />
-                  <Label text="TIMER" />
-                  <Label text="TURNO CORRENTE" />
-                  <Button mnemonicParsing="false" onAction="#showRollingDiceTurn" text="OpenTurn" />
-                  <Button mnemonicParsing="false" onAction="#showCharacterSelectionView" text="OpenChar" />
-                  <Button mnemonicParsing="false" onAction="#showPlayersListView" text="OpenPlayers" />
+                  <Button mnemonicParsing="false" onAction="#showPlayersListView" text="Players" />
+                  <Label fx:id="labelCurrentTurn" text="TURNO CORRENTE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
          </top>
@@ -90,7 +63,7 @@
                <children>
                   <HBox prefHeight="98.0" prefWidth="500.0">
                      <children>
-                        <Label text="INFO GIOCATORE">
+                        <Label fx:id="labelPlayerInfo" text="INFO GIOCATORE" wrapText="true">
                            <font>
                               <Font size="16.0" />
                            </font></Label>
@@ -98,8 +71,8 @@
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <ProgressIndicator prefWidth="45.0" />
-                        <Label text="20s">
+                        <ProgressIndicator fx:id="progressIndicatorBot" prefWidth="45.0" visible="false" />
+                        <Label fx:id="labelDice" text="-">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -110,16 +83,16 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Move" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Ask Clue" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Accusation" />
+                              <Button fx:id="buttonRollDice" mnemonicParsing="false" onAction="#rollDice" prefHeight="26.0" prefWidth="100.0" text="Roll Dice" />
+                              <Button fx:id="buttonOpenClueQuestion" mnemonicParsing="false" onAction="#showClueQuestionView" prefHeight="26.0" prefWidth="100.0" text="Ask Clue" />
+                              <Button fx:id="buttonFinalAccusation" mnemonicParsing="false" onAction="#showFinalAccusationView" prefHeight="26.0" prefWidth="100.0" text="Accusation" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Clue Sheet" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Notepad" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="End Turn" />
+                              <Button mnemonicParsing="false" onAction="#showClueSheetTab" prefHeight="26.0" prefWidth="100.0" text="Clue Sheet" />
+                              <Button mnemonicParsing="false" onAction="#showNotepadTab" prefHeight="26.0" prefWidth="100.0" text="Notepad" />
+                              <Button fx:id="buttonEndTurn" mnemonicParsing="false" onAction="#endTurn" prefHeight="26.0" prefWidth="100.0" text="End Turn" />
                            </children>
                         </HBox>
                      </children>
@@ -130,14 +103,23 @@
          <right>
             <TabPane fx:id="tabPaneRight" prefHeight="200.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                  <Tab text="Objective">
+                  <Tab fx:id="tabObjective" text="Objective">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Find out who killed Samuel Black, with which weapon and where. Then make the final accusation from the Cluedo room." wrapText="true" />
+                              <Label text="Your clues:" />
+                              <ListView fx:id="listViewMyClues" prefHeight="300.0" />
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
                      </content>
                   </Tab>
-                <Tab text="Clue Sheet">
+                <Tab fx:id="tabClueSheet" text="Clue Sheet">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane fx:id="anchorPaneClueSheet" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
                 <Tab fx:id="tabNotepad" text="Notepad">
@@ -616,7 +598,7 @@
       </VBox>
       <VBox fx:id="vboxClueQuestion" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: rgba(0,0,0,0.85);" visible="false" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="150.0">
          <children>
-            <Label text="Ask a Clue Question" textFill="WHITE">
+            <Label fx:id="labelClueQuestionTitle" text="Ask a Clue Question" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
@@ -628,17 +610,14 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Label text="Select a player" textFill="WHITE" />
-                        <ListView prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
-                     <children>
                         <Label text="Select the suspect" textFill="WHITE" />
-                        <ComboBox prefWidth="150.0" promptText="Kassandra Scarlet" />
+                        <ComboBox fx:id="comboBoxSuspect" prefWidth="150.0" promptText="Kassandra Scarlet" />
                         <Separator prefHeight="5.0" prefWidth="200.0" visible="false" />
                         <Label text="Select the murder weapon" textFill="WHITE" />
-                        <ComboBox prefWidth="150.0" promptText="Rope" />
+                        <ComboBox fx:id="comboBoxWeapon" prefWidth="150.0" promptText="Rope" />
+                        <Separator prefHeight="5.0" prefWidth="200.0" visible="false" />
+                        <Label fx:id="labelSelectRoom" text="Select the room" textFill="WHITE" />
+                        <ComboBox fx:id="comboBoxRoom" prefWidth="150.0" promptText="Study" />
                      </children>
                   </VBox>
                </children></HBox>
@@ -655,17 +634,17 @@
                   </VBox>
                   <VBox prefHeight="85.0" prefWidth="300.0">
                      <children>
-                        <Label text="Was it Scarlet" textFill="WHITE">
+                        <Label fx:id="labelQuestionWho" text="Was it Scarlet" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label text="with the Rope" textFill="WHITE">
+                        <Label fx:id="labelQuestionWhat" text="with the Rope" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label text="in the Garage?" textFill="WHITE">
+                        <Label fx:id="labelQuestionWhere" text="in the Garage?" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -674,11 +653,20 @@
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="buttonAskClue" mnemonicParsing="false" prefHeight="39.0" prefWidth="141.0" text="Ask">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#closeClueQuestionView" prefHeight="39.0" prefWidth="141.0" text="Cancel">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonAskClue" mnemonicParsing="false" onAction="#confirmClueQuestion" prefHeight="39.0" prefWidth="141.0" text="Ask">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="10.0" top="10.0" />

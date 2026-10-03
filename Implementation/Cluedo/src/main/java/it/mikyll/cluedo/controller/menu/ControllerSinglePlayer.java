@@ -4,6 +4,7 @@ import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
 import it.mikyll.cluedo.controller.game.ControllerGame;
+import it.mikyll.cluedo.model.game.GameCluedo;
 import it.mikyll.cluedo.model.game.clues.Character;
 import it.mikyll.cluedo.model.game.clues.Characters;
 import it.mikyll.cluedo.model.game.player.Player;
@@ -20,6 +21,8 @@ import javafx.scene.layout.VBox;
 import java.util.*;
 
 public class ControllerSinglePlayer implements IController {
+    private static final int NUM_DICES = 2;
+
     @FXML private AnchorPane anchorPaneRoot;
     @FXML private VBox vboxBackControls;
     @FXML private VBox vboxSinglePlayer;
@@ -93,16 +96,13 @@ public class ControllerSinglePlayer implements IController {
             listPlayers.add(bot);
         }
 
-        // Set turn
-        Collections.shuffle(listPlayers);
-        int turn = 1;
-        for (Player listPlayer : listPlayers) {
-            listPlayer.setTurn(turn);
-            turn++;
-        }
+        // The game assigns turns, clues and starting positions
+        GameCluedo game = new GameCluedo(listPlayers, NUM_DICES);
+        game.prepareGame();
 
         ControllerGame ctrlGame = (ControllerGame) Navigator.getController(NavEntry.GAME);
-        ctrlGame.setProperties(null, listPlayers);
+        ctrlGame.setGame(game);
+        ctrlGame.setProperties(null, game.getPlayers());
 
         Navigator.switchView(NavEntry.GAME);
     }

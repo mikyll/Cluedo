@@ -3,22 +3,32 @@ package it.mikyll.cluedo.controller.game;
 import it.mikyll.cluedo.controller.navigation.IController;
 import it.mikyll.cluedo.controller.navigation.NavEntry;
 import it.mikyll.cluedo.controller.navigation.Navigator;
+import it.mikyll.cluedo.model.game.ClueQuestion;
 import it.mikyll.cluedo.model.game.GameCluedo;
-import it.mikyll.cluedo.model.game.clues.Characters;
+import it.mikyll.cluedo.model.game.MurderEnvelope;
+import it.mikyll.cluedo.model.game.actions.*;
 import it.mikyll.cluedo.model.game.clues.Character;
+import it.mikyll.cluedo.model.game.clues.Clue;
+import it.mikyll.cluedo.model.game.clues.Room;
+import it.mikyll.cluedo.model.game.clues.Weapon;
 import it.mikyll.cluedo.model.game.player.Player;
+import it.mikyll.cluedo.model.game.player.PlayerArtificial;
+import it.mikyll.cluedo.model.game.player.PlayerHuman;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
 import it.mikyll.cluedo.persistence.AssetLoader;
 import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
+import it.mikyll.cluedo.view.gui.javafx.ClueSheet;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -30,17 +40,24 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 
 import java.util.*;
 
 public class ControllerGame implements IController {
+    // Pause between two actions of an artificial player, so that humans can follow them
+    private static final Duration BOT_DELAY = Duration.millis(800);
+
     @FXML private AnchorPane anchorPaneRoot;
     @FXML private BorderPane borderPaneGame;
     @FXML private VBox vboxMenu;
@@ -82,13 +99,18 @@ public class ControllerGame implements IController {
     @FXML private AnchorPane anchorPaneCenter;
     @FXML private ImageView imageViewBoard;
     @FXML private ImageView imageViewBoardLabels;
+    // Pawns and reachable cells
+    @FXML private Pane paneBoardOverlay;
 
-    @FXML private Label labelPawnScarlet;
-    @FXML private Label labelPawnPeacock;
-    @FXML private Label labelPawnGreen;
-    @FXML private Label labelPawnMustard;
-    @FXML private Label labelPawnPlum;
-    @FXML private Label labelPawnWhite;
+    // Top & bottom bars
+    @FXML private Label labelCurrentTurn;
+    @FXML private Label labelPlayerInfo;
+    @FXML private Label labelDice;
+    @FXML private ProgressIndicator progressIndicatorBot;
+    @FXML private Button buttonRollDice;
+    @FXML private Button buttonOpenClueQuestion;
+    @FXML private Button buttonFinalAccusation;
+    @FXML private Button buttonEndTurn;
 
     // Left pane
     @FXML private VBox vboxLeft;
@@ -99,8 +121,25 @@ public class ControllerGame implements IController {
 
     // Right pane
     @FXML private TabPane tabPaneRight;
+    @FXML private Tab tabObjective;
+    @FXML private ListView<String> listViewMyClues;
+    @FXML private Tab tabClueSheet;
+    @FXML private AnchorPane anchorPaneClueSheet;
     @FXML private Tab tabNotepad;
     @FXML private TextArea textAreaNotepad;
+
+    // Clue question pane (also used for the final accusation)
+    @FXML private VBox vboxClueQuestion;
+    @FXML private Label labelClueQuestionTitle;
+    @FXML private ComboBox<Character> comboBoxSuspect;
+    @FXML private ComboBox<Weapon> comboBoxWeapon;
+    @FXML private Label labelSelectRoom;
+    @FXML private ComboBox<Room> comboBoxRoom;
+    @FXML private Label labelQuestionWho;
+    @FXML private Label labelQuestionWhat;
+    @FXML private Label labelQuestionWhere;
+    @FXML private Button buttonAskClue;
+    private boolean finalAccusationMode;
 
     // Menu controls
     @FXML private Button buttonResume;
@@ -111,6 +150,13 @@ public class ControllerGame implements IController {
     private ClientStream client;
 
     private int playerTurn = 1;
+
+    // True once the first turn has begun
+    private boolean started;
+    // Player whose private information (clues, clue sheet, notepad) is shown. Null when hidden.
+    private Player viewer;
+    private final Map<Player, ClueSheet> clueSheets = new HashMap<>();
+    private PauseTransition botTimer;
 
     public ControllerGame()
     {
@@ -154,11 +200,25 @@ public class ControllerGame implements IController {
         imageViewBoardLabels.fitHeightProperty().bind(anchorPaneCenter.heightProperty());
         imageViewBoardLabels.setPreserveRatio(true);
         imageViewBoardLabels.setManaged(false);
-        
+        imageViewBoardLabels.setMouseTransparent(true);
+
+        // Redraw pawns and reachable cells when the board is resized
+        paneBoardOverlay.setManaged(false);
+        imageViewBoard.boundsInParentProperty().addListener((obs, oldValue, newValue) -> drawBoard());
+
         this.vboxWaitingCharacterSelection.setVisible(false);
         this.vboxCharacterSelection.setVisible(false);
         this.vboxPlayersList.setVisible(false);
         this.vboxMenu.setVisible(false);
+        this.vboxClueQuestion.setVisible(false);
+
+        // Clue question pane
+        setClueConverter(comboBoxSuspect);
+        setClueConverter(comboBoxWeapon);
+        setClueConverter(comboBoxRoom);
+        comboBoxSuspect.valueProperty().addListener(e -> updateQuestionLabels());
+        comboBoxWeapon.valueProperty().addListener(e -> updateQuestionLabels());
+        comboBoxRoom.valueProperty().addListener(e -> updateQuestionLabels());
 
         Platform.runLater(() -> {
             this.anchorPaneRoot.getScene().setOnKeyPressed(e -> {
@@ -202,18 +262,24 @@ public class ControllerGame implements IController {
         selectedCharacter = 0;
         updateSelectedCharacter();
 
-        // PlayersList pane
-        //showRollingDiceTurn(3);
-        showCharacterSelectionView(new ActionEvent());
+        if (game != null)
+        {
+            // Single Player: characters have already been assigned, show the turn order and start
+            this.textAreaChat.clear();
+            refresh();
+            showPlayersListView(new ActionEvent());
+        }
+        else
+        {
+            showCharacterSelectionView(new ActionEvent());
+        }
 
         // NB: in Single Player we won't show the turn animation, since there might be multiple human players
-
-        // Character selection
     }
 
     public void setProperties(ClientStream client, List<Player> playersList)
     {
-        initPlayersListView(playersList);
+        initPlayersListView(new ArrayList<>(playersList));
 
         hboxListPlayersFull.getChildren().clear();
         for(int i = 0; i < playersList.size(); i++)
@@ -221,6 +287,43 @@ public class ControllerGame implements IController {
             Player player = playersList.get(i);
             hboxListPlayersFull.getChildren().add(buildVBoxPlayerFullElement(player.getTurn(), player.getCharacter(), player.getUsername(), i == 0));
         }
+    }
+
+    // Prepares the view for a new game (single player)
+    public void setGame(GameCluedo game)
+    {
+        stopBot();
+        this.game = game;
+        this.started = false;
+        this.viewer = null;
+
+        // One clue sheet per player, with their own clues already ticked
+        this.clueSheets.clear();
+        for (Player player : game.getPlayers())
+        {
+            ClueSheet clueSheet = new ClueSheet(game.getTotalCluesList());
+            for (Clue clue : player.getClues())
+                clueSheet.setChecked(clue, true);
+            this.clueSheets.put(player, clueSheet);
+        }
+
+        // Clue question choices
+        List<Character> characterClues = new ArrayList<>();
+        List<Weapon> weaponClues = new ArrayList<>();
+        for (Clue clue : game.getTotalCluesList())
+        {
+            if (clue instanceof Character)
+                characterClues.add((Character) clue);
+            else if (clue instanceof Weapon)
+                weaponClues.add((Weapon) clue);
+        }
+        this.comboBoxSuspect.getItems().setAll(characterClues);
+        this.comboBoxWeapon.getItems().setAll(weaponClues);
+        this.comboBoxRoom.getItems().setAll(game.getBoard().getClueRooms());
+
+        // With a single human player, their information is always shown
+        List<Player> humans = getHumanPlayers();
+        setViewer(humans.size() == 1 ? humans.get(0) : null);
     }
 
     // Left view ==============================================================
@@ -241,8 +344,10 @@ public class ControllerGame implements IController {
         hboxResult.setPrefHeight(20.0);
         hboxResult.setAlignment(Pos.CENTER_LEFT);
 
-        Label labelPlayer = new Label(player.getTurn() + ". " + player.getUsername());
-        labelPlayer.setFont(Font.font(16.0));
+        boolean isCurrent = game != null && !game.isOver() && game.getCurrentPlayer().equals(player);
+        String suffix = (player instanceof PlayerArtificial ? " (bot)" : "") + (player.isEliminated() ? " - out" : "");
+        Label labelPlayer = new Label(player.getTurn() + ". " + player.getUsername() + suffix);
+        labelPlayer.setFont(Font.font("System", isCurrent ? FontWeight.BOLD : FontWeight.NORMAL, 16.0));
         labelPlayer.setPrefWidth(220.0);
         labelPlayer.setAlignment(Pos.CENTER_LEFT);
         hboxResult.getChildren().add(labelPlayer);
@@ -375,6 +480,13 @@ public class ControllerGame implements IController {
     public void closePlayersListView(ActionEvent event) {
         this.vboxPlayersList.setVisible(false);
         this.setBlur(borderPaneGame, false);
+
+        // The first time, the list shows the turn order: then the game begins
+        if (game != null && !started)
+        {
+            started = true;
+            beginTurn();
+        }
     }
 
     private VBox buildVBoxPlayerFullElement(int turn, Character character, String username, boolean isPlayer)
@@ -429,6 +541,514 @@ public class ControllerGame implements IController {
         return vboxResult;
     }
 
+    // Turns ==================================================================
+    private void beginTurn()
+    {
+        if (game.isOver())
+        {
+            showGameOver();
+            return;
+        }
+
+        Player player = game.getCurrentPlayer();
+        log("Turn of " + player.getUsername() + " (" + player.getCharacter().getName() + ")");
+
+        if (player instanceof PlayerArtificial)
+        {
+            if (getHumanPlayers().size() > 1)
+                setViewer(null);
+            refresh();
+            scheduleBotStep();
+            return;
+        }
+
+        // Hot-seat: hide the previous player's information until the next one takes the device
+        if (getHumanPlayers().size() > 1)
+        {
+            setViewer(null);
+            refresh();
+            showMessage("Next turn", "Pass the device to " + player.getUsername() + ", then press OK.");
+            setViewer(player);
+        }
+        refresh();
+    }
+
+    private boolean isHumanTurn()
+    {
+        Player current = game.getCurrentPlayer();
+        return !game.isOver() && current instanceof PlayerHuman && current.equals(viewer);
+    }
+
+    @FXML
+    public void rollDice(ActionEvent event)
+    {
+        Player player = game.getCurrentPlayer();
+        ActionRollDice action = new ActionRollDice(game, player);
+        if (!isHumanTurn() || !action.isAllowed())
+            return;
+
+        action.execute();
+        log(player.getUsername() + " rolled " + action.getResult());
+        refresh();
+    }
+
+    private void moveTo(int y, int x)
+    {
+        Player player = game.getCurrentPlayer();
+        ActionMove action = new ActionMove(game, player, game.getDiceResult(), player.getPosition(), new int[] {y, x});
+        if (!isHumanTurn() || !action.isAllowed())
+            return;
+
+        action.execute();
+        logMove(player);
+        refresh();
+    }
+
+    @FXML
+    public void endTurn(ActionEvent event)
+    {
+        ActionEndTurn action = new ActionEndTurn(game, game.getCurrentPlayer());
+        if (!isHumanTurn() || !action.isAllowed())
+            return;
+
+        action.execute();
+        beginTurn();
+    }
+
+    // Clue question & final accusation =======================================
+    @FXML
+    public void showClueQuestionView(ActionEvent event)
+    {
+        if (!isHumanTurn() || !game.canAskClue(game.getCurrentPlayer()))
+            return;
+
+        this.finalAccusationMode = false;
+        this.labelClueQuestionTitle.setText("Ask a Clue Question");
+        this.buttonAskClue.setText("Ask");
+        this.comboBoxRoom.setValue(game.getRoomOf(game.getCurrentPlayer()));
+        setRoomSelectionVisible(false);
+        openClueQuestionView();
+    }
+
+    @FXML
+    public void showFinalAccusationView(ActionEvent event)
+    {
+        if (!isHumanTurn() || !game.canMakeFinalAccusation(game.getCurrentPlayer()))
+            return;
+
+        this.finalAccusationMode = true;
+        this.labelClueQuestionTitle.setText("Final Accusation");
+        this.buttonAskClue.setText("Accuse");
+        setRoomSelectionVisible(true);
+        openClueQuestionView();
+    }
+
+    private void openClueQuestionView()
+    {
+        if (comboBoxSuspect.getValue() == null)
+            comboBoxSuspect.getSelectionModel().selectFirst();
+        if (comboBoxWeapon.getValue() == null)
+            comboBoxWeapon.getSelectionModel().selectFirst();
+        if (comboBoxRoom.getValue() == null)
+            comboBoxRoom.getSelectionModel().selectFirst();
+        updateQuestionLabels();
+
+        this.vboxClueQuestion.setVisible(true);
+        this.setBlur(borderPaneGame, true);
+    }
+
+    @FXML
+    public void closeClueQuestionView(ActionEvent event)
+    {
+        this.vboxClueQuestion.setVisible(false);
+        this.setBlur(borderPaneGame, false);
+    }
+
+    @FXML
+    public void confirmClueQuestion(ActionEvent event)
+    {
+        Player player = game.getCurrentPlayer();
+        Character character = comboBoxSuspect.getValue();
+        Weapon weapon = comboBoxWeapon.getValue();
+        Room room = comboBoxRoom.getValue();
+        if (character == null || weapon == null || room == null)
+            return;
+
+        closeClueQuestionView(event);
+
+        if (!finalAccusationMode)
+        {
+            ActionAskClue action = new ActionAskClue(game, player, character, weapon);
+            if (!isHumanTurn() || !action.isAllowed())
+                return;
+
+            action.execute();
+            handleClueQuestion(action.getResult());
+            refresh();
+            return;
+        }
+
+        ActionFinalAccusation action = new ActionFinalAccusation(game, player, room, character, weapon);
+        if (!isHumanTurn() || !action.isAllowed())
+            return;
+
+        action.execute();
+        logFinalAccusation(player, character, weapon, room, action.isCorrect());
+        if (game.isOver())
+        {
+            refresh();
+            showGameOver();
+            return;
+        }
+        showMessage("Final accusation", "Wrong! You are out of the game, but you will still answer the clue questions.");
+        beginTurn();
+    }
+
+    private void setRoomSelectionVisible(boolean value)
+    {
+        this.labelSelectRoom.setVisible(value);
+        this.labelSelectRoom.setManaged(value);
+        this.comboBoxRoom.setVisible(value);
+        this.comboBoxRoom.setManaged(value);
+    }
+
+    private void updateQuestionLabels()
+    {
+        labelQuestionWho.setText("Was it " + (comboBoxSuspect.getValue() == null ? "..." : comboBoxSuspect.getValue().getName()));
+        labelQuestionWhat.setText("with the " + (comboBoxWeapon.getValue() == null ? "..." : comboBoxWeapon.getValue().getName()));
+        labelQuestionWhere.setText("in the " + (comboBoxRoom.getValue() == null ? "..." : comboBoxRoom.getValue().getName()) + "?");
+    }
+
+    /*
+     * The answerer shows a clue to the asker. Humans choose which clue to show, bots choose by themselves.
+     * In hot-seat, the device is passed to the answerer and then back to the asker.
+     */
+    private void handleClueQuestion(ClueQuestion question)
+    {
+        Player asker = question.getAsker();
+        log(asker.getUsername() + " asks: " + question.getCharacter().getName() + ", " + question.getWeapon().getName()
+                + ", " + question.getRoom().getName());
+
+        if (!question.hasAnswerer())
+        {
+            log("Nobody could answer");
+            if (asker instanceof PlayerHuman)
+                showMessage("Clue question", "Nobody could answer!");
+            return;
+        }
+
+        Player answerer = question.getAnswerer();
+        Clue clue;
+        if (answerer instanceof PlayerArtificial)
+        {
+            clue = ((PlayerArtificial) answerer).chooseClueToShow(question);
+        }
+        else
+        {
+            if (getHumanPlayers().size() > 1)
+                passDeviceTo(answerer, asker.getUsername() + " asked a clue question that you can answer.");
+            clue = askClueToShow(answerer, question);
+        }
+        new ActionShowClue(game, answerer, clue).execute();
+        log(answerer.getUsername() + " showed a clue to " + asker.getUsername());
+
+        if (asker instanceof PlayerHuman)
+        {
+            if (getHumanPlayers().size() > 1)
+                passDeviceTo(asker, answerer.getUsername() + " answered your clue question.");
+            clueSheets.get(asker).setChecked(clue, true);
+            showMessage("Clue question", answerer.getUsername() + " showed you: " + clue.getName());
+        }
+        else if (getHumanPlayers().size() > 1)
+        {
+            // A bot asked: hide the answerer's information again
+            setViewer(null);
+        }
+    }
+
+    private void passDeviceTo(Player player, String reason)
+    {
+        setViewer(null);
+        refresh();
+        showMessage("Clue question", reason + "\nPass the device to " + player.getUsername() + ", then press OK.");
+        setViewer(player);
+        refresh();
+    }
+
+    private Clue askClueToShow(Player answerer, ClueQuestion question)
+    {
+        Map<String, Clue> options = new LinkedHashMap<>();
+        for (Clue clue : question.getAnswerOptions())
+            options.put(clue.getName(), clue);
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(options.keySet().iterator().next(), options.keySet());
+        dialog.initOwner(window);
+        dialog.setTitle("Clue question");
+        dialog.setHeaderText(question.getAsker().getUsername() + " asks: " + question.getCharacter().getName() + ", "
+                + question.getWeapon().getName() + ", " + question.getRoom().getName());
+        dialog.setContentText(answerer.getUsername() + ", choose the clue to show:");
+
+        // A clue must be shown: if the dialog is closed, the selected one is used
+        Optional<String> result = dialog.showAndWait();
+        return options.get(result.orElse(dialog.getSelectedItem()));
+    }
+
+    // Artificial players =====================================================
+    private void scheduleBotStep()
+    {
+        stopBot();
+        botTimer = new PauseTransition(BOT_DELAY);
+        // Dialogs can't be shown while an animation is running: run the step right after it
+        botTimer.setOnFinished(e -> Platform.runLater(this::botStep));
+        botTimer.play();
+    }
+
+    private void stopBot()
+    {
+        if (botTimer != null)
+            botTimer.stop();
+        botTimer = null;
+    }
+
+    private void botStep()
+    {
+        if (game == null || game.isOver() || !(game.getCurrentPlayer() instanceof PlayerArtificial))
+            return;
+
+        PlayerArtificial bot = (PlayerArtificial) game.getCurrentPlayer();
+        GameAction action = bot.nextAction(game);
+        action.execute();
+
+        if (action instanceof ActionRollDice)
+            log(bot.getUsername() + " rolled " + ((ActionRollDice) action).getResult());
+        else if (action instanceof ActionMove)
+            logMove(bot);
+        else if (action instanceof ActionAskClue)
+            handleClueQuestion(((ActionAskClue) action).getResult());
+        else if (action instanceof ActionFinalAccusation)
+        {
+            boolean correct = ((ActionFinalAccusation) action).isCorrect();
+            log(bot.getUsername() + " makes the final accusation: " + (correct ? "correct!" : "wrong, out of the game"));
+        }
+
+        if (game.isOver())
+        {
+            refresh();
+            showGameOver();
+        }
+        else if (game.getCurrentPlayer().equals(bot))
+        {
+            refresh();
+            scheduleBotStep();
+        }
+        else
+        {
+            beginTurn();
+        }
+    }
+
+    // Game over ==============================================================
+    private void showGameOver()
+    {
+        stopBot();
+        MurderEnvelope envelope = game.getMurderEnvelope();
+        Player winner = game.getWinner();
+        String result = (winner == null ? "Nobody solved the mystery." : winner.getUsername() + " solved the mystery!")
+                + "\n\nIt was " + envelope.getMurderer().getName() + ", with the " + envelope.getWeapon().getName()
+                + ", in the " + envelope.getRoom().getName() + ".";
+        log("Game over. " + result.replace("\n", " "));
+        refresh();
+        showMessage("Game over", result);
+    }
+
+    // Board ==================================================================
+
+    // Draws the pawns and, during a human turn, the reachable cells (click one of them to move there)
+    private void drawBoard()
+    {
+        paneBoardOverlay.getChildren().clear();
+        if (game == null)
+            return;
+
+        Bounds bounds = imageViewBoard.getBoundsInParent();
+        paneBoardOverlay.resizeRelocate(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
+        int rows = game.getBoard().getSize()[0];
+        int cols = game.getBoard().getSize()[1];
+        double cellWidth = bounds.getWidth() / cols;
+        double cellHeight = bounds.getHeight() / rows;
+
+        Player current = game.getCurrentPlayer();
+        if (isHumanTurn() && game.canMove(current))
+        {
+            int[][] destinations = game.getCurrentDestinations();
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < cols; x++)
+                {
+                    if (destinations[y][x] <= 0)
+                        continue;
+
+                    Rectangle cell = new Rectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    cell.setFill(Color.rgb(0, 200, 0, 0.45));
+                    cell.setStroke(Color.rgb(0, 120, 0, 0.8));
+                    cell.setCursor(Cursor.HAND);
+                    final int cellY = y;
+                    final int cellX = x;
+                    cell.setOnMouseClicked(e -> moveTo(cellY, cellX));
+                    paneBoardOverlay.getChildren().add(cell);
+                }
+            }
+        }
+
+        double radius = Math.min(cellWidth, cellHeight) * 0.38;
+        for (Player player : game.getPlayers())
+        {
+            int[] pos = player.getPosition();
+            Circle pawn = new Circle((pos[1] + 0.5) * cellWidth, (pos[0] + 0.5) * cellHeight, radius, Color.web(player.getCharacter().getColor()));
+            pawn.setStroke(Color.BLACK);
+            pawn.setStrokeWidth(!game.isOver() && player.equals(current) ? 3.0 : 1.0);
+            pawn.setOpacity(player.isEliminated() ? 0.5 : 1.0);
+            pawn.setMouseTransparent(true);
+            paneBoardOverlay.getChildren().add(pawn);
+        }
+    }
+
+    // Refreshes labels, buttons, players list, private information and board
+    private void refresh()
+    {
+        if (game == null)
+            return;
+
+        Player current = game.getCurrentPlayer();
+        boolean humanTurn = isHumanTurn();
+
+        labelCurrentTurn.setText(game.isOver() ? "Game over" : "Turn: " + current.getUsername() + " (" + current.getCharacter().getName() + ")");
+        labelDice.setText(game.getDiceResult() < 0 ? "-" : String.valueOf(game.getDiceResult()));
+        progressIndicatorBot.setVisible(!game.isOver() && current instanceof PlayerArtificial);
+
+        buttonRollDice.setDisable(!humanTurn || !game.canRollDices(current));
+        buttonOpenClueQuestion.setDisable(!humanTurn || !game.canAskClue(current));
+        buttonFinalAccusation.setDisable(!humanTurn || !game.canMakeFinalAccusation(current));
+        buttonEndTurn.setDisable(!humanTurn || !game.canEndTurn(current));
+
+        // Player info and hints
+        if (viewer == null)
+        {
+            labelPlayerInfo.setText("");
+        }
+        else
+        {
+            Room room = game.getRoomOf(viewer);
+            String info = viewer.getUsername() + " (" + viewer.getCharacter().getName() + ")" + (viewer.isEliminated() ? " - out of the game" : "")
+                    + "\nPosition: " + (room == null ? "corridor" : room.getName());
+            if (humanTurn && game.canMove(current))
+                info += "\nClick a green cell to move" + (game.getDiceResult() < 0 ? " (trapdoor) or roll the dice" : "");
+            else if (humanTurn && game.canAskClue(current))
+                info += "\nYou can ask a clue question";
+            labelPlayerInfo.setText(info);
+        }
+
+        initPlayersListView(new ArrayList<>(game.getPlayers()));
+        drawBoard();
+    }
+
+    // Shows the clues, clue sheet and notepad of the given player (null hides them)
+    private void setViewer(Player player)
+    {
+        if (viewer != null)
+            viewer.setNotebook(textAreaNotepad.getText());
+
+        this.viewer = player;
+
+        listViewMyClues.getItems().clear();
+        anchorPaneClueSheet.getChildren().clear();
+        textAreaNotepad.setText(player == null ? "" : player.getNotebook());
+        textAreaNotepad.setDisable(player == null);
+        if (player == null)
+            return;
+
+        for (Clue clue : player.getClues())
+            listViewMyClues.getItems().add(clue.getName());
+
+        ClueSheet clueSheet = clueSheets.get(player);
+        ScrollPane scrollPane = new ScrollPane(clueSheet);
+        scrollPane.setPadding(new Insets(5.0));
+        AnchorPane.setTopAnchor(scrollPane, 0.0);
+        AnchorPane.setBottomAnchor(scrollPane, 0.0);
+        AnchorPane.setLeftAnchor(scrollPane, 0.0);
+        AnchorPane.setRightAnchor(scrollPane, 0.0);
+        anchorPaneClueSheet.getChildren().add(scrollPane);
+    }
+
+    @FXML
+    public void showClueSheetTab(ActionEvent event)
+    {
+        tabPaneRight.getSelectionModel().select(tabClueSheet);
+    }
+
+    @FXML
+    public void showNotepadTab(ActionEvent event)
+    {
+        tabPaneRight.getSelectionModel().select(tabNotepad);
+    }
+
+    // Utilities ==============================================================
+    private List<Player> getHumanPlayers()
+    {
+        List<Player> result = new ArrayList<>();
+        if (game != null)
+        {
+            for (Player player : game.getPlayers())
+            {
+                if (player instanceof PlayerHuman)
+                    result.add(player);
+            }
+        }
+        return result;
+    }
+
+    private void logMove(Player player)
+    {
+        Room room = game.getRoomOf(player);
+        log(player.getUsername() + (room == null ? " moved" : " entered the " + room.getName()));
+    }
+
+    private void logFinalAccusation(Player player, Character character, Weapon weapon, Room room, boolean correct)
+    {
+        log(player.getUsername() + " makes the final accusation: " + character.getName() + ", " + weapon.getName() + ", "
+                + room.getName() + (correct ? " - correct!" : " - wrong, out of the game"));
+    }
+
+    // Game events are shown in the chat area
+    private void log(String text)
+    {
+        textAreaChat.appendText("> " + text + "\n");
+    }
+
+    private void showMessage(String title, String text)
+    {
+        // Buttons and board must reflect the current state while the dialog is open
+        refresh();
+        CenteredAlert alert = new CenteredAlert(this.window, AlertType.INFORMATION, title, text);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    private static <T extends Clue> void setClueConverter(ComboBox<T> comboBox)
+    {
+        comboBox.setConverter(new StringConverter<T>() {
+            @Override
+            public String toString(T clue) {
+                return clue == null ? "" : clue.getName();
+            }
+
+            @Override
+            public T fromString(String string) {
+                return null;
+            }
+        });
+    }
+
     @FXML
     public void sendChatMessage(ActionEvent event)
     {
@@ -445,6 +1065,11 @@ public class ControllerGame implements IController {
     @FXML
     public void quit(ActionEvent event)
     {
+        stopBot();
+        if (viewer != null)
+            viewer.setNotebook(textAreaNotepad.getText());
+        this.game = null;
+        this.vboxMenu.setVisible(false);
         Navigator.switchView(NavEntry.MAIN);
     }
 
