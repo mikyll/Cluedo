@@ -144,35 +144,58 @@ public class TerminalGame {
 		int[][] destinations = game.getCurrentDestinations();
 		System.out.println(toStringBoard(destinations));
 
-		// Reachable rooms can be chosen by name, corridor cells by coordinates
-		List<Room> rooms = new ArrayList<>();
-		for (Room room : game.getBoard().getRooms()) {
+		// Reachable rooms are chosen by their letter on the map, corridor cells by coordinates
+		List<Room> allRooms = game.getBoard().getRooms();
+		Map<String, Room> rooms = new LinkedHashMap<>();
+		for (Room room : allRooms) {
 			int[] cell = room.getCells().get(0);
 			if (destinations[cell[0]][cell[1]] > 0)
-				rooms.add(room);
+				rooms.put(String.valueOf((char) ('a' + allRooms.indexOf(room))), room);
 		}
-		for (int i = 0; i < rooms.size(); i++) {
-			System.out.println(i + ") enter the " + rooms.get(i).getName());
-		}
+		rooms.forEach((letter, room) -> System.out.println(letter + ") enter the " + room.getName()));
 
 		while (true) {
-			String input = readLine("Destination (room number, or row,col of a '*' cell): ").trim();
+			String input = readLine("Destination (room letter, or row,col of a '*' cell, row first): ").trim().toLowerCase();
 			int[] dst = null;
-			if (input.matches("\\d+") && Integer.parseInt(input) < rooms.size()) {
-				dst = rooms.get(Integer.parseInt(input)).getCells().get(0);
+			if (rooms.containsKey(input)) {
+				dst = rooms.get(input).getCells().get(0);
 			}
 			else if (input.matches("\\d+\\s*,\\s*\\d+")) {
 				String[] parts = input.split(",");
 				dst = new int[] {Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim())};
 			}
 
-			ActionMove action = dst == null ? null : new ActionMove(game, player, game.getDiceResult(), player.getPosition(), dst);
-			if (action != null && action.isAllowed()) {
+			if (dst == null) {
+				System.out.println("Invalid input: write "
+						+ (rooms.isEmpty() ? "" : "a room letter (e.g. " + rooms.keySet().iterator().next() + ") or ")
+						+ "the row and the column of a '*' cell, separated by a comma (e.g. 5,4)");
+				continue;
+			}
+			ActionMove action = new ActionMove(game, player, game.getDiceResult(), player.getPosition(), dst);
+			if (action.isAllowed()) {
 				action.execute();
 				return;
 			}
-			System.out.println("Unreachable destination");
+			System.out.println(describeCell(dst) + " is not reachable. Remember: row first, then column.");
 		}
+	}
+
+	// Says what is in a cell, to explain why it can't be reached
+	private String describeCell(int[] cell) {
+		Board board = game.getBoard();
+		String coordinates = "Row " + cell[0] + ", column " + cell[1];
+		if (!board.isInBounds(cell[0], cell[1]))
+			return coordinates + " is outside the board and";
+		Room room = board.getRoomAt(cell);
+		if (room != null)
+			return coordinates + " is in the " + room.getName() + " (" + (char) ('A' + board.getRooms().indexOf(room)) + "), which";
+		for (Player p : game.getPlayers()) {
+			if (p.getPosition()[0] == cell[0] && p.getPosition()[1] == cell[1])
+				return coordinates + " is taken by " + p.getUsername() + " and";
+		}
+		if (!board.isWalkable(cell[0], cell[1]))
+			return coordinates + " is a wall and";
+		return coordinates + " is a corridor cell too far away, which";
 	}
 
 	private void askClue(Player player) {
