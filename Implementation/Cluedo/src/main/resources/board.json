@@ -415,12 +415,30 @@
     }
   ],
   "starting_points": [
-    [4,0],
-    [18,0],
-    [23,9],
-    [23,14],
-    [6,23],
-    [0,16]
+    {
+      "position": [4,0],
+      "character": "plum"
+    },
+    {
+      "position": [18,0],
+      "character": "peacock"
+    },
+    {
+      "position": [23,9],
+      "character": "green"
+    },
+    {
+      "position": [23,14],
+      "character": "white"
+    },
+    {
+      "position": [6,23],
+      "character": "mustard"
+    },
+    {
+      "position": [0,16],
+      "character": "scarlet"
+    }
   ],
   "doors": [
     {

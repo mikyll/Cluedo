@@ -120,6 +120,30 @@ class GameCluedoTest {
 		assertTrue(solutions.size() > 1);
 	}
 
+	@Test
+	void pawnsStartOnTheSquareOfTheirCharacter() {
+		List<Player> players = new ArrayList<>(List.of(new PlayerHuman("a"), new PlayerHuman("b"), new PlayerHuman("c")));
+		GameCluedo g = new GameCluedo(players, 2, new Random(1));
+		g.prepareGame();
+		Board b = g.getBoard();
+
+		// Before choosing, every pawn waits on the square of a character
+		for (Player p : g.getPlayers()) {
+			assertTrue(b.getStartingPoints().stream().anyMatch(s -> Arrays.equals(s.getPosition(), p.getPosition())));
+		}
+
+		// After choosing, each pawn is on the square of its own character (swapping if needed)
+		for (int i = g.getPlayers().size() - 1; i >= 0; i--) {
+			g.setPlayerCharacter(i, g.getAvailableCharacters().size() - 1);
+		}
+		Set<String> positions = new HashSet<>();
+		for (Player p : g.getPlayers()) {
+			assertArrayEquals(b.getStartingPosition(p.getCharacter().getId()), p.getPosition(), p.getCharacter().getName());
+			positions.add(Arrays.toString(p.getPosition()));
+		}
+		assertEquals(3, positions.size());
+	}
+
 	// Dices ==================================================================
 	@Test
 	void twoDicesGoFrom2To12() {

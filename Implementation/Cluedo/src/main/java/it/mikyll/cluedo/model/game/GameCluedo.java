@@ -132,15 +132,23 @@ public class GameCluedo {
 			players.get(i % players.size()).getClues().add(assignableCluesList.get(i));
 		}
 
-		// Init player positions
-		List<int[]> initPos = new ArrayList<>(this.board.getStartingPoints());
-		Collections.shuffle(initPos, random);
-		for (int i = 0; i < this.players.size(); i++) {
-			Player player = this.players.get(i);
+		// Init player positions: each pawn starts on the square of its character.
+		// Players that haven't chosen a character yet wait on the square of an available one.
+		for (Player player : this.players) {
 			player.setPosition(null);
 			player.setEliminated(false);
 			player.setMoved(false);
-			movePlayer(player, initPos.get(i));
+		}
+		List<int[]> freePos = new ArrayList<>();
+		for (Character character : this.availableCharacters) {
+			freePos.add(board.getStartingPosition(character.getId()));
+		}
+		Collections.shuffle(freePos, random);
+		for (Player player : this.players) {
+			if (player.getCharacter() != null)
+				movePlayer(player, board.getStartingPosition(player.getCharacter().getId()));
+			else
+				movePlayer(player, freePos.remove(0));
 		}
 
 		this.currentPlayer = 0;
@@ -156,10 +164,35 @@ public class GameCluedo {
 			throw new IllegalArgumentException("Character number out of bounds");
 
 		Character character = availableCharacters.get(iCharacter);
-		this.players.get(iPlayer).setCharacter(character);
+		Player player = this.players.get(iPlayer);
+		player.setCharacter(character);
 
 		// Remove the character from the available characters
 		this.availableCharacters.remove(character);
+
+		// Move the pawn to the starting square of the character, swapping with whoever is waiting there
+		int[] target = board.getStartingPosition(character.getId());
+		int[] current = player.getPosition();
+		if (current != null && !Arrays.equals(current, target)) {
+			Player waiting = getPlayerAt(target);
+			if (waiting != null) {
+				waiting.setPosition(current);
+				this.playerCells[current[0]][current[1]] = waiting.getTurn();
+			}
+			else {
+				this.playerCells[current[0]][current[1]] = -1;
+			}
+			player.setPosition(new int[] {target[0], target[1]});
+			this.playerCells[target[0]][target[1]] = player.getTurn();
+		}
+	}
+
+	private Player getPlayerAt(int[] pos) {
+		for (Player p : players) {
+			if (p.getPosition() != null && Arrays.equals(p.getPosition(), pos))
+				return p;
+		}
+		return null;
 	}
 
 	private boolean isCharacterTaken(Character character) {

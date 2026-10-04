@@ -10,7 +10,7 @@ public class Board {
 
     private int[] size;
     private List<Room> rooms;
-    private List<int[]> startingPoints;
+    private List<StartingPoint> startingPoints;
     private List<Door> doors;
     private List<Trapdoor> trapdoors;
     private List<int[]> voidCells;
@@ -37,8 +37,8 @@ public class Board {
     public void setRooms(List<Room> rooms) {this.rooms = rooms;}
     public List<Trapdoor> getTrapdoors() {return trapdoors;}
     public void setTrapdoors(List<Trapdoor> trapdoors) {this.trapdoors = trapdoors;}
-    public List<int[]> getStartingPoints() {return startingPoints;}
-    public void setStartingPoints(List<int[]> startingPoints) {this.startingPoints = startingPoints;}
+    public List<StartingPoint> getStartingPoints() {return startingPoints;}
+    public void setStartingPoints(List<StartingPoint> startingPoints) {this.startingPoints = startingPoints;}
     public List<Door> getDoors() {return doors;}
     public void setDoors(List<Door> doors) {this.doors = doors;}
     public CellType[][] getCells() {return cells;}
@@ -77,9 +77,9 @@ public class Board {
         }
 
         // Init starting points
-        for (int[] s : this.startingPoints) {
-            int y = s[0];
-            int x = s[1];
+        for (StartingPoint s : this.startingPoints) {
+            int y = s.getPosition()[0];
+            int x = s.getPosition()[1];
             if (this.cells[y][x].equals(CellType.EMPTY)) {
                 this.cells[y][x] = CellType.INIT;
             }
@@ -178,6 +178,15 @@ public class Board {
         for (Room r : rooms) {
             if (r.getId().equals(id))
                 return r;
+        }
+        return null;
+    }
+
+    // Returns the starting square of the given character (see characters.json), or null
+    public int[] getStartingPosition(String characterId) {
+        for (StartingPoint s : startingPoints) {
+            if (s.getCharacter().equals(characterId))
+                return s.getPosition();
         }
         return null;
     }
