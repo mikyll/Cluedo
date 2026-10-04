@@ -91,7 +91,7 @@ public class ControllerLobbyClient implements IController {
         this.client.setReadyMessageHandler(readyHandler);
         this.client.setKickMessageHandler(kickHandler);
         this.client.setBanMessageHandler(banHandler);
-        this.client.setGenericMessageHandler(banHandler);
+        this.client.setGenericMessageHandler(genericHandler);
     }
 
     protected void setProperties(ClientStream client, String username)

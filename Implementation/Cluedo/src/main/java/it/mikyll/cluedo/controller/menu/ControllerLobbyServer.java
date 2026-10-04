@@ -174,7 +174,7 @@ public class ControllerLobbyServer implements IController {
         this.buttonChatSend.setDisable(false);
         this.buttonBack.setDisable(false);
         this.buttonLobbySettings.setDisable(false);
-        this.buttonStartGame.setDisable(this.server.canStart());
+        this.buttonStartGame.setDisable(!this.server.canStart());
     }
 
     @FXML public void ban(ActionEvent event)
