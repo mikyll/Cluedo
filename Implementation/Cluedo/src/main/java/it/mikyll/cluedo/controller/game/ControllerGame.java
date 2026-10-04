@@ -14,22 +14,20 @@ import it.mikyll.cluedo.model.game.clues.Weapon;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
 import it.mikyll.cluedo.model.game.player.PlayerHuman;
-import it.mikyll.cluedo.model.localization.Language;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
 import it.mikyll.cluedo.model.sounds.MusicTrack;
 import it.mikyll.cluedo.persistence.AssetLoader;
 import it.mikyll.cluedo.view.gui.javafx.CenteredAlert;
+import it.mikyll.cluedo.view.gui.javafx.BoardView;
 import it.mikyll.cluedo.view.gui.javafx.ClueSheet;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -41,11 +39,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.StageStyle;
@@ -58,6 +53,7 @@ import java.util.*;
 public class ControllerGame implements IController {
     // Pause between two actions of an artificial player, so that humans can follow them
     private static final Duration BOT_DELAY = Duration.millis(800);
+    private static final double MIN_RIGHT_PANE_WIDTH = 250.0;
 
     @FXML private AnchorPane anchorPaneRoot;
     @FXML private BorderPane borderPaneGame;
@@ -98,10 +94,8 @@ public class ControllerGame implements IController {
 
     // Center pane
     @FXML private AnchorPane anchorPaneCenter;
-    @FXML private ImageView imageViewBoard;
-    @FXML private ImageView imageViewBoardLabels;
-    // Pawns and reachable cells
-    @FXML private Pane paneBoardOverlay;
+    // Board, pawns and reachable cells
+    private BoardView boardView;
 
     // Top & bottom bars
     @FXML private Label labelCurrentTurn;
@@ -193,19 +187,9 @@ public class ControllerGame implements IController {
     @Override
     public void initialize()
     {
-        imageViewBoard.fitWidthProperty().bind(anchorPaneCenter.widthProperty());
-        imageViewBoard.fitHeightProperty().bind(anchorPaneCenter.heightProperty());
-        imageViewBoard.setPreserveRatio(true);
-        imageViewBoard.setManaged(false);
-        imageViewBoardLabels.fitWidthProperty().bind(anchorPaneCenter.widthProperty());
-        imageViewBoardLabels.fitHeightProperty().bind(anchorPaneCenter.heightProperty());
-        imageViewBoardLabels.setPreserveRatio(true);
-        imageViewBoardLabels.setManaged(false);
-        imageViewBoardLabels.setMouseTransparent(true);
-
-        // Redraw pawns and reachable cells when the board is resized
-        paneBoardOverlay.setManaged(false);
-        imageViewBoard.boundsInParentProperty().addListener((obs, oldValue, newValue) -> drawBoard());
+        // The right pane takes the width left beside a square board, also when the window is resized
+        anchorPaneRoot.widthProperty().addListener(e -> fitRightPane());
+        anchorPaneCenter.heightProperty().addListener(e -> fitRightPane());
 
         this.vboxWaitingCharacterSelection.setVisible(false);
         this.vboxCharacterSelection.setVisible(false);
@@ -245,21 +229,14 @@ public class ControllerGame implements IController {
 
         Navigator.setFullscreen(true);
 
-        // Room names on the board, in the selected language
-        String labelsFilename = settings.getLanguage() == Language.ITALIAN ? "map_labels_it.png" : "map_labels_en.png";
-        imageViewBoardLabels.setImage(new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/map/" + labelsFilename).toString()));
-
-        // Get board size
-        Image boardImage = imageViewBoard.getImage();
-        double boardAspectRatio = boardImage.getWidth() / boardImage.getHeight();
-        double boardWidth = Math.min(imageViewBoard.getFitWidth(), imageViewBoard.getFitHeight() * boardAspectRatio);
-        double boardHeight = Math.min(imageViewBoard.getFitHeight(), imageViewBoard.getFitWidth() / boardAspectRatio);
+        // Get board size (the board is square)
+        double boardWidth = Math.min(anchorPaneCenter.getWidth(), anchorPaneCenter.getHeight());
 
         // Adjust left pane
         this.textAreaChat.setPrefHeight(this.vboxLeft.getHeight() - 50 - this.listViewPlayers.getHeight());
 
         // Adjust right pane width
-        this.tabPaneRight.setPrefWidth(anchorPaneRoot.getWidth() - (vboxLeft.getWidth() + boardWidth));
+        fitRightPane();
 
         // Character Selection pane
         availableCharacters = new ArrayList<>(this.characters);
@@ -301,6 +278,14 @@ public class ControllerGame implements IController {
         this.game = game;
         this.started = false;
         this.viewer = null;
+
+        // Board, drawn from board.json: it fills the center pane
+        this.boardView = new BoardView(game.getBoard(), this.characters);
+        AnchorPane.setTopAnchor(boardView, 0.0);
+        AnchorPane.setBottomAnchor(boardView, 0.0);
+        AnchorPane.setLeftAnchor(boardView, 0.0);
+        AnchorPane.setRightAnchor(boardView, 0.0);
+        this.anchorPaneCenter.getChildren().setAll(boardView);
 
         // One clue sheet per player, with their own clues already ticked
         this.clueSheets.clear();
@@ -871,51 +856,12 @@ public class ControllerGame implements IController {
     // Draws the pawns and, during a human turn, the reachable cells (click one of them to move there)
     private void drawBoard()
     {
-        paneBoardOverlay.getChildren().clear();
-        if (game == null)
+        if (game == null || boardView == null)
             return;
 
-        Bounds bounds = imageViewBoard.getBoundsInParent();
-        paneBoardOverlay.resizeRelocate(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
-        int rows = game.getBoard().getSize()[0];
-        int cols = game.getBoard().getSize()[1];
-        double cellWidth = bounds.getWidth() / cols;
-        double cellHeight = bounds.getHeight() / rows;
-
         Player current = game.getCurrentPlayer();
-        if (isHumanTurn() && game.canMove(current))
-        {
-            int[][] destinations = game.getCurrentDestinations();
-            for (int y = 0; y < rows; y++)
-            {
-                for (int x = 0; x < cols; x++)
-                {
-                    if (destinations[y][x] <= 0)
-                        continue;
-
-                    Rectangle cell = new Rectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                    cell.setFill(Color.rgb(0, 200, 0, 0.45));
-                    cell.setStroke(Color.rgb(0, 120, 0, 0.8));
-                    cell.setCursor(Cursor.HAND);
-                    final int cellY = y;
-                    final int cellX = x;
-                    cell.setOnMouseClicked(e -> moveTo(cellY, cellX));
-                    paneBoardOverlay.getChildren().add(cell);
-                }
-            }
-        }
-
-        double radius = Math.min(cellWidth, cellHeight) * 0.38;
-        for (Player player : game.getPlayers())
-        {
-            int[] pos = player.getPosition();
-            Circle pawn = new Circle((pos[1] + 0.5) * cellWidth, (pos[0] + 0.5) * cellHeight, radius, Color.web(player.getCharacter().getColor()));
-            pawn.setStroke(Color.BLACK);
-            pawn.setStrokeWidth(!game.isOver() && player.equals(current) ? 3.0 : 1.0);
-            pawn.setOpacity(player.isEliminated() ? 0.5 : 1.0);
-            pawn.setMouseTransparent(true);
-            paneBoardOverlay.getChildren().add(pawn);
-        }
+        int[][] destinations = isHumanTurn() && game.canMove(current) ? game.getCurrentDestinations() : null;
+        boardView.update(game.getPlayers(), game.isOver() ? null : current, destinations, this::moveTo);
     }
 
     // Refreshes labels, buttons, players list, private information and board
@@ -983,6 +929,12 @@ public class ControllerGame implements IController {
         AnchorPane.setLeftAnchor(scrollPane, 0.0);
         AnchorPane.setRightAnchor(scrollPane, 0.0);
         anchorPaneClueSheet.getChildren().add(scrollPane);
+    }
+
+    private void fitRightPane()
+    {
+        double width = anchorPaneRoot.getWidth() - vboxLeft.getWidth() - anchorPaneCenter.getHeight();
+        this.tabPaneRight.setPrefWidth(Math.max(MIN_RIGHT_PANE_WIDTH, width));
     }
 
     @FXML

@@ -29,18 +29,7 @@
          <center>
             <AnchorPane fx:id="anchorPaneCenter" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: yellow;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="imageViewBoard" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <image>
-                        <Image url="@../images/map/map.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="imageViewBoardLabels" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <image>
-                        <Image url="@../images/map/map_labels_it.png" />
-                     </image>
-                  </ImageView>
-                  <!-- Pawns and reachable cells are drawn here by ControllerGame -->
-                  <Pane fx:id="paneBoardOverlay" pickOnBounds="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <!-- The board (BoardView) is added by ControllerGame when a game starts -->
                </children>
             </AnchorPane>
          </center>
