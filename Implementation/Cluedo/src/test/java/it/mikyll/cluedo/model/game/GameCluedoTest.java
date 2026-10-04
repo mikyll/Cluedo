@@ -193,6 +193,20 @@ class GameCluedoTest {
 	}
 
 	@Test
+	void pawnsInARoomStayNearItsCenter() {
+		Room study = room("study");
+		game.movePlayer(p1, STUDY_CELL);
+		game.movePlayer(p2, STUDY_CELL);
+
+		assertEquals(study, game.getRoomOf(p1));
+		assertEquals(study, game.getRoomOf(p2));
+		assertFalse(Arrays.equals(p1.getPosition(), p2.getPosition()), "each pawn has its own cell");
+		// The room name is written in the top-left corner
+		assertFalse(Arrays.equals(new int[] {0, 0}, p1.getPosition()));
+		assertTrue(distanceFromCenter(study, p1.getPosition()) <= 1.5);
+	}
+
+	@Test
 	void moveFollowsDiceResult() {
 		game.rollDicesForTurn();
 		int steps = game.getDiceResult();
@@ -426,6 +440,12 @@ class GameCluedoTest {
 
 	private Room room(String id) {
 		return Objects.requireNonNull(board.getRoomById(id), id);
+	}
+
+	private static double distanceFromCenter(Room room, int[] cell) {
+		double y = room.getCells().stream().mapToInt(c -> c[0]).average().orElseThrow();
+		double x = room.getCells().stream().mapToInt(c -> c[1]).average().orElseThrow();
+		return Math.hypot(cell[0] - y, cell[1] - x);
 	}
 
 	private static boolean isReachable(int[][] reachable, int[] cell) {

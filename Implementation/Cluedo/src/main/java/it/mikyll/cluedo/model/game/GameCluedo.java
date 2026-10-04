@@ -194,15 +194,17 @@ public class GameCluedo {
 
 	/*
 	 * Puts the player pawn on the given cell, without checking the game rules.
-	 * Many pawns can stay in a room: if the room cell is taken, another free cell of the same room is used.
+	 * Many pawns can stay in a room: any cell of the room means the room, and the pawn is put on a free cell
+	 * near its center (room names are written in a corner).
 	 */
 	public void movePlayer(Player player, int[] newPos) {
 		int[] dst = newPos;
 		Room room = board.getRoomAt(newPos);
-		if (playerCells[dst[0]][dst[1]] != -1 && playerCells[dst[0]][dst[1]] != player.getTurn()) {
-			if (room == null)
-				throw new IllegalArgumentException("Cell [" + dst[0] + "," + dst[1] + "] is already occupied");
+		if (room != null) {
 			dst = getFreeCell(room);
+		}
+		else if (playerCells[dst[0]][dst[1]] != -1 && playerCells[dst[0]][dst[1]] != player.getTurn()) {
+			throw new IllegalArgumentException("Cell [" + dst[0] + "," + dst[1] + "] is already occupied");
 		}
 
 		int[] src = player.getPosition();
@@ -218,8 +220,22 @@ public class GameCluedo {
 			movePlayer(player, getFreeCell(room));
 	}
 
+	// Returns the free cell of the room closest to its center
 	private int[] getFreeCell(Room room) {
+		double centerY = 0;
+		double centerX = 0;
 		for (int[] cell : room.getCells()) {
+			centerY += cell[0];
+			centerX += cell[1];
+		}
+		centerY /= room.getCells().size();
+		centerX /= room.getCells().size();
+
+		List<int[]> cells = new ArrayList<>(room.getCells());
+		final double y = centerY;
+		final double x = centerX;
+		cells.sort(Comparator.comparingDouble(cell -> Math.hypot(cell[0] - y, cell[1] - x)));
+		for (int[] cell : cells) {
 			if (playerCells[cell[0]][cell[1]] == -1)
 				return cell;
 		}
