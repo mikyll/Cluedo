@@ -24,6 +24,8 @@ public class ClueQuestion {
 	// Clues the answerer can choose from
 	private final List<Clue> answerOptions;
 	private Clue shownClue;
+	// In multiplayer the shown clue is known only by the asker and the answerer: the others only know it was shown
+	private boolean answered;
 
 	public ClueQuestion(Player asker, Character character, Weapon weapon, Room room, Player answerer, List<Clue> answerOptions) {
 		this.asker = asker;
@@ -41,13 +43,17 @@ public class ClueQuestion {
 	public Player getAnswerer() {return answerer;}
 	public List<Clue> getAnswerOptions() {return new ArrayList<>(answerOptions);}
 	public Clue getShownClue() {return shownClue;}
-	void setShownClue(Clue shownClue) {this.shownClue = shownClue;}
+	void setShownClue(Clue shownClue) {
+		this.shownClue = shownClue;
+		this.answered = true;
+	}
+	void setAnswered() {this.answered = true;}
 
 	public boolean hasAnswerer() {
 		return answerer != null;
 	}
 
 	public boolean isAnswered() {
-		return answerer == null || shownClue != null;
+		return answerer == null || answered;
 	}
 }

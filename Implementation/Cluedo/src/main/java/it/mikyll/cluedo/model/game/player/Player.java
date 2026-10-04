@@ -22,6 +22,8 @@ public abstract class Player extends User {
 	private boolean eliminated = false;
 	// True if the pawn was moved into a room by someone else's clue question, since the player's last turn
 	private boolean moved = false;
+	// True if the player left a multiplayer game: their clues are revealed and they don't answer anymore
+	private boolean left = false;
 
 	public Player(User user) {
 		super(user.getUsername());
@@ -46,6 +48,8 @@ public abstract class Player extends User {
 	public boolean isEliminated() {return eliminated;}
 	public void setEliminated(boolean eliminated) {this.eliminated = eliminated;}
 	public void setMoved(boolean moved) {this.moved = moved;}
+	public boolean hasLeft() {return left;}
+	public void setLeft(boolean left) {this.left = left;}
 
 	public boolean wasMoved() {
 		return moved;

@@ -86,7 +86,8 @@ public class GameCluedo {
 
 	// NB: the envelope should be revealed only when the game is over
 	public MurderEnvelope getMurderEnvelope() {return murderEnvelope;}
-	void setMurderEnvelope(MurderEnvelope murderEnvelope) {this.murderEnvelope = murderEnvelope;}
+	// Used by tests, and by multiplayer clients when the host reveals the envelope at the end of the game
+	public void setMurderEnvelope(MurderEnvelope murderEnvelope) {this.murderEnvelope = murderEnvelope;}
 
 	public void prepareGame() {
 		// Init board
@@ -155,6 +156,53 @@ public class GameCluedo {
 		this.over = false;
 		this.winner = null;
 		resetTurn();
+	}
+
+	/*
+	 * Prepares a copy of a game hosted by someone else (multiplayer client). Turns, characters, positions and
+	 * the clues of the local player must already be set on the players: the other clues and the murder envelope
+	 * are unknown.
+	 */
+	public void prepareCopy() {
+		board = AssetLoader.loadBoard();
+		board.initCells();
+		this.playerCells = new int[board.getSize()[0]][board.getSize()[1]];
+		for (int[] row : playerCells) {
+			Arrays.fill(row, -1);
+		}
+
+		totalCluesList = new ArrayList<>();
+		totalCluesList.addAll(AssetLoader.loadCharacters());
+		totalCluesList.addAll(board.getClueRooms());
+		totalCluesList.addAll(AssetLoader.loadWeapons());
+
+		this.availableCharacters = new ArrayList<>();
+		for (Clue c : totalCluesList) {
+			if (c.getType().equals(ClueType.CHARACTER) && !isCharacterTaken((Character) c)) {
+				this.availableCharacters.add((Character) c);
+			}
+		}
+
+		for (Player player : players) {
+			int[] pos = player.getPosition();
+			player.setPosition(null);
+			movePlayer(player, pos);
+		}
+
+		this.murderEnvelope = null;
+		this.currentPlayer = 0;
+		this.over = false;
+		this.winner = null;
+		resetTurn();
+	}
+
+	// Index of the character among the available ones, or -1
+	public int getAvailableCharacterIndex(String characterId) {
+		for (int i = 0; i < availableCharacters.size(); i++) {
+			if (availableCharacters.get(i).getId().equals(characterId))
+				return i;
+		}
+		return -1;
 	}
 
 	public void setPlayerCharacter(int iPlayer, int iCharacter) {
@@ -300,6 +348,14 @@ public class GameCluedo {
 
 		this.diceResult = rollDices();
 		return this.diceResult;
+	}
+
+	// Multiplayer clients: the dices are rolled by the host
+	public void applyDiceResult(int result) {
+		if (!canRollDices(getCurrentPlayer()))
+			throw new IllegalStateException("Dices can't be rolled now");
+
+		this.diceResult = result;
 	}
 
 	// Returns the room reachable with the trapdoor of the room the player is in, or null
@@ -458,6 +514,35 @@ public class GameCluedo {
 		if (!room.equals(getRoomOf(player)))
 			throw new IllegalArgumentException("The clue question must be about the room the player is in");
 
+		// Ask the other players, in turn order (players who left can't answer: their clues are known to everyone)
+		for (int offset = 1; offset < players.size(); offset++) {
+			Player other = players.get((currentPlayer + offset) % players.size());
+			if (other.hasLeft())
+				continue;
+			List<Clue> options = new ArrayList<>();
+			for (Clue clue : List.of(character, weapon, room)) {
+				if (other.getClues().contains(clue))
+					options.add(clue);
+			}
+			if (!options.isEmpty()) {
+				return registerClueQuestion(player, character, weapon, room, other, options);
+			}
+		}
+
+		// Nobody could answer
+		ClueQuestion question = registerClueQuestion(player, character, weapon, room, null, List.of());
+		player.onClueQuestionAnswered(question);
+		return question;
+	}
+
+	/*
+	 * Records a clue question and moves the pawn of the named character into the room.
+	 * Multiplayer clients use it directly, since the answerer is found by the host.
+	 */
+	public ClueQuestion registerClueQuestion(Player player, Character character, Weapon weapon, Room room, Player answerer, List<Clue> options) {
+		if (!canAskClue(player))
+			throw new IllegalStateException(player.getUsername() + " can't ask a clue question now");
+
 		this.hasAskedClue = true;
 
 		// The pawn of the named character is moved into the room
@@ -468,24 +553,19 @@ public class GameCluedo {
 			}
 		}
 
-		// Ask the other players, in turn order
-		for (int offset = 1; offset < players.size(); offset++) {
-			Player other = players.get((currentPlayer + offset) % players.size());
-			List<Clue> options = new ArrayList<>();
-			for (Clue clue : List.of(character, weapon, room)) {
-				if (other.getClues().contains(clue))
-					options.add(clue);
-			}
-			if (!options.isEmpty()) {
-				this.clueQuestion = new ClueQuestion(player, character, weapon, room, other, options);
-				return this.clueQuestion;
-			}
-		}
-
-		// Nobody could answer
-		this.clueQuestion = new ClueQuestion(player, character, weapon, room, null, List.of());
-		player.onClueQuestionAnswered(this.clueQuestion);
+		this.clueQuestion = new ClueQuestion(player, character, weapon, room, answerer, options);
 		return this.clueQuestion;
+	}
+
+	// Multiplayer clients: the question was answered, but the shown clue is known only by the asker and the answerer
+	public void applyClueAnswered(Clue shownClue) {
+		if (!isWaitingForAnswer())
+			throw new IllegalStateException("There is no clue question to answer");
+
+		if (shownClue != null)
+			clueQuestion.setShownClue(shownClue);
+		else
+			clueQuestion.setAnswered();
 	}
 
 	public boolean isWaitingForAnswer() {
@@ -522,24 +602,64 @@ public class GameCluedo {
 		if (!canMakeFinalAccusation(player))
 			throw new IllegalStateException(player.getUsername() + " can't make the final accusation now");
 
-		if (murderEnvelope.makeAccusation(who, what, where)) {
+		boolean correct = murderEnvelope.makeAccusation(who, what, where);
+		applyFinalAccusation(player, correct);
+		return correct;
+	}
+
+	// Applies the result of a final accusation (multiplayer clients get it from the host)
+	public void applyFinalAccusation(Player player, boolean correct) {
+		if (!canMakeFinalAccusation(player))
+			throw new IllegalStateException(player.getUsername() + " can't make the final accusation now");
+
+		if (correct) {
 			this.winner = player;
 			this.over = true;
-			return true;
+			return;
 		}
 
 		player.setEliminated(true);
-		boolean allEliminated = true;
-		for (Player p : players) {
-			allEliminated &= p.isEliminated();
-		}
-		if (allEliminated) {
+		checkAllEliminated();
+	}
+
+	/*
+	 * A player left a multiplayer game: they are out of the game and don't answer clue questions anymore
+	 * (their clues are revealed to everyone). If it was their turn, the turn passes to the next player.
+	 * A pending question they had to answer must be answered before (the host shows one of their clues).
+	 */
+	public void removePlayer(Player player) {
+		if (isWaitingForAnswer() && player.equals(clueQuestion.getAnswerer()))
+			throw new IllegalStateException("The pending clue question must be answered first");
+
+		boolean wasCurrent = !over && getCurrentPlayer().equals(player);
+		player.setLeft(true);
+		player.setEliminated(true);
+		if (over)
+			return;
+
+		if (wasCurrent && isWaitingForAnswer())
+			clueQuestion.setAnswered();
+		if (wasCurrent)
+			checkAllEliminated();
+		else if (allEliminated())
 			this.over = true;
+	}
+
+	private boolean allEliminated() {
+		for (Player p : players) {
+			if (!p.isEliminated())
+				return false;
 		}
-		else {
-			nextPlayer();
+		return true;
+	}
+
+	// Ends the game if everybody is out, otherwise passes the turn
+	private void checkAllEliminated() {
+		if (allEliminated()) {
+			this.over = true;
+			return;
 		}
-		return false;
+		nextPlayer();
 	}
 
 	public boolean canEndTurn(Player player) {
