@@ -2,6 +2,8 @@ package it.mikyll.cluedo.model.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.mikyll.cluedo.model.game.actions.ActionMove;
+import it.mikyll.cluedo.model.game.actions.ActionRollDice;
 import it.mikyll.cluedo.model.game.actions.ActionShowClue;
 import it.mikyll.cluedo.model.game.actions.GameAction;
 import it.mikyll.cluedo.model.game.clues.Character;
@@ -22,7 +24,7 @@ class PlayerArtificialTest {
 
 	@Test
 	void botsOnlyGamesEndWithTheRightWinner() {
-		for (int seed = 0; seed < 50; seed++) {
+		for (int seed = 0; seed < 300; seed++) {
 			int numPlayers = 2 + seed % 5;
 			GameCluedo game = playBotsOnlyGame(numPlayers, seed);
 
@@ -72,6 +74,34 @@ class PlayerArtificialTest {
 				(Weapon) envelope.getWeapon(), (Room) envelope.getRoom(), null, List.of()));
 
 		assertTrue(bot.knowsSolution(game));
+	}
+
+	@Test
+	void leavesTheMurderRoomToKeepAsking() {
+		// Once the murder room is known, staying there would block the bot: it can ask again only after moving
+		GameCluedo game = newBotsGame(2, new Random(5));
+		PlayerArtificial bot = (PlayerArtificial) game.getCurrentPlayer();
+		MurderEnvelope envelope = game.getMurderEnvelope();
+		Room murderRoom = (Room) envelope.getRoom();
+
+		// The bot knows every room except the murder one, but not the character nor the weapon
+		for (Clue clue : game.getTotalCluesList()) {
+			if (clue instanceof Room && !clue.equals(murderRoom) && !bot.getClues().contains(clue)) {
+				ClueQuestion question = new ClueQuestion(bot, null, null, null, game.getPlayers().get(1), List.of(clue));
+				question.setShownClue(clue);
+				bot.onClueQuestionAnswered(question);
+			}
+		}
+		game.movePlayer(bot, murderRoom.getCells().get(0));
+		assertFalse(bot.knowsSolution(game));
+
+		// Instead of rolling and ending the turn, the bot moves (by trapdoor or after rolling the dices)
+		GameAction action = bot.nextAction(game);
+		if (action instanceof ActionRollDice) {
+			action.execute();
+			action = bot.nextAction(game);
+		}
+		assertInstanceOf(ActionMove.class, action);
 	}
 
 	private static GameCluedo playBotsOnlyGame(int numPlayers, long seed) {

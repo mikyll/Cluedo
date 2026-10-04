@@ -146,6 +146,13 @@ public class PlayerArtificial extends Player {
 			targets.addAll(getCandidates(game, Room.class));
 		}
 		targets.remove(game.getRoomOf(this));
+
+		// The murder room may be known (and be the current one) while the character or the weapon are not:
+		// any other room is fine to keep asking questions
+		if (targets.isEmpty() && !knowsSolution(game)) {
+			targets.addAll(board.getClueRooms());
+			targets.remove(game.getRoomOf(this));
+		}
 		return targets;
 	}
 
