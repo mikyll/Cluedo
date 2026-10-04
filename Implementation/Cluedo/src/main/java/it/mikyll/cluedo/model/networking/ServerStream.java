@@ -12,7 +12,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import it.mikyll.cluedo.controller.ControllerMenu;
 import it.mikyll.cluedo.model.game.GameCluedo;
 import it.mikyll.cluedo.model.networking.message.IMessageHandler;
 import it.mikyll.cluedo.model.networking.message.Message;
@@ -35,6 +34,7 @@ public class ServerStream {
 	private IMessageHandler readyHandler;
 	private IMessageHandler disconnectHandler;
 	private IMessageHandler genericHandler;
+	private IMessageHandler gameHandler;
 	
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> writers = new ArrayList<ObjectOutputStream>();
@@ -93,16 +93,59 @@ public class ServerStream {
 	{
 		this.genericHandler = msgHandler;
 	}
+	public void setGameMessageHandler(IMessageHandler msgHandler)
+	{
+		this.gameHandler = msgHandler;
+	}
 
+	public String getOwnerUsername() {return ownerUser.getUsername();}
+
+	// Usernames of the users in the lobby (the owner first)
+	public synchronized java.util.List<String> getUsernames()
+	{
+		java.util.List<String> result = new ArrayList<>();
+		for (User u : this.users)
+			result.add(u.getUsername());
+		return result;
+	}
+
+	/*
+	 * Tells the clients to switch to the game. The lobby is closed: nobody else can join.
+	 */
 	public void startGame() {
-		// TODO
-		// this.game = new Game();
+		this.isOpen = false;
+		this.sendMessage(new Message(MessageType.START_GAME, ownerUser.getUsername(), ""));
+	}
+
+	// Sends a GAME message (JSON content) to one user
+	public synchronized void sendGameMessage(String username, String content)
+	{
+		for (int i = 1; i < this.users.size(); i++)
+		{
+			if (this.users.get(i).getUsername().equals(username))
+			{
+				this.write(i, new Message(MessageType.GAME, username, content));
+				return;
+			}
+		}
+	}
+
+	// Writes a message to a client. Streams are shared between threads: writes must not overlap
+	private synchronized void write(int i, Message message)
+	{
+		try {
+			ObjectOutputStream writer = this.writers.get(i);
+			writer.writeObject(message);
+			writer.reset();
+		} catch (IOException e) {
+			System.out.println("IOException while trying to send message to " + this.users.get(i).getUsername());
+		}
 	}
 	
 	/*
 	 * Kick out the User from the lobby, closing the connection and removing its writer stream from the list.
 	 */
-	public void sendKickUser(String username)
+	public synchronized void sendKickUser(String username)
 	{
 		Message msg = new Message(MessageType.KICK, username, "You have been kicked out from the lobby");
 		
@@ -126,7 +169,7 @@ public class ServerStream {
 		}
 	}
 	
-	public void sendBanUser(String username, String address)
+	public synchronized void sendBanUser(String username, String address)
 	{
 		if(username == null && address == null)
 			return;
@@ -248,6 +291,8 @@ public class ServerStream {
 	
 	private class Handler extends Thread {
 		private Socket socket;
+		// Username of the connected user, once accepted
+		private String username;
 		
 		private InputStream is;
 		private ObjectInputStream input;
@@ -267,6 +312,7 @@ public class ServerStream {
 				// NB: the order of these is important (server: input -> output)
 				this.is = this.socket.getInputStream();
 				this.input = new ObjectInputStream(this.is);
+				this.input.setObjectInputFilter(Message.FILTER);
 				this.os = this.socket.getOutputStream();
 				this.output = new ObjectOutputStream(this.os);
 				
@@ -276,6 +322,12 @@ public class ServerStream {
 					if(incomingMsg != null)
 					{
 						System.out.println("Server (" + this.getId() + "): received " + incomingMsg.toString());
+
+						// After the connection, the sender is the user of this connection, whatever the message says
+						if(this.username != null)
+							incomingMsg.setUsername(this.username);
+						else if(incomingMsg.getMsgType() != MessageType.CONNECT_REQUEST)
+							continue;
 						
 						switch(incomingMsg.getMsgType())
 						{
@@ -308,7 +360,7 @@ public class ServerStream {
 									mReply.setContent("Username '" + incomingMsg.getUsername() + "' already present");
 								}	
 								// invalid username
-								else if(!ControllerMenu.validateUsername(incomingMsg.getUsername()))
+								else if(!User.validateUsername(incomingMsg.getUsername()))
 								{
 									mReply.setMsgType(MessageType.CONNECT_REFUSED);
 									mReply.setContent("Invalid username. The username must be from 3 to 15 alphanumeric characters long.");
@@ -316,8 +368,11 @@ public class ServerStream {
 								// connection can be accepted
 								else {
 									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
-									users.add(u);
-									writers.add(this.output);
+									synchronized (ServerStream.this) {
+										users.add(u);
+										writers.add(this.output);
+									}
+									this.username = incomingMsg.getUsername();
 									
 									mReply.setMsgType(MessageType.USER_JOINED);
 									mReply.setUsername(incomingMsg.getUsername());
@@ -336,7 +391,10 @@ public class ServerStream {
 								}
 								
 								// send reply
-								this.output.writeObject(mReply);
+								synchronized (ServerStream.this) {
+									this.output.writeObject(mReply);
+									this.output.reset();
+								}
 								/*{
 									// add user and writer to list
 									User u = new User(incomingMsg.getUsername(), this.socket.getInetAddress());
@@ -363,7 +421,7 @@ public class ServerStream {
 							case CHAT:
 							{
 								
-								// TO-DO: forward
+								forwardMessageToOthers(incomingMsg);
 
 								if (chatHandler != null)
 									chatHandler.handleMessage(incomingMsg);
@@ -390,25 +448,16 @@ public class ServerStream {
 							}
 							case DISCONNECT:
 							{
-								// remove user and writer from the list
-								for(int i = 1; i < users.size(); i++)
-								{
-									if(users.get(i).getUsername().equals(incomingMsg.getUsername()))
-									{
-										users.remove(i);
-										writers.remove(i);
-										break;
-									}
-								}
-								
-								// forward
-								forwardMessageToOthers(incomingMsg);
-								
+								userLeft(incomingMsg);
 								socket.close();
-
-								if (disconnectHandler != null)
-									disconnectHandler.handleMessage(incomingMsg);
 								
+								break;
+							}
+							case GAME:
+							{
+								if (gameHandler != null)
+									gameHandler.handleMessage(incomingMsg);
+
 								break;
 							}
 							default:
@@ -434,8 +483,34 @@ public class ServerStream {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+			} finally {
+				// The connection was lost without a DISCONNECT message (e.g. the app was closed)
+				if (this.username != null)
+					userLeft(new Message(MessageType.DISCONNECT, this.username, "Connection lost"));
 			}
 		}
+	}
+
+	// Removes a user that left, and tells the others (only the first time)
+	private void userLeft(Message message)
+	{
+		synchronized (this) {
+			int index = -1;
+			for(int i = 1; i < users.size(); i++)
+			{
+				if(users.get(i).getUsername().equals(message.getUsername()))
+					index = i;
+			}
+			if (index < 0)
+				return;
+
+			users.remove(index);
+			writers.remove(index);
+			forwardMessageToOthers(message);
+		}
+
+		if (disconnectHandler != null)
+			disconnectHandler.handleMessage(message);
 	}
 	
 	public void setPrivacy(boolean open)
@@ -453,17 +528,12 @@ public class ServerStream {
 		return false;
 	}
 	
-	private void sendMessage(Message message)
+	private synchronized void sendMessage(Message message)
 	{
 		// send the message to each user except the server
 		for(int i = 1; i < this.writers.size(); i++)
 		{
-			try {
-				this.writers.get(i).writeObject(message);
-			} catch (IOException e) {
-				System.out.println("IOException while trying to send message to client");
-				e.printStackTrace();
-			}
+			this.write(i, message);
 		}
 	}
 	
@@ -475,18 +545,14 @@ public class ServerStream {
 		this.sendMessage(msg);
 	}
 	
-	private void forwardMessageToOthers(Message msg)
+	private synchronized void forwardMessageToOthers(Message msg)
 	{
 		// forward the message to each connected client, except the one that sent the message first
 		for(int i = 1; i < this.users.size(); i++)
 		{
 			if(!msg.getUsername().equals(this.users.get(i).getUsername()))
 			{
-				try {
-					this.writers.get(i).writeObject(msg);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.write(i, msg);
 			}
 		}
 	}
@@ -494,20 +560,12 @@ public class ServerStream {
 	/*
 	 * Send a DISCONNECT message to each connected client, and then close the listen socket.
 	 */
-	public void sendClose()
+	public synchronized void sendClose()
 	{
-		Message msg = new Message(MessageType.DISCONNECT, ownerUser.getUsername(), "Server lobby closed");
-
 		// send the message to each user except the server (NB: it's not a normal sendMessage)
 		for(int i = 1; i < this.writers.size(); i++)
 		{
-			msg.setUsername(this.users.get(i).getUsername());
-			try {
-				this.writers.get(i).writeObject(msg);
-			} catch (IOException e) {
-				// remove the writer at index i?
-				e.printStackTrace();
-			}
+			this.write(i, new Message(MessageType.DISCONNECT, this.users.get(i).getUsername(), "Server lobby closed"));
 		}
 		
 		// close the socket
@@ -517,7 +575,7 @@ public class ServerStream {
 	/*
 	 * Check if there are enough connected users to start a game, and they are all ready.
 	 */
-	public boolean canStart()
+	public synchronized boolean canStart()
 	{	
 		for(User u : this.users)
 		{

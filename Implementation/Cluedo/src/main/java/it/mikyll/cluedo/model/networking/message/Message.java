@@ -1,11 +1,19 @@
 package it.mikyll.cluedo.model.networking.message;
 
+import java.io.ObjectInputFilter;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	// Only Message objects can be read from the network: deserializing arbitrary classes would be unsafe.
+	// NB: no maxrefs/maxbytes limits, since they count everything read during the whole connection
+	public static final ObjectInputFilter FILTER = ObjectInputFilter.Config.createFilter(
+			"it.mikyll.cluedo.model.networking.message.Message;"
+			+ "it.mikyll.cluedo.model.networking.message.MessageType;"
+			+ "java.lang.Enum;java.lang.String;maxdepth=5;!*");
 	
 	private static SimpleDateFormat tformatter = new SimpleDateFormat("[HH:mm:ss]");
 	
