@@ -14,6 +14,7 @@ import it.mikyll.cluedo.model.game.clues.Weapon;
 import it.mikyll.cluedo.model.game.player.Player;
 import it.mikyll.cluedo.model.game.player.PlayerArtificial;
 import it.mikyll.cluedo.model.game.player.PlayerHuman;
+import it.mikyll.cluedo.model.localization.Language;
 import it.mikyll.cluedo.model.networking.ClientStream;
 import it.mikyll.cluedo.model.settings.Settings;
 import it.mikyll.cluedo.model.sounds.MusicPlayer;
@@ -243,6 +244,10 @@ public class ControllerGame implements IController {
         }
 
         Navigator.setFullscreen(true);
+
+        // Room names on the board, in the selected language
+        String labelsFilename = settings.getLanguage() == Language.ITALIAN ? "map_labels_it.png" : "map_labels_en.png";
+        imageViewBoardLabels.setImage(new Image(ControllerGame.class.getResource(Settings.RESOURCES_PATH + "images/map/" + labelsFilename).toString()));
 
         // Get board size
         Image boardImage = imageViewBoard.getImage();
